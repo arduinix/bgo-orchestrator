@@ -7,5 +7,5 @@ interface ErrorBoundaryProps {
 export default function ErrorBoundary({ children }: ErrorBoundaryProps) {
   const [hasError] = useState(false);
 
-  return <> {hasError ? <p>Oops. Something seems to have gone wrong. Sorry about that.</p> : children} </>;
+  return <> {hasError ? <p>Something went wrong</p> : children} </>;
 }

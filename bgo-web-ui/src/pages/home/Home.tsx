@@ -1,5 +1,5 @@
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
-import self_small from "../../assets/self_round_cycle.jpg";
+import { Box, Flex } from "@chakra-ui/react";
+import ComingSoon from "../../components/coming-soon/ComingSoon";
 
 export default function Home() {
   return (
@@ -14,26 +14,7 @@ export default function Home() {
         transform="translate(-35%, -50%)"
         flexDirection={"column"}
       >
-        <Image
-          src={self_small}
-          alt="self_small"
-          boxSize={["100px", "150px", "200px", "250px"]}
-          objectFit="cover"
-          borderRadius="full"
-          ml={0}
-          mr={4}
-        />
-        <Flex direction="column" justifyContent={"space-between"} mt={3}>
-          <Text fontSize={"4xl"} as="b">
-            Hi! I'm Nick.
-          </Text>
-          <Text fontSize={"xl"}>
-            Senior Software Engineer, Cyclist, Outdoor Enthusiast, Maker
-          </Text>
-          <Text fontSize={"lg"} fontWeight={"bold"}>
-            Denver, CO
-          </Text>
-        </Flex>
+        <ComingSoon />
       </Flex>
     </Box>
   );

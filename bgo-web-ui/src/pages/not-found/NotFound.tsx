@@ -1,5 +1,5 @@
 import { Box, Flex, Image, Text } from "@chakra-ui/react";
-import mountain from "../../assets/mountain.jpg";
+import torch from "../../assets/image/torch.png";
 
 export default function NotFound() {
   return (
@@ -25,7 +25,7 @@ export default function NotFound() {
         >
           <Flex direction="column" alignItems="center">
             <Image
-              src={mountain}
+              src={torch}
               alt="not_found"
               boxSize={100}
               borderRadius="full"
