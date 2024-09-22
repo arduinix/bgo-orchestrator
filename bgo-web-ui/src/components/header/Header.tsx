@@ -8,6 +8,7 @@ import {
 } from '@chakra-ui/react'
 import { PiDoorOpenBold } from 'react-icons/pi'
 import { signOut } from '@aws-amplify/auth'
+import TopNavigation from '../top-navigation/TopNavigation'
 
 export interface HeaderProps {
   loggedIn: boolean
@@ -16,17 +17,8 @@ export interface HeaderProps {
 export default function Header({ loggedIn }: HeaderProps) {
   const { colorMode, toggleColorMode } = useColorMode()
   return (
-    <Box h="70">
-      <Flex alignItems="center" height="100%" p="10" justifyContent="flex-end">
-        {/* <Image
-          src={self_small}
-          alt="self_small"
-          boxSize="50px"
-          objectFit="cover"
-          borderRadius="full"
-          ml={0}
-          mr={4}
-        /> */}
+    <>
+      {/* <Flex alignItems="center" height="100%" p="10" justifyContent="flex-end">
         <Box mr={5}>
           <Tooltip label="Toggle light/dark mode">
             <Switch
@@ -49,7 +41,10 @@ export default function Header({ loggedIn }: HeaderProps) {
             </Tooltip>
           )}
         </Box>
-      </Flex>
-    </Box>
+      </Flex> */}
+
+<TopNavigation />
+
+    </>
   )
 }
