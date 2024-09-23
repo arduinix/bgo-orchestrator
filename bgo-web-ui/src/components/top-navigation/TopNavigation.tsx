@@ -13,7 +13,6 @@ import {
   MenuDivider,
   useDisclosure,
   useColorModeValue,
-  Stack,
   Image,
   Switch,
   useColorMode,
@@ -21,13 +20,30 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import torch from "../../assets/image/torch.png";
-import NavLink from "./NavLink";
+import NavLinks, { NavLinkProps } from "./NavLinks";
 
-const Links = ["Tutorials", "Olympics", "Leagues", "Player Groups"];
+const navLinks: Array<NavLinkProps> = [
+  {
+    name: "Tutorials",
+    href: "/tutorials",
+    tooltip: "Learn how to create and run a BGO event.",
+  },
+  { name: "Olympics", href: "/olympics", tooltip: "Manage your BGO events." },
+  {
+    name: "Leagues",
+    href: "/leagues",
+    tooltip: "Create, join and manage league play.",
+  },
+  {
+    name: "Player Groups",
+    href: "/playergroups",
+    tooltip: "Manage your player groups and teams.",
+  },
+];
 
 export interface TopNavigationProps {
-    loggedIn: boolean
-  }
+  loggedIn: boolean;
+}
 
 export default function TopNavigation({ loggedIn }: TopNavigationProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -59,11 +75,12 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              {Links.map((link) => (
+              {/* {Links.map((link) => (
                 <NavLink key={link}>
                   <Text fontSize={"xl"}>{link}</Text>
                 </NavLink>
-              ))}
+              ))} */}
+              <NavLinks navLinks={navLinks} />
             </HStack>
           </HStack>
 
@@ -103,16 +120,6 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
             </Menu>
           </Flex>
         </Flex>
-
-        {isOpen ? (
-          <Box pb={4} display={{ md: "none" }}>
-            <Stack as={"nav"} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
-            </Stack>
-          </Box>
-        ) : null}
       </Box>
     </>
   );
