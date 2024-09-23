@@ -15,6 +15,9 @@ import {
   useColorModeValue,
   Stack,
   Image,
+  Switch,
+  useColorMode,
+  Spacer,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import torch from "../../assets/image/torch.png";
@@ -22,8 +25,13 @@ import NavLink from "./NavLink";
 
 const Links = ["Tutorials", "Olympics", "Leagues"];
 
-export default function TopNavigation() {
+export interface TopNavigationProps {
+    loggedIn: boolean
+  }
+
+export default function TopNavigation({ loggedIn }: TopNavigationProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <>
@@ -58,6 +66,7 @@ export default function TopNavigation() {
               ))}
             </HStack>
           </HStack>
+
           <Flex alignItems={"center"}>
             <Menu>
               <MenuButton
@@ -75,10 +84,21 @@ export default function TopNavigation() {
                 />
               </MenuButton>
               <MenuList>
-                <MenuItem>Logout</MenuItem>
+                <MenuItem>Sign Out</MenuItem>
                 <MenuItem>Change Account</MenuItem>
                 <MenuDivider />
                 <MenuItem>Account Settings</MenuItem>
+                <MenuItem>Help</MenuItem>
+                <MenuItem>
+                  <Flex width={"100%"}>
+                    <Text mr={4}>Dark Mode</Text>
+                    <Spacer />
+                    <Switch
+                      onChange={toggleColorMode}
+                      checked={colorMode === "dark"}
+                    />
+                  </Flex>
+                </MenuItem>
               </MenuList>
             </Menu>
           </Flex>

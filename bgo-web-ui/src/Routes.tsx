@@ -22,6 +22,7 @@ export default function AppRouter() {
   return (
     <>
       <Header loggedIn={loggedIn} />
+
       <Box position={'relative'} minHeight={'100vh'}>
         {/* <Box
           backgroundImage={panther}
