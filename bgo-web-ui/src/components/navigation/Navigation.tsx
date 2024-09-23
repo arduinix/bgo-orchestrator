@@ -31,7 +31,7 @@ export default function Navigation({ linkItems }: NavigationProps) {
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)')
   return (
     <>
-      <Box pt={3} pr={3} w="20%">
+      <Box pt={3} pr={3} w="30%">
         {linkItems.map(({ name, icon, href, tooltip }) => (
           <NavItem key={name} icon={icon} href={href} toolTip={tooltip}>
             {isLargerThan768 && (

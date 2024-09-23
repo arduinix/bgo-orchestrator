@@ -23,7 +23,7 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import torch from "../../assets/image/torch.png";
 import NavLink from "./NavLink";
 
-const Links = ["Tutorials", "Olympics", "Leagues"];
+const Links = ["Tutorials", "Olympics", "Leagues", "Player Groups"];
 
 export interface TopNavigationProps {
     loggedIn: boolean

@@ -1,9 +1,13 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import logo_no_info from "../../assets/image/logo_no_info.png";
 
 export default function Home() {
-  return (
-    <Box p={2} pt={4} position="relative" minHeight="100vh">
-      
+  return <>
+    <Box>
+      <img src={logo_no_info} alt="logo" />
+      <h1>Welcome to the BGO Web UI</h1>
     </Box>
-  );
+  
+  
+  </>;
 }
