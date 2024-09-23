@@ -2,6 +2,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import { Outlet, useLocation } from "react-router-dom";
 
 import Navigation, { LinkItemProps } from "../navigation/Navigation";
+import Sidebar from "../sidebar/Sidebar";
 import Home from "../../pages/home/Home";
 
 import { LuHome, LuTrees, LuSettings } from "react-icons/lu";
@@ -9,26 +10,26 @@ import { LuHome, LuTrees, LuSettings } from "react-icons/lu";
 export default function MainLayout() {
   const location = useLocation();
 
-  const linkItems: Array<LinkItemProps> = [
-    {
-      name: "Event Mechanics",
-      icon: LuTrees,
-      href: "/olympics/eventmechanics",
-      tooltip: "Adjust event mechanics and rules.",
-    },
-    {
-      name: "Player Management",
-      icon: LuSettings,
-      href: "/olympics/playermanagement",
-      tooltip: "Manage player registration and participation.",
-    },
-    {
-      name: "Dashboards",
-      icon: LuHome,
-      href: "/olympics/dashboards",
-      tooltip: "View event statistics and analytics.",
-    }
-  ];
+  // const linkItems: Array<LinkItemProps> = [
+  //   {
+  //     name: "Event Mechanics",
+  //     icon: LuTrees,
+  //     href: "/olympics/eventmechanics",
+  //     tooltip: "Adjust event mechanics and rules.",
+  //   },
+  //   {
+  //     name: "Player Management",
+  //     icon: LuSettings,
+  //     href: "/olympics/playermanagement",
+  //     tooltip: "Manage player registration and participation.",
+  //   },
+  //   {
+  //     name: "Dashboards",
+  //     icon: LuHome,
+  //     href: "/olympics/dashboards",
+  //     tooltip: "View event statistics and analytics.",
+  //   }
+  // ];
 
   // create an object to hold link items for 
 
@@ -43,7 +44,8 @@ export default function MainLayout() {
       transform="translate(-50%, -50%)"
     >
       <Flex overflow="scroll">
-        <Navigation linkItems={linkItems} />
+        {/* <Navigation linkItems={linkItems} /> */}
+        <Sidebar />
         <Box p={4} w="100%" flexGrow={1} overflow="scroll">
           {location.pathname === "/" ? <Home /> : <Outlet />}
         </Box>
