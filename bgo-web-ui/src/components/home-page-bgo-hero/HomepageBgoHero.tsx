@@ -9,9 +9,11 @@ import {
   createIcon,
   Image,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 import logo from "../../assets/image/logo_og_cropped.png";
 
 export default function HomepageBgoHero() {
+  const navigate = useNavigate();
   return (
     <>
       <Container maxW={"3xl"}>
@@ -44,17 +46,23 @@ export default function HomepageBgoHero() {
             position={"relative"}
           >
             <Button
-              colorScheme={"green"}
+              colorScheme={"orange"}
               bg={"#F0973B"}
               rounded={"full"}
               px={6}
               _hover={{
                 bg: "#E46334",
               }}
+              onClick={() => navigate("/olympics")}
             >
               Lets Play!
             </Button>
-            <Button variant={"link"} colorScheme={"blue"} size={"sm"}>
+            <Button
+              variant={"link"}
+              colorScheme={"blue"}
+              size={"sm"}
+              onClick={() => navigate("/tutorials")}
+            >
               Learn more
             </Button>
             <Box>
