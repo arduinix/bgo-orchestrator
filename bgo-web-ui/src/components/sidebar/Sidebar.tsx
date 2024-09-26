@@ -1,6 +1,3 @@
-"use client";
-
-import React, { ReactNode } from "react";
 import {
   IconButton,
   Box,
