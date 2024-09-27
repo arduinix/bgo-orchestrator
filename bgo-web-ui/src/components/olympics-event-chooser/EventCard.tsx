@@ -11,9 +11,13 @@ import {
   IconButton,
   MenuList,
   MenuItem,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import torch from "../../assets/image/torch.png";
+
+import ConfirmActionModal from "../confirm-action-modal/ConfirmActionModal";
+import CopyToNewEventModal from "../copy-to-new-event/CopyToNewEventModal";
 
 // interface CardProps {
 //   heading: string;
@@ -29,6 +33,18 @@ interface EventCardProps {
 }
 
 const EventCard = ({ heading, description, href }: EventCardProps) => {
+  const {
+    isOpen: isOpenDelete,
+    onOpen: onOpenDelete,
+    onClose: onCloseDelete,
+  } = useDisclosure();
+
+  const {
+    isOpen: isOpenCopy,
+    onOpen: onOpenCopy,
+    onClose: onCloseCopy,
+  } = useDisclosure();
+
   return (
     <Box
       maxW={{ base: "full", md: "275px" }}
@@ -76,10 +92,26 @@ const EventCard = ({ heading, description, href }: EventCardProps) => {
         />
         <MenuList>
           <MenuItem>Open</MenuItem>
-          <MenuItem>Copy to New</MenuItem>
-          <MenuItem>Delete</MenuItem>
+          <MenuItem onClick={onOpenCopy}>Copy to New</MenuItem>
+          <MenuItem onClick={onOpenDelete}>Delete</MenuItem>
         </MenuList>
       </Menu>
+      <ConfirmActionModal
+        isOpen={isOpenDelete}
+        closeAction={onCloseDelete}
+        confirmAction={onCloseDelete}
+        header={"Delete Event"}
+        body={
+          "Are you sure that you want to delete this event? This action cannot be undone."
+        }
+        confirmButtonText={"Delete"}
+      />
+      <CopyToNewEventModal
+        isOpen={isOpenCopy}
+        closeAction={onCloseCopy}
+        confirmAction={onCloseCopy}
+        sourceEventName="My BGO Event"
+      />
     </Box>
   );
 };
