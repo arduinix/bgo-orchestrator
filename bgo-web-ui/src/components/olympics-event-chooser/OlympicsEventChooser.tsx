@@ -1,30 +1,11 @@
 import {
   Box,
-  Button,
   Container,
   Flex,
   Heading,
-  Icon,
   Stack,
   Text,
-  useColorModeValue,
-  CardHeader,
-  Card,
-  CardBody,
-  StackDivider,
-  Image,
-  Divider,
-  CardFooter,
-  ButtonGroup,
 } from "@chakra-ui/react";
-import { ReactElement } from "react";
-import {
-  FcAbout,
-  FcAssistant,
-  FcCollaboration,
-  FcDonate,
-  FcManager,
-} from "react-icons/fc";
 
 import EventCard from "./EventCard";
 
