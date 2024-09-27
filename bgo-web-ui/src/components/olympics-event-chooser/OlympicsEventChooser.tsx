@@ -6,8 +6,8 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-
 import EventCard from "./EventCard";
+
 
 export default function OlympicsEventChooser() {
   return (
@@ -24,6 +24,13 @@ export default function OlympicsEventChooser() {
 
       <Container maxW={"5xl"} mt={12}>
         <Flex flexWrap="wrap" gridGap={6} justify="center">
+          <EventCard
+            heading={"Heading"}
+            description={
+              "Lorem ipsum dolor sit amet catetur, adipisicing elit."
+            }
+            href={"#"}
+          />
           <EventCard
             heading={"Heading"}
             description={

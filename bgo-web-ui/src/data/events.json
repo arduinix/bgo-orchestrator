@@ -1,0 +1,12 @@
+{
+  "listEvents": [
+    {
+      "id": 1,
+      "name": "Summer 2024",
+      "location": "Dormont, PA",
+      "createdDate": "2024-07-01T00:00:00.000Z",
+      "isPlayed": true,
+      "imagePath": null
+    }
+  ]
+}
