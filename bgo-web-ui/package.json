@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
-    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,md}\" --config ./.prettierrc.json"
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,md}\" --config ./.prettierrc.json",
+    "prepare": "husky"
   },
   "husky": {
     "hooks": {
@@ -18,7 +19,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint",
-    "*.{js,jsx,ts,tsx,json,css,md}": "prettier --write",
+    "*.{js,jsx,ts,tsx,json,css,md}": "prettier --write --config ./.prettierrc.json",
     "package.json": "sort-package-json"
   },
   "dependencies": {
