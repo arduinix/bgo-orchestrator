@@ -24,3 +24,5 @@ npm run format
 
 # TODO
 * Install husky and lint-staged at the root directory of the project because this is a multipackage monorepo.
+
+[Monorepo Setup for Husky + lint-staged](https://nitpum.com/post/lint-staged-eslint-monorepo/)
