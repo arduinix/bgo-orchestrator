@@ -22,11 +22,6 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import torch from '../../assets/image/torch.png'
 import NavLinks, { NavLinkProps } from './NavLinks'
 
-
-
-
-
-
 const navLinks: Array<NavLinkProps> = [
   {
     name: 'Tutorials',
