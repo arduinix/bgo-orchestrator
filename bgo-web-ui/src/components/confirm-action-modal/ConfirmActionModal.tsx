@@ -7,28 +7,28 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react'
 
 export interface ConfirmActionModalProps {
-  isOpen: boolean;
-  closeAction: () => void;
-  header?: string;
-  body?: string;
-  confirmAction?: () => void;
-  confirmButtonText?: string;
-  cancelButtonText?: string;
-  confirmButtonColor?: string;
+  isOpen: boolean
+  closeAction: () => void
+  header?: string
+  body?: string
+  confirmAction?: () => void
+  confirmButtonText?: string
+  cancelButtonText?: string
+  confirmButtonColor?: string
 }
 
 export default function ConfirmActionModal({
   isOpen,
   closeAction,
-  header = "Confirm",
-  body = "Are you sure you want to perform this action?",
+  header = 'Confirm',
+  body = 'Are you sure you want to perform this action?',
   confirmAction = () => {},
-  confirmButtonText = "Confirm",
-  cancelButtonText = "Cancel",
-  confirmButtonColor = "red",
+  confirmButtonText = 'Confirm',
+  cancelButtonText = 'Cancel',
+  confirmButtonColor = 'red',
 }: ConfirmActionModalProps) {
   return (
     <>
@@ -51,5 +51,5 @@ export default function ConfirmActionModal({
         </ModalContent>
       </Modal>
     </>
-  );
+  )
 }

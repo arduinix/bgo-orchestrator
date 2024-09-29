@@ -12,14 +12,14 @@ import {
   ModalHeader,
   ModalOverlay,
   Flex,
-} from "@chakra-ui/react";
-import { useRef, useState } from "react";
+} from '@chakra-ui/react'
+import { useRef, useState } from 'react'
 
 export interface CopyToNewEventModalProps {
-  isOpen: boolean;
-  closeAction: () => void;
-  sourceEventName: string;
-  confirmAction?: () => void;
+  isOpen: boolean
+  closeAction: () => void
+  sourceEventName: string
+  confirmAction?: () => void
 }
 
 export default function CopyToNewEvent({
@@ -28,12 +28,10 @@ export default function CopyToNewEvent({
   sourceEventName,
   confirmAction = () => {},
 }: CopyToNewEventModalProps) {
-  const initialRef = useRef(null);
-  const finalRef = useRef(null);
-  const [newEventName, setNewEventName] = useState(
-    `Copy of ${sourceEventName}`
-  );
-  const [openAfterCreation, setOpenAfterCreation] = useState(true);
+  const initialRef = useRef(null)
+  const finalRef = useRef(null)
+  const [newEventName, setNewEventName] = useState(`Copy of ${sourceEventName}`)
+  const [openAfterCreation, setOpenAfterCreation] = useState(true)
 
   return (
     <>
@@ -59,7 +57,7 @@ export default function CopyToNewEvent({
             </FormControl>
 
             <FormControl mt={4}>
-              <Flex gap={2} align={"center"}>
+              <Flex gap={2} align={'center'}>
                 <Checkbox
                   mb={1.5}
                   isChecked={openAfterCreation}
@@ -79,5 +77,5 @@ export default function CopyToNewEvent({
         </ModalContent>
       </Modal>
     </>
-  );
+  )
 }

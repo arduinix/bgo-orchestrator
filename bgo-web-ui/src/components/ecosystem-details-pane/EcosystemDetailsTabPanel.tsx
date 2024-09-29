@@ -7,13 +7,13 @@ import {
   ListItem,
   UnorderedList,
   Box,
-} from "@chakra-ui/react";
-import { Ecosystem } from "../../types";
+} from '@chakra-ui/react'
+import { Ecosystem } from '../../types'
 
 export default function EcosystemDetailsTabPanel({
   ecosystem,
 }: {
-  ecosystem: Ecosystem;
+  ecosystem: Ecosystem
 }) {
   const {
     totalAcres,
@@ -25,7 +25,7 @@ export default function EcosystemDetailsTabPanel({
     county,
     country,
     state,
-  } = ecosystem;
+  } = ecosystem
   return (
     <Tabs>
       <TabList>
@@ -34,10 +34,10 @@ export default function EcosystemDetailsTabPanel({
         <Tab>Municipality</Tab>
       </TabList>
       <TabPanels>
-        <TabPanel bg={"gray.50"}>
+        <TabPanel bg={'gray.50'}>
           <Box>Location Map Placeholder</Box>
         </TabPanel>
-        <TabPanel bg={"gray.50"}>
+        <TabPanel bg={'gray.50'}>
           <UnorderedList>
             <ListItem>
               <b>Total Acres: </b>
@@ -57,7 +57,7 @@ export default function EcosystemDetailsTabPanel({
             </ListItem>
           </UnorderedList>
         </TabPanel>
-        <TabPanel bg={"gray.50"}>
+        <TabPanel bg={'gray.50'}>
           <UnorderedList>
             <ListItem>
               <b>Land Owner: </b>
@@ -83,5 +83,5 @@ export default function EcosystemDetailsTabPanel({
         </TabPanel>
       </TabPanels>
     </Tabs>
-  );
+  )
 }

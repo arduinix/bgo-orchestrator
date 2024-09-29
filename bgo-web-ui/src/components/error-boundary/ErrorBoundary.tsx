@@ -1,11 +1,11 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useState } from 'react'
 
 interface ErrorBoundaryProps {
-  children?: ReactElement;
+  children?: ReactElement
 }
 
 export default function ErrorBoundary({ children }: ErrorBoundaryProps) {
-  const [hasError] = useState(false);
+  const [hasError] = useState(false)
 
   return (
     <>
@@ -15,5 +15,5 @@ export default function ErrorBoundary({ children }: ErrorBoundaryProps) {
         children
       )}
     </>
-  );
+  )
 }

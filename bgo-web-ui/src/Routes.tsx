@@ -1,33 +1,33 @@
-import { Route, Routes } from "react-router-dom";
-import { Box } from "@chakra-ui/react";
-import { useState } from "react";
-import { isLoggedIn } from "./lib/auth/CognitoAuth";
+import { Route, Routes } from 'react-router-dom'
+import { Box } from '@chakra-ui/react'
+import { useState } from 'react'
+import { isLoggedIn } from './lib/auth/CognitoAuth'
 // import { withAuthenticator } from '@aws-amplify/ui-react'
-import NotFound from "./pages/not-found/NotFound";
-import MainLayout from "./components/main-layout/MainLayout";
-import Header from "./components/header/Header";
-import Ecosystems from "./pages/ecosystems/Ecosystems";
-import Olympics from "./pages/olympics/Olympics";
-import Tutorials from "./pages/tutorials/Tutorials";
-import Leagues from "./pages/leagues/Leagues";
-import PlayerGroups from "./pages/player-groups/PlayerGroups";
+import NotFound from './pages/not-found/NotFound'
+import MainLayout from './components/main-layout/MainLayout'
+import Header from './components/header/Header'
+import Ecosystems from './pages/ecosystems/Ecosystems'
+import Olympics from './pages/olympics/Olympics'
+import Tutorials from './pages/tutorials/Tutorials'
+import Leagues from './pages/leagues/Leagues'
+import PlayerGroups from './pages/player-groups/PlayerGroups'
 
 export default function AppRouter() {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [loggedIn, setLoggedIn] = useState<boolean>(false)
 
   isLoggedIn().then((response) => {
     if (response) {
-      setLoggedIn(true);
+      setLoggedIn(true)
     } else {
-      setLoggedIn(false);
+      setLoggedIn(false)
     }
-  });
+  })
 
   return (
     <>
       <Header loggedIn={loggedIn} />
 
-      <Box position={"relative"} minHeight={"100vh"}>
+      <Box position={'relative'} minHeight={'100vh'}>
         {/* <Box
           backgroundImage={panther}
           bgSize="cover"
@@ -53,7 +53,7 @@ export default function AppRouter() {
         </Routes>
       </Box>
     </>
-  );
+  )
 }
 
 // export default withAuthenticator(AppRouter, {})

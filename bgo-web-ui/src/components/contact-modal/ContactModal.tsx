@@ -14,16 +14,16 @@ import {
   Textarea,
   Text,
   Tooltip,
-} from "@chakra-ui/react";
-import { useState, useEffect } from "react";
-import { Contact } from "../../types";
+} from '@chakra-ui/react'
+import { useState, useEffect } from 'react'
+import { Contact } from '../../types'
 
 export interface ContactModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  onSend: () => void;
-  contact: Contact;
-  setContact: React.Dispatch<React.SetStateAction<Contact>>;
+  isOpen: boolean
+  onClose: () => void
+  onSend: () => void
+  contact: Contact
+  setContact: React.Dispatch<React.SetStateAction<Contact>>
 }
 
 export default function ContactModal({
@@ -33,27 +33,26 @@ export default function ContactModal({
   contact,
   setContact,
 }: ContactModalProps) {
-  
-  const [isButtonDisabled, setButtonDisabled] = useState(true);
-  const [isEmailValid, setEmailValid] = useState(false);
+  const [isButtonDisabled, setButtonDisabled] = useState(true)
+  const [isEmailValid, setEmailValid] = useState(false)
 
   useEffect(() => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setEmailValid(emailRegex.test(contact.email));
-  }, [contact.email]);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    setEmailValid(emailRegex.test(contact.email))
+  }, [contact.email])
 
   useEffect(() => {
     if (contact.name && contact.subject && isEmailValid && contact.message) {
-      setButtonDisabled(false);
+      setButtonDisabled(false)
     } else {
-      setButtonDisabled(true);
+      setButtonDisabled(true)
     }
-  }, [contact.name, contact.subject, isEmailValid, contact.message]);
+  }, [contact.name, contact.subject, isEmailValid, contact.message])
 
   const handleClose = () => {
-    setContact({ name: "", subject: "", email: "", message: "" });
-    onClose();
-  };
+    setContact({ name: '', subject: '', email: '', message: '' })
+    onClose()
+  }
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -61,8 +60,8 @@ export default function ContactModal({
     setContact((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value,
-    }));
-  };
+    }))
+  }
 
   return (
     <>
@@ -94,7 +93,7 @@ export default function ContactModal({
             </FormControl>
             <FormControl
               mt={4}
-              isInvalid={!isEmailValid && contact.email !== ""}
+              isInvalid={!isEmailValid && contact.email !== ''}
             >
               <FormLabel>Email</FormLabel>
               <Input
@@ -124,7 +123,7 @@ export default function ContactModal({
             <Tooltip
               label={
                 isButtonDisabled
-                  ? "Sorry, but you need to fill out all of the fields first."
+                  ? 'Sorry, but you need to fill out all of the fields first.'
                   : null
               }
             >
@@ -142,5 +141,5 @@ export default function ContactModal({
         </ModalContent>
       </Modal>
     </>
-  );
+  )
 }

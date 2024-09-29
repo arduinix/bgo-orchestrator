@@ -43,8 +43,8 @@ export default function EcosystemTable({ data }: EcosystemTableProps) {
                   viewId === id
                     ? 'blue.100'
                     : index % 2 === 0
-                    ? 'gray.200'
-                    : 'white'
+                      ? 'gray.200'
+                      : 'white'
                 }
                 _hover={{ bg: 'blue.200' }}
               >

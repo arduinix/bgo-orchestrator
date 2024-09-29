@@ -12,12 +12,12 @@ import {
   MenuList,
   MenuItem,
   useDisclosure,
-} from "@chakra-ui/react";
-import { RxHamburgerMenu } from "react-icons/rx";
-import torch from "../../assets/image/torch.png";
+} from '@chakra-ui/react'
+import { RxHamburgerMenu } from 'react-icons/rx'
+import torch from '../../assets/image/torch.png'
 
-import ConfirmActionModal from "../confirm-action-modal/ConfirmActionModal";
-import CopyToNewEventModal from "../copy-to-new-event/CopyToNewEventModal";
+import ConfirmActionModal from '../confirm-action-modal/ConfirmActionModal'
+import CopyToNewEventModal from '../copy-to-new-event/CopyToNewEventModal'
 
 // interface CardProps {
 //   heading: string;
@@ -27,9 +27,9 @@ import CopyToNewEventModal from "../copy-to-new-event/CopyToNewEventModal";
 // }
 
 interface EventCardProps {
-  heading: string;
-  description: string;
-  href: string;
+  heading: string
+  description: string
+  href: string
 }
 
 const EventCard = ({ heading, description, href }: EventCardProps) => {
@@ -37,47 +37,47 @@ const EventCard = ({ heading, description, href }: EventCardProps) => {
     isOpen: isOpenDelete,
     onOpen: onOpenDelete,
     onClose: onCloseDelete,
-  } = useDisclosure();
+  } = useDisclosure()
 
   const {
     isOpen: isOpenCopy,
     onOpen: onOpenCopy,
     onClose: onCloseCopy,
-  } = useDisclosure();
+  } = useDisclosure()
 
   return (
     <Box
-      maxW={{ base: "full", md: "275px" }}
-      w={"full"}
+      maxW={{ base: 'full', md: '275px' }}
+      w={'full'}
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
       as="a"
       href={href}
       p={5}
-      display={"flex"}
+      display={'flex'}
       _hover={{
-        boxShadow: "lg",
+        boxShadow: 'lg',
       }}
     >
-      <Box flex={"1"}>
-        <Stack align={"start"} spacing={2}>
+      <Box flex={'1'}>
+        <Stack align={'start'} spacing={2}>
           <Flex
             w={16}
             h={16}
-            align={"center"}
-            justify={"center"}
-            color={"white"}
-            rounded={"full"}
-            bg={useColorModeValue("gray.100", "gray.700")}
+            align={'center'}
+            justify={'center'}
+            color={'white'}
+            rounded={'full'}
+            bg={useColorModeValue('gray.100', 'gray.700')}
           >
             {/* <Icon as={FcDonate} w={10} h={10} /> */}
-            <Image src={torch} boxSize={12} objectFit={"scale-down"} />
+            <Image src={torch} boxSize={12} objectFit={'scale-down'} />
           </Flex>
 
           <Box mt={2}>
             <Heading size="md">{heading}</Heading>
-            <Text mt={1} fontSize={"sm"}>
+            <Text mt={1} fontSize={'sm'}>
               {description}
             </Text>
           </Box>
@@ -100,11 +100,11 @@ const EventCard = ({ heading, description, href }: EventCardProps) => {
         isOpen={isOpenDelete}
         closeAction={onCloseDelete}
         confirmAction={onCloseDelete}
-        header={"Delete Event"}
+        header={'Delete Event'}
         body={
-          "Are you sure that you want to delete this event? This action cannot be undone."
+          'Are you sure that you want to delete this event? This action cannot be undone.'
         }
-        confirmButtonText={"Delete"}
+        confirmButtonText={'Delete'}
       />
       <CopyToNewEventModal
         isOpen={isOpenCopy}
@@ -113,7 +113,7 @@ const EventCard = ({ heading, description, href }: EventCardProps) => {
         sourceEventName="My BGO Event"
       />
     </Box>
-  );
-};
+  )
+}
 
-export default EventCard;
+export default EventCard

@@ -1,3 +1,3 @@
 export default function PlayerGroups() {
-  return <>PlayerGroups placeholder</>;
+  return <>PlayerGroups placeholder</>
 }

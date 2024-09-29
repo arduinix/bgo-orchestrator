@@ -44,11 +44,10 @@ const navLinks: Array<NavLinkProps> = [
 export interface TopNavigationProps {
   loggedIn: boolean
 }
-
-export default function TopNavigation({ loggedIn }: TopNavigationProps) { // eslint-disable-line @typescript-eslint/no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export default function TopNavigation({ loggedIn }: TopNavigationProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { colorMode, toggleColorMode } = useColorMode()
-
 
   return (
     <>

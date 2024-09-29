@@ -1,45 +1,40 @@
-import {
-  getCurrentUser,
-  signIn,
-  signOut,
-  SignInInput,
-} from "@aws-amplify/auth";
+import { getCurrentUser, signIn, signOut, SignInInput } from '@aws-amplify/auth'
 
-const ACCESS_TOKEN_KEY = "accessToken";
+const ACCESS_TOKEN_KEY = 'accessToken'
 
 export function getAccessToken() {
-  return localStorage.getItem(ACCESS_TOKEN_KEY);
+  return localStorage.getItem(ACCESS_TOKEN_KEY)
 }
 
 export async function isLoggedIn(): Promise<boolean> {
-  const response = await checkIsLoggedIn();
-  return response;
+  const response = await checkIsLoggedIn()
+  return response
 }
 export async function checkIsLoggedIn(): Promise<boolean> {
   try {
-    const session = await getCurrentUser();
+    const session = await getCurrentUser()
     if (session) {
-      return true;
+      return true
     }
-    return false;
+    return false
   } catch (err) {
-    console.log("err: ", err);
-    return false;
+    console.log('err: ', err)
+    return false
   }
 }
 
 export function logout() {
-  signOut();
+  signOut()
 }
 
 export async function login(signInInput: SignInInput) {
   signIn(signInInput)
     .then((result) => {
-      console.log("result: ", result);
-      return result;
+      console.log('result: ', result)
+      return result
     })
     .catch((err) => {
-      console.log("err: ", err);
-      return err;
-    });
+      console.log('err: ', err)
+      return err
+    })
 }

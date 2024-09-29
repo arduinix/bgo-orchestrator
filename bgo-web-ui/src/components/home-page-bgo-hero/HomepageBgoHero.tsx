@@ -8,30 +8,30 @@ import {
   useColorModeValue,
   createIcon,
   Image,
-} from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import logo from "../../assets/image/logo_og_cropped.png";
+} from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
+import logo from '../../assets/image/logo_og_cropped.png'
 
 export default function HomepageBgoHero() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   return (
     <>
-      <Container maxW={"3xl"}>
+      <Container maxW={'3xl'}>
         <Stack
           as={Box}
-          textAlign={"center"}
-          align={"center"}
+          textAlign={'center'}
+          align={'center'}
           spacing={{ base: 8, md: 10 }}
           py={{ base: 20, md: 30 }}
         >
           <Image
             boxSize={500}
             src={logo}
-            alt={"BGO logo"}
-            objectFit={"contain"}
+            alt={'BGO logo'}
+            objectFit={'contain'}
           />
 
-          <Text color={"gray.500"}>
+          <Text color={'gray.500'}>
             Do you love board games so much that you want to host an all day
             olympic style event with your friends? Well now you can, just like
             Joe Mszanski! BGO is the perfect platform for you to host your own
@@ -39,48 +39,48 @@ export default function HomepageBgoHero() {
             playing!
           </Text>
           <Stack
-            direction={"column"}
+            direction={'column'}
             spacing={3}
-            align={"center"}
-            alignSelf={"center"}
-            position={"relative"}
+            align={'center'}
+            alignSelf={'center'}
+            position={'relative'}
           >
             <Button
-              colorScheme={"orange"}
-              bg={"#F0973B"}
-              rounded={"full"}
+              colorScheme={'orange'}
+              bg={'#F0973B'}
+              rounded={'full'}
               px={6}
               _hover={{
-                bg: "#E46334",
+                bg: '#E46334',
               }}
-              onClick={() => navigate("/olympics")}
+              onClick={() => navigate('/olympics')}
             >
               Lets Play!
             </Button>
             <Button
-              variant={"link"}
-              colorScheme={"blue"}
-              size={"sm"}
-              onClick={() => navigate("/tutorials")}
+              variant={'link'}
+              colorScheme={'blue'}
+              size={'sm'}
+              onClick={() => navigate('/tutorials')}
             >
               Learn more
             </Button>
             <Box>
               <Icon
                 as={Arrow}
-                color={useColorModeValue("gray.800", "gray.300")}
+                color={useColorModeValue('gray.800', 'gray.300')}
                 w={71}
-                position={"absolute"}
+                position={'absolute'}
                 right={-71}
-                top={"10px"}
+                top={'10px'}
               />
               <Text
-                fontSize={"lg"}
-                fontFamily={"Caveat"}
-                position={"absolute"}
-                right={"-125px"}
-                top={"-15px"}
-                transform={"rotate(10deg)"}
+                fontSize={'lg'}
+                fontFamily={'Caveat'}
+                position={'absolute'}
+                right={'-125px'}
+                top={'-15px'}
+                transform={'rotate(10deg)'}
               >
                 Free for up to 10 players!
               </Text>
@@ -89,12 +89,12 @@ export default function HomepageBgoHero() {
         </Stack>
       </Container>
     </>
-  );
+  )
 }
 
 const Arrow = createIcon({
-  displayName: "Arrow",
-  viewBox: "0 0 72 24",
+  displayName: 'Arrow',
+  viewBox: '0 0 72 24',
   path: (
     <path
       fillRule="evenodd"
@@ -103,4 +103,4 @@ const Arrow = createIcon({
       fill="currentColor"
     />
   ),
-});
+})

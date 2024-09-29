@@ -1,29 +1,29 @@
-import { extendTheme, type ThemeConfig } from "@chakra-ui/react";
-import colors from "./colors";
+import { extendTheme, type ThemeConfig } from '@chakra-ui/react'
+import colors from './colors'
 //import { Button, Input, NavLink, Table, Text } from './components/index'
 
 const overrides = {
   colors,
   styles: {
     global: {
-      "*": {
-        boxSizing: "border-box",
+      '*': {
+        boxSizing: 'border-box',
       },
-      "html, body": {
+      'html, body': {
         fontWeight: 300,
-        fontSize: "14px",
+        fontSize: '14px',
         margin: 0,
-        minHeight: "100vh",
+        minHeight: '100vh',
       },
       img: {
-        maxWidth: "100%",
+        maxWidth: '100%',
       },
     },
   },
   components: {
     Link: {
       baseStyle: {
-        color: "black",
+        color: 'black',
       },
     },
     Text,
@@ -31,18 +31,18 @@ const overrides = {
       variants: {
         responsive: {
           popper: {
-            maxWidth: "unset",
-            width: "unset",
+            maxWidth: 'unset',
+            width: 'unset',
           },
         },
       },
     },
   },
-};
+}
 
 const config: ThemeConfig = {
-  initialColorMode: "light",
-  useSystemColorMode: false ,
-};
+  initialColorMode: 'light',
+  useSystemColorMode: false,
+}
 
-export default extendTheme(overrides, { config });
+export default extendTheme(overrides, { config })

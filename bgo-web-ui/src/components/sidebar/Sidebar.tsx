@@ -103,9 +103,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       </Flex>
       {LinkItems.map(({ tooltip, name, icon }) => (
         <Tooltip key={name} label={tooltip} aria-label={tooltip}>
-          <NavItem icon={icon}>
-            {name}
-          </NavItem>
+          <NavItem icon={icon}>{name}</NavItem>
         </Tooltip>
       ))}
     </Box>

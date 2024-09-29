@@ -1,5 +1,5 @@
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
-import torch from "../../assets/image/torch.png";
+import { Box, Flex, Image, Text } from '@chakra-ui/react'
+import torch from '../../assets/image/torch.png'
 
 export default function NotFound() {
   return (
@@ -12,15 +12,15 @@ export default function NotFound() {
         top="50%"
         left="50%"
         transform="translate(-50%, -50%)"
-        flexDirection={"column"}
+        flexDirection={'column'}
       >
         <Box
           as="a"
-          href={"/"}
+          href={'/'}
           cursor="pointer"
           _hover={{
-            bg: "gray.500",
-            color: "gray.100",
+            bg: 'gray.500',
+            color: 'gray.100',
           }}
         >
           <Flex direction="column" alignItems="center">
@@ -31,11 +31,11 @@ export default function NotFound() {
               borderRadius="full"
               mb={4}
             />
-            <Box textAlign={"center"}>
-              <Text justifyItems={"center"} fontSize={"lg"} fontWeight={"bold"}>
+            <Box textAlign={'center'}>
+              <Text justifyItems={'center'} fontSize={'lg'} fontWeight={'bold'}>
                 Oops! That page was not found.
               </Text>
-              <Text justifyItems={"center"} fontSize={"sm"} fontWeight={"bold"}>
+              <Text justifyItems={'center'} fontSize={'sm'} fontWeight={'bold'}>
                 Take me home.
               </Text>
             </Box>
@@ -43,5 +43,5 @@ export default function NotFound() {
         </Box>
       </Flex>
     </Box>
-  );
+  )
 }
