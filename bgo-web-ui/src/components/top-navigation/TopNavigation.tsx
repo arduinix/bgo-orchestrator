@@ -51,7 +51,6 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
 
 
 
-
   return (
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={10}>
