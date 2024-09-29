@@ -49,6 +49,10 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { colorMode, toggleColorMode } = useColorMode()
 
+
+
+
+  
   return (
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={10}>
