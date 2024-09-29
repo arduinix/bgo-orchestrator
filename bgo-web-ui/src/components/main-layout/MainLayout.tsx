@@ -1,14 +1,10 @@
-import { Box, Flex } from "@chakra-ui/react";
-import { Outlet, useLocation } from "react-router-dom";
-
-import Navigation, { LinkItemProps } from "../navigation/Navigation";
-import Sidebar from "../sidebar/Sidebar";
-import Home from "../../pages/home/Home";
-
-import { LuHome, LuTrees, LuSettings } from "react-icons/lu";
+import { Box, Flex } from '@chakra-ui/react'
+import { Outlet, useLocation } from 'react-router-dom'
+import Sidebar from '../sidebar/Sidebar'
+import Home from '../../pages/home/Home'
 
 export default function MainLayout() {
-  const location = useLocation();
+  const location = useLocation()
 
   // const linkItems: Array<LinkItemProps> = [
   //   {
@@ -31,7 +27,7 @@ export default function MainLayout() {
   //   }
   // ];
 
-  // create an object to hold link items for 
+  // create an object to hold link items for
 
   return (
     <Flex
@@ -47,9 +43,9 @@ export default function MainLayout() {
         {/* <Navigation linkItems={linkItems} /> */}
         <Sidebar />
         <Box p={4} w="100%" flexGrow={1} overflow="scroll">
-          {location.pathname === "/" ? <Home /> : <Outlet />}
+          {location.pathname === '/' ? <Home /> : <Outlet />}
         </Box>
       </Flex>
     </Flex>
-  );
+  )
 }

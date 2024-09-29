@@ -31,34 +31,6 @@ export default function OlympicsEventChooser() {
             }
             href={"#"}
           />
-          <EventCard
-            heading={"Heading"}
-            description={
-              "Lorem ipsum dolor sit amet catetur, adipisicing elit."
-            }
-            href={"#"}
-          />
-          <EventCard
-            heading={"Heading"}
-            description={
-              "Lorem ipsum dolor sit amet catetur, adipisicing elit."
-            }
-            href={"#"}
-          />
-          <EventCard
-            heading={"Heading"}
-            description={
-              "Lorem ipsum dolor sit amet catetur, adipisicing elit."
-            }
-            href={"#"}
-          />
-          <EventCard
-            heading={"Heading"}
-            description={
-              "Lorem ipsum dolor sit amet catetur, adipisicing elit."
-            }
-            href={"#"}
-          />
         </Flex>
       </Container>
     </Box>
