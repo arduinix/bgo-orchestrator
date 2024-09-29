@@ -18,7 +18,8 @@ export async function checkIsLoggedIn(): Promise<boolean> {
     }
     return false
   } catch (err) {
-    console.log('err: ', err)
+    // eslint-disable-next-line no-console
+    console.error(err)
     return false
   }
 }
@@ -30,11 +31,9 @@ export function logout() {
 export async function login(signInInput: SignInInput) {
   signIn(signInInput)
     .then((result) => {
-      console.log('result: ', result)
       return result
     })
     .catch((err) => {
-      console.log('err: ', err)
       return err
     })
 }
