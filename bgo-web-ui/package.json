@@ -10,14 +10,16 @@
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,md}\" --config ./.prettierrc.json",
-    "prepare": "husky install",
-    "lint-staged": "lint-staged"
+    "prepare": "husky install"
   },
-  
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": "eslint",
-    "*.{js,jsx,ts,tsx,json,css,md}": "prettier --write --config ./.prettierrc.json",
-    "package.json": "sort-package-json"
+    "*.{js,jsx,ts,tsx,json,css,md}": "prettier --write --config ./.prettierrc.json"
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^6.5.0",
