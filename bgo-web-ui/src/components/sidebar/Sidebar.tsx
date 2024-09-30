@@ -13,52 +13,28 @@ import {
   FlexProps,
   Tooltip,
 } from '@chakra-ui/react'
-import { GiPerspectiveDiceSixFacesOne, GiTimeBomb } from 'react-icons/gi'
+import { useNavigate } from 'react-router-dom'
 import { FiMenu } from 'react-icons/fi'
-import { RiQrCodeFill } from 'react-icons/ri'
-import { RxDashboard } from 'react-icons/rx'
-import { FaUserSecret } from 'react-icons/fa6'
 import { IconType } from 'react-icons'
 import { ReactText } from 'react'
 
-interface LinkItemProps {
+export interface LinkItemProps {
   name: string
   icon: IconType
+  href: string
   tooltip?: string
 }
-const LinkItems: Array<LinkItemProps> = [
-  {
-    name: 'Registration',
-    icon: FaUserSecret,
-    tooltip: 'Register players and manage player information.',
-  },
-  {
-    name: 'Games & Tables',
-    icon: GiPerspectiveDiceSixFacesOne,
-    tooltip: 'Set up games and player tables.',
-  },
-  {
-    name: 'Rounds',
-    icon: GiTimeBomb,
-    tooltip: 'Start and stop rounds edit scores',
-  },
-  {
-    name: 'Event Resources',
-    icon: RiQrCodeFill,
-    tooltip: 'Manage event resources and printable materials.',
-  },
-  {
-    name: 'Dashboards',
-    icon: RxDashboard,
-    tooltip: 'View event statistics and analytics.',
-  },
-]
 
-export default function SimpleSidebar() {
+export default function SimpleSidebar({
+  linkItems,
+}: {
+  linkItems: Array<LinkItemProps>
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
       <SidebarContent
+        linkItems={linkItems}
         onClose={() => onClose}
         display={{ base: 'none', md: 'block' }}
       />
@@ -71,7 +47,7 @@ export default function SimpleSidebar() {
         size="full"
       >
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent linkItems={linkItems} onClose={onClose} />
         </DrawerContent>
       </Drawer>
       <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} />
@@ -81,10 +57,11 @@ export default function SimpleSidebar() {
 }
 
 interface SidebarProps extends BoxProps {
+  linkItems: Array<LinkItemProps>
   onClose: () => void
 }
 
-const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+const SidebarContent = ({ onClose, linkItems, ...rest }: SidebarProps) => {
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
@@ -95,15 +72,14 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       h="full"
       {...rest}
     >
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text>
+      <Flex h="0" alignItems="center" mx="8" justifyContent="space-between">
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {LinkItems.map(({ tooltip, name, icon }) => (
+      {linkItems.map(({ tooltip, name, icon, href }) => (
         <Tooltip key={name} label={tooltip} aria-label={tooltip}>
-          <NavItem icon={icon}>{name}</NavItem>
+          <NavItem icon={icon} href={href}>
+            {name}
+          </NavItem>
         </Tooltip>
       ))}
     </Box>
@@ -112,13 +88,14 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
 interface NavItemProps extends FlexProps {
   icon: IconType
+  href: string
   children: ReactText
 }
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, href, children, ...rest }: NavItemProps) => {
+  const navigate = useNavigate()
   return (
     <Box
-      as="a"
-      href="#"
+      onClick={() => navigate(href)}
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}
     >

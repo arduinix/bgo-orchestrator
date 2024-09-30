@@ -1,6 +1,5 @@
 import { Box, Flex } from '@chakra-ui/react'
 import { Outlet, useLocation } from 'react-router-dom'
-import Sidebar from '../sidebar/Sidebar'
 import Home from '../../pages/home/Home'
 
 export default function MainLayout() {
@@ -41,7 +40,6 @@ export default function MainLayout() {
     >
       <Flex overflow="scroll">
         {/* <Navigation linkItems={linkItems} /> */}
-        <Sidebar />
         <Box p={4} w="100%" flexGrow={1} overflow="scroll">
           {location.pathname === '/' ? <Home /> : <Outlet />}
         </Box>

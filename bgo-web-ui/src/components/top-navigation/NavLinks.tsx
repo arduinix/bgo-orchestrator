@@ -1,9 +1,9 @@
 import { Box, useColorModeValue, Tooltip, Text } from '@chakra-ui/react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export interface NavLinkProps {
   name: string
-  href: string | (() => void)
+  href: string
   tooltip?: string
 }
 export interface NavLinkItems {
@@ -12,6 +12,7 @@ export interface NavLinkItems {
 
 const NavLink = ({ name, href, tooltip }: NavLinkProps) => {
   const location = useLocation()
+  const navigate = useNavigate()
   const isActive =
     typeof href === 'string' && location.pathname.startsWith(href)
   const hoverBg = useColorModeValue('gray.300', 'gray.700')
@@ -19,7 +20,6 @@ const NavLink = ({ name, href, tooltip }: NavLinkProps) => {
   return (
     <Tooltip label={tooltip} aria-label={tooltip}>
       <Box
-        as="a"
         px={2}
         py={1}
         rounded={'md'}
@@ -29,7 +29,7 @@ const NavLink = ({ name, href, tooltip }: NavLinkProps) => {
         }}
         bg={isActive ? hoverBg : undefined}
         textDecoration={isActive ? 'underline' : 'none'}
-        href={typeof href === 'string' ? href : undefined}
+        onClick={() => navigate(href)}
       >
         <Text fontSize={'xl'}>{name}</Text>
       </Box>

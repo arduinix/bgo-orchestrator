@@ -28,6 +28,6 @@ export interface ListEvent {
   name: string
   location: string
   createdDate: string
-  playedDate?: string
+  playedDate?: string | null
   imagePath?: string | null
 }

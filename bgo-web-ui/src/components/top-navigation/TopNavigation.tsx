@@ -22,25 +22,6 @@ import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import torch from '../../assets/image/torch.png'
 import NavLinks, { NavLinkProps } from './NavLinks'
 
-const navLinks: Array<NavLinkProps> = [
-  {
-    name: 'Tutorials',
-    href: '/tutorials',
-    tooltip: 'Learn how to create and run a BGO event.',
-  },
-  { name: 'Olympics', href: '/olympics', tooltip: 'Manage your BGO events.' },
-  {
-    name: 'Leagues',
-    href: '/leagues',
-    tooltip: 'Create, join and manage league play.',
-  },
-  {
-    name: 'Player Groups',
-    href: '/playergroups',
-    tooltip: 'Manage your player groups and teams.',
-  },
-]
-
 export interface TopNavigationProps {
   loggedIn: boolean
 }
@@ -48,6 +29,25 @@ export interface TopNavigationProps {
 export default function TopNavigation({ loggedIn }: TopNavigationProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { colorMode, toggleColorMode } = useColorMode()
+
+  const navLinks: Array<NavLinkProps> = [
+    {
+      name: 'Tutorials',
+      href: '/tutorials',
+      tooltip: 'Learn how to create and run a BGO event.',
+    },
+    { name: 'Olympics', href: '/olympics', tooltip: 'Manage your BGO events.' },
+    {
+      name: 'Leagues',
+      href: '/leagues',
+      tooltip: 'Create, join and manage league play.',
+    },
+    {
+      name: 'Player Groups',
+      href: '/playergroups',
+      tooltip: 'Manage your player groups and teams.',
+    },
+  ]
 
   return (
     <>

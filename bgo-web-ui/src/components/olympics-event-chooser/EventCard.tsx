@@ -14,6 +14,7 @@ import {
   useDisclosure,
   Badge,
 } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import torch from '../../assets/image/torch.png'
 
@@ -29,7 +30,8 @@ import { convertDateShort } from '../../lib/util/stringConversion'
 //   href: string;
 // }
 
-const EventCard = ({ name, location, playedDate }: ListEvent) => {
+const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
+  const navigate = useNavigate()
   const {
     isOpen: isOpenDelete,
     onOpen: onOpenDelete,
@@ -49,7 +51,7 @@ const EventCard = ({ name, location, playedDate }: ListEvent) => {
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
-      as="a"
+      onClick={() => navigate(`/olympics/${id}`)}
       p={5}
       display={'flex'}
       _hover={{

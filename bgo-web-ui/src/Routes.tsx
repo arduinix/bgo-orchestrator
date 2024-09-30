@@ -11,6 +11,7 @@ import Olympics from './pages/olympics/Olympics'
 import Tutorials from './pages/tutorials/Tutorials'
 import Leagues from './pages/leagues/Leagues'
 import PlayerGroups from './pages/player-groups/PlayerGroups'
+import EventEditor from './pages/event-editor/EventEditor'
 
 export default function AppRouter() {
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
@@ -43,11 +44,12 @@ export default function AppRouter() {
         <Routes>
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<MainLayout />}>
-            <Route path="/olympics" element={<Olympics />} />
+            <Route path="/olympics" element={<Olympics />}>
+              <Route path=":id" element={<EventEditor />} />
+            </Route>
             <Route path="/tutorials" element={<Tutorials />} />
             <Route path="/leagues" element={<Leagues />} />
             <Route path="/playergroups" element={<PlayerGroups />} />
-
             <Route path="/ecosystems/:viewId?" element={<Ecosystems />} />
           </Route>
         </Routes>

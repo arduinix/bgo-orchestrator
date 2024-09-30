@@ -1,7 +1,7 @@
 {
   "listEvents": [
     {
-      "id": 1,
+      "id": "1",
       "name": "BGO Summer 2024",
       "location": "Dormont, PA",
       "createdDate": "2024-07-01T00:00:00.000Z",
@@ -9,7 +9,7 @@
       "imagePath": null
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "BGO Winter 2024",
       "location": "Dormont, PA",
       "createdDate": "2024-01-01T00:00:00.000Z",
@@ -17,7 +17,7 @@
       "imagePath": null
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "BGO Summer 2023",
       "location": "Dormont, PA",
       "createdDate": "2023-07-01T00:00:00.000Z",
@@ -25,7 +25,7 @@
       "imagePath": null
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "BGO Winter 2023",
       "location": "Dormont, PA",
       "createdDate": "2023-01-01T00:00:00.000Z",
@@ -33,7 +33,7 @@
       "imagePath": null
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "BGO Summer 2022",
       "location": "Dormont, PA",
       "createdDate": "2022-07-01T00:00:00.000Z",
@@ -41,7 +41,7 @@
       "imagePath": null
     },
     {
-      "id": 6,
+      "id": "6",
       "name": "BGO Winter 2022",
       "location": "Dormont, PA",
       "createdDate": "2022-01-01T00:00:00.000Z",
