@@ -23,11 +23,11 @@ export interface Ecosystem {
   fIdentifiedSpecies: number
 }
 
-export interface event {
+export interface ListEvent {
   id: string
   name: string
   location: string
   createdDate: string
-  isPlayed: boolean
+  playedDate?: string
   imagePath?: string | null
 }

@@ -1,7 +1,10 @@
 import { Box, Container, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 import EventCard from './EventCard'
+import events from '../../data/events.json'
+import { ListEvent } from '../../types'
 
 export default function OlympicsEventChooser() {
+  const data: ListEvent[] = events.listEvents
   return (
     <Box p={4}>
       <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
@@ -16,13 +19,9 @@ export default function OlympicsEventChooser() {
 
       <Container maxW={'5xl'} mt={12}>
         <Flex flexWrap="wrap" gridGap={6} justify="center">
-          <EventCard
-            heading={'Heading'}
-            description={
-              'Lorem ipsum dolor sit amet catetur, adipisicing elit.'
-            }
-            href={'#'}
-          />
+          {data.map((event) => (
+            <EventCard key={event.id} {...event} />
+          ))}
         </Flex>
       </Container>
     </Box>

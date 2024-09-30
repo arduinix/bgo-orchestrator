@@ -12,12 +12,15 @@ import {
   MenuList,
   MenuItem,
   useDisclosure,
+  Badge,
 } from '@chakra-ui/react'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import torch from '../../assets/image/torch.png'
 
 import ConfirmActionModal from '../confirm-action-modal/ConfirmActionModal'
 import CopyToNewEventModal from '../copy-to-new-event/CopyToNewEventModal'
+import { ListEvent } from '../../types'
+import { convertDateShort } from '../../lib/util/stringConversion'
 
 // interface CardProps {
 //   heading: string;
@@ -26,13 +29,7 @@ import CopyToNewEventModal from '../copy-to-new-event/CopyToNewEventModal'
 //   href: string;
 // }
 
-interface EventCardProps {
-  heading: string
-  description: string
-  href: string
-}
-
-const EventCard = ({ heading, description, href }: EventCardProps) => {
+const EventCard = ({ name, location, playedDate }: ListEvent) => {
   const {
     isOpen: isOpenDelete,
     onOpen: onOpenDelete,
@@ -53,7 +50,6 @@ const EventCard = ({ heading, description, href }: EventCardProps) => {
       borderRadius="lg"
       overflow="hidden"
       as="a"
-      href={href}
       p={5}
       display={'flex'}
       _hover={{
@@ -76,10 +72,17 @@ const EventCard = ({ heading, description, href }: EventCardProps) => {
           </Flex>
 
           <Box mt={2}>
-            <Heading size="md">{heading}</Heading>
+            <Heading size="md">{name}</Heading>
             <Text mt={1} fontSize={'sm'}>
-              {description}
+              {location}
             </Text>
+            {playedDate ? (
+              <Badge colorScheme="green">
+                Played {convertDateShort(playedDate)}
+              </Badge>
+            ) : (
+              <Badge colorScheme="purple">New</Badge>
+            )}
           </Box>
         </Stack>
       </Box>
@@ -100,17 +103,15 @@ const EventCard = ({ heading, description, href }: EventCardProps) => {
         isOpen={isOpenDelete}
         closeAction={onCloseDelete}
         confirmAction={onCloseDelete}
-        header={'Delete Event'}
-        body={
-          'Are you sure that you want to delete this event? This action cannot be undone.'
-        }
+        header={`Delete ${name}?`}
+        body={`Are you sure that you want to delete this event named "${name}"? This action cannot be undone.`}
         confirmButtonText={'Delete'}
       />
       <CopyToNewEventModal
         isOpen={isOpenCopy}
         closeAction={onCloseCopy}
         confirmAction={onCloseCopy}
-        sourceEventName="My BGO Event"
+        sourceEventName={name}
       />
     </Box>
   )
