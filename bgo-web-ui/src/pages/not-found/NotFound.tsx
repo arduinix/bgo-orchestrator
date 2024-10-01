@@ -29,6 +29,8 @@ export default function NotFound() {
               alt="not_found"
               boxSize={100}
               borderRadius="full"
+              objectFit={'scale-down'}
+              transform={'rotate(225deg)'}
               mb={4}
             />
             <Box textAlign={'center'}>

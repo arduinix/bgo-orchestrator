@@ -11,7 +11,10 @@ import Olympics from './pages/olympics/Olympics'
 import Tutorials from './pages/tutorials/Tutorials'
 import Leagues from './pages/leagues/Leagues'
 import PlayerGroups from './pages/player-groups/PlayerGroups'
-import EventEditor from './pages/event-editor/EventEditor'
+import EventEditor from './pages/olympics-manager/OlympicsManager'
+import OlympicsRegistration from './pages/olympics-registration/OlympicsRegistration'
+import OlympicsGames from './pages/olympics-games/OlympicsGames'
+import OlympicsMechanics from './pages/olympics-mechanics/OlympicsMechanics'
 
 export default function AppRouter() {
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
@@ -45,7 +48,11 @@ export default function AppRouter() {
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<MainLayout />}>
             <Route path="/olympics" element={<Olympics />}>
-              <Route path=":id" element={<EventEditor />} />
+              <Route path=":id" element={<EventEditor />}>
+                <Route path="registration" element={<OlympicsRegistration />} />
+                <Route path="games" element={<OlympicsGames />} />
+                <Route path="mechanics" element={<OlympicsMechanics />} />
+              </Route>
             </Route>
             <Route path="/tutorials" element={<Tutorials />} />
             <Route path="/leagues" element={<Leagues />} />

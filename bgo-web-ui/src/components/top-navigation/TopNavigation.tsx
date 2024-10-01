@@ -19,7 +19,7 @@ import {
   Spacer,
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
-import torch from '../../assets/image/torch.png'
+import logo from '../../assets/image/logo_no_info.png'
 import NavLinks, { NavLinkProps } from './NavLinks'
 
 export interface TopNavigationProps {
@@ -62,7 +62,14 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
           />
           <HStack spacing={8} alignItems={'center'}>
             <Box as="a" cursor={'pointer'} href={'/'}>
-              <Image src={torch} alt="logo" boxSize="50px" ml={0} mr={0} />
+              <Image
+                src={logo}
+                alt="logo"
+                boxSize="50px"
+                ml={0}
+                mr={0}
+                objectFit={'scale-down'}
+              />
             </Box>
             <Box as="a" cursor={'pointer'} href={'/'}>
               <Text fontSize={'xl'} as="b">
