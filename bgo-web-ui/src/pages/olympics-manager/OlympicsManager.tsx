@@ -1,7 +1,11 @@
 import { useParams, Outlet } from 'react-router-dom'
 import { Flex } from '@chakra-ui/react'
 import Sidebar, { LinkItemProps } from '../../components/sidebar/Sidebar'
-import { GiPerspectiveDiceSixFacesOne, GiTimeBomb, GiGears } from 'react-icons/gi'
+import {
+  GiPerspectiveDiceSixFacesOne,
+  GiTimeBomb,
+  GiGears,
+} from 'react-icons/gi'
 import { RiQrCodeFill } from 'react-icons/ri'
 import { RxDashboard } from 'react-icons/rx'
 import { FaUserSecret } from 'react-icons/fa6'
@@ -28,7 +32,7 @@ export default function OlympicsManager() {
       href: `${route}/mechanics`,
       // tooltip: 'Set up games and player tables.',
     },
-    
+
     {
       name: 'Rounds',
       icon: GiTimeBomb,
