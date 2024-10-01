@@ -13,7 +13,7 @@ import {
   FlexProps,
   Tooltip,
 } from '@chakra-ui/react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { FiMenu } from 'react-icons/fi'
 import { IconType } from 'react-icons'
 import { ReactText } from 'react'
@@ -93,6 +93,7 @@ interface NavItemProps extends FlexProps {
 }
 const NavItem = ({ icon, href, children, ...rest }: NavItemProps) => {
   const navigate = useNavigate()
+  const location = useLocation()
   return (
     <Box
       onClick={() => navigate(href)}
@@ -106,8 +107,10 @@ const NavItem = ({ icon, href, children, ...rest }: NavItemProps) => {
         borderRadius="lg"
         role="group"
         cursor="pointer"
+        bg={location && location.pathname === href ? 'cyan.200' : undefined}
+        color={location && location.pathname === href ? 'gray.800' : undefined}
         _hover={{
-          bg: 'cyan.400',
+          bg: 'cyan.500',
           color: 'white',
         }}
         {...rest}
@@ -115,7 +118,7 @@ const NavItem = ({ icon, href, children, ...rest }: NavItemProps) => {
         {icon && (
           <Icon
             mr="4"
-            fontSize="16"
+            fontSize="18"
             _groupHover={{
               color: 'white',
             }}
