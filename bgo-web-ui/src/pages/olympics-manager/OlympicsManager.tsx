@@ -3,9 +3,9 @@ import { Flex } from '@chakra-ui/react'
 import Sidebar, { LinkItemProps } from '../../components/sidebar/Sidebar'
 import {
   GiPerspectiveDiceSixFacesOne,
-  GiTimeBomb,
   GiGears,
 } from 'react-icons/gi'
+import { LuWrench } from "react-icons/lu";
 import { RiQrCodeFill } from 'react-icons/ri'
 import { RxDashboard } from 'react-icons/rx'
 import { FaUserSecret } from 'react-icons/fa6'
@@ -28,27 +28,26 @@ export default function OlympicsManager() {
     },
     {
       name: 'Mechanics',
-      icon: GiGears,
+      icon: LuWrench,
       href: `${route}/mechanics`,
       // tooltip: 'Set up games and player tables.',
     },
-
     {
-      name: 'Rounds',
-      icon: GiTimeBomb,
-      href: `${route}/rounds`,
-      // tooltip: 'Start and stop rounds edit scores',
-    },
-    {
-      name: 'Event Resources',
+      name: 'Printables',
       icon: RiQrCodeFill,
-      href: `${route}/resources`,
+      href: `${route}/printables`,
       // tooltip: 'Manage event resources and printable materials.',
     },
     {
       name: 'Dashboards',
       icon: RxDashboard,
       href: `${route}/dashboards`,
+      // tooltip: 'View event statistics and analytics.',
+    },
+    {
+      name: 'Settings',
+      icon: GiGears,
+      href: `${route}/settings`,
       // tooltip: 'View event statistics and analytics.',
     },
   ]

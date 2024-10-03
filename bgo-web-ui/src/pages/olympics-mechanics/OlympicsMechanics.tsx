@@ -5,10 +5,14 @@ export default function OlympicsMechanics() {
     <Tabs size="md" variant="enclosed">
       <TabList>
         <Tab>Scoring</Tab>
+        <Tab>Rounds</Tab>
       </TabList>
       <TabPanels>
         <TabPanel>
           <p>Scoring</p>
+        </TabPanel>
+        <TabPanel>
+          <p>Rounds</p>
         </TabPanel>
       </TabPanels>
     </Tabs>

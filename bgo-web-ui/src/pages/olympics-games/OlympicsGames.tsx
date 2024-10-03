@@ -6,6 +6,7 @@ export default function OlympicsGames() {
       <TabList>
         <Tab>Categories</Tab>
         <Tab>Games</Tab>
+        <Tab>Tables</Tab>
         <Tab>Import</Tab>
       </TabList>
       <TabPanels>
@@ -14,6 +15,9 @@ export default function OlympicsGames() {
         </TabPanel>
         <TabPanel>
           <p>Games</p>
+        </TabPanel>
+        <TabPanel>
+          <p>Tables</p>
         </TabPanel>
         <TabPanel>
           <p>Import</p>

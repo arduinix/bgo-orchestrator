@@ -15,6 +15,9 @@ import EventEditor from './pages/olympics-manager/OlympicsManager'
 import OlympicsRegistration from './pages/olympics-registration/OlympicsRegistration'
 import OlympicsGames from './pages/olympics-games/OlympicsGames'
 import OlympicsMechanics from './pages/olympics-mechanics/OlympicsMechanics'
+import OlympicsPrintables from './pages/olympics-printables/OlympicsPrintables'
+import OlympicsDashboards from './pages/olympics-dashboards/OlympicsDashboards'
+import OlympicsSettings from './pages/olympics-settings/OlympicsSettings'
 
 export default function AppRouter() {
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
@@ -52,6 +55,9 @@ export default function AppRouter() {
                 <Route path="registration" element={<OlympicsRegistration />} />
                 <Route path="games" element={<OlympicsGames />} />
                 <Route path="mechanics" element={<OlympicsMechanics />} />
+                <Route path="printables" element={<OlympicsPrintables />} />
+                <Route path="dashboards" element={<OlympicsDashboards />} />
+                <Route path="settings" element={<OlympicsSettings />} />
               </Route>
             </Route>
             <Route path="/tutorials" element={<Tutorials />} />
