@@ -1,17 +1,26 @@
-import { useParams, Outlet } from 'react-router-dom'
+import { useParams, Outlet, useNavigate, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import { Flex } from '@chakra-ui/react'
 import Sidebar, { LinkItemProps } from '../../components/sidebar/Sidebar'
-import {
-  GiPerspectiveDiceSixFacesOne,
-  GiGears,
-} from 'react-icons/gi'
-import { LuWrench } from "react-icons/lu";
+import { GiPerspectiveDiceSixFacesOne, GiGears } from 'react-icons/gi'
+import { LuWrench } from 'react-icons/lu'
 import { RiQrCodeFill } from 'react-icons/ri'
 import { RxDashboard } from 'react-icons/rx'
 import { FaUserSecret } from 'react-icons/fa6'
+
 export default function OlympicsManager() {
   const { id } = useParams()
   const route = `/olympics/${id}`
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.pathname === route) {
+      navigate(`${route}/registration`)
+    }
+  }, [id, navigate])
+
+  // navigate to the registration page if no other subpage is selected
 
   const linkItems: Array<LinkItemProps> = [
     {
