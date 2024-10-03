@@ -35,8 +35,9 @@ declare global {
 
   export interface Player {
     id: string
-    fname: string
-    lname: string
+    fName: string
+    mInit: string | null
+    lName: string
     email: string
     phone: string
     gender: string
