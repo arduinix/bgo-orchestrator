@@ -1,7 +1,6 @@
 import { Box, Container, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 import EventCard from './EventCard'
 import events from '../../data/events.json'
-import { ListEvent } from '../../types'
 
 export default function OlympicsEventChooser() {
   const data: ListEvent[] = events.listEvents
