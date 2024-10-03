@@ -1,28 +1,12 @@
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
+import ReusableTabs from '../../components/reusable-tabs/ReuseableTabs'
 
 export default function OlympicsGames() {
-  return (
-    <Tabs size="md" variant="enclosed">
-      <TabList>
-        <Tab>Categories</Tab>
-        <Tab>Games</Tab>
-        <Tab>Tables</Tab>
-        <Tab>Import</Tab>
-      </TabList>
-      <TabPanels>
-        <TabPanel>
-          <p>Categories</p>
-        </TabPanel>
-        <TabPanel>
-          <p>Games</p>
-        </TabPanel>
-        <TabPanel>
-          <p>Tables</p>
-        </TabPanel>
-        <TabPanel>
-          <p>Import</p>
-        </TabPanel>
-      </TabPanels>
-    </Tabs>
-  )
+  const tabs = [
+    { label: 'Categories', content: <p>Categories</p> },
+    { label: 'Games', content: <p>Games</p> },
+    { label: 'Tables', content: <p>Tables</p> },
+    { label: 'Import', content: <p>Import</p> },
+  ]
+
+  return <ReusableTabs tabs={tabs} />
 }
