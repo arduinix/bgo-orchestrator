@@ -1,4 +1,5 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
+import PlayersTab from './nested/PlayersTab'
 
 export default function OlympicsRegistration() {
   return (
@@ -9,7 +10,7 @@ export default function OlympicsRegistration() {
       </TabList>
       <TabPanels>
         <TabPanel>
-          <p>Players</p>
+          <PlayersTab />
         </TabPanel>
         <TabPanel>
           <p>Invitations</p>
