@@ -1,0 +1,114 @@
+{
+  "players": [
+    {
+      "id": "1",
+      "fname": "John",
+      "lname": "Doe",
+      "email": "j.doe@foo.net",
+      "phone": "+1 123 456 7890",
+      "gender": "m",
+      "age": 25,
+      "isPlaying": true,
+      "score": 0
+    },
+    {
+      "id": "2",
+      "fname": "Jane",
+      "lname": "Smith",
+      "email": "j.smith@foo.net",
+      "phone": "+1 234 567 8901",
+      "gender": "f",
+      "age": 28,
+      "isPlaying": false,
+      "score": 10
+    },
+    {
+      "id": "3",
+      "fname": "Alice",
+      "lname": "Johnson",
+      "email": "a.johnson@foo.net",
+      "phone": "+1 345 678 9012",
+      "gender": "f",
+      "age": 22,
+      "isPlaying": true,
+      "score": 15
+    },
+    {
+      "id": "4",
+      "fname": "Bob",
+      "lname": "Brown",
+      "email": "b.brown@foo.net",
+      "phone": "+1 456 789 0123",
+      "gender": "m",
+      "age": 30,
+      "isPlaying": false,
+      "score": 5
+    },
+    {
+      "id": "5",
+      "fname": "Charlie",
+      "lname": "Davis",
+      "email": "c.davis@foo.net",
+      "phone": "+1 567 890 1234",
+      "gender": "m",
+      "age": 27,
+      "isPlaying": true,
+      "score": 20
+    },
+    {
+      "id": "6",
+      "fname": "Diana",
+      "lname": "Miller",
+      "email": "d.miller@foo.net",
+      "phone": "+1 678 901 2345",
+      "gender": "f",
+      "age": 24,
+      "isPlaying": false,
+      "score": 8
+    },
+    {
+      "id": "7",
+      "fname": "Eve",
+      "lname": "Wilson",
+      "email": "e.wilson@foo.net",
+      "phone": "+1 789 012 3456",
+      "gender": "f",
+      "age": 26,
+      "isPlaying": true,
+      "score": 12
+    },
+    {
+      "id": "8",
+      "fname": "Frank",
+      "lname": "Moore",
+      "email": "f.moore@foo.net",
+      "phone": "+1 890 123 4567",
+      "gender": "m",
+      "age": 29,
+      "isPlaying": false,
+      "score": 7
+    },
+    {
+      "id": "9",
+      "fname": "Grace",
+      "lname": "Taylor",
+      "email": "g.taylor@foo.net",
+      "phone": "+1 901 234 5678",
+      "gender": "f",
+      "age": 23,
+      "isPlaying": true,
+      "score": 18
+    },
+    {
+      "id": "10",
+      "fname": "Henry",
+      "lname": "Anderson",
+      "email": "h.anderson@foo.net",
+      "phone": "+1 012 345 6789",
+      "gender": "m",
+      "age": 31,
+      "isPlaying": false,
+      "score": 3
+    }
+  ]
+}
