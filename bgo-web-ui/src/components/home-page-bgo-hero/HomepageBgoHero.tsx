@@ -78,11 +78,11 @@ export default function HomepageBgoHero() {
                 fontSize={'lg'}
                 fontFamily={'Caveat'}
                 position={'absolute'}
-                right={'-125px'}
+                right={'-150px'}
                 top={'-15px'}
                 transform={'rotate(10deg)'}
               >
-                Free for up to 10 players!
+                It's free if you know the right people!
               </Text>
             </Box>
           </Stack>

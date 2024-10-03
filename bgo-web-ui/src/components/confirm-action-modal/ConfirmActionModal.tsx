@@ -8,12 +8,13 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react'
+import { ReactNode } from 'react'
 
 export interface ConfirmActionModalProps {
   isOpen: boolean
   closeAction: () => void
-  header?: string
-  body?: string
+  header?: string | ReactNode
+  body?: string | ReactNode
   confirmAction?: () => void
   confirmButtonText?: string
   cancelButtonText?: string

@@ -20,7 +20,6 @@ import torch from '../../assets/image/torch.png'
 
 import ConfirmActionModal from '../confirm-action-modal/ConfirmActionModal'
 import CopyToNewEventModal from '../copy-to-new-event/CopyToNewEventModal'
-import { ListEvent } from '../../types'
 import { convertDateShort } from '../../lib/util/stringConversion'
 
 // interface CardProps {
@@ -44,6 +43,10 @@ const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
     onClose: onCloseCopy,
   } = useDisclosure()
 
+  const handleEventClick = () => {
+    navigate(`/olympics/${id}`)
+  }
+
   return (
     <Box
       maxW={{ base: 'full', md: '275px' }}
@@ -51,7 +54,7 @@ const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
-      onClick={() => navigate(`/olympics/${id}`)}
+      onClick={() => handleEventClick()}
       p={5}
       display={'flex'}
       _hover={{
@@ -94,11 +97,33 @@ const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
           aria-label="Options"
           icon={<RxHamburgerMenu />}
           variant="outline"
+          onClick={(e) => e.stopPropagation()}
         />
         <MenuList>
-          <MenuItem>Open</MenuItem>
-          <MenuItem onClick={onOpenCopy}>Copy to New</MenuItem>
-          <MenuItem onClick={onOpenDelete}>Delete</MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation()
+              handleEventClick()
+            }}
+          >
+            Open
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation()
+              onOpenCopy()
+            }}
+          >
+            Copy to New
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation()
+              onOpenDelete()
+            }}
+          >
+            Delete
+          </MenuItem>
         </MenuList>
       </Menu>
       <ConfirmActionModal
