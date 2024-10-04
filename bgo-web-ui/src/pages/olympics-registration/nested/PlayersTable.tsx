@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, ReactNode } from 'react'
 import {
   TableContainer,
   Table,
@@ -11,10 +11,13 @@ import {
   IconButton,
   Flex,
   Text,
+  useColorMode,
+  Box,
 } from '@chakra-ui/react'
 import { FiTrash2 } from 'react-icons/fi'
 import { FiEdit } from 'react-icons/fi'
 import { formatPlayerName } from '@utils/stringConversion'
+import { FaSortAlphaDown, FaSortAlphaDownAlt } from 'react-icons/fa'
 
 export interface PlayersTableProps {
   players: Player[]
@@ -22,6 +25,11 @@ export interface PlayersTableProps {
   handleDeleteClick: (player: Player) => void
   handleEditClick: (player: Player) => void
   setSelectedPlayer: (player: Player) => void
+}
+
+interface TableHeader {
+  text: string | ReactNode | null
+  sortKey: keyof Player | null
 }
 
 export default function PlayersTable({
@@ -36,6 +44,13 @@ export default function PlayersTable({
     direction: 'ascending' | 'descending'
   } | null>(null)
 
+  const { colorMode } = useColorMode()
+  const bgColor = colorMode === 'dark' ? 'gray.700' : 'white'
+  const textColor = colorMode === 'dark' ? 'white' : 'black'
+  const subTextColor = colorMode === 'dark' ? 'gray.100' : 'gray.500'
+  const headerBgColor = colorMode === 'dark' ? 'gray.800' : 'gray.100'
+  const selectedBgColor = colorMode === 'dark' ? 'blue.900' : 'blue.100'
+
   const handleSort = (key: keyof Player) => {
     let direction: 'ascending' | 'descending' = 'ascending'
     if (
@@ -46,6 +61,17 @@ export default function PlayersTable({
       direction = 'descending'
     }
     setSortConfig({ key, direction })
+  }
+
+  const getSortIcon = (key: keyof Player) => {
+    if (sortConfig && sortConfig.key === key) {
+      return sortConfig.direction === 'ascending' ? (
+        <FaSortAlphaDown />
+      ) : (
+        <FaSortAlphaDownAlt />
+      )
+    }
+    return null
   }
 
   const sortedData = React.useMemo(() => {
@@ -72,11 +98,15 @@ export default function PlayersTable({
     return players
   }, [players, sortConfig])
 
-  interface TableHeader {
-    text: string | null
-    sortKey: keyof Player | null
-  }
   const headers: TableHeader[] = [
+    {
+      text: (
+        <Box>
+          <Checkbox size={'lg'}></Checkbox>
+        </Box>
+      ),
+      sortKey: null,
+    },
     { text: 'Player Name', sortKey: 'fName' },
     { text: 'Email', sortKey: 'email' },
     { text: 'Phone', sortKey: 'phone' },
@@ -99,13 +129,17 @@ export default function PlayersTable({
                       sortKey !== null ? () => handleSort(sortKey) : undefined
                     }
                     cursor={sortKey ? 'pointer' : 'default'}
-                    bg="gray.100"
+                    bg={headerBgColor}
+                    color={textColor}
                     textAlign="center"
                     fontWeight="bold"
                     fontSize={'sm'}
                     p={4}
                   >
-                    {text}
+                    <Flex>
+                      <Box mr={2}>{text}</Box>
+                      <Box>{sortKey && getSortIcon(sortKey)}</Box>
+                    </Flex>
                   </Th>
                 )
               })}
@@ -118,23 +152,26 @@ export default function PlayersTable({
               return (
                 <Tr
                   key={id}
-                  bg={isSelected ? 'blue.100' : 'white'}
+                  bg={isSelected ? selectedBgColor : bgColor}
                   style={{ cursor: 'pointer' }}
                   onClick={() => setSelectedPlayer(player)}
                 >
                   <Td>
+                    <Checkbox size={'lg'} />
+                  </Td>
+                  <Td color={textColor}>
                     <Flex flexDirection={'column'}>
                       <Text>{formatPlayerName(player)}</Text>
                       {nickName && (
-                        <Text fontSize={'sm'} color={'gray.600'}>
+                        <Text fontSize={'sm'} color={subTextColor}>
                           {`"${nickName}"`}
                         </Text>
                       )}
                     </Flex>
                   </Td>
-                  <Td>{email}</Td>
-                  <Td>{phone}</Td>
-                  <Td>
+                  <Td color={textColor}>{email}</Td>
+                  <Td color={textColor}>{phone}</Td>
+                  <Td color={textColor}>
                     <Flex justifyContent="center" alignItems="center">
                       <Checkbox size={'lg'} isChecked={isPlaying} />
                     </Flex>

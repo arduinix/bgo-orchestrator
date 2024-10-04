@@ -58,7 +58,7 @@ export default function ConfirmActionModal({
         <ModalContent backgroundColor={backgroundColor}>
           <ModalHeader>{header}</ModalHeader>
           <ModalCloseButton />
-          <ModalBody pb={6}>{body}</ModalBody>
+          <ModalBody pb={0}>{body}</ModalBody>
           <ModalFooter>
             <Button
               colorScheme={confirmButtonColor}

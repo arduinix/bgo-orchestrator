@@ -7,7 +7,13 @@ import {
   useDisclosure,
   Text,
   useColorModeValue,
+  MenuButton,
+  Menu,
+  MenuList,
+  MenuItem,
+  MenuDivider,
 } from '@chakra-ui/react'
+import { ChevronDownIcon } from '@chakra-ui/icons'
 import PlayersTable from './PlayersTable'
 import ConfirmActionModal from '../../../components/confirm-action-modal/ConfirmActionModal'
 import { useState } from 'react'
@@ -43,8 +49,25 @@ export default function PlayersTab() {
     <>
       <Flex flexDirection={'column'} gap={4}>
         <ButtonGroup colorScheme="blue" size={'md'}>
-          <Button>Import CSV</Button>
-          <Button>Import Player Group</Button>
+          <Menu>
+            <MenuButton
+              as={Button}
+              colorScheme="blue"
+              rightIcon={<ChevronDownIcon />}
+            >
+              Bulk Actions
+            </MenuButton>
+            <MenuList>
+              <MenuItem>Import CSV</MenuItem>
+              <MenuItem>Import Player Group</MenuItem>
+              <MenuDivider />
+              <MenuItem>Export CSV</MenuItem>
+              <MenuItem>Export Player Group</MenuItem>
+              <MenuDivider />
+              <MenuItem>Withdraw Selected Players</MenuItem>
+              <MenuItem>Remove Selected Players</MenuItem>
+            </MenuList>
+          </Menu>
           <Spacer />
           <Button>Add Player</Button>
         </ButtonGroup>

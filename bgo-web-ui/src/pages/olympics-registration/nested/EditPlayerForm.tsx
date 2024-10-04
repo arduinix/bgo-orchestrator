@@ -22,7 +22,7 @@ const BoldFormLabel = chakra(FormLabel, {
 })
 
 export interface EditPlayerFormProps {
-  player: Player
+  player: Player | null
   closeAction: () => void
 }
 
