@@ -10,6 +10,7 @@ import {
   Checkbox,
   IconButton,
   Flex,
+  Text,
 } from '@chakra-ui/react'
 import { FiTrash2 } from 'react-icons/fi'
 import { FiEdit } from 'react-icons/fi'
@@ -59,10 +60,10 @@ export default function PlayersTable({
           return 0
         }
 
-        if (aKey < bKey) {
+        if (bKey !== undefined && aKey !== undefined && aKey < bKey) {
           return -1 * direction
         }
-        if (aKey > bKey) {
+        if (aKey !== undefined && bKey !== undefined && aKey > bKey) {
           return 1 * direction
         }
         return 0
@@ -71,68 +72,48 @@ export default function PlayersTable({
     return players
   }, [players, sortConfig])
 
+  interface TableHeader {
+    text: string | null
+    sortKey: keyof Player | null
+  }
+  const headers: TableHeader[] = [
+    { text: 'Player Name', sortKey: 'fName' },
+    { text: 'Email', sortKey: 'email' },
+    { text: 'Phone', sortKey: 'phone' },
+    { text: 'Playing', sortKey: 'isPlaying' },
+    { text: null, sortKey: null }, // For the empty header
+  ]
+
   return (
     <>
       <TableContainer>
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th
-                onClick={() => handleSort('fName')}
-                cursor="pointer"
-                bg="gray.100"
-                textAlign="center"
-                fontWeight="bold"
-                p={4}
-              >
-                Player Name
-              </Th>
-              <Th
-                onClick={() => handleSort('email')}
-                cursor="pointer"
-                bg="gray.100"
-                textAlign="center"
-                fontWeight="bold"
-                p={4}
-              >
-                Email
-              </Th>
-              <Th
-                onClick={() => handleSort('phone')}
-                cursor="pointer"
-                bg="gray.100"
-                textAlign="center"
-                fontWeight="bold"
-                p={4}
-              >
-                Phone
-              </Th>
-              <Th
-                onClick={() => handleSort('phone')}
-                cursor="pointer"
-                bg="gray.100"
-                textAlign="center"
-                fontWeight="bold"
-                p={4}
-              >
-                Country
-              </Th>
-              <Th
-                onClick={() => handleSort('isPlaying')}
-                cursor="pointer"
-                bg="gray.100"
-                textAlign="center"
-                fontWeight="bold"
-                p={4}
-              >
-                Playing
-              </Th>
-              <Th bg="gray.100" textAlign="center" fontWeight="bold" p={4}></Th>
+              {headers.map((header, index) => {
+                const { text, sortKey } = header
+                return (
+                  <Th
+                    key={index}
+                    onClick={
+                      sortKey !== null ? () => handleSort(sortKey) : undefined
+                    }
+                    cursor={sortKey ? 'pointer' : 'default'}
+                    bg="gray.100"
+                    textAlign="center"
+                    fontWeight="bold"
+                    fontSize={'sm'}
+                    p={4}
+                  >
+                    {text}
+                  </Th>
+                )
+              })}
             </Tr>
           </Thead>
           <Tbody>
             {sortedData.map((player) => {
-              const { id, email, phone, isPlaying } = player
+              const { id, email, phone, isPlaying, nickName } = player
               const isSelected = selectedPlayer?.id === id
               return (
                 <Tr
@@ -141,7 +122,16 @@ export default function PlayersTable({
                   style={{ cursor: 'pointer' }}
                   onClick={() => setSelectedPlayer(player)}
                 >
-                  <Td>{formatPlayerName(player)}</Td>
+                  <Td>
+                    <Flex flexDirection={'column'}>
+                      <Text>{formatPlayerName(player)}</Text>
+                      {nickName && (
+                        <Text fontSize={'sm'} color={'gray.600'}>
+                          {`"${nickName}"`}
+                        </Text>
+                      )}
+                    </Flex>
+                  </Td>
                   <Td>{email}</Td>
                   <Td>{phone}</Td>
                   <Td>

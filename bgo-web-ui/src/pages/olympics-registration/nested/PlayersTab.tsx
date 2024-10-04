@@ -6,6 +6,7 @@ import {
   Spacer,
   useDisclosure,
   Text,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import PlayersTable from './PlayersTable'
 import ConfirmActionModal from '../../../components/confirm-action-modal/ConfirmActionModal'
@@ -88,6 +89,7 @@ export default function PlayersTab() {
           confirmButtonText="Save"
           confirmButtonColor="blue"
           size="3xl"
+          backgroundColor={useColorModeValue('gray.100', 'gray.800')}
         />
       )}
     </>
