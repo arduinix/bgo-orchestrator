@@ -19,6 +19,17 @@ export interface ConfirmActionModalProps {
   confirmButtonText?: string
   cancelButtonText?: string
   confirmButtonColor?: string
+  size?:
+    | 'xs'
+    | 'sm'
+    | 'md'
+    | 'lg'
+    | 'xl'
+    | '2xl'
+    | '3xl'
+    | '4xl'
+    | '5xl'
+    | '6xl'
 }
 
 export default function ConfirmActionModal({
@@ -30,10 +41,16 @@ export default function ConfirmActionModal({
   confirmButtonText = 'Confirm',
   cancelButtonText = 'Cancel',
   confirmButtonColor = 'red',
+  size = 'md',
 }: ConfirmActionModalProps) {
   return (
     <>
-      <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={closeAction}>
+      <Modal
+        closeOnOverlayClick={false}
+        isOpen={isOpen}
+        onClose={closeAction}
+        size={size}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>{header}</ModalHeader>

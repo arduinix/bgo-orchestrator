@@ -26,7 +26,7 @@ export default function OlympicsEventChooser() {
         </Text>
       </Stack>
 
-      <Container maxW={'5xl'} mt={6}>
+      <Container maxW={'6xl'} mt={6}>
         <Flex m={6} justifyContent={'space-between'}>
           <Flex gap={3}>
             <Checkbox defaultChecked>Show only my events</Checkbox>

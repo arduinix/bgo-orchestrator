@@ -10,7 +10,6 @@
       "gender": "m",
       "age": 25,
       "isPlaying": true,
-      "countryCode": "US",
       "score": 0
     },
     {
@@ -23,7 +22,6 @@
       "gender": "f",
       "age": 28,
       "isPlaying": false,
-      "countryCode": "RS",
       "score": 10
     },
     {
@@ -36,7 +34,6 @@
       "gender": "f",
       "age": 22,
       "isPlaying": true,
-      "countryCode": "SE",
       "score": 15
     },
     {
@@ -49,7 +46,6 @@
       "gender": "m",
       "age": 30,
       "isPlaying": false,
-      "countryCode": "ZA",
       "score": 5
     },
     {
@@ -62,7 +58,6 @@
       "gender": "m",
       "age": 27,
       "isPlaying": true,
-      "countryCode": "SK",
       "score": 20
     },
     {
@@ -75,7 +70,6 @@
       "gender": "f",
       "age": 24,
       "isPlaying": false,
-      "countryCode": "AE",
       "score": 8
     },
     {
@@ -88,7 +82,6 @@
       "gender": "f",
       "age": 26,
       "isPlaying": true,
-      "countryCode": "GB",
       "score": 12
     },
     {
@@ -101,7 +94,6 @@
       "gender": "m",
       "age": 29,
       "isPlaying": false,
-      "countryCode": "DE",
       "score": 7
     },
     {
@@ -114,7 +106,6 @@
       "gender": "f",
       "age": 23,
       "isPlaying": true,
-      "countryCode": "KE",
       "score": 18
     },
     {
@@ -127,7 +118,6 @@
       "gender": "m",
       "age": 31,
       "isPlaying": false,
-      "countryCode": "KZ",
       "score": 3
     }
   ]

@@ -49,7 +49,7 @@ const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
 
   return (
     <Box
-      maxW={{ base: 'full', md: '275px' }}
+      maxW={{ base: 'full', md: '285px' }}
       w={'full'}
       borderWidth="1px"
       borderRadius="lg"

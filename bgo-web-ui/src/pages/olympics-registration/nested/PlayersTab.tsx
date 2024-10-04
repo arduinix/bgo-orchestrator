@@ -77,14 +77,19 @@ export default function PlayersTab() {
           </>
         }
       />
-      <ConfirmActionModal
-        isOpen={isOpenEdit}
-        closeAction={onCloseEdit}
-        header="Edit Player Information"
-        body={<EditPlayerForm />}
-        confirmButtonText="Save"
-        confirmButtonColor="blue"
-      />
+      {selectedPlayer && (
+        <ConfirmActionModal
+          isOpen={isOpenEdit}
+          closeAction={onCloseEdit}
+          header="Edit Player Information"
+          body={
+            <EditPlayerForm player={selectedPlayer} closeAction={onCloseEdit} />
+          }
+          confirmButtonText="Save"
+          confirmButtonColor="blue"
+          size="3xl"
+        />
+      )}
     </>
   )
 }

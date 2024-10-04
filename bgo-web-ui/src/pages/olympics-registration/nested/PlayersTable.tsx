@@ -107,6 +107,16 @@ export default function PlayersTable({
                 Phone
               </Th>
               <Th
+                onClick={() => handleSort('phone')}
+                cursor="pointer"
+                bg="gray.100"
+                textAlign="center"
+                fontWeight="bold"
+                p={4}
+              >
+                Country
+              </Th>
+              <Th
                 onClick={() => handleSort('isPlaying')}
                 cursor="pointer"
                 bg="gray.100"
@@ -149,7 +159,7 @@ export default function PlayersTable({
                       />
                       <IconButton
                         size={'sm'}
-                        aria-label="delete player"
+                        aria-label="edit player"
                         icon={<FiEdit />}
                         onClick={() => handleEditClick(player)}
                       />
