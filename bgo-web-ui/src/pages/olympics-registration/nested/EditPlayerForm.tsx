@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react'
 import {
-  Avatar,
   FormControl,
   FormLabel,
   Input,
-  Text,
   Flex,
   Box,
   Checkbox,
   Card,
   CardBody,
   chakra,
+  Avatar,
 } from '@chakra-ui/react'
 import { formatPlayerName } from '@utils/stringConversion'
 import AvatarNameFlex from '@components/avatar-name-flex/AvatarNameFlex'
+import CustomQRCode from '@components/custom-qr-code/CustomQrCode'
 
 const BoldFormLabel = chakra(FormLabel, {
   baseStyle: {
@@ -47,14 +47,18 @@ export default function EditPlayerForm({
     }
   }
 
-  const { fName, mInit, lName, nickName, imagePath, phone, email, isPlaying } =
+  const { fName, mInit, lName, nickName, phone, email, isPlaying } =
     currentPlayer || {}
 
   return (
     <>
       {currentPlayer && (
-        <Card>
+        <Card position={'relative'}>
           <CardBody>
+            <Box position="absolute" top={4} right={4}>
+              <CustomQRCode url="https://www.google.com" />
+            </Box>
+
             <Flex gap={4} flexDir={'column'}>
               <AvatarNameFlex player={currentPlayer} />
 
