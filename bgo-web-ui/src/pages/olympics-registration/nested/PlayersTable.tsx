@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { FiTrash2 } from 'react-icons/fi'
 import { FiEdit } from 'react-icons/fi'
+import { formatPlayerName } from '@utils/stringConversion'
 
 export interface PlayersTableProps {
   players: Player[]
@@ -131,8 +132,7 @@ export default function PlayersTable({
           </Thead>
           <Tbody>
             {sortedData.map((player) => {
-              const { id, fName, mInit, lName, email, phone, isPlaying } =
-                player
+              const { id, email, phone, isPlaying } = player
               const isSelected = selectedPlayer?.id === id
               return (
                 <Tr
@@ -141,7 +141,7 @@ export default function PlayersTable({
                   style={{ cursor: 'pointer' }}
                   onClick={() => setSelectedPlayer(player)}
                 >
-                  <Td>{`${fName} ${mInit ? `${mInit}.` : ''} ${lName}`}</Td>
+                  <Td>{formatPlayerName(player)}</Td>
                   <Td>{email}</Td>
                   <Td>{phone}</Td>
                   <Td>

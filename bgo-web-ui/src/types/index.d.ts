@@ -30,7 +30,7 @@ declare global {
     location: string
     createdDate: string
     playedDate?: string | null
-    imagePath?: string | null
+    imagePath?: string
   }
 
   export interface Player {
@@ -44,6 +44,7 @@ declare global {
     age: number
     isPlaying: boolean
     score: number
+    imagePath?: string
   }
 }
 export {}

@@ -16,11 +16,10 @@ import {
 } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { RxHamburgerMenu } from 'react-icons/rx'
-import torch from '../../assets/image/torch.png'
-
+import torch from '@assets/image/torch.png'
 import ConfirmActionModal from '../confirm-action-modal/ConfirmActionModal'
 import CopyToNewEventModal from '../copy-to-new-event/CopyToNewEventModal'
-import { convertDateShort } from '../../lib/util/stringConversion'
+import { convertDateShort } from '@utils/stringConversion'
 
 // interface CardProps {
 //   heading: string;

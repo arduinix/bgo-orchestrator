@@ -22,3 +22,14 @@ export const convertDateShort = (date: string, locale: string = 'default') => {
 
   return formattedDate
 }
+
+export const formatPlayerName = (
+  player: Player | { fName: string; mInit: string; lName: string },
+  includeMiddle: boolean = true
+) => {
+  const { fName, mInit, lName } = player
+  if (includeMiddle) {
+    return `${fName} ${mInit ? `${mInit}.` : ''} ${lName}`
+  }
+  return `${fName} ${lName}`
+}
