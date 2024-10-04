@@ -43,6 +43,7 @@ declare global {
     gender: string
     age: number
     isPlaying: boolean
+    countryCode: string
     score: number
   }
 }

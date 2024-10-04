@@ -9,28 +9,30 @@ import {
   Td,
   Checkbox,
   IconButton,
-  useDisclosure,
-  Text,
   Flex,
 } from '@chakra-ui/react'
 import { FiTrash2 } from 'react-icons/fi'
-import { RxHamburgerMenu } from 'react-icons/rx'
-import ConfirmActionModal from '../../../components/confirm-action-modal/ConfirmActionModal'
-import players from '../../../data/players.json'
+import { FiEdit } from 'react-icons/fi'
 
-export default function PlayersTable() {
-  const data = players.players as Player[]
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null)
+export interface PlayersTableProps {
+  players: Player[]
+  selectedPlayer?: Player | null
+  handleDeleteClick: (player: Player) => void
+  handleEditClick: (player: Player) => void
+  setSelectedPlayer: (player: Player) => void
+}
+
+export default function PlayersTable({
+  players,
+  selectedPlayer,
+  handleDeleteClick,
+  handleEditClick,
+  setSelectedPlayer,
+}: PlayersTableProps) {
   const [sortConfig, setSortConfig] = useState<{
     key: keyof Player
     direction: 'ascending' | 'descending'
   } | null>(null)
-
-  const handleDeleteClick = (player: Player) => {
-    setSelectedPlayer(player)
-    onOpen()
-  }
 
   const handleSort = (key: keyof Player) => {
     let direction: 'ascending' | 'descending' = 'ascending'
@@ -46,7 +48,7 @@ export default function PlayersTable() {
 
   const sortedData = React.useMemo(() => {
     if (sortConfig !== null) {
-      return [...data].sort((a, b) => {
+      return [...players].sort((a, b) => {
         const key = sortConfig.key
         const direction = sortConfig.direction === 'ascending' ? 1 : -1
 
@@ -65,8 +67,8 @@ export default function PlayersTable() {
         return 0
       })
     }
-    return data
-  }, [data, sortConfig])
+    return players
+  }, [players, sortConfig])
 
   return (
     <>
@@ -74,23 +76,68 @@ export default function PlayersTable() {
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th onClick={() => handleSort('fName')}>Player Name</Th>
-              <Th onClick={() => handleSort('email')}>Email</Th>
-              <Th onClick={() => handleSort('phone')}>Phone</Th>
-              <Th onClick={() => handleSort('isPlaying')}>Playing</Th>
+              <Th
+                onClick={() => handleSort('fName')}
+                cursor="pointer"
+                bg="gray.100"
+                textAlign="center"
+                fontWeight="bold"
+                p={4}
+              >
+                Player Name
+              </Th>
+              <Th
+                onClick={() => handleSort('email')}
+                cursor="pointer"
+                bg="gray.100"
+                textAlign="center"
+                fontWeight="bold"
+                p={4}
+              >
+                Email
+              </Th>
+              <Th
+                onClick={() => handleSort('phone')}
+                cursor="pointer"
+                bg="gray.100"
+                textAlign="center"
+                fontWeight="bold"
+                p={4}
+              >
+                Phone
+              </Th>
+              <Th
+                onClick={() => handleSort('isPlaying')}
+                cursor="pointer"
+                bg="gray.100"
+                textAlign="center"
+                fontWeight="bold"
+                p={4}
+              >
+                Playing
+              </Th>
+              <Th bg="gray.100" textAlign="center" fontWeight="bold" p={4}></Th>
             </Tr>
           </Thead>
           <Tbody>
             {sortedData.map((player) => {
               const { id, fName, mInit, lName, email, phone, isPlaying } =
                 player
+              const isSelected = selectedPlayer?.id === id
               return (
-                <Tr key={id}>
+                <Tr
+                  key={id}
+                  bg={isSelected ? 'blue.100' : 'white'}
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => setSelectedPlayer(player)}
+                >
                   <Td>{`${fName} ${mInit ? `${mInit}.` : ''} ${lName}`}</Td>
                   <Td>{email}</Td>
                   <Td>{phone}</Td>
                   <Td>
-                    <Checkbox size={'lg'} isChecked={isPlaying} />
+                    <Flex justifyContent="center" alignItems="center">
+                      <Checkbox size={'lg'} isChecked={isPlaying} />
+                    </Flex>
                   </Td>
                   <Td>
                     <Flex gap={2}>
@@ -103,7 +150,8 @@ export default function PlayersTable() {
                       <IconButton
                         size={'sm'}
                         aria-label="delete player"
-                        icon={<RxHamburgerMenu />}
+                        icon={<FiEdit />}
+                        onClick={() => handleEditClick(player)}
                       />
                     </Flex>
                   </Td>
@@ -113,26 +161,6 @@ export default function PlayersTable() {
           </Tbody>
         </Table>
       </TableContainer>
-      <ConfirmActionModal
-        isOpen={isOpen}
-        closeAction={onClose}
-        header="Delete Player?"
-        body={
-          <>
-            Are you sure you want to remove player{' '}
-            {selectedPlayer ? (
-              <Text as="strong">
-                {selectedPlayer.fName}{' '}
-                {selectedPlayer.mInit ? `${selectedPlayer.mInit}.` : ''}{' '}
-                {selectedPlayer.lName}
-              </Text>
-            ) : (
-              'this player'
-            )}
-            ? This action cannot be undone.
-          </>
-        }
-      />
     </>
   )
 }
