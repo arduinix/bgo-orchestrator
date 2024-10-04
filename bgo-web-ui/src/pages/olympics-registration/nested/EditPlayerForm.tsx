@@ -9,9 +9,7 @@ import {
   Card,
   CardBody,
   chakra,
-  Avatar,
 } from '@chakra-ui/react'
-import { formatPlayerName } from '@utils/stringConversion'
 import AvatarNameFlex from '@components/avatar-name-flex/AvatarNameFlex'
 import CustomQRCode from '@components/custom-qr-code/CustomQrCode'
 

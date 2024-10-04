@@ -99,8 +99,9 @@
     {
       "id": "9",
       "fName": "Grace",
-      "mInit": null,
+      "mInit": "E",
       "lName": "Taylor",
+      "nickName": "Gracieloo",
       "email": "g.taylor@foo.net",
       "phone": "+1 901 234 5678",
       "gender": "f",
@@ -130,7 +131,7 @@
       "phone": "+1 012 345 8264",
       "gender": "m",
       "age": 39,
-      "isPlaying": false,
+      "isPlaying": true,
       "score": 3
     }
   ]
