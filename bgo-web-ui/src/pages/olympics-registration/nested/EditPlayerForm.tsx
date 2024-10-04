@@ -13,6 +13,7 @@ import {
   chakra,
 } from '@chakra-ui/react'
 import { formatPlayerName } from '@utils/stringConversion'
+import AvatarNameFlex from '@components/avatar-name-flex/AvatarNameFlex'
 
 const BoldFormLabel = chakra(FormLabel, {
   baseStyle: {
@@ -55,28 +56,7 @@ export default function EditPlayerForm({
         <Card>
           <CardBody>
             <Flex gap={4} flexDir={'column'}>
-              <Flex
-                height="100%"
-                width="100%"
-                justifyContent="start"
-                alignItems="center"
-              >
-                <Flex flexDirection="row" gap={3}>
-                  <Avatar
-                    name={formatPlayerName(currentPlayer)}
-                    src={imagePath}
-                    size="lg"
-                  />
-                  <Flex flexDir={'column'} mt={1.5}>
-                    <Text fontSize="lg" fontWeight="bold">
-                      {formatPlayerName(currentPlayer)}
-                    </Text>
-                    <Text ml={0.4} mt={-0.5}>
-                      {email}
-                    </Text>
-                  </Flex>
-                </Flex>
-              </Flex>
+              <AvatarNameFlex player={currentPlayer} />
 
               <FormControl>
                 <Flex gap={4} width={'100%'} flexDirection={'column'}>
