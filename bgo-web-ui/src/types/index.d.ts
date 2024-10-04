@@ -38,6 +38,7 @@ declare global {
     fName: string
     mInit: string | null
     lName: string
+    nickName?: string
     email: string
     phone: string
     gender: string

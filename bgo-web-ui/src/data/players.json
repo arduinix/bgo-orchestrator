@@ -119,6 +119,18 @@
       "age": 31,
       "isPlaying": false,
       "score": 3
+    },
+    {
+      "id": "11",
+      "fName": "Donald",
+      "mInit": null,
+      "lName": "Kedik",
+      "email": "d.kedik@foo.net",
+      "phone": "+1 012 345 8264",
+      "gender": "m",
+      "age": 39,
+      "isPlaying": false,
+      "score": 3
     }
   ]
 }
