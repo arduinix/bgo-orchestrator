@@ -47,5 +47,10 @@ declare global {
     score: number
     imagePath?: string
   }
+
+  export interface PlayerEnhancements {
+    fullName: string
+  }
+  export type EnhancedPlayer = Player & PlayerEnhancements
 }
 export {}

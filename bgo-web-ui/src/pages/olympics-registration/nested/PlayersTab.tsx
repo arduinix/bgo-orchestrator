@@ -22,6 +22,7 @@ import { useState } from 'react'
 import players from '../../../data/players.json'
 import EditPlayerForm from './EditPlayerForm'
 import GenericTable, { TableHeader } from './GenericTable'
+import { formatPlayerName } from '@utils/stringConversion'
 
 export default function PlayersTab() {
   const data: Player[] = players.players
@@ -48,7 +49,7 @@ export default function PlayersTab() {
     onOpenEdit()
   }
 
-  const headers: TableHeader<Player>[] = [
+  const headers: TableHeader<EnhancedPlayer>[] = [
     {
       text: (
         <Box>
@@ -57,12 +58,17 @@ export default function PlayersTab() {
       ),
       sortKey: null,
     },
-    { text: 'Player Name', sortKey: 'fName' },
+    { text: 'Player Name', sortKey: 'fullName' },
     { text: 'Email', sortKey: 'email' },
     { text: 'Phone', sortKey: 'phone' },
     { text: 'Playing', sortKey: 'isPlaying' },
     { text: null, sortKey: null }, // For the empty header
   ]
+
+  const enhancedPlayers = data.map((player) => ({
+    ...player,
+    fullName: formatPlayerName(player),
+  }))
 
   return (
     <>
@@ -100,7 +106,7 @@ export default function PlayersTab() {
           setSelectedPlayer={setSelectedPlayer}
         /> */}
         <GenericTable
-          data={players.players}
+          data={enhancedPlayers}
           headers={headers}
           handleEditClick={(player) => console.log('Edit', player)}
           handleDeleteClick={(player) => console.log('Delete', player)}
