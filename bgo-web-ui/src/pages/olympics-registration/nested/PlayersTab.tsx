@@ -12,6 +12,8 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
+  Box,
+  Checkbox,
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import PlayersTable from './PlayersTable'
@@ -19,6 +21,7 @@ import ConfirmActionModal from '../../../components/confirm-action-modal/Confirm
 import { useState } from 'react'
 import players from '../../../data/players.json'
 import EditPlayerForm from './EditPlayerForm'
+import GenericTable, { TableHeader } from './GenericTable'
 
 export default function PlayersTab() {
   const data: Player[] = players.players
@@ -44,6 +47,22 @@ export default function PlayersTab() {
     setSelectedPlayer(player)
     onOpenEdit()
   }
+
+  const headers: TableHeader<Player>[] = [
+    {
+      text: (
+        <Box>
+          <Checkbox size={'lg'}></Checkbox>
+        </Box>
+      ),
+      sortKey: null,
+    },
+    { text: 'Player Name', sortKey: 'fName' },
+    { text: 'Email', sortKey: 'email' },
+    { text: 'Phone', sortKey: 'phone' },
+    { text: 'Playing', sortKey: 'isPlaying' },
+    { text: null, sortKey: null }, // For the empty header
+  ]
 
   return (
     <>
@@ -73,12 +92,19 @@ export default function PlayersTab() {
         </ButtonGroup>
 
         <Input placeholder="Search players" />
-        <PlayersTable
+        {/* <PlayersTable
           players={data}
           selectedPlayer={selectedPlayer}
           handleDeleteClick={handleDeleteClick}
           handleEditClick={handleEditClick}
           setSelectedPlayer={setSelectedPlayer}
+        /> */}
+        <GenericTable
+          data={players.players}
+          headers={headers}
+          handleEditClick={(player) => console.log('Edit', player)}
+          handleDeleteClick={(player) => console.log('Delete', player)}
+          setSelectedRow={(player) => console.log('Selected', player)}
         />
       </Flex>
       <ConfirmActionModal
@@ -112,7 +138,7 @@ export default function PlayersTab() {
           confirmButtonText="Save"
           confirmButtonColor="blue"
           size="3xl"
-          backgroundColor={useColorModeValue('gray.100', 'gray.800')}
+          backgroundColor={useColorModeValue('gray.50', 'gray.800')}
         />
       )}
     </>

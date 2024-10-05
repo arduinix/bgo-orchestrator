@@ -146,22 +146,22 @@ export default function PlayersTable({
             </Tr>
           </Thead>
           <Tbody>
-            {sortedData.map((player) => {
-              const { id, email, phone, isPlaying, nickName } = player
+            {sortedData.map((data) => {
+              const { id, email, phone, isPlaying, nickName } = data
               const isSelected = selectedPlayer?.id === id
               return (
                 <Tr
                   key={id}
                   bg={isSelected ? selectedBgColor : bgColor}
                   style={{ cursor: 'pointer' }}
-                  onClick={() => setSelectedPlayer(player)}
+                  onClick={() => setSelectedPlayer(data)}
                 >
                   <Td>
                     <Checkbox size={'lg'} />
                   </Td>
                   <Td color={textColor}>
                     <Flex flexDirection={'column'}>
-                      <Text>{formatPlayerName(player)}</Text>
+                      <Text>{formatPlayerName(data)}</Text>
                       {nickName && (
                         <Text fontSize={'sm'} color={subTextColor}>
                           {`"${nickName}"`}
@@ -182,13 +182,13 @@ export default function PlayersTable({
                         size={'sm'}
                         aria-label="delete player"
                         icon={<FiTrash2 />}
-                        onClick={() => handleDeleteClick(player)}
+                        onClick={() => handleDeleteClick(data)}
                       />
                       <IconButton
                         size={'sm'}
                         aria-label="edit player"
                         icon={<FiEdit />}
-                        onClick={() => handleEditClick(player)}
+                        onClick={() => handleEditClick(data)}
                       />
                     </Flex>
                   </Td>
