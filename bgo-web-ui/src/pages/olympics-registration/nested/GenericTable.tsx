@@ -8,13 +8,11 @@ import {
   Th,
   Td,
   Checkbox,
-  IconButton,
   Flex,
   Text,
   useColorMode,
   Box,
 } from '@chakra-ui/react'
-import { FiTrash2, FiEdit } from 'react-icons/fi'
 import { FaSortAlphaDown, FaSortAlphaDownAlt } from 'react-icons/fa'
 
 interface SortConfig<T> {
@@ -32,9 +30,10 @@ interface GenericTableProps<T> {
   data: T[]
   headers: TableHeader<T>[]
   selectedRow?: T | null
-  handleDeleteClick?: (row: T) => void
-  handleEditClick?: (row: T) => void
   setSelectedRow?: (row: T) => void
+  enableMultiSelect?: boolean
+  multiSelectKeyExtractor?: (row: T) => string
+  rowActionButtons?: (row: T) => ReactNode
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -42,11 +41,32 @@ export default function GenericTable<T extends Record<string, any>>({
   data,
   headers,
   selectedRow,
-  handleDeleteClick,
-  handleEditClick,
   setSelectedRow,
+  enableMultiSelect,
+  multiSelectKeyExtractor,
+  rowActionButtons,
 }: GenericTableProps<T>) {
   const [sortConfig, setSortConfig] = useState<SortConfig<T> | null>(null)
+  const [selectedRows, setSelectedRows] = useState<string[]>([])
+
+  const handleRowCheckboxChange = (key: string) => {
+    setSelectedRows((prevSelectedRows: string[]) =>
+      prevSelectedRows.includes(key)
+        ? prevSelectedRows.filter((rowKey) => rowKey !== key)
+        : ([...prevSelectedRows, key] as string[])
+    )
+  }
+
+  const handleHeaderCheckboxChange = () => {
+    if (selectedRows.length === data.length) {
+      setSelectedRows([])
+    } else {
+      if (multiSelectKeyExtractor) {
+        setSelectedRows(data.map((row) => multiSelectKeyExtractor(row)))
+      }
+    }
+  }
+  const isAllSelected = selectedRows.length === data.length
 
   const { colorMode } = useColorMode()
   const bgColor = colorMode === 'dark' ? 'gray.700' : 'white'
@@ -56,7 +76,7 @@ export default function GenericTable<T extends Record<string, any>>({
   const selectedBgColor = colorMode === 'dark' ? 'blue.900' : 'blue.100'
 
   const handleSort = (key: keyof T) => {
-    let direction: 'ascending' = 'ascending'
+    let direction: 'ascending' | 'descending' = 'ascending'
     if (
       sortConfig &&
       sortConfig.key === key &&
@@ -98,6 +118,25 @@ export default function GenericTable<T extends Record<string, any>>({
       <Table variant="simple">
         <Thead>
           <Tr>
+            {enableMultiSelect && (
+              <Th
+                key={'selectAllRows'}
+                bg={headerBgColor}
+                color={textColor}
+                textAlign="left"
+                fontWeight="bold"
+                fontSize={'sm'}
+                p={4}
+              >
+                <Checkbox
+                  size={'lg'}
+                  bg={'white'}
+                  ml={2}
+                  isChecked={isAllSelected}
+                  onChange={handleHeaderCheckboxChange}
+                />
+              </Th>
+            )}
             {headers.map((header, index) => (
               <Th
                 key={index}
@@ -120,74 +159,89 @@ export default function GenericTable<T extends Record<string, any>>({
                 </Flex>
               </Th>
             ))}
+            <Th
+              bg={headerBgColor}
+              color={textColor}
+              textAlign="center"
+              fontWeight="bold"
+              fontSize={'sm'}
+              p={4}
+            />
           </Tr>
         </Thead>
         <Tbody>
-          {sortedData.map((row, index) => (
-            <Tr
-              key={index}
-              bg={
-                selectedRow && row === selectedRow ? selectedBgColor : bgColor
-              }
-              onClick={() => setSelectedRow && setSelectedRow(row)}
-              cursor="pointer"
-            >
-              {headers.map((header, i) => (
-                <Td key={i} color={textColor}>
-                  <Flex flexDirection={'column'}>
-                    {/* <Text>
-                      {typeof row[header.sortKey as keyof T] !== 'undefined' &&
-                        row[header.sortKey as keyof T]}
-                    </Text>
-                    {header.subField && (
-                      <Text fontSize={'sm'} color={subTextColor}>
-                        {typeof row[header.sortKey as keyof T] !==
-                          'undefined' && row[header.subField as keyof T]}
-                      </Text>
-                    )} */}
-                    {typeof row[header.sortKey as keyof T] === 'boolean' ? (
-                      <Checkbox
-                        isChecked={row[header.sortKey as keyof T] as boolean}
-                        alignSelf={'center'}
-                        isReadOnly
+          {sortedData.map((row, index) => {
+            const key = multiSelectKeyExtractor
+              ? multiSelectKeyExtractor(row)
+              : ''
+            return (
+              <Tr
+                key={index}
+                bg={
+                  selectedRow && row === selectedRow ? selectedBgColor : bgColor
+                }
+                onClick={() => setSelectedRow && setSelectedRow(row)}
+                cursor="pointer"
+              >
+                {enableMultiSelect && (
+                  <Td>
+                    <Checkbox
+                      size={'lg'}
+                      bg={'white'}
+                      isChecked={selectedRows.includes(key)}
+                      onChange={() => handleRowCheckboxChange(key)}
+                    />
+                  </Td>
+                )}
+                {headers.map((header, i) => (
+                  <Td key={i} color={textColor}>
+                    <Flex flexDirection={'column'}>
+                      {typeof row[header.sortKey as keyof T] === 'boolean' ? (
+                        <Checkbox
+                          size={'lg'}
+                          isChecked={row[header.sortKey as keyof T] as boolean}
+                          alignSelf={'center'}
+                          isReadOnly
+                        />
+                      ) : (
+                        <Text>
+                          {typeof row[header.sortKey as keyof T] !==
+                            'undefined' && row[header.sortKey as keyof T]}
+                        </Text>
+                      )}
+                      {header.subField && (
+                        <Text fontSize={'sm'} color={subTextColor}>
+                          {typeof row[header.subField as keyof T] !==
+                            'undefined' && row[header.subField as keyof T]}
+                        </Text>
+                      )}
+                    </Flex>
+                  </Td>
+                ))}
+                {/* <Td color={textColor}>
+                  <Flex gap={2}>
+                    {handleDeleteClick && (
+                      <IconButton
+                        size={'sm'}
+                        aria-label="delete row"
+                        icon={<FiTrash2 />}
+                        onClick={() => handleDeleteClick(row)}
                       />
-                    ) : (
-                      <Text>
-                        {typeof row[header.sortKey as keyof T] !==
-                          'undefined' && row[header.sortKey as keyof T]}
-                      </Text>
                     )}
-                    {header.subField && (
-                      <Text fontSize={'sm'} color={subTextColor}>
-                        {typeof row[header.subField as keyof T] !==
-                          'undefined' && row[header.subField as keyof T]}
-                      </Text>
+                    {handleEditClick && (
+                      <IconButton
+                        size={'sm'}
+                        aria-label="edit row"
+                        icon={<FiEdit />}
+                        onClick={() => handleEditClick(row)}
+                      />
                     )}
                   </Flex>
-                </Td>
-              ))}
-              <Td>
-                <Flex gap={2}>
-                  {handleEditClick && (
-                    <IconButton
-                      size={'sm'}
-                      aria-label="edit row"
-                      icon={<FiEdit />}
-                      onClick={() => handleEditClick(row)}
-                    />
-                  )}
-                  {handleDeleteClick && (
-                    <IconButton
-                      size={'sm'}
-                      aria-label="delete row"
-                      icon={<FiTrash2 />}
-                      onClick={() => handleDeleteClick(row)}
-                    />
-                  )}
-                </Flex>
-              </Td>
-            </Tr>
-          ))}
+                </Td> */}
+                {rowActionButtons && <Td>{rowActionButtons(row)}</Td>}
+              </Tr>
+            )
+          })}
         </Tbody>
       </Table>
     </TableContainer>

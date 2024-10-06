@@ -12,17 +12,16 @@ import {
   MenuList,
   MenuItem,
   MenuDivider,
-  Box,
-  Checkbox,
+  IconButton,
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
-import PlayersTable from './PlayersTable'
 import ConfirmActionModal from '../../../components/confirm-action-modal/ConfirmActionModal'
 import { useState, useEffect } from 'react'
 import players from '../../../data/players.json'
 import EditPlayerForm from './EditPlayerForm'
 import GenericTable, { TableHeader } from './GenericTable'
 import { formatPlayerName } from '@utils/stringConversion'
+import { FiTrash2, FiEdit } from 'react-icons/fi'
 
 export default function PlayersTab() {
   const data: Player[] = players.players
@@ -53,14 +52,14 @@ export default function PlayersTab() {
   }
 
   const headers: TableHeader<EnhancedPlayer>[] = [
-    {
-      text: (
-        <Box>
-          <Checkbox size={'lg'}></Checkbox>
-        </Box>
-      ),
-      sortKey: null,
-    },
+    // {
+    //   text: (
+    //     <Box>
+    //       <Checkbox size={'lg'}></Checkbox>
+    //     </Box>
+    //   ),
+    //   sortKey: null,
+    // },
     { text: 'Player Name', sortKey: 'fullName', subField: 'nickName' },
     { text: 'Email', sortKey: 'email' },
     { text: 'Phone', sortKey: 'phone' },
@@ -75,6 +74,26 @@ export default function PlayersTab() {
     }))
     setEnhancedPlayers(enhancedPlayers)
   }, [data])
+
+  // function to render the the row action buttons
+  const rowActionButtons = (player: EnhancedPlayer) => {
+    return (
+      <Flex gap={2}>
+        <IconButton
+          size={'sm'}
+          aria-label="delete row"
+          icon={<FiTrash2 />}
+          onClick={() => handleDeleteClick(player)}
+        />
+        <IconButton
+          size={'sm'}
+          aria-label="edit row"
+          icon={<FiEdit />}
+          onClick={() => handleEditClick(player)}
+        />
+      </Flex>
+    )
+  }
 
   return (
     <>
@@ -114,10 +133,11 @@ export default function PlayersTab() {
         <GenericTable
           data={enhancedPlayers}
           headers={headers}
-          handleEditClick={(player) => console.log('Edit', player)}
-          handleDeleteClick={(player) => console.log('Delete', player)}
           selectedRow={selectedPlayer}
           setSelectedRow={(player) => setSelectedPlayer(player)}
+          enableMultiSelect
+          multiSelectKeyExtractor={(player) => player.id}
+          rowActionButtons={rowActionButtons}
         />
       </Flex>
       <ConfirmActionModal
