@@ -18,7 +18,7 @@ import {
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import PlayersTable from './PlayersTable'
 import ConfirmActionModal from '../../../components/confirm-action-modal/ConfirmActionModal'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import players from '../../../data/players.json'
 import EditPlayerForm from './EditPlayerForm'
 import GenericTable, { TableHeader } from './GenericTable'
@@ -37,14 +37,17 @@ export default function PlayersTab() {
     onOpen: onOpenEdit,
     onClose: onCloseEdit,
   } = useDisclosure()
-  const [selectedPlayer, setSelectedPlayer] = useState<Player | null>(null)
+  const [selectedPlayer, setSelectedPlayer] = useState<EnhancedPlayer | null>(
+    null
+  )
+  const [enhancedPlayers, setEnhancedPlayers] = useState<EnhancedPlayer[]>([])
 
-  const handleDeleteClick = (player: Player) => {
+  const handleDeleteClick = (player: EnhancedPlayer) => {
     setSelectedPlayer(player)
     onOpenDelete()
   }
 
-  const handleEditClick = (player: Player) => {
+  const handleEditClick = (player: EnhancedPlayer) => {
     setSelectedPlayer(player)
     onOpenEdit()
   }
@@ -58,17 +61,20 @@ export default function PlayersTab() {
       ),
       sortKey: null,
     },
-    { text: 'Player Name', sortKey: 'fullName' },
+    { text: 'Player Name', sortKey: 'fullName', subField: 'nickName' },
     { text: 'Email', sortKey: 'email' },
     { text: 'Phone', sortKey: 'phone' },
     { text: 'Playing', sortKey: 'isPlaying' },
-    { text: null, sortKey: null }, // For the empty header
+    { text: null, sortKey: null },
   ]
 
-  const enhancedPlayers = data.map((player) => ({
-    ...player,
-    fullName: formatPlayerName(player),
-  }))
+  useEffect(() => {
+    const enhancedPlayers = data.map((player) => ({
+      ...player,
+      fullName: formatPlayerName(player),
+    }))
+    setEnhancedPlayers(enhancedPlayers)
+  }, [data])
 
   return (
     <>
@@ -110,7 +116,8 @@ export default function PlayersTab() {
           headers={headers}
           handleEditClick={(player) => console.log('Edit', player)}
           handleDeleteClick={(player) => console.log('Delete', player)}
-          setSelectedRow={(player) => console.log('Selected', player)}
+          selectedRow={selectedPlayer}
+          setSelectedRow={(player) => setSelectedPlayer(player)}
         />
       </Flex>
       <ConfirmActionModal

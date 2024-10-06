@@ -1,4 +1,4 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState, ReactNode } from 'react'
 import {
   TableContainer,
   Table,
@@ -13,29 +13,31 @@ import {
   Text,
   useColorMode,
   Box,
-} from '@chakra-ui/react';
-import { FiTrash2, FiEdit } from 'react-icons/fi';
-import { FaSortAlphaDown, FaSortAlphaDownAlt } from 'react-icons/fa';
+} from '@chakra-ui/react'
+import { FiTrash2, FiEdit } from 'react-icons/fi'
+import { FaSortAlphaDown, FaSortAlphaDownAlt } from 'react-icons/fa'
 
 interface SortConfig<T> {
-  key: keyof T;
-  direction: 'ascending' | 'descending';
+  key: keyof T
+  direction: 'ascending' | 'descending'
 }
 
 export interface TableHeader<T> {
-  text: string | ReactNode;
-  sortKey: keyof T | null;
+  text: string | ReactNode
+  sortKey: keyof T | null
+  subField?: keyof T | null
 }
 
 interface GenericTableProps<T> {
-  data: T[];
-  headers: TableHeader<T>[];
-  selectedRow?: T | null;
-  handleDeleteClick?: (row: T) => void;
-  handleEditClick?: (row: T) => void;
-  setSelectedRow?: (row: T) => void;
+  data: T[]
+  headers: TableHeader<T>[]
+  selectedRow?: T | null
+  handleDeleteClick?: (row: T) => void
+  handleEditClick?: (row: T) => void
+  setSelectedRow?: (row: T) => void
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function GenericTable<T extends Record<string, any>>({
   data,
   headers,
@@ -44,44 +46,52 @@ export default function GenericTable<T extends Record<string, any>>({
   handleEditClick,
   setSelectedRow,
 }: GenericTableProps<T>) {
-  const [sortConfig, setSortConfig] = useState<SortConfig<T> | null>(null);
-  
-  const { colorMode } = useColorMode();
-  const bgColor = colorMode === 'dark' ? 'gray.700' : 'white';
-  const textColor = colorMode === 'dark' ? 'white' : 'black';
-  const subTextColor = colorMode === 'dark' ? 'gray.100' : 'gray.500';
-  const headerBgColor = colorMode === 'dark' ? 'gray.800' : 'gray.100';
-  const selectedBgColor = colorMode === 'dark' ? 'blue.900' : 'blue.100';
+  const [sortConfig, setSortConfig] = useState<SortConfig<T> | null>(null)
+
+  const { colorMode } = useColorMode()
+  const bgColor = colorMode === 'dark' ? 'gray.700' : 'white'
+  const textColor = colorMode === 'dark' ? 'white' : 'black'
+  const subTextColor = colorMode === 'dark' ? 'gray.100' : 'gray.500'
+  const headerBgColor = colorMode === 'dark' ? 'gray.800' : 'gray.100'
+  const selectedBgColor = colorMode === 'dark' ? 'blue.900' : 'blue.100'
 
   const handleSort = (key: keyof T) => {
-    let direction: 'ascending' = 'ascending';
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
+    let direction: 'ascending' = 'ascending'
+    if (
+      sortConfig &&
+      sortConfig.key === key &&
+      sortConfig.direction === 'ascending'
+    ) {
+      direction = 'descending'
     }
-    setSortConfig({ key, direction });
-  };
+    setSortConfig({ key, direction })
+  }
 
   const getSortIcon = (key: keyof T) => {
     if (sortConfig && sortConfig.key === key) {
-      return sortConfig.direction === 'ascending' ? <FaSortAlphaDown /> : <FaSortAlphaDownAlt />;
+      return sortConfig.direction === 'ascending' ? (
+        <FaSortAlphaDown />
+      ) : (
+        <FaSortAlphaDownAlt />
+      )
     }
-    return null;
-  };
+    return null
+  }
 
   const sortedData = React.useMemo(() => {
     if (sortConfig !== null) {
       return [...data].sort((a, b) => {
-        const key = sortConfig.key;
-        const direction = sortConfig.direction === 'ascending' ? 1 : -1;
-        const aKey = a[key];
-        const bKey = b[key];
+        const key = sortConfig.key
+        const direction = sortConfig.direction === 'ascending' ? 1 : -1
+        const aKey = a[key]
+        const bKey = b[key]
 
-        if (aKey == null || bKey == null) return 0;
-        return aKey < bKey ? -1 * direction : aKey > bKey ? 1 * direction : 0;
-      });
+        if (aKey == null || bKey == null) return 0
+        return aKey < bKey ? -1 * direction : aKey > bKey ? 1 * direction : 0
+      })
     }
-    return data;
-  }, [data, sortConfig]);
+    return data
+  }, [data, sortConfig])
 
   return (
     <TableContainer>
@@ -91,7 +101,11 @@ export default function GenericTable<T extends Record<string, any>>({
             {headers.map((header, index) => (
               <Th
                 key={index}
-                onClick={header.sortKey !== null ? () => handleSort(header.sortKey as keyof T) : undefined}
+                onClick={
+                  header.sortKey !== null
+                    ? () => handleSort(header.sortKey as keyof T)
+                    : undefined
+                }
                 cursor={header.sortKey ? 'pointer' : 'default'}
                 bg={headerBgColor}
                 color={textColor}
@@ -112,13 +126,44 @@ export default function GenericTable<T extends Record<string, any>>({
           {sortedData.map((row, index) => (
             <Tr
               key={index}
-              bg={selectedRow && row === selectedRow ? selectedBgColor : bgColor}
+              bg={
+                selectedRow && row === selectedRow ? selectedBgColor : bgColor
+              }
               onClick={() => setSelectedRow && setSelectedRow(row)}
               cursor="pointer"
             >
               {headers.map((header, i) => (
                 <Td key={i} color={textColor}>
-                  {typeof row[header.sortKey as keyof T] !== 'undefined' && row[header.sortKey as keyof T]}
+                  <Flex flexDirection={'column'}>
+                    {/* <Text>
+                      {typeof row[header.sortKey as keyof T] !== 'undefined' &&
+                        row[header.sortKey as keyof T]}
+                    </Text>
+                    {header.subField && (
+                      <Text fontSize={'sm'} color={subTextColor}>
+                        {typeof row[header.sortKey as keyof T] !==
+                          'undefined' && row[header.subField as keyof T]}
+                      </Text>
+                    )} */}
+                    {typeof row[header.sortKey as keyof T] === 'boolean' ? (
+                      <Checkbox
+                        isChecked={row[header.sortKey as keyof T] as boolean}
+                        alignSelf={'center'}
+                        isReadOnly
+                      />
+                    ) : (
+                      <Text>
+                        {typeof row[header.sortKey as keyof T] !==
+                          'undefined' && row[header.sortKey as keyof T]}
+                      </Text>
+                    )}
+                    {header.subField && (
+                      <Text fontSize={'sm'} color={subTextColor}>
+                        {typeof row[header.subField as keyof T] !==
+                          'undefined' && row[header.subField as keyof T]}
+                      </Text>
+                    )}
+                  </Flex>
                 </Td>
               ))}
               <Td>
@@ -146,5 +191,5 @@ export default function GenericTable<T extends Record<string, any>>({
         </Tbody>
       </Table>
     </TableContainer>
-  );
+  )
 }
