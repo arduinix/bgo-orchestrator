@@ -52,14 +52,6 @@ export default function PlayersTab() {
   }
 
   const headers: TableHeader<EnhancedPlayer>[] = [
-    // {
-    //   text: (
-    //     <Box>
-    //       <Checkbox size={'lg'}></Checkbox>
-    //     </Box>
-    //   ),
-    //   sortKey: null,
-    // },
     { text: 'Player Name', sortKey: 'fullName', subField: 'nickName' },
     { text: 'Email', sortKey: 'email' },
     { text: 'Phone', sortKey: 'phone' },
@@ -75,7 +67,6 @@ export default function PlayersTab() {
     setEnhancedPlayers(enhancedPlayers)
   }, [data])
 
-  // function to render the the row action buttons
   const rowActionButtons = (player: EnhancedPlayer) => {
     return (
       <Flex gap={2}>
@@ -123,13 +114,6 @@ export default function PlayersTab() {
         </ButtonGroup>
 
         <Input placeholder="Search players" />
-        {/* <PlayersTable
-          players={data}
-          selectedPlayer={selectedPlayer}
-          handleDeleteClick={handleDeleteClick}
-          handleEditClick={handleEditClick}
-          setSelectedPlayer={setSelectedPlayer}
-        /> */}
         <GenericTable
           data={enhancedPlayers}
           headers={headers}
@@ -160,20 +144,21 @@ export default function PlayersTab() {
           </>
         }
       />
-      {selectedPlayer && (
-        <ConfirmActionModal
-          isOpen={isOpenEdit}
-          closeAction={onCloseEdit}
-          header="Edit Player Information"
-          body={
+
+      <ConfirmActionModal
+        isOpen={isOpenEdit}
+        closeAction={onCloseEdit}
+        header="Edit Player Information"
+        body={
+          selectedPlayer && (
             <EditPlayerForm player={selectedPlayer} closeAction={onCloseEdit} />
-          }
-          confirmButtonText="Save"
-          confirmButtonColor="blue"
-          size="3xl"
-          backgroundColor={useColorModeValue('gray.50', 'gray.800')}
-        />
-      )}
+          )
+        }
+        confirmButtonText="Save"
+        confirmButtonColor="blue"
+        size="3xl"
+        backgroundColor={useColorModeValue('gray.50', 'gray.800')}
+      />
     </>
   )
 }

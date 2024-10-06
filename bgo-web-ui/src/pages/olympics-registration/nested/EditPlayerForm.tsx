@@ -65,7 +65,7 @@ export default function EditPlayerForm({
                   <Flex gap={10}>
                     <Box width={'44%'}>
                       <BoldFormLabel>Nick Name</BoldFormLabel>
-                      <Input type="text" value={nickName} />
+                      <Input type="text" value={nickName} onChange={() => {}} />
                     </Box>
                     <Box width={'20%'} alignSelf={'center'} mt={7}>
                       <Checkbox size={'lg'} isChecked={isPlaying}>
@@ -77,25 +77,29 @@ export default function EditPlayerForm({
                   <Flex gap={2}>
                     <Box width={'45%'}>
                       <BoldFormLabel>First Name</BoldFormLabel>
-                      <Input type="text" value={fName} />
+                      <Input type="text" value={fName} onChange={() => {}} />
                     </Box>
                     <Box width={'10%'}>
                       <BoldFormLabel>Initial</BoldFormLabel>
-                      <Input type="text" value={mInit || ''} />
+                      <Input
+                        type="text"
+                        value={mInit || ''}
+                        onChange={() => {}}
+                      />
                     </Box>
                     <Box width={'45%'}>
                       <BoldFormLabel>Last Name</BoldFormLabel>
-                      <Input type="text" value={lName} />
+                      <Input type="text" value={lName} onChange={() => {}} />
                     </Box>
                   </Flex>
                   <Flex gap={2}>
                     <Box width={'50%'}>
                       <BoldFormLabel>Phone</BoldFormLabel>
-                      <Input type="text" value={phone} />
+                      <Input type="text" value={phone} onChange={() => {}} />
                     </Box>
                     <Box width={'50%'}>
                       <BoldFormLabel>Email address</BoldFormLabel>
-                      <Input type="email" value={email} />
+                      <Input type="email" value={email} onChange={() => {}} />
                     </Box>
                   </Flex>
                 </Flex>

@@ -67,7 +67,6 @@ export default function GenericTable<T extends Record<string, any>>({
     }
   }
   const isAllSelected = selectedRows.length === data.length
-
   const { colorMode } = useColorMode()
   const bgColor = colorMode === 'dark' ? 'gray.700' : 'white'
   const textColor = colorMode === 'dark' ? 'white' : 'black'
@@ -218,26 +217,6 @@ export default function GenericTable<T extends Record<string, any>>({
                     </Flex>
                   </Td>
                 ))}
-                {/* <Td color={textColor}>
-                  <Flex gap={2}>
-                    {handleDeleteClick && (
-                      <IconButton
-                        size={'sm'}
-                        aria-label="delete row"
-                        icon={<FiTrash2 />}
-                        onClick={() => handleDeleteClick(row)}
-                      />
-                    )}
-                    {handleEditClick && (
-                      <IconButton
-                        size={'sm'}
-                        aria-label="edit row"
-                        icon={<FiEdit />}
-                        onClick={() => handleEditClick(row)}
-                      />
-                    )}
-                  </Flex>
-                </Td> */}
                 {rowActionButtons && <Td>{rowActionButtons(row)}</Td>}
               </Tr>
             )
