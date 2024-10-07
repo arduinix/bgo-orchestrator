@@ -13,21 +13,32 @@ interface PaginationControlProps {
   totalPages: number
   itemsPerPage: number
   currentPage: number
-  onPageChange: (page: number) => void
   onItemsPerPageChange: (items: number) => void
+  setCurrentPage: (page: number) => void
   itemsPerPageList?: number[]
+  
 }
 
 export default function PaginationControl({
   totalPages,
   itemsPerPage,
   currentPage,
-  onPageChange,
   onItemsPerPageChange,
+  setCurrentPage,
   itemsPerPageList = [10, 20, 50, 100],
 }: PaginationControlProps) {
   const [itemsPerPageOptions] = useState(itemsPerPageList)
-  const  pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1)
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   return (
     <Flex alignItems="center" alignSelf={'center'} gap={8}>
@@ -36,7 +47,7 @@ export default function PaginationControl({
           icon={<FiChevronsLeft />}
           bg="transparent"
           aria-label="First Page"
-          onClick={() => onPageChange(1)}
+          onClick={() => setCurrentPage(1)}
           isDisabled={currentPage === 1}
         />
       </Tooltip>
@@ -45,7 +56,7 @@ export default function PaginationControl({
           icon={<FiChevronLeft />}
           bg="transparent"
           aria-label="Previous Page"
-          onClick={() => onPageChange(currentPage - 1)}
+          onClick={() => handlePreviousPage()}
           isDisabled={currentPage === 1}
         />
       </Tooltip>
@@ -57,7 +68,7 @@ export default function PaginationControl({
           icon={<FiChevronRight />}
           bg="transparent"
           aria-label="Next Page"
-          onClick={() => onPageChange(currentPage + 1)}
+          onClick={() => handleNextPage()}
           isDisabled={currentPage === totalPages}
         />
       </Tooltip>
@@ -66,7 +77,7 @@ export default function PaginationControl({
           icon={<FiChevronsRight />}
           bg="transparent"
           aria-label="Last Page"
-          onClick={() => onPageChange(totalPages)}
+          onClick={() => setCurrentPage(totalPages)}
           isDisabled={currentPage === totalPages}
         />
       </Tooltip>

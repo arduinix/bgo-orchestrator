@@ -56,6 +56,17 @@ export default function GenericTable<T extends Record<string, any>>({
   const [sortConfig, setSortConfig] = useState<SortConfig<T> | null>(null)
   const [selectedRows, setSelectedRows] = useState<string[]>([])
   const [searchTerm, setSearchTerm] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [rowsPerPage, setRowsPerPage] = useState(10)
+
+  const indexOfLastRow = currentPage * rowsPerPage
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage
+  const totalPages = Math.ceil(data.length / rowsPerPage)
+
+  const handleRowsPerPageChange = (numberOfItems: number) => {
+    setRowsPerPage(numberOfItems)
+    setCurrentPage(1)
+  }
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
@@ -134,6 +145,10 @@ export default function GenericTable<T extends Record<string, any>>({
     }
     return filteredData
   }, [filteredData, sortConfig])
+
+  const paginatedData = useMemo(() => {
+    return sortedData.slice(indexOfFirstRow, indexOfLastRow)
+  }, [sortedData, indexOfFirstRow, indexOfLastRow])
 
   return (
     <>
@@ -218,7 +233,7 @@ export default function GenericTable<T extends Record<string, any>>({
                 </Td>
               </Tr>
             ) : (
-              sortedData.map((row, index) => {
+              paginatedData.map((row, index) => {
                 const key = multiSelectKeyExtractor
                   ? multiSelectKeyExtractor(row)
                   : ''
@@ -277,11 +292,11 @@ export default function GenericTable<T extends Record<string, any>>({
         </Table>
       </TableContainer>
       <PaginationControl
-        totalPages={7}
-        itemsPerPage={10}
-        currentPage={1}
-        onPageChange={() => {}}
-        onItemsPerPageChange={() => {}}
+        totalPages={totalPages}
+        itemsPerPage={rowsPerPage}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        onItemsPerPageChange={handleRowsPerPageChange}
       />
     </>
   )
