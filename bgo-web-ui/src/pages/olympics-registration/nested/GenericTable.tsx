@@ -12,10 +12,10 @@ import {
   Text,
   useColorMode,
   Box,
-  Input,
 } from '@chakra-ui/react'
 import { FaSortAlphaDown, FaSortAlphaDownAlt } from 'react-icons/fa'
 import { TrueIcon, FalseIcon } from '@components/standards/StandardIcons'
+import SearchInput from '@components/search-input/SearchInput'
 
 interface SortConfig<T> {
   key: keyof T
@@ -36,6 +36,8 @@ interface GenericTableProps<T> {
   enableMultiSelect?: boolean
   multiSelectKeyExtractor?: (row: T) => string
   rowActionButtons?: (row: T) => ReactNode
+  noRecordsMessage?: string | ReactNode
+  disableSearch?: boolean
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -47,6 +49,8 @@ export default function GenericTable<T extends Record<string, any>>({
   enableMultiSelect,
   multiSelectKeyExtractor,
   rowActionButtons,
+  noRecordsMessage = 'No items found matching the search criteria.',
+  disableSearch = false,
 }: GenericTableProps<T>) {
   const [sortConfig, setSortConfig] = useState<SortConfig<T> | null>(null)
   const [selectedRows, setSelectedRows] = useState<string[]>([])
@@ -105,17 +109,19 @@ export default function GenericTable<T extends Record<string, any>>({
     return null
   }
 
-  // const filteredData = useMemo(() => {
-  //   return data.filter(
-  //     (item) =>
-  //       item.name && item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  //   )
-  // }, [data, searchTerm])
+  const filteredData = useMemo(() => {
+    return data.filter((item) =>
+      Object.keys(item).some(
+        (key) =>
+          item[key] &&
+          item[key].toString().toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    )
+  }, [data, searchTerm])
 
   const sortedData = useMemo(() => {
     if (sortConfig !== null) {
-      return [...data].sort((a, b) => {
-      // return [...filteredData].sort((a, b) => {
+      return [...filteredData].sort((a, b) => {
         const key = sortConfig.key
         const direction = sortConfig.direction === 'ascending' ? 1 : -1
         const aKey = a[key]
@@ -125,17 +131,19 @@ export default function GenericTable<T extends Record<string, any>>({
         return aKey < bKey ? -1 * direction : aKey > bKey ? 1 * direction : 0
       })
     }
-    return data
-  }, [data, sortConfig])
+    return filteredData
+  }, [filteredData, sortConfig])
 
   return (
     <>
-      <Input
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={handleSearchChange}
-      />
-      <TableContainer>
+      {!disableSearch && (
+        <SearchInput
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          handleSearchChange={handleSearchChange}
+        />
+      )}
+      <TableContainer maxWidth={'100%'}>
         <Table variant="simple">
           <Thead>
             <Tr>
@@ -191,59 +199,79 @@ export default function GenericTable<T extends Record<string, any>>({
             </Tr>
           </Thead>
           <Tbody>
-            {sortedData.map((row, index) => {
-              const key = multiSelectKeyExtractor
-                ? multiSelectKeyExtractor(row)
-                : ''
-              return (
-                <Tr
-                  key={index}
-                  bg={
-                    selectedRow && row === selectedRow
-                      ? selectedBgColor
-                      : bgColor
+            {sortedData.length === 0 ? (
+              <Tr>
+                <Td
+                  colSpan={
+                    enableMultiSelect
+                      ? data.length > 0
+                        ? Object.keys(data[0]).length + 1
+                        : headers.length + 1
+                      : data.length > 0
+                        ? Object.keys(data[0]).length
+                        : headers.length
                   }
-                  onClick={() => setSelectedRow && setSelectedRow(row)}
-                  cursor="pointer"
+                  textAlign="center"
                 >
-                  {enableMultiSelect && (
-                    <Td>
-                      <Checkbox
-                        size={'lg'}
-                        bg={'white'}
-                        isChecked={selectedRows.includes(key)}
-                        onChange={() => handleRowCheckboxChange(key)}
-                      />
-                    </Td>
-                  )}
-                  {headers.map((header, i) => (
-                    <Td key={i} color={textColor}>
-                      <Flex flexDirection={'column'}>
-                        {typeof row[header.sortKey as keyof T] === 'boolean' ? (
-                          row[header.sortKey as keyof T] ? (
-                            <TrueIcon />
+                  {noRecordsMessage}
+                </Td>
+              </Tr>
+            ) : (
+              sortedData.map((row, index) => {
+                const key = multiSelectKeyExtractor
+                  ? multiSelectKeyExtractor(row)
+                  : ''
+                return (
+                  <Tr
+                    key={index}
+                    bg={
+                      selectedRow && row === selectedRow
+                        ? selectedBgColor
+                        : bgColor
+                    }
+                    onClick={() => setSelectedRow && setSelectedRow(row)}
+                    cursor="pointer"
+                  >
+                    {enableMultiSelect && (
+                      <Td>
+                        <Checkbox
+                          size={'lg'}
+                          bg={'white'}
+                          isChecked={selectedRows.includes(key)}
+                          onChange={() => handleRowCheckboxChange(key)}
+                        />
+                      </Td>
+                    )}
+                    {headers.map((header, i) => (
+                      <Td key={i} color={textColor}>
+                        <Flex flexDirection={'column'}>
+                          {typeof row[header.sortKey as keyof T] ===
+                          'boolean' ? (
+                            row[header.sortKey as keyof T] ? (
+                              <TrueIcon />
+                            ) : (
+                              <FalseIcon />
+                            )
                           ) : (
-                            <FalseIcon />
-                          )
-                        ) : (
-                          <Text>
-                            {typeof row[header.sortKey as keyof T] !==
-                              'undefined' && row[header.sortKey as keyof T]}
-                          </Text>
-                        )}
-                        {header.subField && (
-                          <Text fontSize={'sm'} color={subTextColor}>
-                            {typeof row[header.subField as keyof T] !==
-                              'undefined' && row[header.subField as keyof T]}
-                          </Text>
-                        )}
-                      </Flex>
-                    </Td>
-                  ))}
-                  {rowActionButtons && <Td>{rowActionButtons(row)}</Td>}
-                </Tr>
-              )
-            })}
+                            <Text>
+                              {typeof row[header.sortKey as keyof T] !==
+                                'undefined' && row[header.sortKey as keyof T]}
+                            </Text>
+                          )}
+                          {header.subField && (
+                            <Text fontSize={'sm'} color={subTextColor}>
+                              {typeof row[header.subField as keyof T] !==
+                                'undefined' && row[header.subField as keyof T]}
+                            </Text>
+                          )}
+                        </Flex>
+                      </Td>
+                    ))}
+                    {rowActionButtons && <Td>{rowActionButtons(row)}</Td>}
+                  </Tr>
+                )
+              })
+            )}
           </Tbody>
         </Table>
       </TableContainer>
