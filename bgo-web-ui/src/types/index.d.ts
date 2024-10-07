@@ -30,7 +30,7 @@ declare global {
     location: string
     createdDate: string
     playedDate?: string | null
-    imagePath?: string
+    imagePath?: string | null
   }
 
   export interface Player {
@@ -48,9 +48,9 @@ declare global {
     imagePath?: string
   }
 
-  export interface PlayerEnhancements {
+  export interface PlayerExtensions {
     fullName: string
   }
-  export type EnhancedPlayer = Player & PlayerEnhancements
+  export type ExtendedPlayer = Player & PlayerExtensions
 }
 export {}

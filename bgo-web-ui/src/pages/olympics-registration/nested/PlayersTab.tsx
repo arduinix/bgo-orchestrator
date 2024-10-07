@@ -36,22 +36,36 @@ export default function PlayersTab() {
     onOpen: onOpenEdit,
     onClose: onCloseEdit,
   } = useDisclosure()
-  const [selectedPlayer, setSelectedPlayer] = useState<EnhancedPlayer | null>(
-    null
-  )
-  const [enhancedPlayers, setEnhancedPlayers] = useState<EnhancedPlayer[]>([])
+  const [selectedPlayer, setSelectedPlayer] = useState<
+    ExtendedPlayer | Player | null
+  >(null)
+  const [extendedPlayers, setExtendedPlayers] = useState<ExtendedPlayer[]>([])
 
-  const handleDeleteClick = (player: EnhancedPlayer) => {
+  const handleDeleteClick = (player: ExtendedPlayer) => {
     setSelectedPlayer(player)
     onOpenDelete()
   }
 
-  const handleEditClick = (player: EnhancedPlayer) => {
+  const handleEditClick = (player: ExtendedPlayer) => {
     setSelectedPlayer(player)
     onOpenEdit()
   }
 
-  const headers: TableHeader<EnhancedPlayer>[] = [
+  const handleAddClick = () => {
+    setSelectedPlayer({
+      id: 'new',
+      fName: '',
+      mInit: '',
+      lName: '',
+      nickName: '',
+      phone: '',
+      email: '',
+      isPlaying: false,
+    } as Player)
+    onOpenEdit()
+  }
+
+  const headers: TableHeader<ExtendedPlayer>[] = [
     { text: 'Player Name', sortKey: 'fullName', subField: 'nickName' },
     { text: 'Email', sortKey: 'email' },
     { text: 'Phone', sortKey: 'phone' },
@@ -60,14 +74,14 @@ export default function PlayersTab() {
   ]
 
   useEffect(() => {
-    const enhancedPlayers = data.map((player) => ({
+    const extendedPlayers = data.map((player) => ({
       ...player,
       fullName: formatPlayerName(player),
     }))
-    setEnhancedPlayers(enhancedPlayers)
+    setExtendedPlayers(extendedPlayers)
   }, [data])
 
-  const rowActionButtons = (player: EnhancedPlayer) => {
+  const rowActionButtons = (player: ExtendedPlayer) => {
     return (
       <Flex gap={2}>
         <IconButton
@@ -113,12 +127,12 @@ export default function PlayersTab() {
             </MenuList>
           </Menu>
           <Spacer />
-          <Button>Add Player</Button>
+          <Button onClick={handleAddClick}>Add Player</Button>
         </ButtonGroup>
 
         <Input placeholder="Search players" />
         <GenericTable
-          data={enhancedPlayers}
+          data={extendedPlayers}
           headers={headers}
           selectedRow={selectedPlayer}
           setSelectedRow={(player) => setSelectedPlayer(player)}
@@ -151,13 +165,19 @@ export default function PlayersTab() {
       <ConfirmActionModal
         isOpen={isOpenEdit}
         closeAction={onCloseEdit}
-        header="Edit Player Information"
+        header={
+          selectedPlayer && selectedPlayer.id === 'new'
+            ? 'Create New Player'
+            : 'Edit Player Information'
+        }
         body={
           selectedPlayer && (
             <EditPlayerForm player={selectedPlayer} closeAction={onCloseEdit} />
           )
         }
-        confirmButtonText="Save"
+        confirmButtonText={
+          selectedPlayer && selectedPlayer.id === 'new' ? 'Create' : 'Save'
+        }
         confirmButtonColor="blue"
         size="3xl"
         backgroundColor={useColorModeValue('gray.50', 'gray.800')}
