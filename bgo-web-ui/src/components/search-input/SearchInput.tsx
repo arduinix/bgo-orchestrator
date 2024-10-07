@@ -1,11 +1,13 @@
 import {
   Input,
   InputRightElement,
+  InputLeftElement,
   InputGroup,
   IconButton,
   Tooltip,
+  Icon,
 } from '@chakra-ui/react'
-import { IoMdClose } from 'react-icons/io'
+import { IoMdClose, IoMdSearch } from 'react-icons/io'
 
 export interface SearchInputProps {
   searchTerm: string
@@ -20,6 +22,9 @@ export default function SearchInput({
 }: SearchInputProps) {
   return (
     <InputGroup width={'50%'} mb={1}>
+      <InputLeftElement>
+        <Icon as={IoMdSearch} color="gray.300" fontSize={25} />
+      </InputLeftElement>
       <Input
         placeholder="Search..."
         value={searchTerm}

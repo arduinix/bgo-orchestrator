@@ -16,6 +16,7 @@ import {
 import { FaSortAlphaDown, FaSortAlphaDownAlt } from 'react-icons/fa'
 import { TrueIcon, FalseIcon } from '@components/standards/StandardIcons'
 import SearchInput from '@components/search-input/SearchInput'
+import PaginationControl from '@components/pagination-control/PaginationControl'
 
 interface SortConfig<T> {
   key: keyof T
@@ -275,6 +276,13 @@ export default function GenericTable<T extends Record<string, any>>({
           </Tbody>
         </Table>
       </TableContainer>
+      <PaginationControl
+        totalPages={7}
+        itemsPerPage={10}
+        currentPage={1}
+        onPageChange={() => {}}
+        onItemsPerPageChange={() => {}}
+      />
     </>
   )
 }
