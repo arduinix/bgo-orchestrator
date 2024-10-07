@@ -18,7 +18,7 @@ import ConfirmActionModal from '../../../components/confirm-action-modal/Confirm
 import { useState, useEffect } from 'react'
 import players from '../../../data/players.json'
 import EditPlayerForm from './EditPlayerForm'
-import GenericTable, { TableHeader } from './GenericTable'
+import GenericTable, { TableHeader } from '../../../components/generic-table/GenericTable'
 import { formatPlayerName } from '@utils/stringConversion'
 import { FiTrash2, FiEdit } from 'react-icons/fi'
 
