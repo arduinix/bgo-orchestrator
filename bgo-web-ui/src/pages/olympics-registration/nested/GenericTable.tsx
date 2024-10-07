@@ -1,4 +1,4 @@
-import React, { useState, ReactNode } from 'react'
+import React, { useState, ReactNode, useMemo } from 'react'
 import {
   TableContainer,
   Table,
@@ -50,6 +50,11 @@ export default function GenericTable<T extends Record<string, any>>({
 }: GenericTableProps<T>) {
   const [sortConfig, setSortConfig] = useState<SortConfig<T> | null>(null)
   const [selectedRows, setSelectedRows] = useState<string[]>([])
+  const [searchTerm, setSearchTerm] = useState('')
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value)
+  }
 
   const handleRowCheckboxChange = (key: string) => {
     setSelectedRows((prevSelectedRows: string[]) =>
@@ -68,6 +73,7 @@ export default function GenericTable<T extends Record<string, any>>({
       }
     }
   }
+
   const isAllSelected = selectedRows.length === data.length
   const { colorMode } = useColorMode()
   const bgColor = colorMode === 'dark' ? 'gray.700' : 'white'
@@ -99,9 +105,17 @@ export default function GenericTable<T extends Record<string, any>>({
     return null
   }
 
-  const sortedData = React.useMemo(() => {
+  // const filteredData = useMemo(() => {
+  //   return data.filter(
+  //     (item) =>
+  //       item.name && item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  //   )
+  // }, [data, searchTerm])
+
+  const sortedData = useMemo(() => {
     if (sortConfig !== null) {
       return [...data].sort((a, b) => {
+      // return [...filteredData].sort((a, b) => {
         const key = sortConfig.key
         const direction = sortConfig.direction === 'ascending' ? 1 : -1
         const aKey = a[key]
@@ -116,7 +130,11 @@ export default function GenericTable<T extends Record<string, any>>({
 
   return (
     <>
-      <Input placeholder="Search..." />
+      <Input
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={handleSearchChange}
+      />
       <TableContainer>
         <Table variant="simple">
           <Thead>
