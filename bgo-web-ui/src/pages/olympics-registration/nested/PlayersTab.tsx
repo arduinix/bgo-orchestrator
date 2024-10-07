@@ -1,7 +1,6 @@
 import {
   Button,
   ButtonGroup,
-  Input,
   Flex,
   Spacer,
   useDisclosure,
@@ -129,8 +128,6 @@ export default function PlayersTab() {
           <Spacer />
           <Button onClick={handleAddClick}>Add Player</Button>
         </ButtonGroup>
-
-        <Input placeholder="Search players" />
         <GenericTable
           data={extendedPlayers}
           headers={headers}

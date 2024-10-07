@@ -12,6 +12,7 @@ import {
   Text,
   useColorMode,
   Box,
+  Input,
 } from '@chakra-ui/react'
 import { FaSortAlphaDown, FaSortAlphaDownAlt } from 'react-icons/fa'
 import { TrueIcon, FalseIcon } from '@components/standards/StandardIcons'
@@ -114,115 +115,120 @@ export default function GenericTable<T extends Record<string, any>>({
   }, [data, sortConfig])
 
   return (
-    <TableContainer>
-      <Table variant="simple">
-        <Thead>
-          <Tr>
-            {enableMultiSelect && (
+    <>
+      <Input placeholder="Search..." />
+      <TableContainer>
+        <Table variant="simple">
+          <Thead>
+            <Tr>
+              {enableMultiSelect && (
+                <Th
+                  key={'selectAllRows'}
+                  bg={headerBgColor}
+                  color={textColor}
+                  textAlign="left"
+                  fontWeight="bold"
+                  fontSize={'sm'}
+                  p={4}
+                >
+                  <Checkbox
+                    size={'lg'}
+                    bg={'white'}
+                    ml={2}
+                    isChecked={isAllSelected}
+                    onChange={handleHeaderCheckboxChange}
+                  />
+                </Th>
+              )}
+              {headers.map((header, index) => (
+                <Th
+                  key={index}
+                  onClick={
+                    header.sortKey !== null
+                      ? () => handleSort(header.sortKey as keyof T)
+                      : undefined
+                  }
+                  cursor={header.sortKey ? 'pointer' : 'default'}
+                  bg={headerBgColor}
+                  color={textColor}
+                  textAlign="center"
+                  fontWeight="bold"
+                  fontSize={'sm'}
+                  p={4}
+                >
+                  <Flex>
+                    <Box mr={2}>{header.text}</Box>
+                    <Box>{header.sortKey && getSortIcon(header.sortKey)}</Box>
+                  </Flex>
+                </Th>
+              ))}
               <Th
-                key={'selectAllRows'}
-                bg={headerBgColor}
-                color={textColor}
-                textAlign="left"
-                fontWeight="bold"
-                fontSize={'sm'}
-                p={4}
-              >
-                <Checkbox
-                  size={'lg'}
-                  bg={'white'}
-                  ml={2}
-                  isChecked={isAllSelected}
-                  onChange={handleHeaderCheckboxChange}
-                />
-              </Th>
-            )}
-            {headers.map((header, index) => (
-              <Th
-                key={index}
-                onClick={
-                  header.sortKey !== null
-                    ? () => handleSort(header.sortKey as keyof T)
-                    : undefined
-                }
-                cursor={header.sortKey ? 'pointer' : 'default'}
                 bg={headerBgColor}
                 color={textColor}
                 textAlign="center"
                 fontWeight="bold"
                 fontSize={'sm'}
                 p={4}
-              >
-                <Flex>
-                  <Box mr={2}>{header.text}</Box>
-                  <Box>{header.sortKey && getSortIcon(header.sortKey)}</Box>
-                </Flex>
-              </Th>
-            ))}
-            <Th
-              bg={headerBgColor}
-              color={textColor}
-              textAlign="center"
-              fontWeight="bold"
-              fontSize={'sm'}
-              p={4}
-            />
-          </Tr>
-        </Thead>
-        <Tbody>
-          {sortedData.map((row, index) => {
-            const key = multiSelectKeyExtractor
-              ? multiSelectKeyExtractor(row)
-              : ''
-            return (
-              <Tr
-                key={index}
-                bg={
-                  selectedRow && row === selectedRow ? selectedBgColor : bgColor
-                }
-                onClick={() => setSelectedRow && setSelectedRow(row)}
-                cursor="pointer"
-              >
-                {enableMultiSelect && (
-                  <Td>
-                    <Checkbox
-                      size={'lg'}
-                      bg={'white'}
-                      isChecked={selectedRows.includes(key)}
-                      onChange={() => handleRowCheckboxChange(key)}
-                    />
-                  </Td>
-                )}
-                {headers.map((header, i) => (
-                  <Td key={i} color={textColor}>
-                    <Flex flexDirection={'column'}>
-                      {typeof row[header.sortKey as keyof T] === 'boolean' ? (
-                        row[header.sortKey as keyof T] ? (
-                          <TrueIcon />
+              />
+            </Tr>
+          </Thead>
+          <Tbody>
+            {sortedData.map((row, index) => {
+              const key = multiSelectKeyExtractor
+                ? multiSelectKeyExtractor(row)
+                : ''
+              return (
+                <Tr
+                  key={index}
+                  bg={
+                    selectedRow && row === selectedRow
+                      ? selectedBgColor
+                      : bgColor
+                  }
+                  onClick={() => setSelectedRow && setSelectedRow(row)}
+                  cursor="pointer"
+                >
+                  {enableMultiSelect && (
+                    <Td>
+                      <Checkbox
+                        size={'lg'}
+                        bg={'white'}
+                        isChecked={selectedRows.includes(key)}
+                        onChange={() => handleRowCheckboxChange(key)}
+                      />
+                    </Td>
+                  )}
+                  {headers.map((header, i) => (
+                    <Td key={i} color={textColor}>
+                      <Flex flexDirection={'column'}>
+                        {typeof row[header.sortKey as keyof T] === 'boolean' ? (
+                          row[header.sortKey as keyof T] ? (
+                            <TrueIcon />
+                          ) : (
+                            <FalseIcon />
+                          )
                         ) : (
-                          <FalseIcon />
-                        )
-                      ) : (
-                        <Text>
-                          {typeof row[header.sortKey as keyof T] !==
-                            'undefined' && row[header.sortKey as keyof T]}
-                        </Text>
-                      )}
-                      {header.subField && (
-                        <Text fontSize={'sm'} color={subTextColor}>
-                          {typeof row[header.subField as keyof T] !==
-                            'undefined' && row[header.subField as keyof T]}
-                        </Text>
-                      )}
-                    </Flex>
-                  </Td>
-                ))}
-                {rowActionButtons && <Td>{rowActionButtons(row)}</Td>}
-              </Tr>
-            )
-          })}
-        </Tbody>
-      </Table>
-    </TableContainer>
+                          <Text>
+                            {typeof row[header.sortKey as keyof T] !==
+                              'undefined' && row[header.sortKey as keyof T]}
+                          </Text>
+                        )}
+                        {header.subField && (
+                          <Text fontSize={'sm'} color={subTextColor}>
+                            {typeof row[header.subField as keyof T] !==
+                              'undefined' && row[header.subField as keyof T]}
+                          </Text>
+                        )}
+                      </Flex>
+                    </Td>
+                  ))}
+                  {rowActionButtons && <Td>{rowActionButtons(row)}</Td>}
+                </Tr>
+              )
+            })}
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </>
   )
 }
