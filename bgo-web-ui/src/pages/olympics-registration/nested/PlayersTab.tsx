@@ -96,17 +96,20 @@ export default function PlayersTab() {
               colorScheme="blue"
               rightIcon={<ChevronDownIcon />}
             >
-              Bulk Actions
+              Actions
             </MenuButton>
             <MenuList>
               <MenuItem>Import CSV</MenuItem>
-              <MenuItem>Import Player Group</MenuItem>
+              <MenuItem isDisabled>Import from Player Group</MenuItem>
               <MenuDivider />
               <MenuItem>Export CSV</MenuItem>
-              <MenuItem>Export Player Group</MenuItem>
+              <MenuItem isDisabled>Export to Player Group</MenuItem>
               <MenuDivider />
-              <MenuItem>Withdraw Selected Players</MenuItem>
+              <MenuItem>Set In-Play</MenuItem>
+              <MenuItem>Set Out-Of-Play</MenuItem>
               <MenuItem>Remove Selected Players</MenuItem>
+              <MenuDivider />
+              <MenuItem>Add Player</MenuItem>
             </MenuList>
           </Menu>
           <Spacer />

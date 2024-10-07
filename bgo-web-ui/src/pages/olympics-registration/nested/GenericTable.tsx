@@ -14,6 +14,7 @@ import {
   Box,
 } from '@chakra-ui/react'
 import { FaSortAlphaDown, FaSortAlphaDownAlt } from 'react-icons/fa'
+import { TrueIcon, FalseIcon } from '@components/standards/StandardIcons'
 
 interface SortConfig<T> {
   key: keyof T
@@ -196,12 +197,11 @@ export default function GenericTable<T extends Record<string, any>>({
                   <Td key={i} color={textColor}>
                     <Flex flexDirection={'column'}>
                       {typeof row[header.sortKey as keyof T] === 'boolean' ? (
-                        <Checkbox
-                          size={'lg'}
-                          isChecked={row[header.sortKey as keyof T] as boolean}
-                          alignSelf={'center'}
-                          isReadOnly
-                        />
+                        row[header.sortKey as keyof T] ? (
+                          <TrueIcon />
+                        ) : (
+                          <FalseIcon />
+                        )
                       ) : (
                         <Text>
                           {typeof row[header.sortKey as keyof T] !==
