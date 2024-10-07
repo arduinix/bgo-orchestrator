@@ -12,7 +12,6 @@ import {
 } from '@chakra-ui/react'
 import AvatarNameFlex from '@components/avatar-name-flex/AvatarNameFlex'
 import CustomQRCode from '@components/custom-qr-code/CustomQRCode'
-import { use } from 'framer-motion/client'
 
 const BoldFormLabel = chakra(FormLabel, {
   baseStyle: {

@@ -1,0 +1,60 @@
+{
+  "catagories": [
+    {
+      "id": "1",
+      "name": "Card Games",
+      "description": "Games involving decks of cards.",
+      "totalGames": 0,
+      "isInPlay": true
+    },
+    {
+      "id": "1",
+      "name": "Convert Goods",
+      "description": "Games where players convert raw materials or goods into other forms for progression.",
+      "totalGames": 0,
+      "isInPlay": true
+    },
+    {
+      "id": "2",
+      "name": "Dad Jokes",
+      "description": "Games centered around humorous and corny one-liners or jokes.",
+      "totalGames": 0,
+      "isInPlay": true
+    },
+    {
+      "id": "3",
+      "name": "Get Rich",
+      "description": "Games focused on accumulating wealth and resources through strategic decisions.",
+      "totalGames": 0,
+      "isInPlay": true
+    },
+    {
+      "id": "4",
+      "name": "Roll/Flip and Write",
+      "description": "Games where players roll dice or flip cards and write down results to achieve objectives.",
+      "totalGames": 0,
+      "isInPlay": true
+    },
+    {
+      "id": "5",
+      "name": "Scheming",
+      "description": "Games that involve plotting and strategy, often with elements of deception.",
+      "totalGames": 0,
+      "isInPlay": true
+    },
+    {
+      "id": "6",
+      "name": "Supply Chain",
+      "description": "Games where players manage supply chains and resources to meet demands.",
+      "totalGames": 0,
+      "isInPlay": true
+    },
+    {
+      "id": "7",
+      "name": "Tile Placement",
+      "description": "Games where players strategically place tiles to build areas or achieve objectives.",
+      "totalGames": 0,
+      "isInPlay": true
+    }
+  ]
+}

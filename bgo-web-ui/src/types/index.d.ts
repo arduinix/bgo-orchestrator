@@ -52,5 +52,14 @@ declare global {
     fullName: string
   }
   export type ExtendedPlayer = Player & PlayerExtensions
+
+  export interface GameCategory {
+    id: string
+    name: string
+    description: string
+    totalGames: number
+    isInPlay: boolean
+  }
 }
+
 export {}

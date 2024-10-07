@@ -18,7 +18,9 @@ import ConfirmActionModal from '../../../components/confirm-action-modal/Confirm
 import { useState, useEffect } from 'react'
 import players from '../../../data/players.json'
 import EditPlayerForm from './EditPlayerForm'
-import GenericTable, { TableHeader } from '../../../components/generic-table/GenericTable'
+import GenericTable, {
+  TableHeader,
+} from '../../../components/generic-table/GenericTable'
 import { formatPlayerName } from '@utils/stringConversion'
 import { FiTrash2, FiEdit } from 'react-icons/fi'
 
@@ -120,6 +122,7 @@ export default function PlayersTab() {
               <MenuDivider />
               <MenuItem>Set In-Play</MenuItem>
               <MenuItem>Set Out-Of-Play</MenuItem>
+              <MenuDivider />
               <MenuItem>Remove Selected Players</MenuItem>
               <MenuDivider />
               <MenuItem>Add Player</MenuItem>
@@ -131,7 +134,7 @@ export default function PlayersTab() {
         <GenericTable
           data={extendedPlayers}
           headers={headers}
-          selectedRow={selectedPlayer}
+          selectedRow={selectedPlayer as ExtendedPlayer}
           setSelectedRow={(player) => setSelectedPlayer(player)}
           enableMultiSelect
           multiSelectKeyExtractor={(player) => player.id}
