@@ -37,6 +37,7 @@ export default function EditCategoryForm({
     setCurrentCategory(category)
   }, [category])
 
+
   const handleFieldUpdate = (key: string, value: string | boolean) => {
     if (currentCategory) {
       setCurrentCategory({

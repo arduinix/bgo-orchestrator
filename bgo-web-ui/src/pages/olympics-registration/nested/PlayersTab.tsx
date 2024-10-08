@@ -67,7 +67,24 @@ export default function PlayersTab() {
   }
 
   const headers: TableHeader<ExtendedPlayer>[] = [
-    { text: 'Player Name', sortKey: 'fullName', subField: 'nickName' },
+    {
+      text: 'Player Name',
+      sortKey: 'fullName',
+      subField: 'nickName',
+      cellStyle: { fontWeight: 'bold', color: '#206CAF' },
+      subFieldStyle: {
+        fontWeight: 'normal',
+        color: '#4A8DD9',
+        fontSize: 'sm',
+        fontStyle: 'italic',
+        '::before': {
+          content: '"“"',
+        },
+        '::after': {
+          content: '"”"',
+        },
+      },
+    },
     { text: 'Email', sortKey: 'email' },
     { text: 'Phone', sortKey: 'phone' },
     { text: 'Playing', sortKey: 'isPlaying' },
@@ -87,13 +104,13 @@ export default function PlayersTab() {
       <Flex gap={2}>
         <IconButton
           size={'sm'}
-          aria-label="delete row"
+          aria-label="delete player"
           icon={<FiTrash2 />}
           onClick={() => handleDeleteClick(player)}
         />
         <IconButton
           size={'sm'}
-          aria-label="edit row"
+          aria-label="edit player"
           icon={<FiEdit />}
           onClick={() => handleEditClick(player)}
         />

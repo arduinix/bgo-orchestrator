@@ -62,8 +62,24 @@ export default function CategoriesTab() {
   }
 
   const headers: TableHeader<GameCategory>[] = [
-    { text: 'Category Name', sortKey: 'name' },
-    { text: 'Description', sortKey: 'description' },
+    {
+      text: 'Category Name',
+      sortKey: 'name',
+      cellStyle: { fontWeight: 'bold', color: '#206CAF' },
+    },
+    {
+      text: 'Description',
+      sortKey: 'description',
+      cellStyle: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'normal',
+        maxWidth: '300px',
+        display: '-webkit-box',
+        WebkitLineClamp: 2,
+        WebkitBoxOrient: 'vertical',
+      },
+    },
     { text: 'Total Games', sortKey: 'totalGames' },
     { text: 'In Play', sortKey: 'isInPlay' },
     { text: null, sortKey: null },

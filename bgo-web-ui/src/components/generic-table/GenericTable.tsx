@@ -13,6 +13,7 @@ import {
   useColorMode,
   Box,
 } from '@chakra-ui/react'
+import { SystemStyleObject } from '@chakra-ui/styled-system'
 import { FaSortAlphaDown, FaSortAlphaDownAlt } from 'react-icons/fa'
 import { TrueIcon, FalseIcon } from '@components/standards/StandardIcons'
 import SearchInput from '@components/search-input/SearchInput'
@@ -25,8 +26,11 @@ interface SortConfig<T> {
 
 export interface TableHeader<T> {
   text: string | ReactNode
-  sortKey: keyof T | null
-  subField?: keyof T | null
+  sortKey: keyof T | null // The key to sort and search by if there is no showKey
+  cellStyle?: SystemStyleObject
+  subFieldStyle?: SystemStyleObject
+  showKey?: keyof T | null // The key of the field to show in the table cell
+  subField?: keyof T | null // A secondary field to be rendered as subtext under the main field
 }
 
 interface GenericTableProps<T> {
@@ -150,6 +154,40 @@ export default function GenericTable<T extends Record<string, any>>({
     return sortedData.slice(indexOfFirstRow, indexOfLastRow)
   }, [sortedData, indexOfFirstRow, indexOfLastRow])
 
+  const renderTableRowField = (
+    value: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+    cellStyle: SystemStyleObject
+  ): ReactNode => {
+    if (typeof value === 'boolean') {
+      return value ? <TrueIcon /> : <FalseIcon />
+    } else if (typeof value === 'string' || typeof value === 'number') {
+      return (
+        <Text color={textColor} sx={cellStyle}>
+          {value}
+        </Text>
+      )
+    } else if (React.isValidElement(value)) {
+      return value
+    } else {
+      return null
+    }
+  }
+
+  const renderSubField = (
+    value: any, // eslint-disable-line @typescript-eslint/no-explicit-any
+    subFieldStyle: SystemStyleObject
+  ): ReactNode => {
+    if (typeof value === 'string' || typeof value === 'number') {
+      return (
+        <Text color={subTextColor} sx={subFieldStyle}>
+          {value}
+        </Text>
+      )
+    } else {
+      return null
+    }
+  }
+
   return (
     <>
       {!disableSearch && (
@@ -261,25 +299,19 @@ export default function GenericTable<T extends Record<string, any>>({
                     {headers.map((header, i) => (
                       <Td key={i} color={textColor}>
                         <Flex flexDirection={'column'}>
-                          {typeof row[header.sortKey as keyof T] ===
-                          'boolean' ? (
-                            row[header.sortKey as keyof T] ? (
-                              <TrueIcon />
-                            ) : (
-                              <FalseIcon />
-                            )
-                          ) : (
-                            <Text>
-                              {typeof row[header.sortKey as keyof T] !==
-                                'undefined' && row[header.sortKey as keyof T]}
-                            </Text>
+                          {renderTableRowField(
+                            row[
+                              header.showKey
+                                ? header.showKey
+                                : (header.sortKey as keyof T)
+                            ],
+                            header.cellStyle as SystemStyleObject
                           )}
-                          {header.subField && (
-                            <Text fontSize={'sm'} color={subTextColor}>
-                              {typeof row[header.subField as keyof T] !==
-                                'undefined' && row[header.subField as keyof T]}
-                            </Text>
-                          )}
+                          {header.subField &&
+                            renderSubField(
+                              row[header.subField as keyof T],
+                              header.subFieldStyle as SystemStyleObject
+                            )}
                         </Flex>
                       </Td>
                     ))}
