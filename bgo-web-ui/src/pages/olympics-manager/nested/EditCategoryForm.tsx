@@ -12,6 +12,7 @@ import {
   chakra,
 } from '@chakra-ui/react'
 import CustomQRCode from '@components/custom-qr-code/CustomQRCode'
+import ColorPickerDropdown from '@components/color-picker-dropdown/ColorPickerDropdown'
 
 const BoldFormLabel = chakra(FormLabel, {
   baseStyle: {
@@ -37,7 +38,6 @@ export default function EditCategoryForm({
   useEffect(() => {
     setCurrentCategory(category)
   }, [category])
-
 
   const handleFieldUpdate = (key: string, value: string | boolean) => {
     if (currentCategory) {
@@ -72,20 +72,22 @@ export default function EditCategoryForm({
                         }
                       />
                     </Box>
-                    
+                    <Box minWidth={'30%'}>
+                      <BoldFormLabel>Category Color</BoldFormLabel>
+                      <ColorPickerDropdown />
+                    </Box>
                   </Flex>
                   <Flex gap={2}>
                     <Box width={'70%'}>
                       <BoldFormLabel>Description</BoldFormLabel>
                       <Textarea
                         value={description}
-
                         onChange={(e) =>
                           handleFieldUpdate('description', e.target.value)
                         }
                       />
                     </Box>
-                    <Box width={'30%'} alignSelf={'flex-end'} pt={7} pl={8}>
+                    <Box width={'30%'} alignSelf={'flex-end'} pl={20}>
                       <Checkbox
                         size={'lg'}
                         isChecked={isInPlay}

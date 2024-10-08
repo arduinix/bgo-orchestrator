@@ -60,6 +60,11 @@ declare global {
     totalGames: number
     isInPlay: boolean
   }
+
+  export interface CategoryColor {
+    name: string
+    hex: string
+  }
 }
 
 export {}

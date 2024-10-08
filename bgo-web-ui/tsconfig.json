@@ -9,6 +9,7 @@
     "paths": {
       "@types/*": ["src/types/*"],
       "@utils/*": ["src/lib/utils/*"],
+      "@constants/*": ["src/lib/constants/*"],
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"],
       "@assets/*": ["src/assets/*"],
