@@ -3,6 +3,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Textarea,
   Flex,
   Box,
   Checkbox,
@@ -71,7 +72,20 @@ export default function EditCategoryForm({
                         }
                       />
                     </Box>
-                    <Box width={'20%'} alignSelf={'center'} mt={7}>
+                    
+                  </Flex>
+                  <Flex gap={2}>
+                    <Box width={'70%'}>
+                      <BoldFormLabel>Description</BoldFormLabel>
+                      <Textarea
+                        value={description}
+
+                        onChange={(e) =>
+                          handleFieldUpdate('description', e.target.value)
+                        }
+                      />
+                    </Box>
+                    <Box width={'30%'} alignSelf={'flex-end'} pt={7} pl={8}>
                       <Checkbox
                         size={'lg'}
                         isChecked={isInPlay}
@@ -79,20 +93,8 @@ export default function EditCategoryForm({
                           handleFieldUpdate('isInPlay', e.target.checked)
                         }
                       >
-                        Category In Play?
+                        In Play
                       </Checkbox>
-                    </Box>
-                  </Flex>
-                  <Flex gap={2}>
-                    <Box width={'45%'}>
-                      <BoldFormLabel>Description</BoldFormLabel>
-                      <Input
-                        type="text"
-                        value={description}
-                        onChange={(e) =>
-                          handleFieldUpdate('description', e.target.value)
-                        }
-                      />
                     </Box>
                   </Flex>
                 </Flex>
