@@ -6,7 +6,6 @@ export default function OlympicsGames() {
     { label: 'Categories', content: <CategoriesTab /> },
     { label: 'Games', content: <p>Games</p> },
     { label: 'Tables', content: <p>Tables</p> },
-    { label: 'Import', content: <p>Import</p> },
   ]
 
   return <ReusableTabs tabs={tabs} />
