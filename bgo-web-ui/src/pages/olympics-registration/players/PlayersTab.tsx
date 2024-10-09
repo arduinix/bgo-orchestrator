@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import ConfirmActionModal from '../../../components/confirm-action-modal/ConfirmActionModal'
-import { useState, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import players from '../../../data/players.json'
 import EditPlayerForm from './EditPlayerForm'
 import GenericTable, {
@@ -40,7 +40,6 @@ export default function PlayersTab() {
   const [selectedPlayer, setSelectedPlayer] = useState<
     ExtendedPlayer | Player | null
   >(null)
-  const [extendedPlayers, setExtendedPlayers] = useState<ExtendedPlayer[]>([])
 
   const handleDeleteClick = (player: ExtendedPlayer) => {
     setSelectedPlayer(player)
@@ -91,13 +90,14 @@ export default function PlayersTab() {
     { text: null, sortKey: null },
   ]
 
-  useEffect(() => {
-    const extendedPlayers = data.map((player) => ({
-      ...player,
-      fullName: formatPlayerName(player),
-    }))
-    setExtendedPlayers(extendedPlayers)
-  }, [data])
+  const extendedPlayers = useMemo(
+    () =>
+      data.map((player) => ({
+        ...player,
+        fullName: formatPlayerName(player),
+      })),
+    [data]
+  )
 
   const rowActionButtons = (player: ExtendedPlayer) => {
     return (

@@ -59,12 +59,32 @@ declare global {
     description: string
     totalGames: number
     isInPlay: boolean
+    categoryColor?: CategoryColor
   }
 
   export interface CategoryColor {
     name: string
     hex: string
   }
+
+  export interface Game {
+    id: string
+    name: string
+    description: string
+    category: string
+    isInPlay: boolean
+    minPlayers: number
+    maxPlayers: number
+    lowScoreWins: boolean
+    addedDate: string
+    averageCompletionMinutes?: number
+    imagePath?: string
+  }
+  export interface GameExtensions {
+    playerScaleDisplayNode: React.ReactNode
+    scoreMethodDisplayNode: React.ReactNode
+  }
+  export type ExtendedGame = Game & GameExtensions
 }
 
 export {}
