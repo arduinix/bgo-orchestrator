@@ -87,7 +87,7 @@ export default function EditCategoryForm({
                         }
                       />
                     </Box>
-                    <Box width={'30%'} alignSelf={'flex-end'} pl={20}>
+                    <Box width={'30%'} alignSelf={'flex-end'} pl={20} pb={3}>
                       <Checkbox
                         size={'lg'}
                         isChecked={isInPlay}

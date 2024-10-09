@@ -1,5 +1,5 @@
 import ReusableTabs from '../../components/reusable-tabs/ReuseableTabs'
-import PlayersTab from './nested/PlayersTab'
+import PlayersTab from './players/PlayersTab'
 
 export default function OlympicsRegistration() {
   const tabs = [
