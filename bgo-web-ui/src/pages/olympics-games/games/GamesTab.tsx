@@ -114,9 +114,9 @@ export default function GamesTab() {
         scoreMethodDisplayNode: (
           <>
             {game.lowScoreWins ? (
-              <Badge colorScheme="purple">Low Wins</Badge>
+              <Badge colorScheme='purple'>Low Wins</Badge>
             ) : (
-              <Badge colorScheme="green">High Wins</Badge>
+              <Badge colorScheme='green'>High Wins</Badge>
             )}
           </>
         ),
@@ -129,13 +129,13 @@ export default function GamesTab() {
       <Flex gap={2}>
         <IconButton
           size={'sm'}
-          aria-label="delete row"
+          aria-label='delete row'
           icon={<FiTrash2 />}
           onClick={() => handleDeleteClick(game)}
         />
         <IconButton
           size={'sm'}
-          aria-label="edit row"
+          aria-label='edit row'
           icon={<FiEdit />}
           onClick={() => handleEditClick(game)}
         />
@@ -146,7 +146,7 @@ export default function GamesTab() {
   return (
     <>
       <Flex flexDirection={'column'} gap={4}>
-        <ButtonGroup colorScheme="blue" size={'md'}>
+        <ButtonGroup colorScheme='blue' size={'md'}>
           <Menu>
             <MenuButton
               as={Button}
@@ -180,12 +180,12 @@ export default function GamesTab() {
       <ConfirmActionModal
         isOpen={isOpenDelete}
         closeAction={onCloseDelete}
-        header="Delete Game?"
+        header='Delete Game?'
         body={
           <>
             Are you sure you want to remove the game{' '}
             {selectedGame ? (
-              <Text as="strong">{selectedGame.name}</Text>
+              <Text as='strong'>{selectedGame.name}</Text>
             ) : (
               'this game'
             )}
