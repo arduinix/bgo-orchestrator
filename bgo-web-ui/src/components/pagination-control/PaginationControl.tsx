@@ -16,7 +16,6 @@ interface PaginationControlProps {
   onItemsPerPageChange: (items: number) => void
   setCurrentPage: (page: number) => void
   itemsPerPageList?: number[]
-  
 }
 
 export default function PaginationControl({
@@ -30,15 +29,15 @@ export default function PaginationControl({
   const [itemsPerPageOptions] = useState(itemsPerPageList)
   const handleNextPage = () => {
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+      setCurrentPage(currentPage + 1)
     }
-  };
+  }
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      setCurrentPage(currentPage - 1)
     }
-  };
+  }
 
   return (
     <Flex alignItems="center" alignSelf={'center'} gap={8}>

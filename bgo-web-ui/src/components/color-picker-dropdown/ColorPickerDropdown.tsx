@@ -14,8 +14,6 @@ import selectableColors from '@constants/selectableColors'
 export default function ColorPickerDropdown() {
   const [selectedColor, setSelectedColor] = useState<CategoryColor | null>(null)
 
-  
-
   const handleColorChange = (color: CategoryColor | null) => {
     setSelectedColor(color)
   }

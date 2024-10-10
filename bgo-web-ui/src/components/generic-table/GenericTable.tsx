@@ -189,7 +189,7 @@ export default function GenericTable<T extends Record<string, any>>({
   }
 
   return (
-    <>
+    <Flex flexDirection={'column'} gap={2}>
       {!disableSearch && (
         <SearchInput
           searchTerm={searchTerm}
@@ -323,6 +323,7 @@ export default function GenericTable<T extends Record<string, any>>({
           </Tbody>
         </Table>
       </TableContainer>
+
       <PaginationControl
         totalPages={totalPages}
         itemsPerPage={rowsPerPage}
@@ -330,6 +331,6 @@ export default function GenericTable<T extends Record<string, any>>({
         setCurrentPage={setCurrentPage}
         onItemsPerPageChange={handleRowsPerPageChange}
       />
-    </>
+    </Flex>
   )
 }

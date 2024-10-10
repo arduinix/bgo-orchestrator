@@ -92,14 +92,12 @@ export default function GamesTab() {
       sortKey: 'maxPlayers',
       showKey: 'playerScaleDisplayNode',
     },
-    // { text: 'Min Players', sortKey: 'minPlayers' },
-    // { text: 'Max Players', sortKey: 'maxPlayers' },
     {
       text: 'Scoring',
       sortKey: 'lowScoreWins',
       showKey: 'scoreMethodDisplayNode',
     },
-    { text: 'Duration (avg)', sortKey: 'averageCompletionMinutes' },
+    { text: 'Duration', sortKey: 'averageCompletionMinutes' },
     { text: 'In Play', sortKey: 'isInPlay' },
     { text: null, sortKey: null },
   ]
@@ -152,7 +150,7 @@ export default function GamesTab() {
           <Menu>
             <MenuButton
               as={Button}
-              colorScheme="blue"
+              colorScheme='blue'
               rightIcon={<ChevronDownIcon />}
             >
               Actions
@@ -185,11 +183,11 @@ export default function GamesTab() {
         header="Delete Game?"
         body={
           <>
-            Are you sure you want to remove category{' '}
+            Are you sure you want to remove the game{' '}
             {selectedGame ? (
               <Text as="strong">{selectedGame.name}</Text>
             ) : (
-              'this category'
+              'this game'
             )}
             ? This action cannot be undone.
           </>
