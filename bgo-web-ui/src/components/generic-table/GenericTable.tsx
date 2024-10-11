@@ -41,6 +41,7 @@ interface GenericTableProps<T> {
   enableMultiSelect?: boolean
   multiSelectKeyExtractor?: (row: T) => string
   rowActionButtons?: (row: T) => ReactNode
+  rowClickAction?: (row: T) => void
   noRecordsMessage?: string | ReactNode
   disableSearch?: boolean
 }
@@ -54,6 +55,7 @@ export default function GenericTable<T extends Record<string, any>>({
   enableMultiSelect,
   multiSelectKeyExtractor,
   rowActionButtons,
+  rowClickAction,
   noRecordsMessage = 'No items found matching the search criteria.',
   disableSearch = false,
 }: GenericTableProps<T>) {
@@ -100,7 +102,7 @@ export default function GenericTable<T extends Record<string, any>>({
   const textColor = colorMode === 'dark' ? 'white' : 'black'
   const subTextColor = colorMode === 'dark' ? 'gray.100' : 'gray.500'
   const headerBgColor = colorMode === 'dark' ? 'gray.800' : 'gray.100'
-  const selectedBgColor = colorMode === 'dark' ? 'blue.900' : 'blue.100'
+  const selectedBgColor = colorMode === 'dark' ? 'blue.700' : 'blue.100'
 
   const handleSort = (key: keyof T) => {
     let direction: 'ascending' | 'descending' = 'ascending'
@@ -284,6 +286,10 @@ export default function GenericTable<T extends Record<string, any>>({
                         : bgColor
                     }
                     onClick={() => setSelectedRow && setSelectedRow(row)}
+                    // onClick={(e) => {
+                    //   e.stopPropagation()
+                    //   rowActionButtons && rowClickAction(row)
+                    // }}
                     cursor='pointer'
                   >
                     {enableMultiSelect && (

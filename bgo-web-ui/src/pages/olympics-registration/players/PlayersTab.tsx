@@ -159,6 +159,7 @@ export default function PlayersTab() {
           enableMultiSelect
           multiSelectKeyExtractor={(player) => player.id}
           rowActionButtons={rowActionButtons}
+          rowClickAction={handleEditClick}
         />
       </Flex>
       <ConfirmActionModal
