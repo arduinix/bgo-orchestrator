@@ -19,6 +19,7 @@ import ConfirmActionModal from '../../../components/confirm-action-modal/Confirm
 import { useState, useMemo } from 'react'
 import games from '../../../data/games.json'
 // import EditCategoryForm from './EditCategoryForm'
+import EditGameForm from './EditGameForm'
 import GenericTable, {
   TableHeader,
 } from '../../../components/generic-table/GenericTable'
@@ -204,24 +205,24 @@ export default function GamesTab() {
         }
       />
 
-      {/* <ConfirmActionModal
+      <ConfirmActionModal
         isOpen={isOpenEdit}
         closeAction={onCloseEdit}
         header={
           selectedGame?.id === 'new'
             ? 'Create New Game'
-            : 'Edit Game Information'
+            : `Edit Game: ${selectedGame?.name}`
         }
         body={
           selectedGame && (
-            <EditCategoryForm game={selectedGame} closeAction={onCloseEdit} />
+            <EditGameForm game={selectedGame} closeAction={onCloseEdit} />
           )
         }
         confirmButtonText={selectedGame?.id === 'new' ? 'Create' : 'Save'}
-        confirmButtonColor="blue"
-        size="3xl"
+        confirmButtonColor='blue'
+        size='3xl'
         backgroundColor={useColorModeValue('gray.50', 'gray.800')}
-      /> */}
+      />
     </>
   )
 }
