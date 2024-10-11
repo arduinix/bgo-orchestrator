@@ -65,7 +65,18 @@ export default function CategoriesTab() {
     {
       text: 'Category Name',
       sortKey: 'name',
-      cellStyle: { fontWeight: 'bold', color: '#206CAF' },
+      cellStyle: {
+        fontWeight: 'bold',
+        color: useColorModeValue('#206CAF', '#3ca4ff'),
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'normal',
+        maxWidth: '300px',
+        // minWidth: '200px',
+        display: '-webkit-box',
+        WebkitLineClamp: 2,
+        WebkitBoxOrient: 'vertical',
+      },
     },
     {
       text: 'Description',
@@ -82,7 +93,6 @@ export default function CategoriesTab() {
     },
     { text: 'Total Games', sortKey: 'totalGames' },
     { text: 'In Play', sortKey: 'isInPlay' },
-    { text: null, sortKey: null },
   ]
 
   const rowActionButtons = (category: GameCategory) => {
@@ -90,13 +100,13 @@ export default function CategoriesTab() {
       <Flex gap={2}>
         <IconButton
           size={'sm'}
-          aria-label="delete row"
+          aria-label='delete row'
           icon={<FiTrash2 />}
           onClick={() => handleDeleteClick(category)}
         />
         <IconButton
           size={'sm'}
-          aria-label="edit row"
+          aria-label='edit row'
           icon={<FiEdit />}
           onClick={() => handleEditClick(category)}
         />
@@ -107,11 +117,11 @@ export default function CategoriesTab() {
   return (
     <>
       <Flex flexDirection={'column'} gap={4}>
-        <ButtonGroup colorScheme="blue" size={'md'}>
+        <ButtonGroup colorScheme='blue' size={'md'}>
           <Menu>
             <MenuButton
               as={Button}
-              colorScheme="blue"
+              colorScheme='blue'
               rightIcon={<ChevronDownIcon />}
             >
               Actions
@@ -141,12 +151,12 @@ export default function CategoriesTab() {
       <ConfirmActionModal
         isOpen={isOpenDelete}
         closeAction={onCloseDelete}
-        header="Delete Category?"
+        header='Delete Category?'
         body={
           <>
             Are you sure you want to remove category{' '}
             {selectedCategory ? (
-              <Text as="strong">{selectedCategory.name}</Text>
+              <Text as='strong'>{selectedCategory.name}</Text>
             ) : (
               'this category'
             )}
@@ -174,8 +184,8 @@ export default function CategoriesTab() {
         confirmButtonText={
           selectedCategory && selectedCategory.id === 'new' ? 'Create' : 'Save'
         }
-        confirmButtonColor="blue"
-        size="3xl"
+        confirmButtonColor='blue'
+        size='3xl'
         backgroundColor={useColorModeValue('gray.50', 'gray.800')}
       />
     </>

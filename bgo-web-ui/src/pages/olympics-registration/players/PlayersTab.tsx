@@ -12,6 +12,7 @@ import {
   MenuItem,
   MenuDivider,
   IconButton,
+  useColorMode,
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
 import ConfirmActionModal from '../../../components/confirm-action-modal/ConfirmActionModal'
@@ -70,7 +71,10 @@ export default function PlayersTab() {
       text: 'Player Name',
       sortKey: 'fullName',
       subField: 'nickName',
-      cellStyle: { fontWeight: 'bold', color: '#206CAF' },
+      cellStyle: {
+        fontWeight: 'bold',
+        color: useColorModeValue('#206CAF', '#3ca4ff'),
+      },
       subFieldStyle: {
         fontWeight: 'normal',
         color: '#4A8DD9',
@@ -87,7 +91,6 @@ export default function PlayersTab() {
     { text: 'Email', sortKey: 'email' },
     { text: 'Phone', sortKey: 'phone' },
     { text: 'Playing', sortKey: 'isPlaying' },
-    { text: null, sortKey: null },
   ]
 
   const extendedPlayers = useMemo(
@@ -104,13 +107,13 @@ export default function PlayersTab() {
       <Flex gap={2}>
         <IconButton
           size={'sm'}
-          aria-label="delete player"
+          aria-label='delete player'
           icon={<FiTrash2 />}
           onClick={() => handleDeleteClick(player)}
         />
         <IconButton
           size={'sm'}
-          aria-label="edit player"
+          aria-label='edit player'
           icon={<FiEdit />}
           onClick={() => handleEditClick(player)}
         />
@@ -121,11 +124,11 @@ export default function PlayersTab() {
   return (
     <>
       <Flex flexDirection={'column'} gap={4}>
-        <ButtonGroup colorScheme="blue" size={'md'}>
+        <ButtonGroup colorScheme='blue' size={'md'}>
           <Menu>
             <MenuButton
               as={Button}
-              colorScheme="blue"
+              colorScheme='blue'
               rightIcon={<ChevronDownIcon />}
             >
               Actions
@@ -161,12 +164,12 @@ export default function PlayersTab() {
       <ConfirmActionModal
         isOpen={isOpenDelete}
         closeAction={onCloseDelete}
-        header="Delete Player?"
+        header='Delete Player?'
         body={
           <>
             Are you sure you want to remove player{' '}
             {selectedPlayer ? (
-              <Text as="strong">
+              <Text as='strong'>
                 {selectedPlayer.fName}{' '}
                 {selectedPlayer.mInit ? `${selectedPlayer.mInit}.` : ''}{' '}
                 {selectedPlayer.lName}
@@ -195,8 +198,8 @@ export default function PlayersTab() {
         confirmButtonText={
           selectedPlayer && selectedPlayer.id === 'new' ? 'Create' : 'Save'
         }
-        confirmButtonColor="blue"
-        size="3xl"
+        confirmButtonColor='blue'
+        size='3xl'
         backgroundColor={useColorModeValue('gray.50', 'gray.800')}
       />
     </>

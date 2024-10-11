@@ -198,7 +198,7 @@ export default function GenericTable<T extends Record<string, any>>({
         />
       )}
       <TableContainer maxWidth={'100%'}>
-        <Table variant="simple">
+        <Table variant='simple'>
           <Thead>
             <Tr>
               {enableMultiSelect && (
@@ -206,8 +206,8 @@ export default function GenericTable<T extends Record<string, any>>({
                   key={'selectAllRows'}
                   bg={headerBgColor}
                   color={textColor}
-                  textAlign="left"
-                  fontWeight="bold"
+                  textAlign='center'
+                  fontWeight='bold'
                   fontSize={'sm'}
                   p={4}
                 >
@@ -231,8 +231,8 @@ export default function GenericTable<T extends Record<string, any>>({
                   cursor={header.sortKey ? 'pointer' : 'default'}
                   bg={headerBgColor}
                   color={textColor}
-                  textAlign="center"
-                  fontWeight="bold"
+                  textAlign='center'
+                  fontWeight='bold'
                   fontSize={'sm'}
                   p={4}
                 >
@@ -245,8 +245,8 @@ export default function GenericTable<T extends Record<string, any>>({
               <Th
                 bg={headerBgColor}
                 color={textColor}
-                textAlign="center"
-                fontWeight="bold"
+                textAlign='center'
+                fontWeight='bold'
                 fontSize={'sm'}
                 p={4}
               />
@@ -265,7 +265,7 @@ export default function GenericTable<T extends Record<string, any>>({
                         ? Object.keys(data[0]).length
                         : headers.length
                   }
-                  textAlign="center"
+                  textAlign='center'
                 >
                   {noRecordsMessage}
                 </Td>
@@ -284,7 +284,7 @@ export default function GenericTable<T extends Record<string, any>>({
                         : bgColor
                     }
                     onClick={() => setSelectedRow && setSelectedRow(row)}
-                    cursor="pointer"
+                    cursor='pointer'
                   >
                     {enableMultiSelect && (
                       <Td>
@@ -297,22 +297,20 @@ export default function GenericTable<T extends Record<string, any>>({
                       </Td>
                     )}
                     {headers.map((header, i) => (
-                      <Td key={i} color={textColor}>
-                        <Flex flexDirection={'column'}>
-                          {renderTableRowField(
-                            row[
-                              header.showKey
-                                ? header.showKey
-                                : (header.sortKey as keyof T)
-                            ],
-                            header.cellStyle as SystemStyleObject
+                      <Td key={i} color={textColor} flexDirection={'column'}>
+                        {renderTableRowField(
+                          row[
+                            header.showKey
+                              ? header.showKey
+                              : (header.sortKey as keyof T)
+                          ],
+                          header.cellStyle as SystemStyleObject
+                        )}
+                        {header.subField &&
+                          renderSubField(
+                            row[header.subField as keyof T],
+                            header.subFieldStyle as SystemStyleObject
                           )}
-                          {header.subField &&
-                            renderSubField(
-                              row[header.subField as keyof T],
-                              header.subFieldStyle as SystemStyleObject
-                            )}
-                        </Flex>
                       </Td>
                     ))}
                     {rowActionButtons && <Td>{rowActionButtons(row)}</Td>}

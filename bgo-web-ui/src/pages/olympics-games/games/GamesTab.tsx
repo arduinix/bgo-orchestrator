@@ -70,7 +70,18 @@ export default function GamesTab() {
     {
       text: 'Game Name',
       sortKey: 'name',
-      cellStyle: { fontWeight: 'bold', color: '#206CAF' },
+      cellStyle: {
+        fontWeight: 'bold',
+        color: useColorModeValue('#206CAF', '#3ca4ff'),
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'normal',
+        maxWidth: '300px',
+        // minWidth: '200px',
+        display: '-webkit-box',
+        WebkitLineClamp: 2,
+        WebkitBoxOrient: 'vertical',
+      },
     },
     {
       text: 'Description',
@@ -80,7 +91,7 @@ export default function GamesTab() {
         textOverflow: 'ellipsis',
         whiteSpace: 'normal',
         maxWidth: '300px',
-        minWidth: '200px',
+        // minWidth: '200px',
         display: '-webkit-box',
         WebkitLineClamp: 2,
         WebkitBoxOrient: 'vertical',
@@ -93,13 +104,12 @@ export default function GamesTab() {
       showKey: 'playerScaleDisplayNode',
     },
     {
-      text: 'Scoring',
+      text: 'Win',
       sortKey: 'lowScoreWins',
       showKey: 'scoreMethodDisplayNode',
     },
     { text: 'Duration', sortKey: 'averageCompletionMinutes' },
     { text: 'In Play', sortKey: 'isInPlay' },
-    { text: null, sortKey: null },
   ]
 
   const extendedGames = useMemo(() => {
@@ -114,9 +124,9 @@ export default function GamesTab() {
         scoreMethodDisplayNode: (
           <>
             {game.lowScoreWins ? (
-              <Badge colorScheme='purple'>Low Wins</Badge>
+              <Badge colorScheme='purple'>Low</Badge>
             ) : (
-              <Badge colorScheme='green'>High Wins</Badge>
+              <Badge colorScheme='green'>High</Badge>
             )}
           </>
         ),
