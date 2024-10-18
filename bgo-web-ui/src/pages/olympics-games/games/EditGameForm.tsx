@@ -13,6 +13,7 @@ import {
   Select,
 } from '@chakra-ui/react'
 import CustomQRCode from '@components/custom-qr-code/CustomQRCode'
+import NumberPicker from '@components/number-picker/NumberPicker'
 import games from '../../../data/games.json'
 
 const BoldFormLabel = chakra(FormLabel, {
@@ -39,7 +40,7 @@ export default function EditGameyForm({
     setCurrentGame(game)
   }, [game])
 
-  const handleFieldUpdate = (key: string, value: string | boolean) => {
+  const handleFieldUpdate = (key: string, value: string | number | boolean) => {
     if (currentGame) {
       setCurrentGame({
         ...currentGame,
@@ -48,7 +49,8 @@ export default function EditGameyForm({
     }
   }
 
-  const { name, description, isInPlay } = currentGame || {}
+  const { name, description, isInPlay, averageCompletionMinutes, minPlayers, maxPlayers } =
+    currentGame || {}
 
   return (
     <>
@@ -102,12 +104,31 @@ export default function EditGameyForm({
 
                 <Box>
                   <BoldFormLabel>Completion Time (avg)</BoldFormLabel>
-                 
+                  <NumberPicker
+                    value={averageCompletionMinutes || 0}
+                    onChange={(value) =>
+                      handleFieldUpdate('averageCompletionMinutes', value)
+                    }
+                  />
                 </Box>
-
-
-
-
+                <Box>
+                  <BoldFormLabel>Minimum Players</BoldFormLabel>
+                  <NumberPicker
+                    value={minPlayers || 0}
+                    onChange={(value) =>
+                      handleFieldUpdate('minPlayers', value)
+                    }
+                  />
+                </Box>
+                <Box>
+                  <BoldFormLabel>Maximum Players</BoldFormLabel>
+                  <NumberPicker
+                    value={minPlayers || 0}
+                    onChange={(value) =>
+                      handleFieldUpdate('minPlayers', value)
+                    }
+                  />
+                </Box>
 
                 <Box>
                   <Checkbox
