@@ -28,7 +28,7 @@ import { convertDateShort } from '@utils/stringConversion'
 //   href: string;
 // }
 
-const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
+const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
   const navigate = useNavigate()
   const {
     isOpen: isOpenDelete,
@@ -110,10 +110,18 @@ const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
           <MenuItem
             onClick={(e) => {
               e.stopPropagation()
-              onOpenCopy()
+              handleEventClick()
             }}
           >
-            Copy to New
+            Start
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              e.stopPropagation()
+              handleEventClick()
+            }}
+          >
+            Declare Finished
           </MenuItem>
           <MenuItem
             onClick={(e) => {
@@ -121,7 +129,7 @@ const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
               onOpenDelete()
             }}
           >
-            Delete
+            Remove Round
           </MenuItem>
         </MenuList>
       </Menu>
@@ -143,4 +151,4 @@ const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
   )
 }
 
-export default EventCard
+export default OlympicsRoundCard

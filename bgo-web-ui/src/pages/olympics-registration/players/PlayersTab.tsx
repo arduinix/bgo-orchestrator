@@ -15,13 +15,13 @@ import {
   useColorMode,
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
-import ConfirmActionModal from '../../../components/confirm-action-modal/ConfirmActionModal'
+import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
 import { useState, useMemo } from 'react'
-import players from '../../../data/players.json'
+import players from '@data/players.json'
 import EditPlayerForm from './EditPlayerForm'
 import GenericTable, {
   TableHeader,
-} from '../../../components/generic-table/GenericTable'
+} from '@components/generic-table/GenericTable'
 import { formatPlayerName } from '@utils/stringConversion'
 import { FiTrash2, FiEdit } from 'react-icons/fi'
 

@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react'
 import CustomQRCode from '@components/custom-qr-code/CustomQRCode'
 import NumberPicker from '@components/number-picker/NumberPicker'
-import games from '../../../data/games.json'
+import games from '@data/games.json'
 
 const BoldFormLabel = chakra(FormLabel, {
   baseStyle: {

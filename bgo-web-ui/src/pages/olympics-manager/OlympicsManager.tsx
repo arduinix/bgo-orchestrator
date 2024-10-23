@@ -1,7 +1,7 @@
 import { useParams, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { Flex } from '@chakra-ui/react'
-import Sidebar, { LinkItemProps } from '../../components/sidebar/Sidebar'
+import Sidebar, { LinkItemProps } from '@components/sidebar/Sidebar'
 import { GiPerspectiveDiceSixFacesOne, GiGears } from 'react-icons/gi'
 import { RiQrCodeFill } from 'react-icons/ri'
 import { RxDashboard } from 'react-icons/rx'

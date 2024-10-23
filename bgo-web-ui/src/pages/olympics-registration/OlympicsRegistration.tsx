@@ -1,4 +1,4 @@
-import ReusableTabs from '../../components/reusable-tabs/ReuseableTabs'
+import ReusableTabs from '@components/reusable-tabs/ReuseableTabs'
 import PlayersTab from './players/PlayersTab'
 
 export default function OlympicsRegistration() {

@@ -15,14 +15,14 @@ import {
   Badge,
 } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
-import ConfirmActionModal from '../../../components/confirm-action-modal/ConfirmActionModal'
+import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
 import { useState, useMemo } from 'react'
-import games from '../../../data/games.json'
+import games from '@data/games.json'
 // import EditCategoryForm from './EditCategoryForm'
 import EditGameForm from './EditGameForm'
 import GenericTable, {
   TableHeader,
-} from '../../../components/generic-table/GenericTable'
+} from '@components/generic-table/GenericTable'
 import { FiTrash2, FiEdit } from 'react-icons/fi'
 
 export default function GamesTab() {
