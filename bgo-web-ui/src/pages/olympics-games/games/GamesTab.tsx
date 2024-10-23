@@ -170,13 +170,13 @@ export default function GamesTab() {
               <MenuItem>Set In-Play</MenuItem>
               <MenuItem>Set Out-Of-Play</MenuItem>
               <MenuDivider />
-              <MenuItem>Remove Selected Catagories</MenuItem>
+              <MenuItem>Remove Selected Games</MenuItem>
               <MenuDivider />
-              <MenuItem>Add Category</MenuItem>
+              <MenuItem onClick={handleAddClick}>Add Game</MenuItem>
             </MenuList>
           </Menu>
           <Spacer />
-          <Button onClick={handleAddClick}>Add Category</Button>
+          <Button onClick={handleAddClick}>Add Game</Button>
         </ButtonGroup>
         <GenericTable
           data={extendedGames}

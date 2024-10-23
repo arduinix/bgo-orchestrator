@@ -132,7 +132,7 @@ export default function CategoriesTab() {
               <MenuDivider />
               <MenuItem>Remove Selected Catagories</MenuItem>
               <MenuDivider />
-              <MenuItem>Add Category</MenuItem>
+              <MenuItem onClick={handleAddClick}>Add Category</MenuItem>
             </MenuList>
           </Menu>
           <Spacer />

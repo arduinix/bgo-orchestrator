@@ -145,7 +145,7 @@ export default function PlayersTab() {
               <MenuDivider />
               <MenuItem>Remove Selected Players</MenuItem>
               <MenuDivider />
-              <MenuItem>Add Player</MenuItem>
+              <MenuItem onClick={handleAddClick}>Add Player</MenuItem>
             </MenuList>
           </Menu>
           <Spacer />

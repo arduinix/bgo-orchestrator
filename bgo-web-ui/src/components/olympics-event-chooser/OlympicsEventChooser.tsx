@@ -26,16 +26,23 @@ export default function OlympicsEventChooser() {
         </Text>
       </Stack>
 
-      <Container maxW={'6xl'} mt={6}>
-        <Flex m={6} justifyContent={'space-between'}>
+      <Container
+        maxW={'6xl'}
+        mt={6}
+        display='flex'
+        flexDirection='column'
+        alignItems='center'
+        justifyContent='center'
+      >
+        <Flex m={6} w={'90%'} justifyContent={'space-between'}>
           <Flex gap={3}>
             <Checkbox defaultChecked>Show only my events</Checkbox>
             <Checkbox defaultChecked>Show past events</Checkbox>
           </Flex>
           <Spacer />
-          <Button colorScheme="blue">Create New Event</Button>
+          <Button colorScheme='blue'>Create New Event</Button>
         </Flex>
-        <Flex flexWrap="wrap" gridGap={6} justify="center">
+        <Flex flexWrap='wrap' gridGap={6} justify='center'>
           {data.map((event) => (
             <EventCard key={event.id} {...event} />
           ))}

@@ -3,10 +3,10 @@ import { useEffect } from 'react'
 import { Flex } from '@chakra-ui/react'
 import Sidebar, { LinkItemProps } from '../../components/sidebar/Sidebar'
 import { GiPerspectiveDiceSixFacesOne, GiGears } from 'react-icons/gi'
-import { LuWrench } from 'react-icons/lu'
 import { RiQrCodeFill } from 'react-icons/ri'
 import { RxDashboard } from 'react-icons/rx'
 import { FaUserSecret } from 'react-icons/fa6'
+import { GrCycle } from 'react-icons/gr'
 
 export default function OlympicsManager() {
   const { id } = useParams()
@@ -36,9 +36,9 @@ export default function OlympicsManager() {
       // tooltip: 'Set up games and player tables.',
     },
     {
-      name: 'Mechanics',
-      icon: LuWrench,
-      href: `${route}/mechanics`,
+      name: 'Rounds',
+      icon: GrCycle,
+      href: `${route}/rounds`,
       // tooltip: 'Set up games and player tables.',
     },
     {
@@ -64,17 +64,17 @@ export default function OlympicsManager() {
   return (
     <>
       <Flex
-        direction="column"
-        position="absolute"
-        width="100%"
-        height="100%"
-        top="50%"
-        left="50%"
-        transform="translate(-50%, -50%)"
+        direction='column'
+        position='absolute'
+        width='100%'
+        height='100%'
+        top='50%'
+        left='50%'
+        transform='translate(-50%, -50%)'
       >
-        <Flex overflow="scroll">
+        <Flex overflow='scroll'>
           <Sidebar linkItems={linkItems} />
-          <Flex p={4} w="100%" flexGrow={1} overflow="scroll">
+          <Flex p={4} w='100%' flexGrow={1} overflow='scroll'>
             <Outlet />
           </Flex>
         </Flex>

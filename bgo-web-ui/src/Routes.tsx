@@ -14,7 +14,7 @@ import PlayerGroups from '@pages/player-groups/PlayerGroups'
 import EventEditor from '@pages/olympics-manager/OlympicsManager'
 import OlympicsRegistration from '@pages/olympics-registration/OlympicsRegistration'
 import OlympicsGames from '@pages/olympics-games/OlympicsGames'
-import OlympicsMechanics from '@pages/olympics-mechanics/OlympicsMechanics'
+import OlympicsRounds from '@pages/olympics-rounds/OlympicsRounds'
 import OlympicsPrintables from '@pages/olympics-printables/OlympicsPrintables'
 import OlympicsDashboards from '@pages/olympics-dashboards/OlympicsDashboards'
 import OlympicsSettings from '@pages/olympics-settings/OlympicsSettings'
@@ -54,7 +54,7 @@ export default function AppRouter() {
               <Route path=":id" element={<EventEditor />}>
                 <Route path="registration" element={<OlympicsRegistration />} />
                 <Route path="games" element={<OlympicsGames />} />
-                <Route path="mechanics" element={<OlympicsMechanics />} />
+                <Route path="rounds" element={<OlympicsRounds />} />
                 <Route path="printables" element={<OlympicsPrintables />} />
                 <Route path="dashboards" element={<OlympicsDashboards />} />
                 <Route path="settings" element={<OlympicsSettings />} />

@@ -49,8 +49,14 @@ export default function EditGameyForm({
     }
   }
 
-  const { name, description, isInPlay, averageCompletionMinutes, minPlayers, maxPlayers } =
-    currentGame || {}
+  const {
+    name,
+    description,
+    isInPlay,
+    averageCompletionMinutes,
+    minPlayers,
+    maxPlayers,
+  } = currentGame || {}
 
   return (
     <>
@@ -60,7 +66,7 @@ export default function EditGameyForm({
             <Box position='absolute' top={4} right={4}>
               <CustomQRCode url='https://www.google.com' />
             </Box>
-            <Box position='absolute' top={170} right={10}>
+            <Box position='absolute' top={160} right={10}>
               <Checkbox
                 size={'lg'}
                 isChecked={isInPlay}
@@ -90,46 +96,49 @@ export default function EditGameyForm({
                     }
                   />
                 </Box>
+                <Flex gap={4} width={'100%'}>
+                  <Box width={'73%'}>
+                    <BoldFormLabel>Category</BoldFormLabel>
+                    <Select>
+                      {categories.map(({ id, name }) => (
+                        <option key={id} value={name}>
+                          {name}
+                        </option>
+                      ))}
+                    </Select>
+                  </Box>
 
-                <Box>
-                  <BoldFormLabel>Category</BoldFormLabel>
-                  <Select>
-                    {categories.map(({ id, name }) => (
-                      <option key={id} value={name}>
-                        {name}
-                      </option>
-                    ))}
-                  </Select>
-                </Box>
+                  <Box width={'26%'}>
+                    <BoldFormLabel>Play Time (minutes)</BoldFormLabel>
+                    <NumberPicker
+                      value={averageCompletionMinutes || 0}
+                      onChange={(value) =>
+                        handleFieldUpdate('averageCompletionMinutes', value)
+                      }
+                    />
+                  </Box>
+                </Flex>
 
-                <Box>
-                  <BoldFormLabel>Completion Time (avg)</BoldFormLabel>
-                  <NumberPicker
-                    value={averageCompletionMinutes || 0}
-                    onChange={(value) =>
-                      handleFieldUpdate('averageCompletionMinutes', value)
-                    }
-                  />
+                <Box width={'28%'}>
+                  <BoldFormLabel>Players</BoldFormLabel>
+                  <Flex alignItems={'center'}>
+                    <NumberPicker
+                      value={minPlayers || 0}
+                      onChange={(value) =>
+                        handleFieldUpdate('minPlayers', value)
+                      }
+                    />
+                    <FormLabel ml={3} pt={2}>
+                      TO
+                    </FormLabel>
+                    <NumberPicker
+                      value={maxPlayers || 0}
+                      onChange={(value) =>
+                        handleFieldUpdate('maxPlayers', value)
+                      }
+                    />
+                  </Flex>
                 </Box>
-                <Box>
-                  <BoldFormLabel>Minimum Players</BoldFormLabel>
-                  <NumberPicker
-                    value={minPlayers || 0}
-                    onChange={(value) =>
-                      handleFieldUpdate('minPlayers', value)
-                    }
-                  />
-                </Box>
-                <Box>
-                  <BoldFormLabel>Maximum Players</BoldFormLabel>
-                  <NumberPicker
-                    value={minPlayers || 0}
-                    onChange={(value) =>
-                      handleFieldUpdate('minPlayers', value)
-                    }
-                  />
-                </Box>
-
                 <Box>
                   <Checkbox
                     size={'lg'}
