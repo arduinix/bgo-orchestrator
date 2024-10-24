@@ -6,7 +6,6 @@ import { isLoggedIn } from './lib/auth/CognitoAuth'
 import NotFound from '@pages/not-found/NotFound'
 import MainLayout from '@components/main-layout/MainLayout'
 import Header from '@components/header/Header'
-import Ecosystems from '@pages/ecosystems/Ecosystems'
 import Olympics from '@pages/olympics/Olympics'
 import Tutorials from '@pages/tutorials/Tutorials'
 import Leagues from '@pages/leagues/Leagues'
@@ -63,7 +62,7 @@ export default function AppRouter() {
             <Route path="/tutorials" element={<Tutorials />} />
             <Route path="/leagues" element={<Leagues />} />
             <Route path="/playergroups" element={<PlayerGroups />} />
-            <Route path="/ecosystems/:viewId?" element={<Ecosystems />} />
+            {/* <Route path="/ecosystems/:viewId?" element={<Ecosystems />} /> */}
           </Route>
         </Routes>
       </Box>
