@@ -20,7 +20,7 @@ export default function HomepageBgoHero() {
           as={Box}
           textAlign={'center'}
           align={'center'}
-          spacing={{ base: 8, md: 10 }}
+          gap={{ base: 8, md: 10 }}
           py={{ base: 20, md: 30 }}
         >
           <Image
@@ -38,7 +38,7 @@ export default function HomepageBgoHero() {
           </Text>
           <Stack
             direction={'column'}
-            spacing={3}
+            gap={3}
             align={'center'}
             alignSelf={'center'}
             position={'relative'}
