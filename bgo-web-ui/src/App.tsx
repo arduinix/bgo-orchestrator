@@ -2,13 +2,12 @@
 // import { Amplify } from "aws-amplify";
 import './App.css'
 // import { amplifyAuthConfig } from "./lib/auth/amplifyAuthConfig";
-import { ChakraProvider } from '@chakra-ui/react'
+import { Provider } from '@/components/ui/provider'
+import { system } from '@/theme'
 import { BrowserRouter } from 'react-router-dom'
 import './App.css'
 import ErrorBoundary from './components/error-boundary/ErrorBoundary'
 import AppRouter from './Routes'
-import theme from './theme'
-
 import '@aws-amplify/ui-react/styles.css'
 import '@aws-amplify/ui-react/styles/reset.layer.css'
 import '@aws-amplify/ui-react/styles/base.layer.css'
@@ -30,9 +29,9 @@ export default function App() {
 
     <BrowserRouter>
       <ErrorBoundary>
-        <ChakraProvider theme={theme}>
+        <Provider value={system}>
           <AppRouter />
-        </ChakraProvider>
+        </Provider>
       </ErrorBoundary>
     </BrowserRouter>
   )

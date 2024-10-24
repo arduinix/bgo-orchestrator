@@ -1,4 +1,4 @@
-import { Box, useColorModeValue, Tooltip, Text } from '@chakra-ui/react'
+import { Box, Tooltip, Text } from '@chakra-ui/react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 export interface NavLinkProps {
@@ -15,7 +15,7 @@ const NavLink = ({ name, href, tooltip }: NavLinkProps) => {
   const navigate = useNavigate()
   const isActive =
     typeof href === 'string' && location.pathname.startsWith(href)
-  const hoverBg = useColorModeValue('gray.300', 'gray.700')
+  const hoverBg = 'gray.300'
 
   return (
     <Tooltip label={tooltip} aria-label={tooltip}>

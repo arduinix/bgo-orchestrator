@@ -1,4 +1,5 @@
 {
+  
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
@@ -8,6 +9,7 @@
   "moduleResolution": "Bundler",
   "skipLibCheck": true,
   "compilerOptions": {
+
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],

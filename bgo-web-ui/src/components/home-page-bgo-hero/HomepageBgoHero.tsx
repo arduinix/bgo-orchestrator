@@ -5,7 +5,6 @@ import {
   Button,
   Stack,
   Icon,
-  useColorModeValue,
   createIcon,
   Image,
 } from '@chakra-ui/react'
@@ -67,7 +66,7 @@ export default function HomepageBgoHero() {
             <Box>
               <Icon
                 as={Arrow}
-                color={useColorModeValue('gray.800', 'gray.300')}
+                color={'gray.800'}
                 w={71}
                 position={'absolute'}
                 right={-71}
@@ -81,7 +80,7 @@ export default function HomepageBgoHero() {
                 top={'-15px'}
                 transform={'rotate(10deg)'}
               >
-                It's free if you know the right people!
+                {'It\'s free if you know the right people!'}
               </Text>
             </Box>
           </Stack>

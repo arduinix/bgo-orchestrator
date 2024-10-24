@@ -6,20 +6,18 @@ import {
   Text,
   IconButton,
   Button,
-  Menu,
-  MenuButton,
-  MenuList,
+  MenuRoot,
+  MenuTrigger,
+  MenuContent,
   MenuItem,
-  MenuDivider,
+  MenuSeparator,
   useDisclosure,
-  useColorModeValue,
   Image,
   Switch,
-  useColorMode,
   Spacer,
 } from '@chakra-ui/react'
-import { RxHamburgerMenu } from "react-icons/rx";
-import { IoClose } from "react-icons/io5";
+import { RxHamburgerMenu } from 'react-icons/rx';
+import { IoClose } from 'react-icons/io5';
 
 
 import logo from '../../assets/image/logo_no_info.png'
@@ -30,7 +28,7 @@ export interface TopNavigationProps {
 }
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function TopNavigation({ loggedIn }: TopNavigationProps) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { open, onOpen, onClose } = useDisclosure()
   const { colorMode, toggleColorMode } = useColorMode()
 
   const navLinks: Array<NavLinkProps> = [
@@ -54,14 +52,14 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
 
   return (
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={10}>
+      <Box bg={'gray.100'} px={10}>
         <Flex h={20} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}
-            icon={isOpen ? <IoClose /> : <RxHamburgerMenu />}
+            icon={open ? <IoClose /> : <RxHamburgerMenu />}
             aria-label={'Open Menu'}
             display={{ md: 'none' }}
-            onClick={isOpen ? onClose : onOpen}
+            onClick={open ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
             <Box as="a" cursor={'pointer'} href={'/'}>
@@ -95,8 +93,8 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
           </HStack>
 
           <Flex alignItems={'center'}>
-            <Menu>
-              <MenuButton
+            <MenuRoot>
+              <MenuTrigger
                 as={Button}
                 rounded={'full'}
                 variant={'link'}
@@ -109,11 +107,11 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
                     'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
                   }
                 />
-              </MenuButton>
-              <MenuList>
+              </MenuTrigger>
+              <MenuContent>
                 <MenuItem>Sign Out</MenuItem>
                 <MenuItem>Change Account</MenuItem>
-                <MenuDivider />
+                <MenuSeparator />
                 <MenuItem>Account Settings</MenuItem>
                 <MenuItem>Help</MenuItem>
                 <MenuItem>
@@ -126,8 +124,8 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
                     />
                   </Flex>
                 </MenuItem>
-              </MenuList>
-            </Menu>
+              </MenuContent>
+            </MenuRoot>
           </Flex>
         </Flex>
       </Box>

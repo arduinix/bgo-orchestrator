@@ -55,7 +55,6 @@ export default function GenericTable<T extends Record<string, any>>({
   enableMultiSelect,
   multiSelectKeyExtractor,
   rowActionButtons,
-  rowClickAction,
   noRecordsMessage = 'No items found matching the search criteria.',
   disableSearch = false,
 }: GenericTableProps<T>) {

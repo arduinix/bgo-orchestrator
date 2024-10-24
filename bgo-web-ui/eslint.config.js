@@ -9,8 +9,10 @@ export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
+
   {
     rules: {
+      '@typescript-eslint/no-empty-object-type': 'off',
       'react/react-in-jsx-scope': 'off',
       'no-console': 'warn',
       quotes: ['error', 'single', { allowTemplateLiterals: true }],

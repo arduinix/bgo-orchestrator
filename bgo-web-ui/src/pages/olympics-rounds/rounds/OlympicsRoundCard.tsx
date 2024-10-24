@@ -39,7 +39,6 @@ const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
 
   const {
     isOpen: isOpenCopy,
-    onOpen: onOpenCopy,
     onClose: onCloseCopy,
   } = useDisclosure()
 

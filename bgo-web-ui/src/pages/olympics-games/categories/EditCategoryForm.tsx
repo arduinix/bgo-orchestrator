@@ -29,7 +29,6 @@ export interface EditCategoryFormProps {
 
 export default function EditCategoryForm({
   category,
-  closeAction,
 }: EditCategoryFormProps) {
   const [currentCategory, setCurrentCategory] = useState<GameCategory | null>(
     null
