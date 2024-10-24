@@ -9,7 +9,7 @@ import {
   Menu,
   MenuList,
   MenuItem,
-  MenuDivider,
+  MenuSeparator,
   IconButton,
   Badge,
 } from '@chakra-ui/react'
@@ -169,9 +169,9 @@ export default function GamesTab() {
             <MenuList>
               <MenuItem>Set In-Play</MenuItem>
               <MenuItem>Set Out-Of-Play</MenuItem>
-              <MenuDivider />
+              <MenuSeparator />
               <MenuItem>Remove Selected Games</MenuItem>
-              <MenuDivider />
+              <MenuSeparator />
               <MenuItem onClick={handleAddClick}>Add Game</MenuItem>
             </MenuList>
           </Menu>

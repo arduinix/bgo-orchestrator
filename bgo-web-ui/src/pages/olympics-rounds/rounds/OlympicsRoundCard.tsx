@@ -10,7 +10,7 @@ import {
   IconButton,
   MenuList,
   MenuItem,
-  MenuDivider,
+  MenuSeparator,
   useDisclosure,
   Badge,
 } from '@chakra-ui/react'
@@ -36,10 +36,7 @@ const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
     onClose: onCloseDelete,
   } = useDisclosure()
 
-  const {
-    open: isOpenCopy,
-    onClose: onCloseCopy,
-  } = useDisclosure()
+  const { open: isOpenCopy, onClose: onCloseCopy } = useDisclosure()
 
   const handleEventClick = () => {
     navigate(`/olympics/${id}`)
@@ -104,9 +101,9 @@ const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
               e.stopPropagation()
               handleEventClick()
             }}
-          >
-            Open
-          </MenuItem>
+            value='Open'
+          />
+
           <MenuItem
             onClick={(e) => {
               e.stopPropagation()
@@ -123,7 +120,7 @@ const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
           >
             Declare Finished
           </MenuItem>
-          <MenuDivider />
+          <MenuSeparator />
           <MenuItem
             onClick={(e) => {
               e.stopPropagation()
@@ -137,7 +134,6 @@ const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
               e.stopPropagation()
               onOpenDelete()
             }}
-            
           >
             Undo Remove
           </MenuItem>

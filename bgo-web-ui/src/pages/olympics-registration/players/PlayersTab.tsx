@@ -9,7 +9,7 @@ import {
   Menu,
   MenuList,
   MenuItem,
-  MenuDivider,
+  MenuSeparator,
   IconButton,
 } from '@chakra-ui/react'
 import { GoChevronDown } from 'react-icons/go'
@@ -135,15 +135,15 @@ export default function PlayersTab() {
             <MenuList>
               <MenuItem>Import CSV</MenuItem>
               <MenuItem isDisabled>Import from Player Group</MenuItem>
-              <MenuDivider />
+              <MenuSeparator />
               <MenuItem>Export CSV</MenuItem>
               <MenuItem isDisabled>Export to Player Group</MenuItem>
-              <MenuDivider />
+              <MenuSeparator />
               <MenuItem>Set In-Play</MenuItem>
               <MenuItem>Set Out-Of-Play</MenuItem>
-              <MenuDivider />
+              <MenuSeparator />
               <MenuItem>Remove Selected Players</MenuItem>
-              <MenuDivider />
+              <MenuSeparator />
               <MenuItem onClick={handleAddClick}>Add Player</MenuItem>
             </MenuList>
           </Menu>

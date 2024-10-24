@@ -9,7 +9,7 @@ import {
   Menu,
   MenuList,
   MenuItem,
-  MenuDivider,
+  MenuSeparator,
   IconButton,
 } from '@chakra-ui/react'
 import { GoChevronDown } from 'react-icons/go'
@@ -129,9 +129,9 @@ export default function CategoriesTab() {
             <MenuList>
               <MenuItem>Set In-Play</MenuItem>
               <MenuItem>Set Out-Of-Play</MenuItem>
-              <MenuDivider />
+              <MenuSeparator />
               <MenuItem>Remove Selected Catagories</MenuItem>
-              <MenuDivider />
+              <MenuSeparator />
               <MenuItem onClick={handleAddClick}>Add Category</MenuItem>
             </MenuList>
           </Menu>
