@@ -4,7 +4,6 @@ import {
   CloseButton,
   Flex,
   Icon,
-  useColorModeValue,
   Text,
   Drawer,
   DrawerContent,
@@ -30,16 +29,16 @@ export default function SimpleSidebar({
 }: {
   linkItems: Array<LinkItemProps>
 }) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { open, onOpen, onClose } = useDisclosure()
   return (
-    <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+    <Box minH="100vh" bg={'gray.100'}>
       <SidebarContent
         linkItems={linkItems}
         onClose={() => onClose}
         display={{ base: 'none', md: 'block' }}
       />
       <Drawer
-        isOpen={isOpen}
+        isOpen={open}
         placement="left"
         onClose={onClose}
         returnFocusOnClose={false}
@@ -64,9 +63,9 @@ interface SidebarProps extends BoxProps {
 const SidebarContent = ({ onClose, linkItems, ...rest }: SidebarProps) => {
   return (
     <Box
-      bg={useColorModeValue('white', 'gray.900')}
+      bg={'white'}
       borderRight="1px"
-      borderRightColor={useColorModeValue('gray.200', 'gray.700')}
+      borderRightColor={'gray.200'}
       w={{ base: 'full', md: 60 }}
       pos="fixed"
       h="full"
@@ -141,9 +140,11 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       px={{ base: 4, md: 24 }}
       height="20"
       alignItems="center"
-      bg={useColorModeValue('white', 'gray.900')}
+      // bg={useColorModeValue('white', 'gray.900')}
+      bg={'white'}
       borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
+      // borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
+      borderBottomColor={'gray.200'}
       justifyContent="flex-start"
       {...rest}
     >

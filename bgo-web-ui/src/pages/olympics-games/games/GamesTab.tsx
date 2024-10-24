@@ -5,7 +5,6 @@ import {
   Spacer,
   useDisclosure,
   Text,
-  useColorModeValue,
   MenuButton,
   Menu,
   MenuList,
@@ -28,13 +27,13 @@ import { FiTrash2, FiEdit } from 'react-icons/fi'
 export default function GamesTab() {
   const data: Game[] = games.games
   const {
-    isOpen: isOpenDelete,
+    open: isOpenDelete,
     onOpen: onOpenDelete,
     onClose: onCloseDelete,
   } = useDisclosure()
 
   const {
-    isOpen: isOpenEdit,
+    open: isOpenEdit,
     onOpen: onOpenEdit,
     onClose: onCloseEdit,
   } = useDisclosure()
@@ -73,7 +72,8 @@ export default function GamesTab() {
       sortKey: 'name',
       cellStyle: {
         fontWeight: 'bold',
-        color: useColorModeValue('#206CAF', '#3ca4ff'),
+        // color: useColorModeValue('#206CAF', '#3ca4ff'),
+        color: '#206CAF',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'normal',

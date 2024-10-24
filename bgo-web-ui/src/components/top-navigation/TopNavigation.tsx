@@ -29,7 +29,7 @@ export interface TopNavigationProps {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export default function TopNavigation({ loggedIn }: TopNavigationProps) {
   const { open, onOpen, onClose } = useDisclosure()
-  const { colorMode, toggleColorMode } = useColorMode()
+  // const { colorMode, toggleColorMode } = useColorMode()
 
   const navLinks: Array<NavLinkProps> = [
     {
@@ -119,8 +119,8 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
                     <Text mr={4}>Dark Mode</Text>
                     <Spacer />
                     <Switch
-                      onChange={toggleColorMode}
-                      checked={colorMode === 'dark'}
+                      // onChange={toggleColorMode}
+                      // checked={colorMode === 'dark'}
                     />
                   </Flex>
                 </MenuItem>

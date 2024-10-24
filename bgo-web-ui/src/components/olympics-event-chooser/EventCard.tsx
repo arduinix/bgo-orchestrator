@@ -4,7 +4,6 @@ import {
   Heading,
   Stack,
   Text,
-  useColorModeValue,
   Image,
   MenuButton,
   Menu,
@@ -31,13 +30,13 @@ import { convertDateShort } from '@utils/stringConversion'
 const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
   const navigate = useNavigate()
   const {
-    isOpen: isOpenDelete,
+    open: isOpenDelete,
     onOpen: onOpenDelete,
     onClose: onCloseDelete,
   } = useDisclosure()
 
   const {
-    isOpen: isOpenCopy,
+    open: isOpenCopy,
     onOpen: onOpenCopy,
     onClose: onCloseCopy,
   } = useDisclosure()
@@ -61,7 +60,7 @@ const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
       }}
     >
       <Box flex={'1'}>
-        <Stack align={'start'} spacing={2}>
+        <Stack align={'start'} gap={2}>
           <Flex
             w={16}
             h={16}
@@ -69,7 +68,7 @@ const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
             justify={'center'}
             color={'white'}
             rounded={'full'}
-            bg={useColorModeValue('gray.100', 'gray.700')}
+            bg={'gray.100'}
           >
             {/* <Icon as={FcDonate} w={10} h={10} /> */}
             <Image src={torch} boxSize={12} objectFit={'scale-down'} />

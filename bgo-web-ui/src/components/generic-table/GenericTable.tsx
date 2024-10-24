@@ -9,7 +9,6 @@ import {
   Td,
   Flex,
   Text,
-  useColorMode,
   Box,
 } from '@chakra-ui/react'
 import { Checkbox } from '@components/ui/checkbox'
@@ -96,12 +95,11 @@ export default function GenericTable<T extends Record<string, any>>({
   }
 
   const isAllSelected = selectedRows.length === data.length
-  const { colorMode } = useColorMode()
-  const bgColor = colorMode === 'dark' ? 'gray.700' : 'white'
-  const textColor = colorMode === 'dark' ? 'white' : 'black'
-  const subTextColor = colorMode === 'dark' ? 'gray.100' : 'gray.500'
-  const headerBgColor = colorMode === 'dark' ? 'gray.800' : 'gray.100'
-  const selectedBgColor = colorMode === 'dark' ? 'blue.700' : 'blue.100'
+  const bgColor = 'white'
+  const textColor = 'black'
+  const subTextColor = 'gray.500'
+  const headerBgColor = 'gray.100'
+  const selectedBgColor = 'blue.100'
 
   const handleSort = (key: keyof T) => {
     let direction: 'ascending' | 'descending' = 'ascending'

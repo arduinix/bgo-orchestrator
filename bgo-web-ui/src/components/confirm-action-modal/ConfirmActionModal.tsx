@@ -7,7 +7,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  useColorModeValue,
 } from '@chakra-ui/react'
 import { ReactNode } from 'react'
 
@@ -44,7 +43,7 @@ export default function ConfirmActionModal({
   cancelButtonText = 'Cancel',
   confirmButtonColor = 'red',
   size = 'md',
-  backgroundColor = useColorModeValue('white', 'gray.800'),
+  backgroundColor = 'white',
 }: ConfirmActionModalProps) {
   return (
     <>

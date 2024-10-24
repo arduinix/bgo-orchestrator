@@ -5,7 +5,6 @@ import {
   Spacer,
   useDisclosure,
   Text,
-  useColorModeValue,
   MenuButton,
   Menu,
   MenuList,
@@ -26,13 +25,13 @@ import { FiTrash2, FiEdit } from 'react-icons/fi'
 export default function CategoriesTab() {
   const data: GameCategory[] = games.catagories
   const {
-    isOpen: isOpenDelete,
+    open: isOpenDelete,
     onOpen: onOpenDelete,
     onClose: onCloseDelete,
   } = useDisclosure()
 
   const {
-    isOpen: isOpenEdit,
+    open: isOpenEdit,
     onOpen: onOpenEdit,
     onClose: onCloseEdit,
   } = useDisclosure()
@@ -67,7 +66,8 @@ export default function CategoriesTab() {
       sortKey: 'name',
       cellStyle: {
         fontWeight: 'bold',
-        color: useColorModeValue('#206CAF', '#3ca4ff'),
+        // color: useColorModeValue('#206CAF', '#3ca4ff'),
+        color: '#206CAF',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'normal',
@@ -186,7 +186,8 @@ export default function CategoriesTab() {
         }
         confirmButtonColor='blue'
         size='3xl'
-        backgroundColor={useColorModeValue('gray.50', 'gray.800')}
+        // backgroundColor={useColorModeValue('gray.50', 'gray.800')}
+        backgroundColor={'gray.50'}
       />
     </>
   )
