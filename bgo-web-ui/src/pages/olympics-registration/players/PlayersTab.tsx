@@ -12,9 +12,8 @@ import {
   MenuItem,
   MenuDivider,
   IconButton,
-  useColorMode,
 } from '@chakra-ui/react'
-import { ChevronDownIcon } from '@chakra-ui/icons'
+import { GoChevronDown } from 'react-icons/go'
 import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
 import { useState, useMemo } from 'react'
 import players from '@data/players.json'
@@ -129,7 +128,7 @@ export default function PlayersTab() {
             <MenuButton
               as={Button}
               colorScheme='blue'
-              rightIcon={<ChevronDownIcon />}
+              rightIcon={<GoChevronDown />}
             >
               Actions
             </MenuButton>

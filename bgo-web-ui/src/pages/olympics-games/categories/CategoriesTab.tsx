@@ -13,7 +13,7 @@ import {
   MenuDivider,
   IconButton,
 } from '@chakra-ui/react'
-import { ChevronDownIcon } from '@chakra-ui/icons'
+import { GoChevronDown } from 'react-icons/go'
 import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
 import { useState } from 'react'
 import games from '@data/games.json'
@@ -122,7 +122,7 @@ export default function CategoriesTab() {
             <MenuButton
               as={Button}
               colorScheme='blue'
-              rightIcon={<ChevronDownIcon />}
+              rightIcon={<GoChevronDown />}
             >
               Actions
             </MenuButton>

@@ -4,16 +4,20 @@
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
+  "module": "ESNext",
+  "moduleResolution": "Bundler",
+  "skipLibCheck": true,
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@/*": ["./src/*"],
       "@types/*": ["src/types/*"],
       "@utils/*": ["src/lib/utils/*"],
       "@constants/*": ["src/lib/constants/*"],
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"],
       "@assets/*": ["src/assets/*"],
-      "@data/*": ["src/data/*"],
+      "@data/*": ["src/data/*"]
     }
   }
 }
