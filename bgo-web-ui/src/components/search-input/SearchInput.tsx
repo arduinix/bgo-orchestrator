@@ -4,9 +4,9 @@ import {
   InputLeftElement,
   InputGroup,
   IconButton,
-  Tooltip,
   Icon,
 } from '@chakra-ui/react'
+import { Tooltip } from '@/components/ui/tooltip'
 import { IoMdClose, IoMdSearch } from 'react-icons/io'
 
 export interface SearchInputProps {
@@ -31,7 +31,7 @@ export default function SearchInput({
         onChange={handleSearchChange}
       />
       <InputRightElement>
-        <Tooltip label="Clear search">
+        <Tooltip content="Clear search">
           <IconButton
             aria-label="clear search"
             size={'md'}

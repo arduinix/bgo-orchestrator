@@ -1,4 +1,5 @@
-import { Box, Tooltip, Text } from '@chakra-ui/react'
+import { Box, Text } from '@chakra-ui/react'
+import { Tooltip } from '@/components/ui/tooltip'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 export interface NavLinkProps {
@@ -18,7 +19,7 @@ const NavLink = ({ name, href, tooltip }: NavLinkProps) => {
   const hoverBg = 'gray.300'
 
   return (
-    <Tooltip label={tooltip} aria-label={tooltip}>
+    <Tooltip content={tooltip} aria-label={tooltip}>
       <Box
         px={2}
         py={1}

@@ -61,7 +61,7 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
             display={{ md: 'none' }}
             onClick={open ? onClose : onOpen}
           />
-          <HStack spacing={8} alignItems={'center'}>
+          <HStack gap={8} alignItems={'center'}>
             <Box as="a" cursor={'pointer'} href={'/'}>
               <Image
                 src={logo}
@@ -80,7 +80,7 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
 
             <HStack
               as={'nav'}
-              spacing={4}
+              gap={4}
               display={{ base: 'none', md: 'flex' }}
             >
               {/* {Links.map((link) => (

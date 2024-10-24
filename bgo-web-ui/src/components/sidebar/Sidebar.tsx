@@ -10,8 +10,8 @@ import {
   useDisclosure,
   BoxProps,
   FlexProps,
-  Tooltip,
 } from '@chakra-ui/react'
+import { Tooltip } from '@/components/ui/tooltip'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { FiMenu } from 'react-icons/fi'
 import { IconType } from 'react-icons'
@@ -75,7 +75,7 @@ const SidebarContent = ({ onClose, linkItems, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {linkItems.map(({ tooltip, name, icon, href }) => (
-        <Tooltip key={name} label={tooltip} aria-label={tooltip}>
+        <Tooltip key={name} content={tooltip} aria-label={tooltip}>
           <NavItem icon={icon} href={href}>
             {name}
           </NavItem>

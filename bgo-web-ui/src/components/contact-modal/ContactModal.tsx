@@ -13,8 +13,8 @@ import {
   Input,
   Textarea,
   Text,
-  Tooltip,
 } from '@chakra-ui/react'
+import { Tooltip } from '@/components/ui/tooltip'
 import { useState, useEffect } from 'react'
 import { Contact } from '../../types'
 
@@ -74,7 +74,7 @@ export default function ContactModal({
             <FormControl>
               <FormLabel>Name</FormLabel>
               <Input
-                name="name"
+                name='name'
                 placeholder="What's your name?"
                 maxLength={50}
                 value={contact.name}
@@ -84,8 +84,8 @@ export default function ContactModal({
             <FormControl mt={4}>
               <FormLabel>Subject</FormLabel>
               <Input
-                name="subject"
-                placeholder="What are you messaging about?"
+                name='subject'
+                placeholder='What are you messaging about?'
                 maxLength={50}
                 value={contact.subject}
                 onChange={handleChange}
@@ -97,8 +97,8 @@ export default function ContactModal({
             >
               <FormLabel>Email</FormLabel>
               <Input
-                name="email"
-                placeholder="who@where.com"
+                name='email'
+                placeholder='who@where.com'
                 maxLength={50}
                 value={contact.email}
                 onChange={handleChange}
@@ -110,8 +110,8 @@ export default function ContactModal({
             <FormControl mt={4}>
               <FormLabel>Elaborate</FormLabel>
               <Textarea
-                name="message"
-                placeholder="Tell me more."
+                name='message'
+                placeholder='Tell me more.'
                 maxLength={500}
                 value={contact.message}
                 onChange={handleChange}
@@ -121,17 +121,17 @@ export default function ContactModal({
           </ModalBody>
           <ModalFooter>
             <Tooltip
-              label={
+              content={
                 isButtonDisabled
                   ? 'Sorry, but you need to fill out all of the fields first.'
                   : null
               }
             >
               <Button
-                colorScheme="blue"
+                colorScheme='blue'
                 mr={3}
                 onClick={onSend}
-                isDisabled={isButtonDisabled}
+                disabled={isButtonDisabled}
               >
                 Send it!
               </Button>

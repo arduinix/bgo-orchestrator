@@ -1,4 +1,5 @@
-import { Button, IconButton, Tooltip, Select, Flex } from '@chakra-ui/react'
+import { Button, IconButton, Select, Flex } from '@chakra-ui/react'
+import { Tooltip } from '@/components/ui/tooltip'
 
 import {
   FiChevronLeft,
@@ -40,42 +41,42 @@ export default function PaginationControl({
   }
 
   return (
-    <Flex alignItems="center" alignSelf={'center'} gap={8}>
-      <Tooltip label="First Page">
+    <Flex alignItems='center' alignSelf={'center'} gap={8}>
+      <Tooltip content='First Page'>
         <IconButton
           icon={<FiChevronsLeft />}
-          bg="transparent"
-          aria-label="First Page"
+          bg='transparent'
+          aria-label='First Page'
           onClick={() => setCurrentPage(1)}
           isDisabled={currentPage === 1}
         />
       </Tooltip>
-      <Tooltip label="Previous Page">
+      <Tooltip content='Previous Page'>
         <IconButton
           icon={<FiChevronLeft />}
-          bg="transparent"
-          aria-label="Previous Page"
+          bg='transparent'
+          aria-label='Previous Page'
           onClick={() => handlePreviousPage()}
           isDisabled={currentPage === 1}
         />
       </Tooltip>
-      <Tooltip label="Current Page">
+      <Tooltip content='Current Page'>
         <Button background={'transparent'}>{currentPage}</Button>
       </Tooltip>
-      <Tooltip label="Next Page">
+      <Tooltip content='Next Page'>
         <IconButton
           icon={<FiChevronRight />}
-          bg="transparent"
-          aria-label="Next Page"
+          bg='transparent'
+          aria-label='Next Page'
           onClick={() => handleNextPage()}
           isDisabled={currentPage === totalPages}
         />
       </Tooltip>
-      <Tooltip label="Last Page">
+      <Tooltip content='Last Page'>
         <IconButton
           icon={<FiChevronsRight />}
-          bg="transparent"
-          aria-label="Last Page"
+          bg='transparent'
+          aria-label='Last Page'
           onClick={() => setCurrentPage(totalPages)}
           isDisabled={currentPage === totalPages}
         />
