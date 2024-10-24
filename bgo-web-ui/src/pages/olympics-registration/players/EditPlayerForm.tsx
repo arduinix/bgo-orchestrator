@@ -5,11 +5,11 @@ import {
   Input,
   Flex,
   Box,
-  Checkbox,
   Card,
   CardBody,
   chakra,
 } from '@chakra-ui/react'
+import { Checkbox } from '@components/ui/checkbox'
 import AvatarNameFlex from '@components/avatar-name-flex/AvatarNameFlex'
 import CustomQRCode from '@components/custom-qr-code/CustomQRCode'
 

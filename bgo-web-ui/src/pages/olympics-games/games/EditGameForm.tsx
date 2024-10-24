@@ -6,12 +6,12 @@ import {
   Textarea,
   Flex,
   Box,
-  Checkbox,
   Card,
   CardBody,
   chakra,
   Select,
 } from '@chakra-ui/react'
+import { Checkbox } from '@components/ui/checkbox'
 import CustomQRCode from '@components/custom-qr-code/CustomQRCode'
 import NumberPicker from '@components/number-picker/NumberPicker'
 import games from '@data/games.json'

@@ -7,8 +7,8 @@ import {
   Text,
   Button,
   Spacer,
-  Checkbox,
 } from '@chakra-ui/react'
+import { Checkbox } from '@components/ui/checkbox'
 import EventCard from './EventCard'
 import events from '@data/events.json'
 
@@ -16,7 +16,7 @@ export default function OlympicsEventChooser() {
   const data: ListEvent[] = events.listEvents
   return (
     <Box p={4}>
-      <Stack spacing={4} as={Container} maxW={'4xl'} textAlign={'center'}>
+      <Stack gap={4} as={Container} maxW={'4xl'} textAlign={'center'}>
         <Heading fontSize={{ base: '2xl', sm: '4xl' }} fontWeight={'bold'}>
           Events
         </Heading>

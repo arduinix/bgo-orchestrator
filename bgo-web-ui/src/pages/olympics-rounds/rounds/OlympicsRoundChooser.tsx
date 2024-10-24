@@ -6,8 +6,8 @@ import {
   Text,
   Button,
   Spacer,
-  Checkbox,
 } from '@chakra-ui/react'
+import { Checkbox } from '@components/ui/checkbox'
 import EventCard from './OlympicsRoundCard'
 import events from '@data/events.json'
 
@@ -15,7 +15,7 @@ export default function OlympicsRoundChooser() {
   const data: ListEvent[] = events.listEvents
   return (
     <Box p={4}>
-      <Stack spacing={4} as={Container} maxW={'4xl'} textAlign={'center'}>
+      <Stack gap={4} as={Container} maxW={'4xl'} textAlign={'center'}>
         <Text color={'gray.600'} fontSize={{ base: 'sm', sm: 'lg' }}>
           Prepare and start a new round. Or view and edit data from past rounds.
         </Text>

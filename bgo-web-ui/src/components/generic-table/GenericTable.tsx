@@ -7,12 +7,12 @@ import {
   Tr,
   Th,
   Td,
-  Checkbox,
   Flex,
   Text,
   useColorMode,
   Box,
 } from '@chakra-ui/react'
+import { Checkbox } from '@components/ui/checkbox'
 import { SystemStyleObject } from '@chakra-ui/styled-system'
 import { FaSortAlphaDown, FaSortAlphaDownAlt } from 'react-icons/fa'
 import { TrueIcon, FalseIcon } from '@components/standards/StandardIcons'

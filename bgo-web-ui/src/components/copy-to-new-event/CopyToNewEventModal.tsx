@@ -1,6 +1,5 @@
 import {
   Button,
-  Checkbox,
   FormControl,
   FormLabel,
   Input,
@@ -13,6 +12,7 @@ import {
   ModalOverlay,
   Flex,
 } from '@chakra-ui/react'
+import { Checkbox } from '@components/ui/checkbox'
 import { useRef, useState } from 'react'
 
 export interface CopyToNewEventModalProps {

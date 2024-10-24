@@ -2,7 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import pluginChecker from 'vite-plugin-checker'
 import tsconfigPaths from 'vite-tsconfig-paths'
-import eslintPlugin from 'vite-plugin-eslint'
+// import eslintPlugin from 'vite-plugin-eslint'
+import pluginTerminal from 'vite-plugin-terminal'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -10,6 +11,9 @@ export default defineConfig({
     react(),
     pluginChecker({ typescript: true }),
     tsconfigPaths(),
-    eslintPlugin(),
+    // eslintPlugin(),
+    pluginTerminal(),
+    
   ],
+  logLevel: 'info',
 })

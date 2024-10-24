@@ -24,6 +24,7 @@
     "react-qrcode-logo": "^3.0.0",
     "react-router-dom": "^6.26.2",
     "vite-plugin-checker": "^0.8.0",
+    "vite-plugin-terminal": "^1.2.0",
     "vite-tsconfig-paths": "^5.0.1"
   },
   "devDependencies": {
