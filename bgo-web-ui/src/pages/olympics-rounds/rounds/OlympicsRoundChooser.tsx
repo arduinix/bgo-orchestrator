@@ -32,10 +32,13 @@ export default function OlympicsRoundChooser() {
         <Flex m={6} w={'70%'} justifyContent={'space-between'}>
           <Flex gap={3}>
             <Checkbox size={'lg'} defaultChecked>
-              Show current rounds
+              Show current
             </Checkbox>
             <Checkbox size={'lg'} defaultChecked>
-              Show finished rounds
+              Show finished
+            </Checkbox>
+            <Checkbox size={'lg'} defaultChecked>
+              Show removed
             </Checkbox>
           </Flex>
           <Spacer />
