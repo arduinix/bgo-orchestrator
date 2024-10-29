@@ -7,7 +7,6 @@ import {
   Flex,
   Box,
   Card,
-  CardBody,
   chakra,
 } from '@chakra-ui/react'
 import { Checkbox } from '@components/ui/checkbox'
@@ -52,8 +51,8 @@ export default function EditCategoryForm({
   return (
     <>
       {currentCategory && (
-        <Card position={'relative'}>
-          <CardBody>
+        <Card.Root position={'relative'}>
+          <Card.Body>
             <Box position="absolute" top={4} right={4}>
               <CustomQRCode url="https://www.google.com" />
             </Box>
@@ -101,8 +100,8 @@ export default function EditCategoryForm({
                 </Flex>
               </FormControl>
             </Flex>
-          </CardBody>
-        </Card>
+          </Card.Body>
+        </Card.Root>
       )}
     </>
   )

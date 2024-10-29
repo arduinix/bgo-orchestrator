@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tab, TabList, TabPanel, TabPanels, Tabs, Box } from '@chakra-ui/react'
+import { Tabs, Box } from '@chakra-ui/react'
 
 interface ReusableTabsProps {
   tabs: { label: string; content: React.ReactNode }[]
@@ -7,20 +7,22 @@ interface ReusableTabsProps {
 
 const ReusableTabs: React.FC<ReusableTabsProps> = ({ tabs }) => {
   return (
-    <Tabs size="md" variant="enclosed">
-      <TabList>
+    <Tabs.Root size='md' variant='enclosed'>
+      <Tabs.List>
         {tabs.map((tab, index) => (
-          <Tab key={index}>{tab.label}</Tab>
+          <Tabs.Trigger key={index} value={tab.label}>
+            {tab.label}
+          </Tabs.Trigger>
         ))}
-      </TabList>
+      </Tabs.List>
       <Box p={2}>
-        <TabPanels>
-          {tabs.map((tab, index) => (
-            <TabPanel key={index}>{tab.content}</TabPanel>
-          ))}
-        </TabPanels>
+        {tabs.map((tab, index) => (
+          <Tabs.Content key={index} value={tab.label}>
+            {tab.content}
+          </Tabs.Content>
+        ))}
       </Box>
-    </Tabs>
+    </Tabs.Root>
   )
 }
 

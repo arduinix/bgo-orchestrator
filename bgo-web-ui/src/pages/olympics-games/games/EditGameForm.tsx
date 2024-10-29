@@ -7,7 +7,6 @@ import {
   Flex,
   Box,
   Card,
-  CardBody,
   chakra,
   Select,
 } from '@chakra-ui/react'
@@ -29,9 +28,7 @@ export interface EditGameFormProps {
   closeAction: () => void
 }
 
-export default function EditGameyForm({
-  game,
-}: EditGameFormProps) {
+export default function EditGameyForm({ game }: EditGameFormProps) {
   const categories: GameCategory[] = games.catagories
   const [currentGame, setCurrentGame] = useState<Game | null>(null)
 
@@ -60,8 +57,8 @@ export default function EditGameyForm({
   return (
     <>
       {currentGame && (
-        <Card position={'relative'}>
-          <CardBody>
+        <Card.Root position={'relative'}>
+          <Card.Body>
             <Box position='absolute' top={4} right={4}>
               <CustomQRCode url='https://www.google.com' />
             </Box>
@@ -153,8 +150,8 @@ export default function EditGameyForm({
                 <Flex gap={2}></Flex>
               </Flex>
             </FormControl>
-          </CardBody>
-        </Card>
+          </Card.Body>
+        </Card.Root>
       )}
     </>
   )
