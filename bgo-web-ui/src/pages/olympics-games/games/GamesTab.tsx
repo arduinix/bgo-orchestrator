@@ -143,15 +143,17 @@ export default function GamesTab() {
         <IconButton
           size={'sm'}
           aria-label='delete row'
-          icon={<FiTrash2 />}
           onClick={() => handleDeleteClick(game)}
-        />
+        >
+          <FiTrash2 />
+        </IconButton>
         <IconButton
           size={'sm'}
           aria-label='edit row'
-          icon={<FiEdit />}
           onClick={() => handleEditClick(game)}
-        />
+        >
+          <FiEdit />
+        </IconButton>
       </Flex>
     )
   }
@@ -226,7 +228,8 @@ export default function GamesTab() {
         confirmButtonText={selectedGame?.id === 'new' ? 'Create' : 'Save'}
         confirmButtonColor='blue'
         size='3xl'
-        backgroundColor={useColorModeValue('gray.50', 'gray.800')}
+        // backgroundColor={useColorModeValue('gray.50', 'gray.800')}
+        backgroundColor={'gray.50'}
       />
     </>
   )

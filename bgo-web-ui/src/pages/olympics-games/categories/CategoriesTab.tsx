@@ -103,15 +103,17 @@ export default function CategoriesTab() {
         <IconButton
           size={'sm'}
           aria-label='delete row'
-          icon={<FiTrash2 />}
           onClick={() => handleDeleteClick(category)}
-        />
+        >
+          <FiTrash2 />
+        </IconButton>
         <IconButton
           size={'sm'}
           aria-label='edit row'
-          icon={<FiEdit />}
           onClick={() => handleEditClick(category)}
-        />
+        >
+          <FiEdit />
+        </IconButton>
       </Flex>
     )
   }

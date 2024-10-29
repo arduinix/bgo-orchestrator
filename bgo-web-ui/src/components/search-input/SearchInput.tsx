@@ -23,22 +23,23 @@ export default function SearchInput({
   return (
     <InputGroup width={'50%'} mb={1}>
       <InputLeftElement>
-        <Icon as={IoMdSearch} color="gray.300" fontSize={25} />
+        <Icon as={IoMdSearch} color='gray.300' fontSize={25} />
       </InputLeftElement>
       <Input
-        placeholder="Search..."
+        placeholder='Search...'
         value={searchTerm}
         onChange={handleSearchChange}
       />
       <InputRightElement>
-        <Tooltip content="Clear search">
+        <Tooltip content='Clear search'>
           <IconButton
-            aria-label="clear search"
+            aria-label='clear search'
             size={'md'}
             fontSize={20}
-            icon={<IoMdClose />}
             onClick={() => setSearchTerm('')}
-          />
+          >
+            <IoMdClose />
+          </IconButton>
         </Tooltip>
       </InputRightElement>
     </InputGroup>

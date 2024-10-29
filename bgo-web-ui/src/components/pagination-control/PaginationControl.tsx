@@ -44,42 +44,46 @@ export default function PaginationControl({
     <Flex alignItems='center' alignSelf={'center'} gap={8}>
       <Tooltip content='First Page'>
         <IconButton
-          icon={<FiChevronsLeft />}
           bg='transparent'
           aria-label='First Page'
           onClick={() => setCurrentPage(1)}
-          isDisabled={currentPage === 1}
-        />
+          disabled={currentPage === 1}
+        >
+          <FiChevronsLeft />
+        </IconButton>
       </Tooltip>
       <Tooltip content='Previous Page'>
         <IconButton
-          icon={<FiChevronLeft />}
           bg='transparent'
           aria-label='Previous Page'
           onClick={() => handlePreviousPage()}
-          isDisabled={currentPage === 1}
-        />
+          disabled={currentPage === 1}
+        >
+          <FiChevronLeft />
+        </IconButton>
       </Tooltip>
       <Tooltip content='Current Page'>
         <Button background={'transparent'}>{currentPage}</Button>
       </Tooltip>
       <Tooltip content='Next Page'>
         <IconButton
-          icon={<FiChevronRight />}
           bg='transparent'
           aria-label='Next Page'
           onClick={() => handleNextPage()}
-          isDisabled={currentPage === totalPages}
-        />
+          disabled={currentPage === totalPages}
+        >
+          <FiChevronRight />
+        </IconButton>
       </Tooltip>
       <Tooltip content='Last Page'>
         <IconButton
-          icon={<FiChevronsRight />}
           bg='transparent'
           aria-label='Last Page'
           onClick={() => setCurrentPage(totalPages)}
-          isDisabled={currentPage === totalPages}
-        />
+          disabled={currentPage === totalPages}
+        >
+          <FiChevronsRight />
+        </IconButton>
       </Tooltip>
       <Select
         width={'70px'}

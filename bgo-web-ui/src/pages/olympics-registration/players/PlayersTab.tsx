@@ -109,15 +109,17 @@ export default function PlayersTab() {
         <IconButton
           size={'sm'}
           aria-label='delete player'
-          icon={<FiTrash2 />}
           onClick={() => handleDeleteClick(player)}
-        />
+        >
+          <FiTrash2 />
+        </IconButton>
         <IconButton
           size={'sm'}
           aria-label='edit player'
-          icon={<FiEdit />}
           onClick={() => handleEditClick(player)}
-        />
+        >
+          <FiEdit />
+        </IconButton>
       </Flex>
     )
   }
