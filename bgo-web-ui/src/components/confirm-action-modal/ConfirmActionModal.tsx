@@ -1,18 +1,19 @@
+import { Button } from '@chakra-ui/react'
 import {
-  Button,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-} from '@chakra-ui/react'
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogRoot,
+  DialogTitle,
+  DialogActionTrigger,
+} from '@/components/ui/dialog'
 import { ReactNode } from 'react'
 
 export interface ConfirmActionModalProps {
-  isOpen: boolean
-  closeAction: () => void
+  open: boolean
+  setOpen: () => void
   header?: string | ReactNode
   body?: string | ReactNode
   confirmAction?: () => void
@@ -20,22 +21,12 @@ export interface ConfirmActionModalProps {
   cancelButtonText?: string
   confirmButtonColor?: string
   backgroundColor?: string
-  size?:
-    | 'xs'
-    | 'sm'
-    | 'md'
-    | 'lg'
-    | 'xl'
-    | '2xl'
-    | '3xl'
-    | '4xl'
-    | '5xl'
-    | '6xl'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'cover' | 'full'
 }
 
 export default function ConfirmActionModal({
-  isOpen,
-  closeAction,
+  open,
+  setOpen,
   header = 'Confirm',
   body = 'Are you sure you want to perform this action?',
   confirmAction = () => {},
@@ -47,18 +38,13 @@ export default function ConfirmActionModal({
 }: ConfirmActionModalProps) {
   return (
     <>
-      <Modal
-        closeOnOverlayClick={false}
-        isOpen={isOpen}
-        onClose={closeAction}
-        size={size}
-      >
-        <ModalOverlay />
-        <ModalContent backgroundColor={backgroundColor}>
-          <ModalHeader>{header}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={0}>{body}</ModalBody>
-          <ModalFooter>
+      <DialogRoot open={open} onOpenChange={(e) => setOpen(e.open)} size={size}>
+        <DialogContent backgroundColor={backgroundColor}>
+          <DialogHeader>
+            <DialogTitle>{header}</DialogTitle>
+          </DialogHeader>
+          <DialogBody pb={0}>{body}</DialogBody>
+          <DialogFooter>
             <Button
               colorScheme={confirmButtonColor}
               mr={3}
@@ -66,10 +52,13 @@ export default function ConfirmActionModal({
             >
               {confirmButtonText}
             </Button>
-            <Button onClick={closeAction}>{cancelButtonText}</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+            <DialogActionTrigger asChild>
+              <Button variant='outline'>{cancelButtonText}</Button>
+            </DialogActionTrigger>
+          </DialogFooter>
+          <DialogCloseTrigger />
+        </DialogContent>
+      </DialogRoot>
     </>
   )
 }

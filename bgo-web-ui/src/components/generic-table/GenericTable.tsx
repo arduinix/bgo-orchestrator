@@ -1,18 +1,13 @@
 import React, { useState, ReactNode, useMemo } from 'react'
 import {
-  TableContainer,
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
   Flex,
   Text,
   Box,
+  Stack,
+  Table,
+  SystemStyleObject,
 } from '@chakra-ui/react'
 import { Checkbox } from '@components/ui/checkbox'
-import { SystemStyleObject } from '@chakra-ui/styled-system'
 import { FaSortAlphaDown, FaSortAlphaDownAlt } from 'react-icons/fa'
 import { TrueIcon, FalseIcon } from '@components/standards/StandardIcons'
 import SearchInput from '@components/search-input/SearchInput'
@@ -161,7 +156,7 @@ export default function GenericTable<T extends Record<string, any>>({
       return value ? <TrueIcon /> : <FalseIcon />
     } else if (typeof value === 'string' || typeof value === 'number') {
       return (
-        <Text color={textColor} sx={cellStyle}>
+        <Text color={textColor} css={cellStyle}>
           {value}
         </Text>
       )
@@ -178,7 +173,7 @@ export default function GenericTable<T extends Record<string, any>>({
   ): ReactNode => {
     if (typeof value === 'string' || typeof value === 'number') {
       return (
-        <Text color={subTextColor} sx={subFieldStyle}>
+        <Text color={subTextColor} css={subFieldStyle}>
           {value}
         </Text>
       )
@@ -196,12 +191,12 @@ export default function GenericTable<T extends Record<string, any>>({
           handleSearchChange={handleSearchChange}
         />
       )}
-      <TableContainer maxWidth={'100%'}>
-        <Table variant='simple'>
-          <Thead>
-            <Tr>
+      <Stack maxWidth={'100%'}>
+        <Table.Root variant='outline'>
+          <Table.Header>
+            <Table.Row>
               {enableMultiSelect && (
-                <Th
+                <Table.Header
                   key={'selectAllRows'}
                   bg={headerBgColor}
                   color={textColor}
@@ -217,10 +212,10 @@ export default function GenericTable<T extends Record<string, any>>({
                     checked={isAllSelected}
                     onChange={handleHeaderCheckboxChange}
                   />
-                </Th>
+                </Table.Header>
               )}
               {headers.map((header, index) => (
-                <Th
+                <Table.Header
                   key={index}
                   onClick={
                     header.sortKey !== null
@@ -239,9 +234,9 @@ export default function GenericTable<T extends Record<string, any>>({
                     <Box mr={2}>{header.text}</Box>
                     <Box>{header.sortKey && getSortIcon(header.sortKey)}</Box>
                   </Flex>
-                </Th>
+                </Table.Header>
               ))}
-              <Th
+              <Table.Header
                 bg={headerBgColor}
                 color={textColor}
                 textAlign='center'
@@ -249,12 +244,12 @@ export default function GenericTable<T extends Record<string, any>>({
                 fontSize={'sm'}
                 p={4}
               />
-            </Tr>
-          </Thead>
-          <Tbody>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
             {sortedData.length === 0 ? (
-              <Tr>
-                <Td
+              <Table.Row>
+                <Table.Cell
                   colSpan={
                     enableMultiSelect
                       ? data.length > 0
@@ -267,15 +262,15 @@ export default function GenericTable<T extends Record<string, any>>({
                   textAlign='center'
                 >
                   {noRecordsMessage}
-                </Td>
-              </Tr>
+                </Table.Cell>
+              </Table.Row>
             ) : (
               paginatedData.map((row, index) => {
                 const key = multiSelectKeyExtractor
                   ? multiSelectKeyExtractor(row)
                   : ''
                 return (
-                  <Tr
+                  <Table.Row
                     key={index}
                     bg={
                       selectedRow && row === selectedRow
@@ -290,17 +285,21 @@ export default function GenericTable<T extends Record<string, any>>({
                     cursor='pointer'
                   >
                     {enableMultiSelect && (
-                      <Td>
+                      <Table.Cell>
                         <Checkbox
                           size={'lg'}
                           bg={'white'}
                           checked={selectedRows.includes(key)}
                           onChange={() => handleRowCheckboxChange(key)}
                         />
-                      </Td>
+                      </Table.Cell>
                     )}
                     {headers.map((header, i) => (
-                      <Td key={i} color={textColor} flexDirection={'column'}>
+                      <Table.Cell
+                        key={i}
+                        color={textColor}
+                        flexDirection={'column'}
+                      >
                         {renderTableRowField(
                           row[
                             header.showKey
@@ -314,16 +313,18 @@ export default function GenericTable<T extends Record<string, any>>({
                             row[header.subField as keyof T],
                             header.subFieldStyle as SystemStyleObject
                           )}
-                      </Td>
+                      </Table.Cell>
                     ))}
-                    {rowActionButtons && <Td>{rowActionButtons(row)}</Td>}
-                  </Tr>
+                    {rowActionButtons && (
+                      <Table.Cell>{rowActionButtons(row)}</Table.Cell>
+                    )}
+                  </Table.Row>
                 )
               })
             )}
-          </Tbody>
-        </Table>
-      </TableContainer>
+          </Table.Body>
+        </Table.Root>
+      </Stack>
 
       <PaginationControl
         totalPages={totalPages}

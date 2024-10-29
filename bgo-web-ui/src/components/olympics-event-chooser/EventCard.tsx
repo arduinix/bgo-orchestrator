@@ -6,7 +6,6 @@ import {
   Text,
   Image,
   IconButton,
-  useDisclosure,
   Badge,
 } from '@chakra-ui/react'
 import {
@@ -21,6 +20,7 @@ import torch from '@assets/image/torch.png'
 import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
 import CopyToNewEventModal from '@components/copy-to-new-event/CopyToNewEventModal'
 import { convertDateShort } from '@utils/stringConversion'
+import {useState } from 'react'
 
 // interface CardProps {
 //   heading: string;
@@ -31,17 +31,19 @@ import { convertDateShort } from '@utils/stringConversion'
 
 const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
   const navigate = useNavigate()
-  const {
-    open: isOpenDelete,
-    onOpen: onOpenDelete,
-    onClose: onCloseDelete,
-  } = useDisclosure()
+  // const {
+  //   open: isOpenDelete,
+  //   onOpen: onOpenDelete,
+  //   onClose: onCloseDelete,
+  // } = useDisclosure()
 
-  const {
-    open: isOpenCopy,
-    onOpen: onOpenCopy,
-    onClose: onCloseCopy,
-  } = useDisclosure()
+  // const {
+  //   open: isOpenCopy,
+  //   onOpen: onOpenCopy,
+  //   onClose: onCloseCopy,
+  // } = useState()
+  const [isOpenDelete, setIsOpenDelete] = useState(false)
+  const [isOpenCopy, setIsOpenCopy] = useState(false)
 
   const handleEventClick = () => {
     navigate(`/olympics/${id}`)
@@ -110,7 +112,7 @@ const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
           <MenuItem
             onClick={(e) => {
               e.stopPropagation()
-              onOpenCopy()
+              setIsOpenCopy(true)
             }}
             value='copy-to-new'
           >
@@ -119,7 +121,7 @@ const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
           <MenuItem
             onClick={(e) => {
               e.stopPropagation()
-              onOpenDelete()
+              setIsOpenDelete(true)
             }}
             value='delete'
           >
@@ -129,16 +131,16 @@ const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
       </MenuRoot>
       <ConfirmActionModal
         isOpen={isOpenDelete}
-        closeAction={onCloseDelete}
-        confirmAction={onCloseDelete}
+        closeAction={setIsOpenDelete(false)}
+        confirmAction={setIsOpenDelete(false)}
         header={`Delete ${name}?`}
         body={`Are you sure that you want to delete this event named "${name}"? This action cannot be undone.`}
         confirmButtonText={'Delete'}
       />
       <CopyToNewEventModal
-        isOpen={isOpenCopy}
-        closeAction={onCloseCopy}
-        confirmAction={onCloseCopy}
+        open={isOpenCopy}
+        setOpen={setIsOpenCopy(true)}
+        confirmAction={setIsOpenCopy(false)}
         sourceEventName={name}
       />
     </Box>

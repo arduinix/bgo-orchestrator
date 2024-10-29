@@ -1,30 +1,28 @@
+import { Button, Text, Input, Flex } from '@chakra-ui/react'
+import { Field } from '@components/ui/field'
 import {
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Flex,
-} from '@chakra-ui/react'
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogRoot,
+  DialogTitle,
+  DialogActionTrigger,
+} from '@/components/ui/dialog'
 import { Checkbox } from '@components/ui/checkbox'
 import { useRef, useState } from 'react'
 
 export interface CopyToNewEventModalProps {
-  isOpen: boolean
-  closeAction: () => void
+  open: boolean
+  setOpen: () => void
   sourceEventName: string
   confirmAction?: () => void
 }
 
 export default function CopyToNewEvent({
-  isOpen,
-  closeAction,
+  open,
+  setOpen,
   sourceEventName,
   confirmAction = () => {},
 }: CopyToNewEventModalProps) {
@@ -35,47 +33,53 @@ export default function CopyToNewEvent({
 
   return (
     <>
-      <Modal
-        initialFocusRef={initialRef}
-        finalFocusRef={finalRef}
-        isOpen={isOpen}
-        onClose={closeAction}
+      <DialogRoot
+        initialFocusEl={() => initialRef.current}
+        finalFocusEl={() => finalRef.current}
+        lazyMount
+        open={open}
+        onOpenChange={(e) => setOpen(e.open)}
       >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Copy to new Event?</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel>New Event Name</FormLabel>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Copy to new Event?</DialogTitle>
+          </DialogHeader>
+          <DialogBody pb={6}>
+            <Field>
+              <Text>New Event Name</Text>
               <Input
                 ref={initialRef}
                 value={newEventName}
                 onChange={(e) => setNewEventName(e.target.value)}
                 onFocus={(e) => e.target.select()}
               />
-            </FormControl>
+            </Field>
 
-            <FormControl mt={4}>
+            <Field mt={4}>
               <Flex gap={2} align={'center'}>
                 <Checkbox
                   mb={1.5}
                   checked={openAfterCreation}
-                  onChange={(e) => setOpenAfterCreation(e.target.checked)}
+                  onCheckedChange={(e) =>
+                    setOpenAfterCreation(Boolean(e.checked))
+                  }
                 />
-                <FormLabel>Open after creation?</FormLabel>
+                <Text>Open after creation?</Text>
               </Flex>
-            </FormControl>
-          </ModalBody>
+            </Field>
+          </DialogBody>
 
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={confirmAction}>
+          <DialogFooter>
+            <Button colorScheme='blue' mr={3} onClick={confirmAction}>
               Create
             </Button>
-            <Button onClick={closeAction}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+            <DialogActionTrigger asChild>
+              <Button variant='outline'>Cancel</Button>
+            </DialogActionTrigger>
+          </DialogFooter>
+          <DialogCloseTrigger />
+        </DialogContent>
+      </DialogRoot>
     </>
   )
 }
