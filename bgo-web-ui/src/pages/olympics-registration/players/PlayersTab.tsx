@@ -81,10 +81,10 @@ export default function PlayersTab() {
         color: '#4A8DD9',
         fontSize: 'sm',
         fontStyle: 'italic',
-        '::before': {
+        '&::before': {
           content: '"“"',
         },
-        '::after': {
+        '&::after': {
           content: '"”"',
         },
       },

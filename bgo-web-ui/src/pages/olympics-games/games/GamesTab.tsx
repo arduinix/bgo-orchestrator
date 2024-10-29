@@ -83,7 +83,7 @@ export default function GamesTab() {
         // minWidth: '200px',
         display: '-webkit-box',
         WebkitLineClamp: 2,
-        WebkitBoxOrient: 'vertical',
+        // WebkitBoxOrient: 'vertical',
       },
     },
     {
@@ -97,7 +97,7 @@ export default function GamesTab() {
         // minWidth: '200px',
         display: '-webkit-box',
         WebkitLineClamp: 2,
-        WebkitBoxOrient: 'vertical',
+        // WebkitBoxOrient: 'vertical',
       },
     },
     { text: 'Category', sortKey: 'category' },

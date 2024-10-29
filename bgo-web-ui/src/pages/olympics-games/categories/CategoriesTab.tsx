@@ -77,7 +77,7 @@ export default function CategoriesTab() {
         // minWidth: '200px',
         display: '-webkit-box',
         WebkitLineClamp: 2,
-        WebkitBoxOrient: 'vertical',
+        // WebkitBoxOrient: 'vertical',
       },
     },
     {
@@ -90,7 +90,7 @@ export default function CategoriesTab() {
         maxWidth: '300px',
         display: '-webkit-box',
         WebkitLineClamp: 2,
-        WebkitBoxOrient: 'vertical',
+        // WebkitBoxOrient: 'vertical',
       },
     },
     { text: 'Total Games', sortKey: 'totalGames' },
