@@ -1,4 +1,11 @@
-import { Button, IconButton, Select, Flex } from '@chakra-ui/react'
+import { Button, IconButton, Flex } from '@chakra-ui/react'
+import {
+  SelectContent,
+  SelectItem,
+  SelectRoot,
+  SelectTrigger,
+  SelectValueText,
+} from '@/components/ui/select'
 import { Tooltip } from '@/components/ui/tooltip'
 
 import {
@@ -85,17 +92,22 @@ export default function PaginationControl({
           <FiChevronsRight />
         </IconButton>
       </Tooltip>
-      <Select
+      <SelectRoot
         width={'70px'}
         value={itemsPerPage}
         onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
       >
-        {itemsPerPageOptions.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </Select>
+        <SelectTrigger>
+          <SelectValueText />
+        </SelectTrigger>
+        <SelectContent>
+          {itemsPerPageOptions.map((option) => (
+            <SelectItem key={option} item={option}>
+              {option}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </SelectRoot>
     </Flex>
   )
 }

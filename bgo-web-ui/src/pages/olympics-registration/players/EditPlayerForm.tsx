@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { FormControl, Input, Flex, Box, Card } from '@chakra-ui/react'
+import { Input, Flex, Box, Card } from '@chakra-ui/react'
 import { BoldFormLabel } from '@/components/styled-components/StyledComponents'
 import { Checkbox } from '@components/ui/checkbox'
 import AvatarNameFlex from '@components/avatar-name-flex/AvatarNameFlex'
@@ -39,7 +39,7 @@ export default function EditPlayerForm({ player }: EditPlayerFormProps) {
             </Box>
             <Flex gap={4} flexDir={'column'}>
               <AvatarNameFlex player={currentPlayer} />
-              <FormControl>
+              <Flex>
                 <Flex gap={4} width={'100%'} flexDirection={'column'}>
                   <Flex gap={10}>
                     <Box width={'44%'}>
@@ -119,7 +119,7 @@ export default function EditPlayerForm({ player }: EditPlayerFormProps) {
                     </Box>
                   </Flex>
                 </Flex>
-              </FormControl>
+              </Flex>
             </Flex>
           </Card.Body>
         </Card.Root>
