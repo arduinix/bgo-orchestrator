@@ -5,15 +5,17 @@ import {
   Stack,
   Text,
   Image,
-  MenuButton,
-  Menu,
   IconButton,
-  MenuList,
-  MenuItem,
   MenuSeparator,
   useDisclosure,
   Badge,
 } from '@chakra-ui/react'
+import {
+  MenuRoot,
+  MenuItem,
+  MenuContent,
+  MenuTrigger,
+} from '@components/ui/menu'
 import { useNavigate } from 'react-router-dom'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import torch from '@assets/image/torch.png'
@@ -87,15 +89,17 @@ const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
           </Box>
         </Stack>
       </Box>
-      <Menu>
-        <MenuButton
-          as={IconButton}
-          aria-label='Options'
-          icon={<RxHamburgerMenu />}
-          variant='outline'
-          onClick={(e) => e.stopPropagation()}
-        />
-        <MenuList>
+      <MenuRoot>
+        <MenuTrigger asChild>
+          <IconButton
+            aria-label='Options'
+            variant='outline'
+            onClick={(e) => e.stopPropagation()}
+          >
+            <RxHamburgerMenu />
+          </IconButton>
+        </MenuTrigger>
+        <MenuContent>
           <MenuItem
             onClick={(e) => {
               e.stopPropagation()
@@ -141,8 +145,8 @@ const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
           >
             Undo Remove
           </MenuItem>
-        </MenuList>
-      </Menu>
+        </MenuContent>
+      </MenuRoot>
       <ConfirmActionModal
         isOpen={isOpenDelete}
         closeAction={onCloseDelete}

@@ -1,13 +1,11 @@
 import { useState } from 'react'
+import { Button, Box, Flex } from '@chakra-ui/react'
 import {
-  Menu,
-  MenuButton,
-  MenuList,
+  MenuRoot,
   MenuItem,
-  Button,
-  Box,
-  Flex,
-} from '@chakra-ui/react'
+  MenuContent,
+  MenuTrigger,
+} from '@components/ui/menu'
 import { GoChevronDown } from 'react-icons/go'
 import selectableColors from '@constants/selectableColors'
 
@@ -19,21 +17,26 @@ export default function ColorPickerDropdown() {
   }
 
   return (
-    <Menu>
-      <MenuButton as={Button} rightIcon={<GoChevronDown />}>
-        <Flex alignItems='center'>
-          <Box
-            width='16px'
-            height='16px'
-            backgroundColor={selectedColor?.hex}
-            outline={'1px solid gray'}
-            borderRadius='50%'
-            marginRight='8px'
-          />
-          {selectedColor ? selectedColor.name : 'None'}
-        </Flex>
-      </MenuButton>
-      <MenuList maxHeight='175px' overflowY='auto'>
+    <MenuRoot>
+      <MenuTrigger asChild>
+        <Button as={Button}>
+          <Flex alignItems='center'>
+            <Box
+              width='16px'
+              height='16px'
+              backgroundColor={selectedColor?.hex}
+              outline={'1px solid gray'}
+              borderRadius='50%'
+              marginRight='8px'
+            />
+            {selectedColor ? selectedColor.name : 'None'}
+            <Flex marginLeft='auto'>
+              <GoChevronDown />
+            </Flex>
+          </Flex>
+        </Button>
+      </MenuTrigger>
+      <MenuContent maxHeight='175px' overflowY='auto'>
         <MenuItem onClick={() => handleColorChange(null)} value='none'>
           <Flex alignItems='center'>
             <Box
@@ -48,7 +51,11 @@ export default function ColorPickerDropdown() {
           </Flex>
         </MenuItem>
         {selectableColors.map((color) => (
-          <MenuItem key={color.name} onClick={() => handleColorChange(color)} value='color-name'>
+          <MenuItem
+            key={color.name}
+            onClick={() => handleColorChange(color)}
+            value='color-name'
+          >
             <Flex alignItems='center'>
               <Box
                 width='16px'
@@ -62,7 +69,7 @@ export default function ColorPickerDropdown() {
             </Flex>
           </MenuItem>
         ))}
-      </MenuList>
-    </Menu>
+      </MenuContent>
+    </MenuRoot>
   )
 }

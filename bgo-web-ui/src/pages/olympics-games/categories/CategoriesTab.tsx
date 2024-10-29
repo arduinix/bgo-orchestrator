@@ -5,13 +5,15 @@ import {
   Spacer,
   useDisclosure,
   Text,
-  MenuButton,
-  Menu,
-  MenuList,
-  MenuItem,
   MenuSeparator,
   IconButton,
 } from '@chakra-ui/react'
+import {
+  MenuRoot,
+  MenuItem,
+  MenuContent,
+  MenuTrigger,
+} from '@components/ui/menu'
 import { GoChevronDown } from 'react-icons/go'
 import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
 import { useState } from 'react'
@@ -118,15 +120,14 @@ export default function CategoriesTab() {
     <>
       <Flex flexDirection={'column'} gap={4}>
         <ButtonGroup colorScheme='blue' size={'md'}>
-          <Menu>
-            <MenuButton
-              as={Button}
-              colorScheme='blue'
-              rightIcon={<GoChevronDown />}
-            >
-              Actions
-            </MenuButton>
-            <MenuList>
+          <MenuRoot>
+            <MenuTrigger asChild>
+              <Flex alignItems='center'>
+                <Button colorPalette={'blue'}>Actions</Button>
+                <GoChevronDown />
+              </Flex>
+            </MenuTrigger>
+            <MenuContent>
               <MenuItem value='set-in-play'>Set In-Play</MenuItem>
               <MenuItem value='set-out-of-play'>Set Out-Of-Play</MenuItem>
               <MenuSeparator />
@@ -137,8 +138,8 @@ export default function CategoriesTab() {
               <MenuItem onClick={handleAddClick} value='add-category'>
                 Add Category
               </MenuItem>
-            </MenuList>
-          </Menu>
+            </MenuContent>
+          </MenuRoot>
           <Spacer />
           <Button onClick={handleAddClick}>Add Category</Button>
         </ButtonGroup>

@@ -5,13 +5,15 @@ import {
   Spacer,
   useDisclosure,
   Text,
-  MenuButton,
-  Menu,
-  MenuList,
-  MenuItem,
   MenuSeparator,
   IconButton,
 } from '@chakra-ui/react'
+import {
+  MenuRoot,
+  MenuItem,
+  MenuContent,
+  MenuTrigger,
+} from '@components/ui/menu'
 import { GoChevronDown } from 'react-icons/go'
 import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
 import { useState, useMemo } from 'react'
@@ -124,29 +126,38 @@ export default function PlayersTab() {
     <>
       <Flex flexDirection={'column'} gap={4}>
         <ButtonGroup colorScheme='blue' size={'md'}>
-          <Menu>
-            <MenuButton
-              as={Button}
-              colorScheme='blue'
-              rightIcon={<GoChevronDown />}
-            >
-              Actions
-            </MenuButton>
-            <MenuList>
+          <MenuRoot>
+            <MenuTrigger asChild>
+              <Button colorPalette={'blue'}>
+                <Flex alignItems='center'>
+                  Actions
+                  <GoChevronDown />
+                </Flex>
+              </Button>
+            </MenuTrigger>
+            <MenuContent>
               <MenuItem value='import-csv'>Import CSV</MenuItem>
-              <MenuItem disabled value='import-player'>Import from Player Group</MenuItem>
+              <MenuItem disabled value='import-player'>
+                Import from Player Group
+              </MenuItem>
               <MenuSeparator />
               <MenuItem value='export-csv'>Export CSV</MenuItem>
-              <MenuItem disabled value='export-player'>Export to Player Group</MenuItem>
+              <MenuItem disabled value='export-player'>
+                Export to Player Group
+              </MenuItem>
               <MenuSeparator />
               <MenuItem value='set-in-play'>Set In-Play</MenuItem>
               <MenuItem value='set-out-of-play'>Set Out-Of-Play</MenuItem>
               <MenuSeparator />
-              <MenuItem value='remove-selected'>Remove Selected Players</MenuItem>
+              <MenuItem value='remove-selected'>
+                Remove Selected Players
+              </MenuItem>
               <MenuSeparator />
-              <MenuItem onClick={handleAddClick} value='add-player'>Add Player</MenuItem>
-            </MenuList>
-          </Menu>
+              <MenuItem onClick={handleAddClick} value='add-player'>
+                Add Player
+              </MenuItem>
+            </MenuContent>
+          </MenuRoot>
           <Spacer />
           <Button onClick={handleAddClick}>Add Player</Button>
         </ButtonGroup>

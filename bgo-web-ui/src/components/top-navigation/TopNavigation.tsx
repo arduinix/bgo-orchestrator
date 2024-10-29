@@ -6,19 +6,20 @@ import {
   Text,
   IconButton,
   Button,
-  MenuRoot,
-  MenuTrigger,
-  MenuContent,
-  MenuItem,
   MenuSeparator,
   useDisclosure,
   Image,
   Switch,
   Spacer,
 } from '@chakra-ui/react'
-import { RxHamburgerMenu } from 'react-icons/rx';
-import { IoClose } from 'react-icons/io5';
-
+import {
+  MenuRoot,
+  MenuItem,
+  MenuContent,
+  MenuTrigger,
+} from '@components/ui/menu'
+import { RxHamburgerMenu } from 'react-icons/rx'
+import { IoClose } from 'react-icons/io5'
 
 import logo from '../../assets/image/logo_no_info.png'
 import NavLinks, { NavLinkProps } from './NavLinks'
@@ -56,33 +57,31 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
         <Flex h={20} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}
-            icon={open ? <IoClose /> : <RxHamburgerMenu />}
             aria-label={'Open Menu'}
             display={{ md: 'none' }}
             onClick={open ? onClose : onOpen}
-          />
+          >
+            {open ? <IoClose /> : <RxHamburgerMenu />}
+          </IconButton>
+
           <HStack gap={8} alignItems={'center'}>
-            <Box as="a" cursor={'pointer'} href={'/'}>
+            <Box as='a' cursor={'pointer'} href={'/'}>
               <Image
                 src={logo}
-                alt="logo"
-                boxSize="50px"
+                alt='logo'
+                boxSize='50px'
                 ml={0}
                 mr={0}
                 objectFit={'scale-down'}
               />
             </Box>
-            <Box as="a" cursor={'pointer'} href={'/'}>
-              <Text fontSize={'xl'} as="b">
+            <Box as='a' cursor={'pointer'} href={'/'}>
+              <Text fontSize={'xl'} as='b'>
                 BOARD GAME OLYMPICS
               </Text>
             </Box>
 
-            <HStack
-              as={'nav'}
-              gap={4}
-              display={{ base: 'none', md: 'flex' }}
-            >
+            <HStack as={'nav'} gap={4} display={{ base: 'none', md: 'flex' }}>
               {/* {Links.map((link) => (
                 <NavLink key={link}>
                   <Text fontSize={"xl"}>{link}</Text>
@@ -114,13 +113,13 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
                 <MenuSeparator />
                 <MenuItem value='account-settings'>Account Settings</MenuItem>
                 <MenuItem value='help'>Help</MenuItem>
-                <MenuItem value='dark-mode' >
+                <MenuItem value='dark-mode'>
                   <Flex width={'100%'}>
                     <Text mr={4}>Dark Mode</Text>
                     <Spacer />
                     <Switch
-                      // onChange={toggleColorMode}
-                      // checked={colorMode === 'dark'}
+                    // onChange={toggleColorMode}
+                    // checked={colorMode === 'dark'}
                     />
                   </Flex>
                 </MenuItem>

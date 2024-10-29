@@ -5,14 +5,16 @@ import {
   Spacer,
   useDisclosure,
   Text,
-  MenuButton,
-  Menu,
-  MenuList,
-  MenuItem,
   MenuSeparator,
   IconButton,
   Badge,
 } from '@chakra-ui/react'
+import {
+  MenuRoot,
+  MenuItem,
+  MenuContent,
+  MenuTrigger,
+} from '@components/ui/menu'
 import { GoChevronDown } from 'react-icons/go'
 import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
 import { useState, useMemo } from 'react'
@@ -158,23 +160,26 @@ export default function GamesTab() {
     <>
       <Flex flexDirection={'column'} gap={4}>
         <ButtonGroup colorScheme='blue' size={'md'}>
-          <Menu>
-            <MenuButton
-              as={Button}
-              colorScheme='blue'
-              rightIcon={<GoChevronDown />}
-            >
-              Actions
-            </MenuButton>
-            <MenuList>
+          <MenuRoot>
+            <MenuTrigger asChild>
+              <Button colorPalette={'blue'}>
+                <Flex alignItems='center'>
+                  Actions
+                  <GoChevronDown />
+                </Flex>
+              </Button>
+            </MenuTrigger>
+            <MenuContent>
               <MenuItem value='set-in-play'>Set In-Play</MenuItem>
               <MenuItem value='set-out-of-play'>Set Out-Of-Play</MenuItem>
               <MenuSeparator />
               <MenuItem value='remove-selected'>Remove Selected Games</MenuItem>
               <MenuSeparator />
-              <MenuItem onClick={handleAddClick} value='add-game'>Add Game</MenuItem>
-            </MenuList>
-          </Menu>
+              <MenuItem onClick={handleAddClick} value='add-game'>
+                Add Game
+              </MenuItem>
+            </MenuContent>
+          </MenuRoot>
           <Spacer />
           <Button onClick={handleAddClick}>Add Game</Button>
         </ButtonGroup>
