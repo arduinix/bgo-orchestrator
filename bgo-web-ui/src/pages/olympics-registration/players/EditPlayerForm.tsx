@@ -73,7 +73,7 @@ export default function EditPlayerForm({
                     <Box width={'20%'} alignSelf={'center'} mt={7}>
                       <Checkbox
                         size={'lg'}
-                        isChecked={isPlaying}
+                        checked={isPlaying}
                         onChange={(e) =>
                           handleFieldUpdate('isPlaying', e.target.checked)
                         }

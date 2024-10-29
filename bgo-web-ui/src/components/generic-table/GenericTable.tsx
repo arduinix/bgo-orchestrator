@@ -214,7 +214,7 @@ export default function GenericTable<T extends Record<string, any>>({
                     size={'lg'}
                     bg={'white'}
                     ml={2}
-                    isChecked={isAllSelected}
+                    checked={isAllSelected}
                     onChange={handleHeaderCheckboxChange}
                   />
                 </Th>
@@ -294,7 +294,7 @@ export default function GenericTable<T extends Record<string, any>>({
                         <Checkbox
                           size={'lg'}
                           bg={'white'}
-                          isChecked={selectedRows.includes(key)}
+                          checked={selectedRows.includes(key)}
                           onChange={() => handleRowCheckboxChange(key)}
                         />
                       </Td>

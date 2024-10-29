@@ -1,6 +1,6 @@
 import {
   Button,
-  ButtonGroup,
+  Group,
   Flex,
   Spacer,
   useDisclosure,
@@ -121,7 +121,7 @@ export default function CategoriesTab() {
   return (
     <>
       <Flex flexDirection={'column'} gap={4}>
-        <ButtonGroup colorScheme='blue' size={'md'}>
+        <Group colorScheme='blue' size={'md'}>
           <MenuRoot>
             <MenuTrigger asChild>
               <Flex alignItems='center'>
@@ -144,7 +144,7 @@ export default function CategoriesTab() {
           </MenuRoot>
           <Spacer />
           <Button onClick={handleAddClick}>Add Category</Button>
-        </ButtonGroup>
+        </Group>
         <GenericTable
           data={data}
           headers={headers}

@@ -1,6 +1,6 @@
 import {
   Button,
-  ButtonGroup,
+  Group,
   Flex,
   Spacer,
   useDisclosure,
@@ -127,7 +127,7 @@ export default function PlayersTab() {
   return (
     <>
       <Flex flexDirection={'column'} gap={4}>
-        <ButtonGroup colorScheme='blue' size={'md'}>
+        <Group colorScheme='blue' size={'md'}>
           <MenuRoot>
             <MenuTrigger asChild>
               <Button colorPalette={'blue'}>
@@ -162,7 +162,7 @@ export default function PlayersTab() {
           </MenuRoot>
           <Spacer />
           <Button onClick={handleAddClick}>Add Player</Button>
-        </ButtonGroup>
+        </Group>
         <GenericTable
           data={extendedPlayers}
           headers={headers}

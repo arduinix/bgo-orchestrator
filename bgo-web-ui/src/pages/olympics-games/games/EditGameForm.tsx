@@ -68,7 +68,7 @@ export default function EditGameyForm({
             <Box position='absolute' top={160} right={10}>
               <Checkbox
                 size={'lg'}
-                isChecked={isInPlay}
+                checked={isInPlay}
                 onChange={(e) =>
                   handleFieldUpdate('isInPlay', e.target.checked)
                 }
@@ -141,7 +141,7 @@ export default function EditGameyForm({
                 <Box>
                   <Checkbox
                     size={'lg'}
-                    isChecked={isInPlay}
+                    checked={isInPlay}
                     onChange={(e) =>
                       handleFieldUpdate('lowScoreWins', e.target.checked)
                     }

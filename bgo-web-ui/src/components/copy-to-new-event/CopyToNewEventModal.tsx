@@ -60,7 +60,7 @@ export default function CopyToNewEvent({
               <Flex gap={2} align={'center'}>
                 <Checkbox
                   mb={1.5}
-                  isChecked={openAfterCreation}
+                  checked={openAfterCreation}
                   onChange={(e) => setOpenAfterCreation(e.target.checked)}
                 />
                 <FormLabel>Open after creation?</FormLabel>

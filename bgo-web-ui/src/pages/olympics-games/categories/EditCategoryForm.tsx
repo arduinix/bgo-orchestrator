@@ -89,7 +89,7 @@ export default function EditCategoryForm({
                     <Box width={'30%'} alignSelf={'flex-end'} pl={20} pb={3}>
                       <Checkbox
                         size={'lg'}
-                        isChecked={isInPlay}
+                        checked={isInPlay}
                         onChange={(e) =>
                           handleFieldUpdate('isInPlay', e.target.checked)
                         }

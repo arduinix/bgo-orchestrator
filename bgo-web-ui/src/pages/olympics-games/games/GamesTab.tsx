@@ -1,6 +1,6 @@
 import {
   Button,
-  ButtonGroup,
+  Group,
   Flex,
   Spacer,
   useDisclosure,
@@ -161,7 +161,7 @@ export default function GamesTab() {
   return (
     <>
       <Flex flexDirection={'column'} gap={4}>
-        <ButtonGroup colorScheme='blue' size={'md'}>
+        <Group colorScheme='blue' size={'md'}>
           <MenuRoot>
             <MenuTrigger asChild>
               <Button colorPalette={'blue'}>
@@ -184,7 +184,7 @@ export default function GamesTab() {
           </MenuRoot>
           <Spacer />
           <Button onClick={handleAddClick}>Add Game</Button>
-        </ButtonGroup>
+        </Group>
         <GenericTable
           data={extendedGames}
           headers={headers}
