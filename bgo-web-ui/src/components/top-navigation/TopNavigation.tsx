@@ -9,9 +9,9 @@ import {
   MenuSeparator,
   useDisclosure,
   Image,
-  Switch,
   Spacer,
 } from '@chakra-ui/react'
+import { Switch } from '@components/ui/switch'
 import {
   MenuRoot,
   MenuItem,

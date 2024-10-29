@@ -5,12 +5,11 @@ import {
   Flex,
   Icon,
   Text,
-  Drawer,
-  DrawerContent,
   useDisclosure,
   BoxProps,
   FlexProps,
 } from '@chakra-ui/react'
+import { DrawerRoot, DrawerContent } from '@components/ui/drawer'
 import { Tooltip } from '@/components/ui/tooltip'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { FiMenu } from 'react-icons/fi'
@@ -37,18 +36,18 @@ export default function SimpleSidebar({
         onClose={() => onClose}
         display={{ base: 'none', md: 'block' }}
       />
-      <Drawer
-        isOpen={open}
-        placement='left'
-        onClose={onClose}
-        returnFocusOnClose={false}
-        onOverlayClick={onClose}
+      <DrawerRoot
+        open={open}
+        placement='start'
+        // onClose={onClose}
+        // returnFocusOnClose={false}
+        // onOverlayClick={onClose}
         size='full'
       >
         <DrawerContent>
           <SidebarContent linkItems={linkItems} onClose={onClose} />
         </DrawerContent>
-      </Drawer>
+      </DrawerRoot>
       <MobileNav display={{ base: 'flex', md: 'none' }} onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }}></Box>
     </Box>
