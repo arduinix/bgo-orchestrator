@@ -133,18 +133,18 @@ export default function PlayersTab() {
               Actions
             </MenuButton>
             <MenuList>
-              <MenuItem>Import CSV</MenuItem>
-              <MenuItem isDisabled>Import from Player Group</MenuItem>
+              <MenuItem value='import-csv'>Import CSV</MenuItem>
+              <MenuItem disabled value='import-player'>Import from Player Group</MenuItem>
               <MenuSeparator />
-              <MenuItem>Export CSV</MenuItem>
-              <MenuItem isDisabled>Export to Player Group</MenuItem>
+              <MenuItem value='export-csv'>Export CSV</MenuItem>
+              <MenuItem disabled value='export-player'>Export to Player Group</MenuItem>
               <MenuSeparator />
-              <MenuItem>Set In-Play</MenuItem>
-              <MenuItem>Set Out-Of-Play</MenuItem>
+              <MenuItem value='set-in-play'>Set In-Play</MenuItem>
+              <MenuItem value='set-out-of-play'>Set Out-Of-Play</MenuItem>
               <MenuSeparator />
-              <MenuItem>Remove Selected Players</MenuItem>
+              <MenuItem value='remove-selected'>Remove Selected Players</MenuItem>
               <MenuSeparator />
-              <MenuItem onClick={handleAddClick}>Add Player</MenuItem>
+              <MenuItem onClick={handleAddClick} value='add-player'>Add Player</MenuItem>
             </MenuList>
           </Menu>
           <Spacer />

@@ -109,12 +109,12 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
                 />
               </MenuTrigger>
               <MenuContent>
-                <MenuItem>Sign Out</MenuItem>
-                <MenuItem>Change Account</MenuItem>
+                <MenuItem value='sign-out'>Sign Out</MenuItem>
+                <MenuItem value='change-account'>Change Account</MenuItem>
                 <MenuSeparator />
-                <MenuItem>Account Settings</MenuItem>
-                <MenuItem>Help</MenuItem>
-                <MenuItem>
+                <MenuItem value='account-settings'>Account Settings</MenuItem>
+                <MenuItem value='help'>Help</MenuItem>
+                <MenuItem value='dark-mode' >
                   <Flex width={'100%'}>
                     <Text mr={4}>Dark Mode</Text>
                     <Spacer />

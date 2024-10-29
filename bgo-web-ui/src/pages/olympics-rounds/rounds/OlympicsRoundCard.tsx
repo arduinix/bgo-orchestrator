@@ -109,6 +109,7 @@ const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
               e.stopPropagation()
               handleEventClick()
             }}
+            value='start'
           >
             Start
           </MenuItem>
@@ -117,6 +118,7 @@ const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
               e.stopPropagation()
               handleEventClick()
             }}
+            value='finish'
           >
             Declare Finished
           </MenuItem>
@@ -126,6 +128,7 @@ const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
               e.stopPropagation()
               onOpenDelete()
             }}
+            value='delete'
           >
             Remove Round
           </MenuItem>
@@ -134,6 +137,7 @@ const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
               e.stopPropagation()
               onOpenDelete()
             }}
+            value='undo'
           >
             Undo Remove
           </MenuItem>

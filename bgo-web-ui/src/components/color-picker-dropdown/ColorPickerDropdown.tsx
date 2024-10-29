@@ -34,7 +34,7 @@ export default function ColorPickerDropdown() {
         </Flex>
       </MenuButton>
       <MenuList maxHeight='175px' overflowY='auto'>
-        <MenuItem onClick={() => handleColorChange(null)}>
+        <MenuItem onClick={() => handleColorChange(null)} value='none'>
           <Flex alignItems='center'>
             <Box
               width='16px'
@@ -48,7 +48,7 @@ export default function ColorPickerDropdown() {
           </Flex>
         </MenuItem>
         {selectableColors.map((color) => (
-          <MenuItem key={color.name} onClick={() => handleColorChange(color)}>
+          <MenuItem key={color.name} onClick={() => handleColorChange(color)} value='color-name'>
             <Flex alignItems='center'>
               <Box
                 width='16px'

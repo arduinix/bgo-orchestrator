@@ -167,12 +167,12 @@ export default function GamesTab() {
               Actions
             </MenuButton>
             <MenuList>
-              <MenuItem>Set In-Play</MenuItem>
-              <MenuItem>Set Out-Of-Play</MenuItem>
+              <MenuItem value='set-in-play'>Set In-Play</MenuItem>
+              <MenuItem value='set-out-of-play'>Set Out-Of-Play</MenuItem>
               <MenuSeparator />
-              <MenuItem>Remove Selected Games</MenuItem>
+              <MenuItem value='remove-selected'>Remove Selected Games</MenuItem>
               <MenuSeparator />
-              <MenuItem onClick={handleAddClick}>Add Game</MenuItem>
+              <MenuItem onClick={handleAddClick} value='add-game'>Add Game</MenuItem>
             </MenuList>
           </Menu>
           <Spacer />
