@@ -1,11 +1,6 @@
-import {
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  Flex,
-} from '@chakra-ui/react'
+import { Flex, NumberInput } from '@chakra-ui/react'
+
+import { NumberInputField, NumberInputRoot } from '@/components/ui/number-input'
 
 export interface NumberPickerProps {
   value: number
@@ -23,20 +18,23 @@ export default function NumberPicker({
 }: NumberPickerProps) {
   return (
     <Flex alignItems={'center'}>
-      <NumberInput
-        value={value}
+      <NumberInputRoot
+        defaultValue='0'
         min={min}
         max={max}
-        onChange={(_, valueAsNumber) => onChange(valueAsNumber)}
+        // onChange={(_, valueAsNumber) => onChange(valueAsNumber)}
         allowMouseWheel
         {...rest}
       >
-        <NumberInputField />
-        <NumberInputStepper>
-          <NumberIncrementStepper />
-          <NumberDecrementStepper />
-        </NumberInputStepper>
-      </NumberInput>
+        <NumberInputField
+          value={value}
+          onChange={(e) => onChange(Number(e.target.value))}
+        />
+        <NumberInput.Control>
+          <NumberInput.IncrementTrigger />
+          <NumberInput.DecrementTrigger />
+        </NumberInput.Control>
+      </NumberInputRoot>
     </Flex>
   )
 }

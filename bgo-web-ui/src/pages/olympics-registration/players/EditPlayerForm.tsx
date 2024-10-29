@@ -1,33 +1,16 @@
 import { useState, useEffect } from 'react'
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  Flex,
-  Box,
-  Card,
-  chakra,
-} from '@chakra-ui/react'
+import { FormControl, Input, Flex, Box, Card } from '@chakra-ui/react'
+import { BoldFormLabel } from '@/components/styled-components/StyledComponents'
 import { Checkbox } from '@components/ui/checkbox'
 import AvatarNameFlex from '@components/avatar-name-flex/AvatarNameFlex'
 import CustomQRCode from '@components/custom-qr-code/CustomQRCode'
-
-const BoldFormLabel = chakra(FormLabel, {
-  baseStyle: {
-    fontWeight: 'bold',
-    pl: 1,
-    mb: 1,
-  },
-})
 
 export interface EditPlayerFormProps {
   player: Player | null
   closeAction: () => void
 }
 
-export default function EditPlayerForm({
-  player,
-}: EditPlayerFormProps) {
+export default function EditPlayerForm({ player }: EditPlayerFormProps) {
   const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null)
 
   useEffect(() => {
@@ -51,8 +34,8 @@ export default function EditPlayerForm({
       {currentPlayer && (
         <Card.Root position={'relative'}>
           <Card.Body>
-            <Box position="absolute" top={4} right={4}>
-              <CustomQRCode url="https://www.google.com" />
+            <Box position='absolute' top={4} right={4}>
+              <CustomQRCode url='https://www.google.com' />
             </Box>
             <Flex gap={4} flexDir={'column'}>
               <AvatarNameFlex player={currentPlayer} />
@@ -62,7 +45,7 @@ export default function EditPlayerForm({
                     <Box width={'44%'}>
                       <BoldFormLabel>Nick Name</BoldFormLabel>
                       <Input
-                        type="text"
+                        type='text'
                         value={nickName || ''}
                         onChange={(e) =>
                           handleFieldUpdate('nickName', e.target.value)
@@ -85,7 +68,7 @@ export default function EditPlayerForm({
                     <Box width={'45%'}>
                       <BoldFormLabel>First Name</BoldFormLabel>
                       <Input
-                        type="text"
+                        type='text'
                         value={fName}
                         onChange={(e) =>
                           handleFieldUpdate('fName', e.target.value)
@@ -95,7 +78,7 @@ export default function EditPlayerForm({
                     <Box width={'10%'}>
                       <BoldFormLabel>Initial</BoldFormLabel>
                       <Input
-                        type="text"
+                        type='text'
                         value={mInit || ''}
                         onChange={(e) =>
                           handleFieldUpdate('mInit', e.target.value)
@@ -105,7 +88,7 @@ export default function EditPlayerForm({
                     <Box width={'45%'}>
                       <BoldFormLabel>Last Name</BoldFormLabel>
                       <Input
-                        type="text"
+                        type='text'
                         value={lName}
                         onChange={(e) =>
                           handleFieldUpdate('lName', e.target.value)
@@ -117,7 +100,7 @@ export default function EditPlayerForm({
                     <Box width={'50%'}>
                       <BoldFormLabel>Phone</BoldFormLabel>
                       <Input
-                        type="text"
+                        type='text'
                         value={phone}
                         onChange={(e) =>
                           handleFieldUpdate('phone', e.target.value)
@@ -127,7 +110,7 @@ export default function EditPlayerForm({
                     <Box width={'50%'}>
                       <BoldFormLabel>Email Address</BoldFormLabel>
                       <Input
-                        type="email"
+                        type='email'
                         value={email}
                         onChange={(e) =>
                           handleFieldUpdate('email', e.target.value)

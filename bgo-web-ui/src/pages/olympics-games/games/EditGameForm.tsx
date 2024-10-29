@@ -1,27 +1,18 @@
 import { useState, useEffect } from 'react'
 import {
-  FormControl,
-  FormLabel,
+  Text,
   Input,
   Textarea,
   Flex,
   Box,
   Card,
-  chakra,
   Select,
 } from '@chakra-ui/react'
+import { BoldFormLabel } from '@/components/styled-components/StyledComponents'
 import { Checkbox } from '@components/ui/checkbox'
 import CustomQRCode from '@components/custom-qr-code/CustomQRCode'
 import NumberPicker from '@components/number-picker/NumberPicker'
 import games from '@data/games.json'
-
-const BoldFormLabel = chakra(FormLabel, {
-  baseStyle: {
-    fontWeight: 'bold',
-    pl: 1,
-    mb: 1,
-  },
-})
 
 export interface EditGameFormProps {
   game: Game | null
@@ -73,7 +64,7 @@ export default function EditGameyForm({ game }: EditGameFormProps) {
                 In Play
               </Checkbox>
             </Box>
-            <FormControl gap={4} flexDir={'column'}>
+            <Flex gap={4} flexDir={'column'}>
               <Flex gap={4} width={'100%'} flexDirection={'column'}>
                 <Box width={'69%'}>
                   <BoldFormLabel>Name</BoldFormLabel>
@@ -124,9 +115,9 @@ export default function EditGameyForm({ game }: EditGameFormProps) {
                         handleFieldUpdate('minPlayers', value)
                       }
                     />
-                    <FormLabel ml={3} pt={2}>
+                    <Text ml={3} pt={2}>
                       TO
-                    </FormLabel>
+                    </Text>
                     <NumberPicker
                       value={maxPlayers || 0}
                       onChange={(value) =>
@@ -149,7 +140,7 @@ export default function EditGameyForm({ game }: EditGameFormProps) {
 
                 <Flex gap={2}></Flex>
               </Flex>
-            </FormControl>
+            </Flex>
           </Card.Body>
         </Card.Root>
       )}
