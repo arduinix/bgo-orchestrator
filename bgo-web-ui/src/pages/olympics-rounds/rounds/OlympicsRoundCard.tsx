@@ -3,7 +3,6 @@ import {
   Flex,
   Heading,
   Stack,
-  Text,
   useColorModeValue,
   Image,
   MenuButton,
@@ -20,19 +19,14 @@ import { RxHamburgerMenu } from 'react-icons/rx'
 import torch from '@assets/image/torch.png'
 import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
 import { elapsedSinceDate } from '@utils/stringConversion'
-
-// interface CardProps {
-//   heading: string;
-//   description: string;
-//   icon: ReactElement;
-//   href: string;
-// }
+import { color } from 'framer-motion'
 
 const OlympicsRoundCard = ({
-  id,
+  id: roundId,
   phase,
   createdTimestamp,
   completedTimestamp,
+  startedTimestamp,
   roundNumber,
 }: SortedRound) => {
   const navigate = useNavigate()
@@ -42,15 +36,46 @@ const OlympicsRoundCard = ({
     onClose: onCloseDelete,
   } = useDisclosure()
 
-  const {
-    isOpen: isOpenCopy,
-    onOpen: onOpenCopy,
-    onClose: onCloseCopy,
-  } = useDisclosure()
+  const handleRoundClick = () => {
+    navigate(`./${roundId}`)
+  }
 
-  // const handleEventClick = () => {
-  //   navigate(`/olympics/${id}`)
-  // }
+  const PhaseBadge = () => {
+    const phaseMapping = {
+      setup: { color: 'red', text: 'Setup required' },
+      ready: { color: 'yellow', text: 'Ready to play' },
+      playing: { color: 'green', text: 'Playing' },
+      complete: { color: 'blue', text: 'Complete' },
+    }
+    const { color, text } = phaseMapping[phase]
+
+    return (
+      <Badge variant={'solid'} colorScheme={color}>
+        {text}
+      </Badge>
+    )
+  }
+
+  const RoundTimestampBadge = () => {
+    if (completedTimestamp) {
+      return (
+        <Badge variant={'outline'}>
+          Completed {elapsedSinceDate(completedTimestamp)}
+        </Badge>
+      )
+    } else if (startedTimestamp) {
+      return (
+        <Badge variant={'outline'}>
+          Started {elapsedSinceDate(startedTimestamp)}
+        </Badge>
+      )
+    }
+    return (
+      <Badge variant={'outline'}>
+        Created {elapsedSinceDate(createdTimestamp)}
+      </Badge>
+    )
+  }
 
   return (
     <Box
@@ -59,7 +84,7 @@ const OlympicsRoundCard = ({
       borderWidth='1px'
       borderRadius='lg'
       overflow='hidden'
-      onClick={() => handleEventClick()}
+      onClick={() => handleRoundClick()}
       p={5}
       display={'flex'}
       _hover={{
@@ -86,13 +111,8 @@ const OlympicsRoundCard = ({
             {/* <Text mt={1} fontSize={'sm'}>
               {location}
             </Text> */}
-            {createdTimestamp ? (
-              <Badge colorScheme='green'>
-                Created {elapsedSinceDate(createdTimestamp)}
-              </Badge>
-            ) : (
-              <Badge colorScheme='purple'>New</Badge>
-            )}
+            <RoundTimestampBadge />
+            <PhaseBadge />
           </Box>
         </Stack>
       </Box>
@@ -106,26 +126,23 @@ const OlympicsRoundCard = ({
         />
         <MenuList>
           <MenuItem
-          // onClick={(e) => {
-          //   e.stopPropagation()
-          //   handleEventClick()
-          // }}
+            onClick={(e) => {
+              e.stopPropagation()
+            }}
           >
             Open
           </MenuItem>
           <MenuItem
-          // onClick={(e) => {
-          //   e.stopPropagation()
-          //   handleEventClick()
-          // }}
+            onClick={(e) => {
+              e.stopPropagation()
+            }}
           >
             Start
           </MenuItem>
           <MenuItem
-          // onClick={(e) => {
-          //   e.stopPropagation()
-          //   handleEventClick()
-          // }}
+            onClick={(e) => {
+              e.stopPropagation()
+            }}
           >
             Declare Finished
           </MenuItem>
@@ -152,8 +169,8 @@ const OlympicsRoundCard = ({
         isOpen={isOpenDelete}
         closeAction={onCloseDelete}
         confirmAction={onCloseDelete}
-        header={`Remove ${name}?`}
-        body={`Are you sure that you want to round named "${name}"?.`}
+        header={`Remove round ${roundNumber}?`}
+        body={`Are you sure that you want to Round "${roundNumber}"?. Note that round numbers are ordered based on creation time. If a round is removed, the round number will be replaced by the next round in the order.`}
         confirmButtonText={'Delete'}
       />
     </Box>

@@ -43,7 +43,7 @@ const EventCard = ({ id: eventId, name, location, playedDate }: ListEvent) => {
   } = useDisclosure()
 
   const handleEventClick = () => {
-    navigate(`/olympics/${eventId}`)
+    navigate(`./${eventId}`)
   }
 
   return (
