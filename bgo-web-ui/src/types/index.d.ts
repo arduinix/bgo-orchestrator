@@ -86,9 +86,24 @@ declare global {
   }
   export type ExtendedGame = Game & GameExtensions
 
-  interface RoundScoreElement {
-    id: string
+  interface ScoreElement {
+    playerId: string
+    score: number
+  }
 
+  interface RoundGameElement {
+    id: string
+    roundId: string
+    gameId: string
+    categoryId: string
+    playerIds: string[]
+    lowScoreWins: boolean
+    phase: 'incomplete' | 'complete'
+    createdTimestamp: string
+    startedTimestamp?: string
+    completedTimestamp?: string
+    removedTimestamp?: string
+    scores: ScoreElement[]
   }
 
   export interface Round {
@@ -96,11 +111,12 @@ declare global {
     playerIdsInPlay: string[]
     categoryIdsInPlay: string[]
     gameIdsInPlay: string[]
-    roundPhase: 'setup' | 'inProgress' | 'completed'
+    phase: 'setup' | 'inProgress' | 'complete' // this status should change when a new round is started by the game master
     createdTimestamp: string
     startedTimestamp?: string
     completedTimestamp?: string
     removedTimestamp?: string
+    gamePlayElements: RoundGamePlayElement[] // one for each game
   }
 }
 
