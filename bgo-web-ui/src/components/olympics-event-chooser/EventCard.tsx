@@ -50,14 +50,15 @@ const EventCard = ({ id: eventId, name, location, playedDate }: ListEvent) => {
     <Box
       maxW={{ base: 'full', md: '285px' }}
       w={'full'}
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
+      borderWidth='1px'
+      borderRadius='lg'
+      overflow='hidden'
       onClick={() => handleEventClick()}
       p={5}
       display={'flex'}
       _hover={{
         boxShadow: 'lg',
+        cursor: 'pointer',
       }}
     >
       <Box flex={'1'}>
@@ -76,16 +77,16 @@ const EventCard = ({ id: eventId, name, location, playedDate }: ListEvent) => {
           </Flex>
 
           <Box mt={2}>
-            <Heading size="md">{name}</Heading>
+            <Heading size='md'>{name}</Heading>
             <Text mt={1} fontSize={'sm'}>
               {location}
             </Text>
             {playedDate ? (
-              <Badge colorScheme="green">
+              <Badge colorScheme='green'>
                 Played {convertDateShort(playedDate)}
               </Badge>
             ) : (
-              <Badge colorScheme="purple">New</Badge>
+              <Badge colorScheme='purple'>New</Badge>
             )}
           </Box>
         </Stack>
@@ -93,9 +94,9 @@ const EventCard = ({ id: eventId, name, location, playedDate }: ListEvent) => {
       <Menu>
         <MenuButton
           as={IconButton}
-          aria-label="Options"
+          aria-label='Options'
           icon={<RxHamburgerMenu />}
-          variant="outline"
+          variant='outline'
           onClick={(e) => e.stopPropagation()}
         />
         <MenuList>

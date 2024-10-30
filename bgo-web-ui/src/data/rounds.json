@@ -1,0 +1,35 @@
+{
+  "rounds": [
+    {
+      "id": "1",
+      "phase": "setup",
+      "createdTimestamp": "2023-10-01T13:00:00Z",
+      "roundGameIds": []
+    },
+    {
+      "id": "2",
+      "selectedCategoryId": "6",
+      "phase": "ready",
+      "createdTimestamp": "2023-10-01T12:00:00Z",
+      "roundGameIds": []
+    },
+    {
+      "id": "3",
+      "selectedCategoryId": "6",
+      "phase": "playing",
+      "createdTimestamp": "2023-10-01T11:00:00Z",
+      "startedTimestamp": "2023-10-01T11:30:00Z",
+      "completedTimestamp": "2023-10-01T12:00:00Z",
+      "roundGameIds": []
+    },
+    {
+      "id": "4",
+      "selectedCategoryId": "6",
+      "phase": "complete",
+      "createdTimestamp": "2023-10-01T10:00:00Z",
+      "startedTimestamp": "2023-10-01T10:30:00Z",
+      "completedTimestamp": "2023-10-01T11:00:00Z",
+      "roundGameIds": []
+    }
+  ]
+}

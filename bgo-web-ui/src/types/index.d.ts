@@ -91,7 +91,7 @@ declare global {
     score: number
   }
 
-  interface RoundGameElement {
+  interface RoundGame {
     id: string
     roundId: string
     gameId: string
@@ -108,15 +108,13 @@ declare global {
 
   interface Round {
     id: string
-    playerIdsInPlay: string[]
-    categoryIdsInPlay: string[]
-    gameIdsInPlay: string[]
+    selectedCategoryId?: string
     phase: 'setup' | 'ready' | 'playing' | 'complete' // this status should change when a new round is started by the game master
     createdTimestamp: string
     startedTimestamp?: string
     completedTimestamp?: string
     removedTimestamp?: string
-    gamePlayElements: RoundGamePlayElement[] // one for each game
+    roundGameIds: string[] // this will be a string list of ids of the round games
   }
 }
 
