@@ -85,6 +85,23 @@ declare global {
     scoreMethodDisplayNode: React.ReactNode
   }
   export type ExtendedGame = Game & GameExtensions
+
+  interface RoundScoreElement {
+    id: string
+
+  }
+
+  export interface Round {
+    id: string
+    playerIdsInPlay: string[]
+    categoryIdsInPlay: string[]
+    gameIdsInPlay: string[]
+    roundPhase: 'setup' | 'inProgress' | 'completed'
+    createdTimestamp: string
+    startedTimestamp?: string
+    completedTimestamp?: string
+    removedTimestamp?: string
+  }
 }
 
 export {}

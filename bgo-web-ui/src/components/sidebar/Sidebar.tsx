@@ -45,6 +45,7 @@ export default function SimpleSidebar({
         returnFocusOnClose={false}
         onOverlayClick={onClose}
         size="full"
+        
       >
         <DrawerContent>
           <SidebarContent linkItems={linkItems} onClose={onClose} />
