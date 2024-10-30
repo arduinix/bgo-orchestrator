@@ -28,7 +28,7 @@ import { convertDateShort } from '@utils/stringConversion'
 //   href: string;
 // }
 
-const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
+const EventCard = ({ id: eventId, name, location, playedDate }: ListEvent) => {
   const navigate = useNavigate()
   const {
     isOpen: isOpenDelete,
@@ -43,7 +43,7 @@ const EventCard = ({ id, name, location, playedDate }: ListEvent) => {
   } = useDisclosure()
 
   const handleEventClick = () => {
-    navigate(`/olympics/${id}`)
+    navigate(`/olympics/${eventId}`)
   }
 
   return (
