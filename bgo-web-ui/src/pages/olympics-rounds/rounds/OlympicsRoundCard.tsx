@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import torch from '@assets/image/torch.png'
 import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
-import { convertDate } from '@utils/stringConversion'
+import { elapsedSinceDate } from '@utils/stringConversion'
 
 // interface CardProps {
 //   heading: string;
@@ -88,7 +88,7 @@ const OlympicsRoundCard = ({
             </Text> */}
             {createdTimestamp ? (
               <Badge colorScheme='green'>
-                Created {convertDate(createdTimestamp)}
+                Created {elapsedSinceDate(createdTimestamp)}
               </Badge>
             ) : (
               <Badge colorScheme='purple'>New</Badge>
