@@ -1,12 +1,12 @@
 declare global {
-  export interface Contact {
+  interface Contact {
     name: string
     subject: string
     email: string
     message: string
   }
 
-  export interface Ecosystem {
+  interface Ecosystem {
     id: string
     name: string
     description: string
@@ -24,7 +24,7 @@ declare global {
     fIdentifiedSpecies: number
   }
 
-  export interface ListEvent {
+  interface ListEvent {
     id: string
     name: string
     location: string
@@ -33,7 +33,7 @@ declare global {
     imagePath?: string | null
   }
 
-  export interface Player {
+  interface Player {
     id: string
     fName: string
     mInit: string | null
@@ -48,12 +48,12 @@ declare global {
     imagePath?: string
   }
 
-  export interface PlayerExtensions {
+  interface PlayerExtensions {
     fullName: string
   }
-  export type ExtendedPlayer = Player & PlayerExtensions
+  type ExtendedPlayer = Player & PlayerExtensions
 
-  export interface GameCategory {
+  interface GameCategory {
     id: string
     name: string
     description: string
@@ -62,12 +62,12 @@ declare global {
     categoryColor?: CategoryColor
   }
 
-  export interface CategoryColor {
+  interface CategoryColor {
     name: string
     hex: string
   }
 
-  export interface Game {
+  interface Game {
     id: string
     name: string
     description: string
@@ -80,11 +80,11 @@ declare global {
     averageCompletionMinutes?: number
     imagePath?: string
   }
-  export interface GameExtensions {
+  interface GameExtensions {
     playerScaleDisplayNode: React.ReactNode
     scoreMethodDisplayNode: React.ReactNode
   }
-  export type ExtendedGame = Game & GameExtensions
+  type ExtendedGame = Game & GameExtensions
 
   interface ScoreElement {
     playerId: string
@@ -106,7 +106,7 @@ declare global {
     scores: ScoreElement[]
   }
 
-  export interface Round {
+  interface Round {
     id: string
     playerIdsInPlay: string[]
     categoryIdsInPlay: string[]
