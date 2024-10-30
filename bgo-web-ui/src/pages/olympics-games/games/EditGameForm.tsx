@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
+import { Text, Input, Textarea, Flex, Box, Card } from '@chakra-ui/react'
 import {
-  Text,
-  Input,
-  Textarea,
-  Flex,
-  Box,
-  Card,
-  Select,
-} from '@chakra-ui/react'
+  SelectContent,
+  SelectItem,
+  SelectRoot,
+  SelectTrigger,
+  SelectValueText,
+  SelectLabel,
+} from '@/components/ui/select'
 import { BoldFormLabel } from '@/components/styled-components/StyledComponents'
 import { Checkbox } from '@components/ui/checkbox'
 import CustomQRCode from '@components/custom-qr-code/CustomQRCode'
@@ -85,14 +85,19 @@ export default function EditGameyForm({ game }: EditGameFormProps) {
                 </Box>
                 <Flex gap={4} width={'100%'}>
                   <Box width={'73%'}>
-                    <BoldFormLabel>Category</BoldFormLabel>
-                    <Select>
-                      {categories.map(({ id, name }) => (
-                        <option key={id} value={name}>
-                          {name}
-                        </option>
-                      ))}
-                    </Select>
+                    <SelectRoot>
+                      <SelectLabel>Category</SelectLabel>
+                      <SelectTrigger>
+                        <SelectValueText />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {categories.map(({ id, name }) => (
+                          <SelectItem key={id} value={name}>
+                            {name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </SelectRoot>
                   </Box>
 
                   <Box width={'26%'}>
