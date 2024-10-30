@@ -19,8 +19,7 @@ import { useNavigate } from 'react-router-dom'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import torch from '@assets/image/torch.png'
 import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
-import CopyToNewEventModal from '@components/copy-to-new-event/CopyToNewEventModal'
-import { convertDateShort } from '@utils/stringConversion'
+import { convertDate } from '@utils/stringConversion'
 
 // interface CardProps {
 //   heading: string;
@@ -29,7 +28,13 @@ import { convertDateShort } from '@utils/stringConversion'
 //   href: string;
 // }
 
-const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
+const OlympicsRoundCard = ({
+  id,
+  phase,
+  createdTimestamp,
+  completedTimestamp,
+  roundNumber,
+}: SortedRound) => {
   const navigate = useNavigate()
   const {
     isOpen: isOpenDelete,
@@ -43,9 +48,9 @@ const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
     onClose: onCloseCopy,
   } = useDisclosure()
 
-  const handleEventClick = () => {
-    navigate(`/olympics/${id}`)
-  }
+  // const handleEventClick = () => {
+  //   navigate(`/olympics/${id}`)
+  // }
 
   return (
     <Box
@@ -77,13 +82,13 @@ const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
           </Flex>
 
           <Box mt={2}>
-            <Heading size='md'>{name}</Heading>
-            <Text mt={1} fontSize={'sm'}>
+            <Heading size='md'>Round {roundNumber}</Heading>
+            {/* <Text mt={1} fontSize={'sm'}>
               {location}
-            </Text>
-            {playedDate ? (
+            </Text> */}
+            {createdTimestamp ? (
               <Badge colorScheme='green'>
-                Played {convertDateShort(playedDate)}
+                Created {convertDate(createdTimestamp)}
               </Badge>
             ) : (
               <Badge colorScheme='purple'>New</Badge>
@@ -101,26 +106,26 @@ const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
         />
         <MenuList>
           <MenuItem
-            onClick={(e) => {
-              e.stopPropagation()
-              handleEventClick()
-            }}
+          // onClick={(e) => {
+          //   e.stopPropagation()
+          //   handleEventClick()
+          // }}
           >
             Open
           </MenuItem>
           <MenuItem
-            onClick={(e) => {
-              e.stopPropagation()
-              handleEventClick()
-            }}
+          // onClick={(e) => {
+          //   e.stopPropagation()
+          //   handleEventClick()
+          // }}
           >
             Start
           </MenuItem>
           <MenuItem
-            onClick={(e) => {
-              e.stopPropagation()
-              handleEventClick()
-            }}
+          // onClick={(e) => {
+          //   e.stopPropagation()
+          //   handleEventClick()
+          // }}
           >
             Declare Finished
           </MenuItem>
@@ -138,7 +143,6 @@ const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
               e.stopPropagation()
               onOpenDelete()
             }}
-            
           >
             Undo Remove
           </MenuItem>
@@ -148,15 +152,9 @@ const OlympicsRoundCard = ({ id, name, location, playedDate }: ListEvent) => {
         isOpen={isOpenDelete}
         closeAction={onCloseDelete}
         confirmAction={onCloseDelete}
-        header={`Delete ${name}?`}
-        body={`Are you sure that you want to delete this event named "${name}"? This action cannot be undone.`}
+        header={`Remove ${name}?`}
+        body={`Are you sure that you want to round named "${name}"?.`}
         confirmButtonText={'Delete'}
-      />
-      <CopyToNewEventModal
-        isOpen={isOpenCopy}
-        closeAction={onCloseCopy}
-        confirmAction={onCloseCopy}
-        sourceEventName={name}
       />
     </Box>
   )

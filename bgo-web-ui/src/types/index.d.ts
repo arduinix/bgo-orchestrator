@@ -48,10 +48,9 @@ declare global {
     imagePath?: string
   }
 
-  interface PlayerExtensions {
+  interface ExtendedPlayer {
     fullName: string
   }
-  type ExtendedPlayer = Player & PlayerExtensions
 
   interface GameCategory {
     id: string
@@ -80,11 +79,10 @@ declare global {
     averageCompletionMinutes?: number
     imagePath?: string
   }
-  interface GameExtensions {
+  interface ExtendedGame {
     playerScaleDisplayNode: React.ReactNode
     scoreMethodDisplayNode: React.ReactNode
   }
-  type ExtendedGame = Game & GameExtensions
 
   interface ScoreElement {
     playerId: string
@@ -115,6 +113,9 @@ declare global {
     completedTimestamp?: string
     removedTimestamp?: string
     roundGameIds: string[] // this will be a string list of ids of the round games
+  }
+  interface SortedRound extends Round {
+    roundNumber: number
   }
 }
 

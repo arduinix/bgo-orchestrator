@@ -8,11 +8,29 @@ import {
   Spacer,
   Checkbox,
 } from '@chakra-ui/react'
-import EventCard from './OlympicsRoundCard'
-import events from '@data/events.json'
+import { useMemo } from 'react'
+// import events from '@data/events.json'
+import rounds from '@data/rounds.json'
+import OlympicsRoundCard from './OlympicsRoundCard'
 
 export default function OlympicsRoundChooser() {
-  const data: ListEvent[] = events.listEvents
+  const data: Round[] = rounds.rounds
+
+  const sortedRounds: SortedRound[] = useMemo(() => {
+    const sortedRounds = data.sort((a, b) => {
+      return (
+        new Date(b.createdTimestamp).getTime() -
+        new Date(a.createdTimestamp).getTime()
+      )
+    })
+    return sortedRounds.map((round, index) => {
+      return {
+        ...round,
+        roundNumber: sortedRounds.length - index,
+      }
+    })
+  }, [data])
+
   return (
     <Box p={4}>
       <Stack spacing={4} as={Container} maxW={'4xl'} textAlign={'center'}>
@@ -45,8 +63,8 @@ export default function OlympicsRoundChooser() {
           <Button colorScheme='blue'>Create Round</Button>
         </Flex>
         <Flex flexWrap='wrap' gridGap={6} justify={'center'}>
-          {data.map((event) => (
-            <EventCard key={event.id} {...event} />
+          {sortedRounds.map((round) => (
+            <OlympicsRoundCard key={round.id} {...round} />
           ))}
         </Flex>
       </Container>
