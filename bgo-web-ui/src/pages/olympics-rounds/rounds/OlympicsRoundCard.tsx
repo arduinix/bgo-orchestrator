@@ -19,7 +19,6 @@ import { RxHamburgerMenu } from 'react-icons/rx'
 import torch from '@assets/image/torch.png'
 import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
 import { elapsedSinceDate } from '@utils/stringConversion'
-import { color } from 'framer-motion'
 
 const OlympicsRoundCard = ({
   id: roundId,

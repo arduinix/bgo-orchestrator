@@ -23,7 +23,7 @@ export const convertDateShort = (date: string, locale: string = 'default') => {
   return formattedDate
 }
 
-export const elapsedSinceDate = (date: string) => {
+export const elapsedSinceDate = (date: string, locale: string = 'default') => {
   const currentDate = new Date()
   const givenDate = new Date(date)
 
@@ -43,10 +43,11 @@ export const elapsedSinceDate = (date: string) => {
   if (months > 0) formattedDate += `${months} month${months > 1 ? 's' : ''} `
   formattedDate += `${days} day${days > 1 ? 's' : ''} ago`
 
-  const hours = givenDate.getHours()
-  const minutes = givenDate.getMinutes()
-  const ampm = hours >= 12 ? 'PM' : 'AM'
-  const formattedTime = `${hours % 12 || 12}:${minutes.toString().padStart(2, '0')} ${ampm}`
+  const formattedTime = givenDate.toLocaleString(locale, {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  })
 
   formattedDate += ` at ${formattedTime}`
 
