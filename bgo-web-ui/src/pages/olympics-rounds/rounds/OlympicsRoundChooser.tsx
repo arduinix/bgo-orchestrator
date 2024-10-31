@@ -63,9 +63,25 @@ export default function OlympicsRoundChooser() {
           <Button colorScheme='blue'>Create Round</Button>
         </Flex>
         <Flex flexWrap='wrap' gridGap={6} justify={'center'}>
-          {sortedRounds.map((round) => (
-            <OlympicsRoundCard key={round.id} {...round} />
-          ))}
+          {sortedRounds.length === 0 ? (
+            <Box
+              bg={'gray.100'}
+              fontWeight={'bold'}
+              p={4}
+              rounded={50}
+              whiteSpace={'normal'}
+              wordBreak={'break-word'}
+              maxW={'md'}
+            >
+              <Text fontSize={'lg'}>
+                This event does not have any rounds yet.
+              </Text>
+            </Box>
+          ) : (
+            sortedRounds.map((round) => (
+              <OlympicsRoundCard key={round.id} {...round} />
+            ))
+          )}
         </Flex>
       </Container>
     </Box>
