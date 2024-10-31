@@ -12,6 +12,7 @@ import {
   BoxProps,
   FlexProps,
   Tooltip,
+  Divider,
 } from '@chakra-ui/react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { FiMenu } from 'react-icons/fi'
@@ -25,14 +26,18 @@ export interface LinkItemProps {
   tooltip?: string
 }
 
-export default function SimpleSidebar({
+export default function Sidebar({
   linkItems,
+  heading,
 }: {
   linkItems: Array<LinkItemProps>
+  heading?: React.ReactNode
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
-    <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+    <Box minH='100vh' bg={useColorModeValue('gray.100', 'gray.900')}>
+      <Divider size={'md'} />
+      {heading}
       <SidebarContent
         linkItems={linkItems}
         onClose={() => onClose}
@@ -40,12 +45,11 @@ export default function SimpleSidebar({
       />
       <Drawer
         isOpen={isOpen}
-        placement="left"
+        placement='left'
         onClose={onClose}
         returnFocusOnClose={false}
         onOverlayClick={onClose}
-        size="full"
-        
+        size='full'
       >
         <DrawerContent>
           <SidebarContent linkItems={linkItems} onClose={onClose} />
@@ -66,14 +70,14 @@ const SidebarContent = ({ onClose, linkItems, ...rest }: SidebarProps) => {
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
-      borderRight="1px"
+      borderRight='1px'
       borderRightColor={useColorModeValue('gray.200', 'gray.700')}
       w={{ base: 'full', md: 60 }}
-      pos="fixed"
-      h="full"
+      pos='fixed'
+      h='full'
       {...rest}
     >
-      <Flex h="0" alignItems="center" mx="8" justifyContent="space-between">
+      <Flex h='0' alignItems='center' mx='8' justifyContent='space-between'>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {linkItems.map(({ tooltip, name, icon, href }) => (
@@ -102,12 +106,12 @@ const NavItem = ({ icon, href, children, ...rest }: NavItemProps) => {
       _focus={{ boxShadow: 'none' }}
     >
       <Flex
-        align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
+        align='center'
+        p='4'
+        mx='4'
+        borderRadius='lg'
+        role='group'
+        cursor='pointer'
         bg={location && location.pathname === href ? 'cyan.200' : undefined}
         color={location && location.pathname === href ? 'gray.800' : undefined}
         _hover={{
@@ -118,8 +122,8 @@ const NavItem = ({ icon, href, children, ...rest }: NavItemProps) => {
       >
         {icon && (
           <Icon
-            mr="4"
-            fontSize="18"
+            mr='4'
+            fontSize='18'
             _groupHover={{
               color: 'white',
             }}
@@ -140,22 +144,22 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     <Flex
       ml={{ base: 0, md: 60 }}
       px={{ base: 4, md: 24 }}
-      height="20"
-      alignItems="center"
+      height='20'
+      alignItems='center'
       bg={useColorModeValue('white', 'gray.900')}
-      borderBottomWidth="1px"
+      borderBottomWidth='1px'
       borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
-      justifyContent="flex-start"
+      justifyContent='flex-start'
       {...rest}
     >
       <IconButton
-        variant="outline"
+        variant='outline'
         onClick={onOpen}
-        aria-label="open menu"
+        aria-label='open menu'
         icon={<FiMenu />}
       />
 
-      <Text fontSize="2xl" ml="8" fontFamily="monospace" fontWeight="bold">
+      <Text fontSize='2xl' ml='8' fontFamily='monospace' fontWeight='bold'>
         Logo
       </Text>
     </Flex>

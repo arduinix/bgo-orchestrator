@@ -17,6 +17,7 @@ import OlympicsRounds from '@pages/olympics-rounds/OlympicsRounds'
 import OlympicsPrintables from '@pages/olympics-printables/OlympicsPrintables'
 import OlympicsDashboards from '@pages/olympics-dashboards/OlympicsDashboards'
 import OlympicsSettings from '@pages/olympics-settings/OlympicsSettings'
+import OlympicsRoundEditor from '@pages/olympics-rounds/OlympicsRoundEditor'
 
 export default function AppRouter() {
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
@@ -32,7 +33,6 @@ export default function AppRouter() {
   return (
     <>
       <Header loggedIn={loggedIn} />
-
       <Box position={'relative'} minHeight={'100vh'}>
         {/* <Box
           backgroundImage={panther}
@@ -47,21 +47,23 @@ export default function AppRouter() {
           height="100%"
         /> */}
         <Routes>
-          <Route path="*" element={<NotFound />} />
-          <Route path="/" element={<MainLayout />}>
-            <Route path="/olympics" element={<Olympics />}>
-              <Route path=":eventId" element={<OlympicsManager />}>
-                <Route path="registration" element={<OlympicsRegistration />} />
-                <Route path="games" element={<OlympicsGames />} />
-                <Route path="rounds" element={<OlympicsRounds />} />
-                <Route path="printables" element={<OlympicsPrintables />} />
-                <Route path="dashboards" element={<OlympicsDashboards />} />
-                <Route path="settings" element={<OlympicsSettings />} />
+          <Route path='*' element={<NotFound />} />
+          <Route path='/' element={<MainLayout />}>
+            <Route path='/olympics' element={<Olympics />}>
+              <Route path=':eventId' element={<OlympicsManager />}>
+                <Route path='registration' element={<OlympicsRegistration />} />
+                <Route path='games' element={<OlympicsGames />} />
+                <Route path='rounds' element={<OlympicsRounds />}>
+                  <Route path=':roundId' element={<OlympicsRoundEditor />} />
+                </Route>
+                <Route path='printables' element={<OlympicsPrintables />} />
+                <Route path='dashboards' element={<OlympicsDashboards />} />
+                <Route path='settings' element={<OlympicsSettings />} />
               </Route>
             </Route>
-            <Route path="/tutorials" element={<Tutorials />} />
-            <Route path="/leagues" element={<Leagues />} />
-            <Route path="/playergroups" element={<PlayerGroups />} />
+            <Route path='/tutorials' element={<Tutorials />} />
+            <Route path='/leagues' element={<Leagues />} />
+            <Route path='/playergroups' element={<PlayerGroups />} />
             {/* <Route path="/ecosystems/:viewId?" element={<Ecosystems />} /> */}
           </Route>
         </Routes>

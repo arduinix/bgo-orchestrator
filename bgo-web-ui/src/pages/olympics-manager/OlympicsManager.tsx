@@ -74,9 +74,11 @@ export default function OlympicsManager() {
         transform='translate(-50%, -50%)'
       >
         <Flex overflow='scroll'>
-          <Sidebar linkItems={linkItems} />
+          <Sidebar
+            linkItems={linkItems}
+            heading={<EventHeading eventId={eventId} />}
+          />
           <Flex p={4} flexDir={'column'}>
-            <EventHeading eventId={eventId} />
             <Flex p={4} w='100%' flexGrow={1} overflow='scroll'>
               <Outlet />
             </Flex>
