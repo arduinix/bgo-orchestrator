@@ -112,8 +112,12 @@ const NavItem = ({ icon, href, children, ...rest }: NavItemProps) => {
         borderRadius='lg'
         role='group'
         cursor='pointer'
-        bg={location && location.pathname === href ? 'cyan.200' : undefined}
-        color={location && location.pathname === href ? 'gray.800' : undefined}
+        bg={
+          location && location.pathname.includes(href) ? 'cyan.200' : undefined
+        }
+        color={
+          location && location.pathname.includes(href) ? 'gray.800' : undefined
+        }
         _hover={{
           bg: 'cyan.500',
           color: 'white',
