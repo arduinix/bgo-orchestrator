@@ -113,10 +113,11 @@ declare global {
     completedTimestamp?: string
     removedTimestamp?: string
     roundGameIds: string[] // this will be a string list of ids of the round games
-  }
-  interface SortedRound extends Round {
     roundNumber: number
   }
+  // interface SortedRound extends Round {
+  //   roundNumber: number
+  // }
 }
 
 export {}

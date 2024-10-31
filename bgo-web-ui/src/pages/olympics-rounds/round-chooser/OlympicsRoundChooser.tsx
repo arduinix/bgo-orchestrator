@@ -8,28 +8,27 @@ import {
   Spacer,
   Checkbox,
 } from '@chakra-ui/react'
-import { useMemo } from 'react'
-// import events from '@data/events.json'
+// import { useMemo } from 'react'
 import rounds from '@data/rounds.json'
 import OlympicsRoundCard from './OlympicsRoundCard'
 
 export default function OlympicsRoundChooser() {
   const data: Round[] = rounds.rounds
 
-  const sortedRounds: SortedRound[] = useMemo(() => {
-    const sortedRounds = data.sort((a, b) => {
-      return (
-        new Date(b.createdTimestamp).getTime() -
-        new Date(a.createdTimestamp).getTime()
-      )
-    })
-    return sortedRounds.map((round, index) => {
-      return {
-        ...round,
-        roundNumber: sortedRounds.length - index,
-      }
-    })
-  }, [data])
+  // const sortedRounds: SortedRound[] = useMemo(() => {
+  //   const sortedRounds = data.sort((a, b) => {
+  //     return (
+  //       new Date(b.createdTimestamp).getTime() -
+  //       new Date(a.createdTimestamp).getTime()
+  //     )
+  //   })
+  //   return sortedRounds.map((round, index) => {
+  //     return {
+  //       ...round,
+  //       roundNumber: sortedRounds.length - index,
+  //     }
+  //   })
+  // }, [data])
 
   return (
     <Box p={4}>
@@ -63,7 +62,7 @@ export default function OlympicsRoundChooser() {
           <Button colorScheme='blue'>Create Round</Button>
         </Flex>
         <Flex flexWrap='wrap' gridGap={6} justify={'center'}>
-          {sortedRounds.length === 0 ? (
+          {data.length === 0 ? (
             <Box
               bg={'gray.100'}
               fontWeight={'bold'}
@@ -78,9 +77,7 @@ export default function OlympicsRoundChooser() {
               </Text>
             </Box>
           ) : (
-            sortedRounds.map((round) => (
-              <OlympicsRoundCard key={round.id} {...round} />
-            ))
+            data.map((round) => <OlympicsRoundCard key={round.id} {...round} />)
           )}
         </Flex>
       </Container>
