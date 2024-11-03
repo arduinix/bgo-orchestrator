@@ -130,9 +130,11 @@ export default function CategoriesTab() {
               <MenuItem>Set In-Play</MenuItem>
               <MenuItem>Set Out-Of-Play</MenuItem>
               <MenuDivider />
-              <MenuItem>Remove Selected Catagories</MenuItem>
+              <MenuItem>Remove Selected Categories</MenuItem>
               <MenuDivider />
               <MenuItem onClick={handleAddClick}>Add Category</MenuItem>
+              <MenuDivider />
+              <MenuItem>Remove Selected Categories</MenuItem>
             </MenuList>
           </Menu>
           <Spacer />

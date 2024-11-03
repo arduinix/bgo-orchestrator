@@ -27,7 +27,7 @@ const OlympicsRoundCard = ({
   completedTimestamp,
   startedTimestamp,
   roundNumber,
-}: SortedRound) => {
+}: Round) => {
   const navigate = useNavigate()
   const {
     isOpen: isOpenDelete,
@@ -40,7 +40,7 @@ const OlympicsRoundCard = ({
   }
 
   const PhaseBadge = () => {
-    const phaseMapping = {
+    const phaseMapping: { [key: string]: { color: string; text: string } } = {
       setup: { color: 'red', text: 'Setup required' },
       ready: { color: 'yellow', text: 'Ready to play' },
       playing: { color: 'green', text: 'Playing' },
@@ -55,25 +55,13 @@ const OlympicsRoundCard = ({
     )
   }
 
-  const RoundTimestampBadge = () => {
+  const roundTimestampText = () => {
     if (completedTimestamp) {
-      return (
-        <Badge variant={'outline'}>
-          Completed {elapsedSinceDate(completedTimestamp)}
-        </Badge>
-      )
+      return `Completed ${elapsedSinceDate(completedTimestamp)}`
     } else if (startedTimestamp) {
-      return (
-        <Badge variant={'outline'}>
-          Started {elapsedSinceDate(startedTimestamp)}
-        </Badge>
-      )
+      return `Started ${elapsedSinceDate(startedTimestamp)}`
     }
-    return (
-      <Badge variant={'outline'}>
-        Created {elapsedSinceDate(createdTimestamp)}
-      </Badge>
-    )
+    return `Created ${elapsedSinceDate(createdTimestamp)}`
   }
 
   return (
@@ -101,18 +89,17 @@ const OlympicsRoundCard = ({
             rounded={'full'}
             bg={useColorModeValue('gray.100', 'gray.700')}
           >
-            {/* <Icon as={FcDonate} w={10} h={10} /> */}
             <Image src={torch} boxSize={12} objectFit={'scale-down'} />
           </Flex>
-
-          <Box mt={2}>
+          <Flex mt={2} gap={2} alignItems={'flex-start'} flexDir={'column'}>
             <Heading size='md'>Round {roundNumber}</Heading>
-            {/* <Text mt={1} fontSize={'sm'}>
-              {location}
-            </Text> */}
-            <RoundTimestampBadge />
+            <Box>
+              <Badge whiteSpace={'normal'} wordBreak={'break-word'}>
+                {roundTimestampText()}
+              </Badge>
+            </Box>
             <PhaseBadge />
-          </Box>
+          </Flex>
         </Stack>
       </Box>
       <Menu>

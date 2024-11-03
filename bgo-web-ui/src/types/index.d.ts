@@ -48,7 +48,7 @@ declare global {
     imagePath?: string
   }
 
-  interface ExtendedPlayer {
+  interface ExtendedPlayer extends Player {
     fullName: string
   }
 
@@ -75,13 +75,15 @@ declare global {
     minPlayers: number
     maxPlayers: number
     lowScoreWins: boolean
+    tableAssignment?: number
     addedDate: string
     averageCompletionMinutes?: number
     imagePath?: string
   }
-  interface ExtendedGame {
+  interface ExtendedGame extends Game {
     playerScaleDisplayNode: React.ReactNode
     scoreMethodDisplayNode: React.ReactNode
+    tableAssignmentDisplayNode: React.ReactNode
   }
 
   interface ScoreElement {

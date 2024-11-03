@@ -111,6 +111,7 @@ export default function GamesTab() {
     },
     { text: 'Duration', sortKey: 'averageCompletionMinutes' },
     { text: 'In Play', sortKey: 'isInPlay' },
+    { text: 'Table', sortKey: 'tableAssignmentDisplayNode' },
   ]
 
   const extendedGames = useMemo(() => {
@@ -130,6 +131,11 @@ export default function GamesTab() {
               <Badge colorScheme='green'>High</Badge>
             )}
           </>
+        ),
+        tableAssignmentDisplayNode: (
+          <Badge colorScheme={game.tableAssignment ? 'green' : 'red'}>
+            {game.tableAssignment ? game.tableAssignment : 'Not Assigned'}
+          </Badge>
         ),
       }
     })
@@ -170,9 +176,11 @@ export default function GamesTab() {
               <MenuItem>Set In-Play</MenuItem>
               <MenuItem>Set Out-Of-Play</MenuItem>
               <MenuDivider />
-              <MenuItem>Remove Selected Games</MenuItem>
+              <MenuItem>Auto Assign Tables</MenuItem>
               <MenuDivider />
               <MenuItem onClick={handleAddClick}>Add Game</MenuItem>
+              <MenuDivider />
+              <MenuItem>Remove Selected Games</MenuItem>
             </MenuList>
           </Menu>
           <Spacer />

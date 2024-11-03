@@ -118,40 +118,50 @@ export default function EditGameyForm({
                     />
                   </Box>
                 </Flex>
-
-                <Box width={'28%'}>
-                  <BoldFormLabel>Players</BoldFormLabel>
-                  <Flex alignItems={'center'}>
-                    <NumberPicker
-                      value={minPlayers || 0}
-                      onChange={(value) =>
-                        handleFieldUpdate('minPlayers', value)
+                <Flex width={'100%'} gap={5}>
+                  <Box width={'28%'}>
+                    <BoldFormLabel>Players</BoldFormLabel>
+                    <Flex alignItems={'center'}>
+                      <NumberPicker
+                        value={minPlayers || 0}
+                        onChange={(value) =>
+                          handleFieldUpdate('minPlayers', value)
+                        }
+                      />
+                      <FormLabel ml={3} pt={2}>
+                        TO
+                      </FormLabel>
+                      <NumberPicker
+                        value={maxPlayers || 0}
+                        onChange={(value) =>
+                          handleFieldUpdate('maxPlayers', value)
+                        }
+                      />
+                    </Flex>
+                  </Box>
+                  <Box width={'30%'}>
+                    <BoldFormLabel>Preferred Players</BoldFormLabel>
+                    <Flex alignItems={'center'}>
+                      <NumberPicker
+                        value={minPlayers || 0}
+                        onChange={(value) =>
+                          handleFieldUpdate('minPlayers', value)
+                        }
+                      />
+                    </Flex>
+                  </Box>
+                  <Box alignSelf={'flex-end'}>
+                    <Checkbox
+                      size={'lg'}
+                      isChecked={isInPlay}
+                      onChange={(e) =>
+                        handleFieldUpdate('lowScoreWins', e.target.checked)
                       }
-                    />
-                    <FormLabel ml={3} pt={2}>
-                      TO
-                    </FormLabel>
-                    <NumberPicker
-                      value={maxPlayers || 0}
-                      onChange={(value) =>
-                        handleFieldUpdate('maxPlayers', value)
-                      }
-                    />
-                  </Flex>
-                </Box>
-                <Box>
-                  <Checkbox
-                    size={'lg'}
-                    isChecked={isInPlay}
-                    onChange={(e) =>
-                      handleFieldUpdate('lowScoreWins', e.target.checked)
-                    }
-                  >
-                    Low Score Wins
-                  </Checkbox>
-                </Box>
-
-                <Flex gap={2}></Flex>
+                    >
+                      Low Score Wins
+                    </Checkbox>
+                  </Box>
+                </Flex>
               </Flex>
             </FormControl>
           </CardBody>
