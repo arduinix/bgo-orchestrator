@@ -18,7 +18,6 @@ import { GoChevronDown } from 'react-icons/go'
 import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
 import { useState, useMemo } from 'react'
 import games from '@data/games.json'
-// import EditCategoryForm from './EditCategoryForm'
 import EditGameForm from './EditGameForm'
 import GenericTable, {
   TableHeader,
@@ -190,8 +189,6 @@ export default function GamesTab() {
           data={extendedGames}
           headers={headers}
           selectedRow={selectedGame as ExtendedGame}
-          setSelectedRow={(game) => setSelectedGame(game)}
-          enableMultiSelect
           multiSelectKeyExtractor={(game) => game.id}
           rowActionButtons={rowActionButtons}
         />

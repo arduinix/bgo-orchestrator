@@ -56,7 +56,8 @@ export default function RoundPlayersTable() {
         <GenericTable
           data={extendedPlayers}
           headers={headers}
-          multiSelectKeyExtractor={(player) => player.id}
+          disablePagination
+          tableContainerProps={{height:'700px', overflowY: 'auto'}}
         />
       </Flex>
     </>

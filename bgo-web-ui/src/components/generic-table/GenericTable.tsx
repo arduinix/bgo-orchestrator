@@ -1,4 +1,4 @@
-import React, { useState, ReactNode, useMemo } from 'react'
+import React, { useState, ReactNode, useMemo, ComponentProps } from 'react'
 import {
   TableContainer,
   Table,
@@ -31,19 +31,21 @@ export interface TableHeader<T> {
   subFieldStyle?: SystemStyleObject
   showKey?: keyof T | null // The key of the field to show in the table cell
   subField?: keyof T | null // A secondary field to be rendered as subtext under the main field
+  disableDataCellClickAction?: boolean // Disable the rowClickAction on cells belonging to this header
 }
 
 interface GenericTableProps<T> {
   data: T[]
   headers: TableHeader<T>[]
   selectedRow?: T | null
-  setSelectedRow?: (row: T) => void
-  enableMultiSelect?: boolean
   multiSelectKeyExtractor?: (row: T) => string
   rowActionButtons?: (row: T) => ReactNode
   rowClickAction?: (row: T) => void
   noRecordsMessage?: string | ReactNode
   disableSearch?: boolean
+  defaultRowsPerPage?: number
+  disablePagination?: boolean // When pagination is disabled, the defaultRowsPerPage is will be set to the length of the data array
+  tableContainerProps?: ComponentProps<typeof TableContainer>
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -51,19 +53,22 @@ export default function GenericTable<T extends Record<string, any>>({
   data,
   headers,
   selectedRow,
-  setSelectedRow,
-  enableMultiSelect,
   multiSelectKeyExtractor,
   rowActionButtons,
   rowClickAction,
   noRecordsMessage = 'No items found matching the search criteria.',
   disableSearch = false,
+  defaultRowsPerPage = 10,
+  disablePagination = false,
+  tableContainerProps = {},
 }: GenericTableProps<T>) {
   const [sortConfig, setSortConfig] = useState<SortConfig<T> | null>(null)
   const [selectedRows, setSelectedRows] = useState<string[]>([])
   const [searchTerm, setSearchTerm] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
-  const [rowsPerPage, setRowsPerPage] = useState(20)
+  const [rowsPerPage, setRowsPerPage] = useState(
+    disablePagination ? data.length : defaultRowsPerPage
+  )
 
   const indexOfLastRow = currentPage * rowsPerPage
   const indexOfFirstRow = indexOfLastRow - rowsPerPage
@@ -199,11 +204,11 @@ export default function GenericTable<T extends Record<string, any>>({
           handleSearchChange={handleSearchChange}
         />
       )}
-      <TableContainer maxWidth={'100%'}>
+      <TableContainer maxWidth={'100%'} {...tableContainerProps}>
         <Table variant='simple'>
           <Thead>
-            <Tr>
-              {enableMultiSelect && (
+            <Tr sx={{ position: 'sticky', top: 0, zIndex: 1 }}>
+              {multiSelectKeyExtractor && (
                 <Th
                   key={'selectAllRows'}
                   bg={headerBgColor}
@@ -259,7 +264,7 @@ export default function GenericTable<T extends Record<string, any>>({
               <Tr>
                 <Td
                   colSpan={
-                    enableMultiSelect
+                    multiSelectKeyExtractor
                       ? data.length > 0
                         ? Object.keys(data[0]).length + 1
                         : headers.length + 1
@@ -285,14 +290,8 @@ export default function GenericTable<T extends Record<string, any>>({
                         ? selectedBgColor
                         : bgColor
                     }
-                    onClick={() => setSelectedRow && setSelectedRow(row)}
-                    // onClick={(e) => {
-                    //   e.stopPropagation()
-                    //   rowActionButtons && rowClickAction(row)
-                    // }}
-                    cursor='pointer'
                   >
-                    {enableMultiSelect && (
+                    {multiSelectKeyExtractor && (
                       <Td>
                         <Checkbox
                           size={'lg'}
@@ -302,23 +301,45 @@ export default function GenericTable<T extends Record<string, any>>({
                         />
                       </Td>
                     )}
-                    {headers.map((header, i) => (
-                      <Td key={i} color={textColor} flexDirection={'column'}>
-                        {renderTableRowField(
-                          row[
-                            header.showKey
-                              ? header.showKey
-                              : (header.sortKey as keyof T)
-                          ],
-                          header.cellStyle as SystemStyleObject
-                        )}
-                        {header.subField &&
-                          renderSubField(
-                            row[header.subField as keyof T],
-                            header.subFieldStyle as SystemStyleObject
+                    {headers.map(
+                      (
+                        {
+                          disableDataCellClickAction,
+                          showKey,
+                          sortKey,
+                          cellStyle,
+                          subField,
+                          subFieldStyle,
+                        },
+                        i
+                      ) => (
+                        <Td
+                          key={i}
+                          color={textColor}
+                          flexDirection={'column'}
+                          _hover={{
+                            cursor: !disableDataCellClickAction
+                              ? 'pointer'
+                              : 'default',
+                          }}
+                          onClick={() => {
+                            if (!disableDataCellClickAction && rowClickAction) {
+                              rowClickAction(row)
+                            }
+                          }}
+                        >
+                          {renderTableRowField(
+                            row[showKey ? showKey : (sortKey as keyof T)],
+                            cellStyle as SystemStyleObject
                           )}
-                      </Td>
-                    ))}
+                          {subField &&
+                            renderSubField(
+                              row[subField as keyof T],
+                              subFieldStyle as SystemStyleObject
+                            )}
+                        </Td>
+                      )
+                    )}
                     {rowActionButtons && <Td>{rowActionButtons(row)}</Td>}
                   </Tr>
                 )
@@ -327,14 +348,15 @@ export default function GenericTable<T extends Record<string, any>>({
           </Tbody>
         </Table>
       </TableContainer>
-
-      <PaginationControl
-        totalPages={totalPages}
-        itemsPerPage={rowsPerPage}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        onItemsPerPageChange={handleRowsPerPageChange}
-      />
+      {!disablePagination && (
+        <PaginationControl
+          totalPages={totalPages}
+          itemsPerPage={rowsPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          onItemsPerPageChange={handleRowsPerPageChange}
+        />
+      )}
     </Flex>
   )
 }

@@ -89,7 +89,7 @@ export default function PlayersTab() {
     },
     { text: 'Email', sortKey: 'email' },
     { text: 'Phone', sortKey: 'phone' },
-    { text: 'Playing', sortKey: 'isPlaying' },
+    { text: 'Playing', sortKey: 'isPlaying'},
   ]
 
   const extendedPlayers = useMemo(
@@ -154,8 +154,6 @@ export default function PlayersTab() {
           data={extendedPlayers}
           headers={headers}
           selectedRow={selectedPlayer as ExtendedPlayer}
-          setSelectedRow={(player) => setSelectedPlayer(player)}
-          enableMultiSelect
           multiSelectKeyExtractor={(player) => player.id}
           rowActionButtons={rowActionButtons}
           rowClickAction={handleEditClick}

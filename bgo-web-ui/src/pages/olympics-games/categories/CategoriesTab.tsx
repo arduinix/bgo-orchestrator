@@ -144,8 +144,6 @@ export default function CategoriesTab() {
           data={data}
           headers={headers}
           selectedRow={selectedCategory as GameCategory}
-          setSelectedRow={(category) => setSelectedCategory(category)}
-          enableMultiSelect
           multiSelectKeyExtractor={(category) => category.id}
           rowActionButtons={rowActionButtons}
         />
