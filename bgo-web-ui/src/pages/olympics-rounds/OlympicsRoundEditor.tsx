@@ -2,6 +2,8 @@ import { Heading, Box, Flex } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
 import rounds from '@data/rounds.json'
 import ReusableAccordion from '@/components/reusable-accordion/ReusableAccordion'
+import RoundPlayersTable from './RoundPlayersTable'
+import RoundGamesTable from './RoundGamesTable'
 
 export default function OlympicsRoundEditor() {
   const roundData: Round[] = rounds.rounds
@@ -22,8 +24,9 @@ export default function OlympicsRoundEditor() {
       {/* <ReusableTabs tabs={tabs} /> */}
       <ReusableAccordion
         items={[
-          { title: 'asdf', content: 'asdf' },
-          { title: 'asdf', content: 'asdf' },
+          { title: 'Players', content: <RoundPlayersTable /> },
+          { title: 'Games', content: <RoundGamesTable /> },
+          { title: 'Matches', content: <p>Matches</p> },
         ]}
       />
     </Flex>

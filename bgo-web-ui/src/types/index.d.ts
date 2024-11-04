@@ -1,3 +1,4 @@
+import { ReactNode } from 'react'
 declare global {
   interface Contact {
     name: string
@@ -50,6 +51,7 @@ declare global {
 
   interface ExtendedPlayer extends Player {
     fullName: string
+    isPlayingToggleNode?: ReactNode
   }
 
   interface GameCategory {
@@ -81,9 +83,10 @@ declare global {
     imagePath?: string
   }
   interface ExtendedGame extends Game {
-    playerScaleDisplayNode: React.ReactNode
-    scoreMethodDisplayNode: React.ReactNode
-    tableAssignmentDisplayNode: React.ReactNode
+    playerScaleDisplayNode?: ReactNode
+    scoreMethodDisplayNode?: ReactNode
+    tableAssignmentDisplayNode: ReactNode
+    isInPlayToggleNode?: ReactNode
   }
 
   interface ScoreElement {
