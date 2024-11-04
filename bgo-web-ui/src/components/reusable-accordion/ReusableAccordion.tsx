@@ -36,31 +36,39 @@ const CustomAccordionButton: React.FC<{
     </AccordionButton>
   )
 }
+
 export default function ReusableAccordion({ items }: ReusableAccordionProps) {
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
+  const [expandedIndices, setExpandedIndices] = useState<number[]>([])
 
   const handleToggle = (index: number) => {
-    setExpandedIndex(expandedIndex === index ? null : index)
+    setExpandedIndices((prevIndices) =>
+      prevIndices.includes(index)
+        ? prevIndices.filter((i) => i !== index)
+        : [...prevIndices, index]
+    )
   }
 
   return (
     <Accordion allowMultiple>
       <Flex direction='row'>
-        <Accordion allowMultiple>
-          {items.map((item, index) => (
-            <AccordionItem key={index}>
-              <h2>
-                <CustomAccordionButton
-                  isExpanded={expandedIndex === index}
-                  onClick={() => handleToggle(index)}
-                >
-                  {item.title}
-                </CustomAccordionButton>
-              </h2>
-              <AccordionPanel pb={4}>{item.content}</AccordionPanel>
-            </AccordionItem>
-          ))}
-        </Accordion>
+        {items.map((item, index) => (
+          <AccordionItem key={index}>
+            <h2>
+              <CustomAccordionButton
+                isExpanded={expandedIndices.includes(index)}
+                onClick={() => handleToggle(index)}
+              >
+                {item.title}
+              </CustomAccordionButton>
+            </h2>
+            <AccordionPanel
+              pb={4}
+              display={expandedIndices.includes(index) ? 'block' : 'none'}
+            >
+              {item.content}
+            </AccordionPanel>
+          </AccordionItem>
+        ))}
       </Flex>
     </Accordion>
   )

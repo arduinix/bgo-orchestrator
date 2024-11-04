@@ -20,7 +20,12 @@ export default function OlympicsRoundEditor() {
         </Box>
       </Flex>
       {/* <ReusableTabs tabs={tabs} /> */}
-      <ReusableAccordion items={[{ title: 'asdf', content: 'asdf' }]} />
+      <ReusableAccordion
+        items={[
+          { title: 'asdf', content: 'asdf' },
+          { title: 'asdf', content: 'asdf' },
+        ]}
+      />
     </Flex>
   )
 }
