@@ -52,7 +52,7 @@ export default function ReusableAccordion({ items }: ReusableAccordionProps) {
     <Accordion allowMultiple>
       <Flex direction='row'>
         {items.map((item, index) => (
-          <AccordionItem key={index}>
+          <AccordionItem key={index} m={4}>
             <h2>
               <CustomAccordionButton
                 isExpanded={expandedIndices.includes(index)}
