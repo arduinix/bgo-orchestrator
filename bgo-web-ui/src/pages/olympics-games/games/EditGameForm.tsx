@@ -109,7 +109,7 @@ export default function EditGameyForm({
                   </Box>
 
                   <Box width={'26%'}>
-                    <BoldFormLabel>Play Time (minutes)</BoldFormLabel>
+                    <BoldFormLabel>Play minutes</BoldFormLabel>
                     <NumberPicker
                       value={averageCompletionMinutes || 0}
                       onChange={(value) =>
@@ -139,8 +139,8 @@ export default function EditGameyForm({
                       />
                     </Flex>
                   </Box>
-                  <Box width={'30%'}>
-                    <BoldFormLabel>Preferred Players</BoldFormLabel>
+                  <Box width={'20%'}>
+                    <BoldFormLabel>Ideal Players</BoldFormLabel>
                     <Flex alignItems={'center'}>
                       <NumberPicker
                         value={minPlayers || 0}
@@ -149,6 +149,12 @@ export default function EditGameyForm({
                         }
                       />
                     </Flex>
+                  </Box>
+                  <Box width={'10%'}>
+                    <BoldFormLabel>Table</BoldFormLabel>
+                    <Select>
+                      
+                    </Select>
                   </Box>
                   <Box alignSelf={'flex-end'}>
                     <Checkbox
