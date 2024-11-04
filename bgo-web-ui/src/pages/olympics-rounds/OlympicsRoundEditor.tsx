@@ -4,6 +4,7 @@ import rounds from '@data/rounds.json'
 import ReusableAccordion from '@/components/reusable-accordion/ReusableAccordion'
 import RoundPlayersTable from './RoundPlayersTable'
 import RoundGamesTable from './RoundGamesTable'
+import ScrollingConsole from '@/components/scrolling-console/ScrollingConsole'
 
 export default function OlympicsRoundEditor() {
   const roundData: Round[] = rounds.rounds
@@ -29,6 +30,7 @@ export default function OlympicsRoundEditor() {
           { title: 'Matches', content: <p>Matches</p> },
         ]}
       />
+      <ScrollingConsole logs={['Event/Round logs']} />
     </Flex>
   )
 }
