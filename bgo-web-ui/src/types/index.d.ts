@@ -89,18 +89,24 @@ declare global {
     isInPlayToggleNode?: ReactNode
   }
 
+  interface ScoreElement {
+    recordedTimestamp: string
+    score: number
+    tieBreaker?: number // TODO: we need to determine what we are going to determine how we manage ties and tie breakers
+    isWinner?: boolean
+    lowScoreWins: boolean
+  }
   interface PlayerMatchScore {
+    id: string
     playerId: string
     playerName: string
-    score?: number
-    isWinner?: boolean
-    scoreRecordedTimestamp?: string
+    scoreElement?: ScoreElement
   }
 
   interface Match {
     id: string
     roundId: string
-    game: {id: string, name: string}
+    game: { id: string; name: string }
     categoryId: string
     lowScoreWins: boolean
     phase: 'incomplete' | 'complete'
@@ -108,7 +114,14 @@ declare global {
     startedTimestamp?: string
     completedTimestamp?: string
     removedTimestamp?: string // will show the time that the match was removed if desired
-    scores: PlayerMatchScore[]
+    playerMatchScores: PlayerMatchScore[]
+  }
+
+  interface ExtendedMatch extends Match {
+    gameName: string
+    phaseBadgeNode: ReactNode
+    playersNode: ReactNode
+    scoresNode: ReactNode
   }
 
   interface Round {

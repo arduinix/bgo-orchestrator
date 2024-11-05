@@ -1,0 +1,233 @@
+{
+  "matches": [
+    {
+      "id": "match1",
+      "roundId": "round1",
+      "game": { "id": "game1", "name": "Chess" },
+      "categoryId": "cat1",
+      "lowScoreWins": false,
+      "phase": "complete",
+      "createdTimestamp": "2023-01-01T10:00:00Z",
+      "startedTimestamp": "2023-01-01T10:05:00Z",
+      "completedTimestamp": "2023-01-01T11:00:00Z",
+      "playerMatchScores": [
+        {
+          "id": "score1",
+          "playerId": "player1",
+          "playerName": "Alice",
+          "scoreElement": {
+            "recordedTimestamp": "2023-01-01T11:00:00Z",
+            "score": 1,
+            "isWinner": true,
+            "lowScoreWins": false
+          }
+        },
+        {
+          "id": "score2",
+          "playerId": "player2",
+          "playerName": "Bob",
+          "scoreElement": {
+            "recordedTimestamp": "2023-01-01T11:00:00Z",
+            "score": 0,
+            "isWinner": false,
+            "lowScoreWins": false
+          }
+        },
+        {
+          "id": "score3",
+          "playerId": "player3",
+          "playerName": "Charlie",
+          "scoreElement": {
+            "recordedTimestamp": "2023-01-01T11:00:00Z",
+            "score": 0,
+            "isWinner": false,
+            "lowScoreWins": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "match2",
+      "roundId": "round1",
+      "game": { "id": "game2", "name": "Checkers" },
+      "categoryId": "cat2",
+      "lowScoreWins": true,
+      "phase": "incomplete",
+      "createdTimestamp": "2023-01-02T10:00:00Z",
+      "startedTimestamp": "2023-01-02T10:05:00Z",
+      "playerMatchScores": [
+        { "id": "score4", "playerId": "player4", "playerName": "David" },
+        { "id": "score5", "playerId": "player5", "playerName": "Eve" },
+        { "id": "score6", "playerId": "player6", "playerName": "Frank" }
+      ]
+    },
+    {
+      "id": "match3",
+      "roundId": "round2",
+      "game": { "id": "game3", "name": "Poker" },
+      "categoryId": "cat3",
+      "lowScoreWins": false,
+      "phase": "complete",
+      "createdTimestamp": "2023-01-03T10:00:00Z",
+      "startedTimestamp": "2023-01-03T10:05:00Z",
+      "completedTimestamp": "2023-01-03T12:00:00Z",
+      "playerMatchScores": [
+        {
+          "id": "score7",
+          "playerId": "player7",
+          "playerName": "Grace",
+          "scoreElement": {
+            "recordedTimestamp": "2023-01-03T12:00:00Z",
+            "score": 100,
+            "isWinner": true,
+            "lowScoreWins": false
+          }
+        },
+        {
+          "id": "score8",
+          "playerId": "player8",
+          "playerName": "Heidi",
+          "scoreElement": {
+            "recordedTimestamp": "2023-01-03T12:00:00Z",
+            "score": 50,
+            "isWinner": false,
+            "lowScoreWins": false
+          }
+        },
+        {
+          "id": "score9",
+          "playerId": "player9",
+          "playerName": "Ivan",
+          "scoreElement": {
+            "recordedTimestamp": "2023-01-03T12:00:00Z",
+            "score": 25,
+            "isWinner": false,
+            "lowScoreWins": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "match4",
+      "roundId": "round2",
+      "game": { "id": "game4", "name": "Scrabble" },
+      "categoryId": "cat4",
+      "lowScoreWins": false,
+      "phase": "incomplete",
+      "createdTimestamp": "2023-01-04T10:00:00Z",
+      "startedTimestamp": "2023-01-04T10:05:00Z",
+      "playerMatchScores": [
+        { "id": "score10", "playerId": "player10", "playerName": "Judy" },
+        { "id": "score11", "playerId": "player11", "playerName": "Karl" },
+        { "id": "score12", "playerId": "player12", "playerName": "Leo" }
+      ]
+    },
+    {
+      "id": "match5",
+      "roundId": "round3",
+      "game": { "id": "game5", "name": "Monopoly" },
+      "categoryId": "cat5",
+      "lowScoreWins": false,
+      "phase": "complete",
+      "createdTimestamp": "2023-01-05T10:00:00Z",
+      "startedTimestamp": "2023-01-05T10:05:00Z",
+      "completedTimestamp": "2023-01-05T13:00:00Z",
+      "playerMatchScores": [
+        {
+          "id": "score13",
+          "playerId": "player13",
+          "playerName": "Mallory",
+          "scoreElement": {
+            "recordedTimestamp": "2023-01-05T13:00:00Z",
+            "score": 1500,
+            "isWinner": true,
+            "lowScoreWins": false
+          }
+        },
+        {
+          "id": "score14",
+          "playerId": "player14",
+          "playerName": "Niaj",
+          "scoreElement": {
+            "recordedTimestamp": "2023-01-05T13:00:00Z",
+            "score": 1200,
+            "isWinner": false,
+            "lowScoreWins": false
+          }
+        },
+        {
+          "id": "score15",
+          "playerId": "player15",
+          "playerName": "Olivia",
+          "scoreElement": {
+            "recordedTimestamp": "2023-01-05T13:00:00Z",
+            "score": 800,
+            "isWinner": false,
+            "lowScoreWins": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "match6",
+      "roundId": "round3",
+      "game": { "id": "game6", "name": "Uno" },
+      "categoryId": "cat6",
+      "lowScoreWins": true,
+      "phase": "incomplete",
+      "createdTimestamp": "2023-01-06T10:00:00Z",
+      "startedTimestamp": "2023-01-06T10:05:00Z",
+      "playerMatchScores": [
+        { "id": "score16", "playerId": "player16", "playerName": "Peggy" },
+        { "id": "score17", "playerId": "player17", "playerName": "Quentin" },
+        { "id": "score18", "playerId": "player18", "playerName": "Rupert" }
+      ]
+    },
+    {
+      "id": "match7",
+      "roundId": "round4",
+      "game": { "id": "game7", "name": "Catan" },
+      "categoryId": "cat7",
+      "lowScoreWins": false,
+      "phase": "complete",
+      "createdTimestamp": "2023-01-07T10:00:00Z",
+      "startedTimestamp": "2023-01-07T10:05:00Z",
+      "completedTimestamp": "2023-01-07T14:00:00Z",
+      "playerMatchScores": [
+        {
+          "id": "score19",
+          "playerId": "player19",
+          "playerName": "Sybil",
+          "scoreElement": {
+            "recordedTimestamp": "2023-01-07T14:00:00Z",
+            "score": 10,
+            "isWinner": true,
+            "lowScoreWins": false
+          }
+        },
+        {
+          "id": "score20",
+          "playerId": "player20",
+          "playerName": "Trent",
+          "scoreElement": {
+            "recordedTimestamp": "2023-01-07T14:00:00Z",
+            "score": 8,
+            "isWinner": false,
+            "lowScoreWins": false
+          }
+        },
+        {
+          "id": "score21",
+          "playerId": "player21",
+          "playerName": "Uma",
+          "scoreElement": {
+            "recordedTimestamp": "2023-01-07T14:00:00Z",
+            "score": 6,
+            "isWinner": false,
+            "lowScoreWins": false
+          }
+        }
+      ]
+    }
+  ]
+}

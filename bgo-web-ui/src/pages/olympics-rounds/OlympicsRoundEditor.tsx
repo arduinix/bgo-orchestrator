@@ -4,7 +4,9 @@ import rounds from '@data/rounds.json'
 import ReusableAccordion from '@/components/reusable-accordion/ReusableAccordion'
 import RoundPlayersTable from './RoundPlayersTable'
 import RoundGamesTable from './RoundGamesTable'
+import MatchTable from './RoundMatchTable'
 import ScrollingConsole from '@/components/scrolling-console/ScrollingConsole'
+import RoundMatchTable from './RoundMatchTable'
 
 export default function OlympicsRoundEditor() {
   const roundData: Round[] = rounds.rounds
@@ -17,7 +19,7 @@ export default function OlympicsRoundEditor() {
     <Flex flexDir={'column'}>
       <Flex justifyContent='space-between' alignItems='center'>
         <Box>
-          <Heading  pl={4} pr={4} size={'md'}>
+          <Heading pl={4} pr={4} size={'md'}>
             Round {selectedRound()?.roundNumber}
           </Heading>
         </Box>
@@ -27,7 +29,7 @@ export default function OlympicsRoundEditor() {
         items={[
           { title: 'Players', content: <RoundPlayersTable /> },
           { title: 'Games', content: <RoundGamesTable /> },
-          { title: 'Matches', content: <p>Matches</p> },
+          { title: 'Matches', content: <RoundMatchTable /> },
         ]}
       />
       <ScrollingConsole logs={['Event/Round logs']} />
