@@ -58,7 +58,21 @@ export default function RoundPlayersTable() {
           data={extendedPlayers}
           headers={headers}
           disablePagination
-          tableContainerProps={{height:'650px', overflowY: 'auto'}}
+          tableContainerProps={{
+            height: '650px',
+            overflowY: 'auto',
+            sx: {
+              '::-webkit-scrollbar': {
+                width: '8px',
+                height: '8px',
+                background: 'rgba(0, 0, 0, 0.05)',
+              },
+              '::-webkit-scrollbar-thumb': {
+                backgroundColor: 'gray.300',
+                borderRadius: '4px',
+              },
+            },
+          }}
         />
       </Flex>
     </>

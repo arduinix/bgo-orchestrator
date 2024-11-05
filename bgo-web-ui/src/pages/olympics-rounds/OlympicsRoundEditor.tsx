@@ -4,7 +4,6 @@ import rounds from '@data/rounds.json'
 import ReusableAccordion from '@/components/reusable-accordion/ReusableAccordion'
 import RoundPlayersTable from './RoundPlayersTable'
 import RoundGamesTable from './RoundGamesTable'
-import MatchTable from './RoundMatchTable'
 import ScrollingConsole from '@/components/scrolling-console/ScrollingConsole'
 import RoundMatchTable from './RoundMatchTable'
 
