@@ -89,24 +89,26 @@ declare global {
     isInPlayToggleNode?: ReactNode
   }
 
-  interface ScoreElement {
+  interface PlayerMatchScore {
     playerId: string
-    score: number
+    playerName: string
+    score?: number
+    isWinner?: boolean
+    scoreRecordedTimestamp?: string
   }
 
-  interface RoundGame {
+  interface Match {
     id: string
     roundId: string
-    gameId: string
+    game: {id: string, name: string}
     categoryId: string
-    playerIds: string[]
     lowScoreWins: boolean
     phase: 'incomplete' | 'complete'
     createdTimestamp: string
     startedTimestamp?: string
     completedTimestamp?: string
-    removedTimestamp?: string
-    scores: ScoreElement[]
+    removedTimestamp?: string // will show the time that the match was removed if desired
+    scores: PlayerMatchScore[]
   }
 
   interface Round {
@@ -120,9 +122,6 @@ declare global {
     roundGameIds: string[] // this will be a string list of ids of the round games
     roundNumber: number
   }
-  // interface SortedRound extends Round {
-  //   roundNumber: number
-  // }
 }
 
 export {}

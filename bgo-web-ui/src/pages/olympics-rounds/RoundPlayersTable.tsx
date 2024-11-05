@@ -16,6 +16,7 @@ export default function RoundPlayersTable() {
       subField: 'nickName',
       cellStyle: {
         fontWeight: 'bold',
+        maxWidth: '150px',
         color: useColorModeValue('#206CAF', '#3ca4ff'),
       },
       subFieldStyle: {
@@ -57,7 +58,7 @@ export default function RoundPlayersTable() {
           data={extendedPlayers}
           headers={headers}
           disablePagination
-          tableContainerProps={{height:'700px', overflowY: 'auto'}}
+          tableContainerProps={{height:'650px', overflowY: 'auto'}}
         />
       </Flex>
     </>

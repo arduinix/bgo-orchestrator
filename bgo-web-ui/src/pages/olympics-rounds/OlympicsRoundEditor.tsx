@@ -17,7 +17,7 @@ export default function OlympicsRoundEditor() {
     <Flex flexDir={'column'}>
       <Flex justifyContent='space-between' alignItems='center'>
         <Box>
-          <Heading p={2} pl={4} pr={4} size={'md'}>
+          <Heading  pl={4} pr={4} size={'md'}>
             Round {selectedRound()?.roundNumber}
           </Heading>
         </Box>

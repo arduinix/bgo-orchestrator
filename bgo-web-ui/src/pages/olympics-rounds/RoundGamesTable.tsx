@@ -18,7 +18,7 @@ export default function RoundGamesTable() {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'normal',
-        maxWidth: '300px',
+        maxWidth: '150px',
         display: '-webkit-box',
         WebkitLineClamp: 2,
         WebkitBoxOrient: 'vertical',
@@ -52,7 +52,7 @@ export default function RoundGamesTable() {
           data={extendedGames}
           headers={headers}
           disablePagination
-          tableContainerProps={{height:'700px', overflowY: 'auto'}}
+          tableContainerProps={{height:'650px', overflowY: 'auto'}}
         />
       </Flex>
     </>
