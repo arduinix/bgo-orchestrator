@@ -46,6 +46,7 @@ interface GenericTableProps<T> {
   defaultRowsPerPage?: number
   disablePagination?: boolean // When pagination is disabled, the defaultRowsPerPage is will be set to the length of the data array
   tableContainerProps?: ComponentProps<typeof TableContainer>
+  tableProps?: ComponentProps<typeof Table>
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,6 +62,7 @@ export default function GenericTable<T extends Record<string, any>>({
   defaultRowsPerPage = 10,
   disablePagination = false,
   tableContainerProps = {},
+  tableProps = {},
 }: GenericTableProps<T>) {
   const [sortConfig, setSortConfig] = useState<SortConfig<T> | null>(null)
   const [selectedRows, setSelectedRows] = useState<string[]>([])
@@ -205,7 +207,7 @@ export default function GenericTable<T extends Record<string, any>>({
         />
       )}
       <TableContainer maxWidth={'100%'} {...tableContainerProps}>
-        <Table variant='simple'>
+        <Table variant='simple' {...tableProps}>
           <Thead>
             <Tr sx={{ position: 'sticky', top: 0, zIndex: 1 }}>
               {multiSelectKeyExtractor && (
