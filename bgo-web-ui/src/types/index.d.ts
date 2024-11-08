@@ -119,9 +119,11 @@ declare global {
 
   interface ExtendedMatch extends Match {
     gameName: string
+    gameNameNode: ReactNode
     phaseBadgeNode: ReactNode
     playersNode: ReactNode
     scoresNode: ReactNode
+    medalNode?: ReactNode
   }
 
   interface Round {
@@ -136,5 +138,4 @@ declare global {
     roundNumber: number
   }
 }
-
 export {}
