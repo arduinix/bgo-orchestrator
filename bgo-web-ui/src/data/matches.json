@@ -19,7 +19,8 @@
             "recordedTimestamp": "2023-01-01T11:00:00Z",
             "score": 1,
             "isWinner": true,
-            "lowScoreWins": false
+            "lowScoreWins": false,
+            "awardedMedal": "gold"
           }
         },
         {
@@ -30,7 +31,8 @@
             "recordedTimestamp": "2023-01-01T11:00:00Z",
             "score": 0,
             "isWinner": false,
-            "lowScoreWins": false
+            "lowScoreWins": false,
+            "awardedMedal": "silver"
           }
         },
         {
@@ -41,7 +43,8 @@
             "recordedTimestamp": "2023-01-01T11:00:00Z",
             "score": 0,
             "isWinner": false,
-            "lowScoreWins": false
+            "lowScoreWins": false,
+            "awardedMedal": "bronze"
           }
         }
       ]
@@ -80,7 +83,8 @@
             "recordedTimestamp": "2023-01-03T12:00:00Z",
             "score": 100,
             "isWinner": true,
-            "lowScoreWins": false
+            "lowScoreWins": false,
+            "awardedMedal": "bronze"
           }
         },
         {
@@ -91,7 +95,8 @@
             "recordedTimestamp": "2023-01-03T12:00:00Z",
             "score": 50,
             "isWinner": false,
-            "lowScoreWins": false
+            "lowScoreWins": false,
+            "awardedMedal": "silver"
           }
         },
         {
@@ -141,7 +146,8 @@
             "recordedTimestamp": "2023-01-05T13:00:00Z",
             "score": 1500,
             "isWinner": true,
-            "lowScoreWins": false
+            "lowScoreWins": false,
+            "awardedMedal": "gold"
           }
         },
         {
@@ -152,7 +158,8 @@
             "recordedTimestamp": "2023-01-05T13:00:00Z",
             "score": 1200,
             "isWinner": false,
-            "lowScoreWins": false
+            "lowScoreWins": false,
+            "awardedMedal": "silver"
           }
         },
         {
@@ -163,7 +170,8 @@
             "recordedTimestamp": "2023-01-05T13:00:00Z",
             "score": 800,
             "isWinner": false,
-            "lowScoreWins": false
+            "lowScoreWins": false,
+            "awardedMedal": "bronze"
           }
         }
       ]
@@ -202,7 +210,8 @@
             "recordedTimestamp": "2023-01-07T14:00:00Z",
             "score": 10,
             "isWinner": true,
-            "lowScoreWins": false
+            "lowScoreWins": false,
+            "awardedMedal": "silver"
           }
         },
         {
@@ -213,7 +222,8 @@
             "recordedTimestamp": "2023-01-07T14:00:00Z",
             "score": 8,
             "isWinner": false,
-            "lowScoreWins": false
+            "lowScoreWins": false,
+            "awardedMedal": "bronze"
           }
         },
         {
@@ -224,7 +234,8 @@
             "recordedTimestamp": "2023-01-07T14:00:00Z",
             "score": 6,
             "isWinner": false,
-            "lowScoreWins": false
+            "lowScoreWins": false,
+            "awardedMedal": "gold"
           }
         }
       ]

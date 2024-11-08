@@ -1,4 +1,4 @@
-import { Icon } from '@chakra-ui/react'
+import { Icon, Tooltip } from '@chakra-ui/react'
 import { FaMedal } from 'react-icons/fa6'
 import { OlympicMedalType } from '@enums/enums'
 
@@ -22,5 +22,13 @@ export default function OlympicMedal({
     }
   }
 
-  return <Icon color={medalColor()} boxSize={'1.5em'} as={FaMedal} />
+  return (
+    <>
+      {medalType !== OlympicMedalType.none && (
+        <Tooltip label={medalType}>
+          <Icon color={medalColor()} boxSize={'1.7em'} as={FaMedal} />
+        </Tooltip>
+      )}
+    </>
+  )
 }

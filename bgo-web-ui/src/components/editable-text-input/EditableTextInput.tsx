@@ -1,22 +1,23 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
-  Td,
   Input,
   Text,
   useColorModeValue,
   FormErrorMessage,
   FormControl,
+  Box,
 } from '@chakra-ui/react'
 
-interface EditableTableCellProps {
+interface EditableTextInputProps {
   initialValue?: string | number
   onValueChange?: (value: string | number | null) => void
 }
 
-export default function EditableTableCell({
+export default function EditableTextInput({
   initialValue,
   onValueChange,
-}: EditableTableCellProps) {
+}: EditableTextInputProps) {
+  const inputRef = useRef<HTMLInputElement>(null)
   const [isEditing, setIsEditing] = useState(false)
   const [value, setValue] = useState<string | number | null>(
     initialValue ?? null
@@ -34,6 +35,7 @@ export default function EditableTableCell({
       setError(null)
       return
     }
+    setValue(inputValue)
     if (!isNaN(Number(inputValue))) {
       setValue(Number(inputValue))
       setError(null)
@@ -53,14 +55,23 @@ export default function EditableTableCell({
     if (e.key === 'Enter') {
       handleInputBlur()
     }
+    if (e.key === 'Escape') {
+      setIsEditing(false)
+    }
   }
 
+  useEffect(() => {
+    if (isEditing && inputRef.current) {
+      inputRef.current.select()
+    }
+  }, [isEditing])
+
   return (
-    <Td>
+    <>
       {isEditing ? (
         <FormControl isInvalid={!!error}>
           <Input
-            m={-3}
+            ref={inputRef}
             width={'6ch'}
             size={'sm'}
             pl={1}
@@ -80,10 +91,11 @@ export default function EditableTableCell({
           color={useColorModeValue('#206CAF', '#3ca4ff')}
           fontWeight={'bold'}
           onClick={handleTextClick}
+          width={'5ch'}
         >
           {value ?? '-'}
         </Text>
       )}
-    </Td>
+    </>
   )
 }

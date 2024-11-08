@@ -12,13 +12,14 @@ import {
   MenuList,
   MenuItem,
   Button,
+  Box,
 } from '@chakra-ui/react'
 import { useMemo } from 'react'
 import matches from '@data/matches.json'
 import GenericTable, {
   TableHeader,
 } from '@components/generic-table/GenericTable'
-import EditableTableCell from '@/components/editable-table-cell/EditableTableCell'
+import EditableTextInput from '@/components/editable-text-input/EditableTextInput'
 import { GoChevronDown } from 'react-icons/go'
 import OlympicMedal from '@/components/olympic-medal/OlympicMedal'
 
@@ -29,11 +30,19 @@ export default function RoundMatchTable() {
     {
       text: 'Game',
       sortKey: 'gameNameNode',
+      disableDataCellClickAction: true,
     },
-    { text: 'Phase', sortKey: 'phaseBadgeNode' },
-    { text: 'Players', sortKey: 'playersNode' },
-    { text: 'Scores', sortKey: 'scoresNode' },
-    { text: '', sortKey: 'medalNode' },
+    {
+      text: 'Phase',
+      sortKey: 'phaseBadgeNode',
+      disableDataCellClickAction: true,
+    },
+    {
+      text: 'Players',
+      sortKey: 'playersNode',
+      disableDataCellClickAction: true,
+    },
+    { text: 'Scores', sortKey: 'scoresNode', disableDataCellClickAction: true },
   ]
 
   const extendedMatches: ExtendedMatch[] = useMemo(
@@ -79,7 +88,7 @@ export default function RoundMatchTable() {
                   <Td>
                     <Menu>
                       <MenuButton
-                        m={-3}
+                        m={-10}
                         size={'sm'}
                         as={Button}
                         rightIcon={<GoChevronDown />}
@@ -103,26 +112,31 @@ export default function RoundMatchTable() {
             <Tbody>
               {match.playerMatchScores.map((playerMatchScore) => (
                 <Tr key={playerMatchScore.id}>
-                  <EditableTableCell
-                    initialValue={playerMatchScore.scoreElement?.score}
-                    onValueChange={() => {}}
-                  />
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        ),
-        medalNode: (
-          
-          <Table>
-            <Tbody>
-              {match.playerMatchScores.map((playerMatchScore) => (
-                <Tr key={playerMatchScore.id}>
-                  {/* <EditableTableCell
-                    initialValue={playerMatchScore.scoreElement?.score}
-                    onValueChange={() => {}}
-                  /> */}
-                  <OlympicMedal />
+                  <Td>
+                    <Flex
+                      alignItems={'center'}
+                      justifyContent={'space-between'}
+                      gap={5}
+                    >
+                      <Box
+                        _hover={{
+                          cursor: 'pointer',
+                        }}
+                      >
+                        <EditableTextInput
+                          initialValue={playerMatchScore.scoreElement?.score}
+                          onValueChange={() => {}}
+                        />
+                      </Box>
+                      <Box justifyContent={'center'} mt={-2} mb={-2}>
+                        <OlympicMedal
+                          medalType={
+                            playerMatchScore.scoreElement?.awardedMedal
+                          }
+                        />
+                      </Box>
+                    </Flex>
+                  </Td>
                 </Tr>
               ))}
             </Tbody>

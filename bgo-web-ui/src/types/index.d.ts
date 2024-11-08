@@ -1,28 +1,11 @@
 import { ReactNode } from 'react'
+import { OlympicMedalType } from '@/enums/enums'
 declare global {
   interface Contact {
     name: string
     subject: string
     email: string
     message: string
-  }
-
-  interface Ecosystem {
-    id: string
-    name: string
-    description: string
-    totalAcres: number
-    landOwner: string
-    outerEntity: string
-    county: string
-    state: string
-    country: string
-    latitudeCenter: number
-    longitudeCenter: number
-    elevation: number
-    createdDate: string
-    fTotalImages: number
-    fIdentifiedSpecies: number
   }
 
   interface ListEvent {
@@ -94,6 +77,7 @@ declare global {
     score: number
     tieBreaker?: number // TODO: we need to determine what we are going to determine how we manage ties and tie breakers
     isWinner?: boolean
+    awardedMedal?: OlympicMedalType
     lowScoreWins: boolean
   }
   interface PlayerMatchScore {
@@ -123,7 +107,6 @@ declare global {
     phaseBadgeNode: ReactNode
     playersNode: ReactNode
     scoresNode: ReactNode
-    medalNode?: ReactNode
   }
 
   interface Round {
