@@ -10,16 +10,13 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
   IconButton,
 } from '@chakra-ui/react'
 import games from '@data/games.json'
 import { GiChoice } from 'react-icons/gi'
 import NumberPicker from '@/components/number-picker/NumberPicker'
 import { FaPlay, FaStop, FaChevronDown } from 'react-icons/fa'
+import RoundTimer from './RoundTimer'
 
 export default function RoundControlsCard() {
   const categories: GameCategory[] = games.catagories
@@ -34,7 +31,7 @@ export default function RoundControlsCard() {
               alignItems={'center'}
               gap={2}
             >
-              <Box display={'flex'} alignItems={'center'} m={1} mr={2}>
+              <Box display={'flex'} alignItems={'center'}   m={1} mr={1} ml={2}>
                 <Text fontWeight={'bold'} sx={{ whiteSpace: 'nowrap' }} mr={2}>
                   Select Category:
                 </Text>
@@ -46,7 +43,7 @@ export default function RoundControlsCard() {
                   ))}
                 </Select>
               </Box>
-              <Button size={'md'} rightIcon={<GiChoice />}>
+              <Button size={'md'} mr= {2} rightIcon={<GiChoice />}>
                 Auto Pick
               </Button>
             </Flex>
@@ -57,7 +54,7 @@ export default function RoundControlsCard() {
               gap={2}
             >
               <Box display={'flex'} alignItems={'center'} m={1} mr={2}>
-                <Text fontWeight={'bold'} sx={{ whiteSpace: 'nowrap' }} mr={2}>
+                <Text fontWeight={'bold'} sx={{ whiteSpace: 'nowrap' }} m={1} mr={2} ml={2}>
                   Tables:
                 </Text>
                 <NumberPicker value={1} onChange={() => {}} />
@@ -88,6 +85,7 @@ export default function RoundControlsCard() {
               variant={'outline'}
               // set up so the if playing the variant is solid
             />
+            <RoundTimer />
           </Flex>
         </CardBody>
       </Box>
