@@ -39,10 +39,12 @@ export default function RoundMatchTable() {
     },
     {
       text: 'Players',
-      sortKey: 'playersNode',
+      showKey: 'playersNode',
+      sortKey: 'playersSearchField',
       disableDataCellClickAction: true,
     },
     { text: 'Scores', sortKey: 'scoresNode', disableDataCellClickAction: true },
+    
   ]
 
   const extendedMatches: ExtendedMatch[] = useMemo(
@@ -142,6 +144,10 @@ export default function RoundMatchTable() {
             </Tbody>
           </Table>
         ),
+        // create a field containing a comma separated list of players names from each match so that we can search them in the table
+        playersSearchField: match.playerMatchScores
+          .map((playerMatchScore) => playerMatchScore.playerName)
+          .join(','),
       })),
     [data]
   )

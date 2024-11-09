@@ -32,6 +32,7 @@ export interface TableHeader<T> {
   showKey?: keyof T | null // The key of the field to show in the table cell
   subField?: keyof T | null // A secondary field to be rendered as subtext under the main field
   disableDataCellClickAction?: boolean // Disable the rowClickAction on cells belonging to this header
+  // hiddenField?: boolean // Hide the field from the table but allow to be used for searching
 }
 
 interface GenericTableProps<T> {
