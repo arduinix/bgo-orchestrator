@@ -6,6 +6,7 @@ import RoundPlayersTable from './RoundPlayersTable'
 import RoundGamesTable from './RoundGamesTable'
 import ScrollingConsole from '@/components/scrolling-console/ScrollingConsole'
 import RoundMatchTable from './RoundMatchTable'
+import RoundControlsCard from './RoundControlsCard'
 
 export default function OlympicsRoundEditor() {
   const roundData: Round[] = rounds.rounds
@@ -13,17 +14,23 @@ export default function OlympicsRoundEditor() {
 
   const { roundId } = useParams()
 
-  // const tabs = [{ label: 'Setup', content: <>setup</> }]
   return (
     <Flex flexDir={'column'}>
-      <Flex justifyContent='space-between' alignItems='center'>
-        <Box>
+      <Flex
+        justifyContent='space-between'
+        alignItems='center'
+        flexDir={'column'}
+        gap={4}
+      >
+        <Box alignSelf={'flex-start'}>
           <Heading pl={4} pr={4} size={'md'}>
             Round {selectedRound()?.roundNumber}
           </Heading>
         </Box>
+        <Box width={'98%'}>
+          <RoundControlsCard />
+        </Box>
       </Flex>
-      {/* <ReusableTabs tabs={tabs} /> */}
       <ReusableAccordion
         items={[
           { title: 'Players', content: <RoundPlayersTable /> },
