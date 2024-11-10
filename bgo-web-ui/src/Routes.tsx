@@ -64,7 +64,6 @@ export default function AppRouter() {
             <Route path='/tutorials' element={<Tutorials />} />
             <Route path='/leagues' element={<Leagues />} />
             <Route path='/playergroups' element={<PlayerGroups />} />
-            {/* <Route path="/ecosystems/:viewId?" element={<Ecosystems />} /> */}
           </Route>
         </Routes>
       </Box>

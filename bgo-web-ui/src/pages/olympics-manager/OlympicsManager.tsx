@@ -1,6 +1,6 @@
 import { useParams, Outlet, useNavigate, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
-import { Flex } from '@chakra-ui/react'
+import { Flex} from '@chakra-ui/react'
 import Sidebar, { LinkItemProps } from '@components/sidebar/Sidebar'
 import { GiPerspectiveDiceSixFacesOne, GiGears } from 'react-icons/gi'
 import { RiQrCodeFill } from 'react-icons/ri'
@@ -79,7 +79,7 @@ export default function OlympicsManager() {
             heading={<EventHeading eventId={eventId} />}
           />
           <Flex p={4} flexDir={'column'}>
-            <Flex p={4} w='100%' flexGrow={1} overflow='scroll'>
+            <Flex p={4} w='100%' overflow='scroll' position={'absolute'}>
               <Outlet />
             </Flex>
           </Flex>

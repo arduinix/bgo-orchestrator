@@ -1,6 +1,7 @@
-import { extendTheme, type ThemeConfig } from '@chakra-ui/react'
+import { Drawer, extendTheme, position, type ThemeConfig } from '@chakra-ui/react'
 import colors from './colors'
 import '@fontsource/ibm-plex-sans'
+import { dialog } from 'framer-motion/client'
 //import { Button, Input, NavLink, Table, Text } from './components/index'
 
 const overrides = {
@@ -38,6 +39,8 @@ const overrides = {
         },
       },
     },
+    
+    
   },
   fonts: {
     heading: `'IBM Plex Sans': 'sans-serif'`,
