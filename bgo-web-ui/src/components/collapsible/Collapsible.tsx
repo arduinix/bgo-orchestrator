@@ -63,9 +63,7 @@ const MyComponent: React.FC = () => {
             left='-50px'
             transform='translateY(-50%) rotate(-90deg)'
             whiteSpace='nowrap'
-          >
-           
-          </Text>
+          ></Text>
         )}
       </Box>
     </HStack>

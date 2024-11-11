@@ -38,8 +38,6 @@ const overrides = {
         },
       },
     },
-    
-    
   },
   fonts: {
     heading: `'IBM Plex Sans': 'sans-serif'`,

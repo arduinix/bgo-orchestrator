@@ -40,7 +40,6 @@ const CustomAccordionButton: React.FC<{
 
 export default function ReusableAccordion({ items }: ReusableAccordionProps) {
   const [expandedIndices, setExpandedIndices] = useState<number[]>([])
-  
 
   const handleToggle = (index: number) => {
     setExpandedIndices((prevIndices) =>

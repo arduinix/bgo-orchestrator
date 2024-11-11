@@ -5,7 +5,6 @@ import {
   useColorModeValue,
   FormErrorMessage,
   FormControl,
-  Box,
 } from '@chakra-ui/react'
 
 interface EditableTextInputProps {

@@ -152,9 +152,7 @@ export default function EditGameyForm({
                   </Box>
                   <Box width={'10%'}>
                     <BoldFormLabel>Table</BoldFormLabel>
-                    <Select>
-                      
-                    </Select>
+                    <Select></Select>
                   </Box>
                   <Box alignSelf={'flex-end'}>
                     <Checkbox

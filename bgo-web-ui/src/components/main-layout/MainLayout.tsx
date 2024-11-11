@@ -30,17 +30,17 @@ export default function MainLayout() {
 
   return (
     <Flex
-      direction="column"
-      position="absolute"
-      width="100%"
-      height="100%"
-      top="50%"
-      left="50%"
-      transform="translate(-50%, -50%)"
+      direction='column'
+      position='absolute'
+      width='100%'
+      height='100%'
+      top='50%'
+      left='50%'
+      transform='translate(-50%, -50%)'
     >
-      <Flex overflow="scroll">
+      <Flex overflow='scroll'>
         {/* <Navigation linkItems={linkItems} /> */}
-        <Box p={4} w="100%" flexGrow={1} overflow="scroll">
+        <Box p={4} w='100%' flexGrow={1} overflow='scroll'>
           {location.pathname === '/' ? <Home /> : <Outlet />}
         </Box>
       </Flex>
