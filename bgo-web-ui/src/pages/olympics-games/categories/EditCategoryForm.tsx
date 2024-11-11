@@ -55,8 +55,8 @@ export default function EditCategoryForm({
       {currentCategory && (
         <Card position={'relative'}>
           <CardBody>
-            <Box position="absolute" top={4} right={4}>
-              <CustomQRCode url="https://www.google.com" />
+            <Box position='absolute' top={4} right={4}>
+              <CustomQRCode url='https://www.google.com' />
             </Box>
             <Flex gap={4} flexDir={'column'}>
               <FormControl>
@@ -65,7 +65,7 @@ export default function EditCategoryForm({
                     <Box width={'44%'}>
                       <BoldFormLabel>Category Name</BoldFormLabel>
                       <Input
-                        type="text"
+                        type='text'
                         value={name || ''}
                         onChange={(e) =>
                           handleFieldUpdate('name', e.target.value)

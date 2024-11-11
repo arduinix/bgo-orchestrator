@@ -69,7 +69,7 @@ export default function CopyToNewEvent({
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={confirmAction}>
+            <Button colorScheme='blue' mr={3} onClick={confirmAction}>
               Create
             </Button>
             <Button onClick={closeAction}>Cancel</Button>

@@ -1,0 +1,38 @@
+{
+  "rounds": [
+    {
+      "id": "4",
+      "phase": "setup",
+      "createdTimestamp": "2024-10-30T13:00:00Z",
+      "roundGameIds": [],
+      "roundNumber": 4
+    },
+    {
+      "id": "3",
+      "selectedCategoryId": "6",
+      "phase": "ready",
+      "createdTimestamp": "2024-10-30T12:00:00Z",
+      "roundGameIds": [],
+      "roundNumber": 3
+    },
+    {
+      "id": "2",
+      "selectedCategoryId": "6",
+      "phase": "playing",
+      "createdTimestamp": "2024-10-30T11:00:00Z",
+      "startedTimestamp": "2024-10-30T11:30:00Z",
+      "roundGameIds": [],
+      "roundNumber": 2
+    },
+    {
+      "id": "1",
+      "selectedCategoryId": "6",
+      "phase": "complete",
+      "createdTimestamp": "2024-10-30T10:00:00Z",
+      "startedTimestamp": "2024-10-30T10:30:00Z",
+      "completedTimestamp": "2024-10-30T11:00:00Z",
+      "roundGameIds": [],
+      "roundNumber": 1
+    }
+  ]
+}

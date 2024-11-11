@@ -20,7 +20,7 @@ export default function EcosystemTable({ data }: EcosystemTableProps) {
   const { viewId } = useParams<{ viewId: string }>()
   return (
     <TableContainer m={2}>
-      <Table colorScheme="gray">
+      <Table colorScheme='gray'>
         <TableCaption>Select an Ecosystem to see more details.</TableCaption>
         <Thead>
           <Tr>

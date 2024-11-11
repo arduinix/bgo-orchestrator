@@ -7,10 +7,11 @@ import { RiQrCodeFill } from 'react-icons/ri'
 import { RxDashboard } from 'react-icons/rx'
 import { FaUserSecret } from 'react-icons/fa6'
 import { GrCycle } from 'react-icons/gr'
+import EventHeading from './EventHeading'
 
 export default function OlympicsManager() {
-  const { id } = useParams()
-  const route = `/olympics/${id}`
+  const { eventId } = useParams()
+  const route = `/olympics/${eventId}`
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -18,7 +19,7 @@ export default function OlympicsManager() {
     if (location.pathname === route) {
       navigate(`${route}/registration`)
     }
-  }, [id, navigate])
+  }, [eventId, navigate])
 
   // navigate to the registration page if no other subpage is selected
 
@@ -73,9 +74,14 @@ export default function OlympicsManager() {
         transform='translate(-50%, -50%)'
       >
         <Flex overflow='scroll'>
-          <Sidebar linkItems={linkItems} />
-          <Flex p={4} w='100%' flexGrow={1} overflow='scroll'>
-            <Outlet />
+          <Sidebar
+            linkItems={linkItems}
+            heading={<EventHeading eventId={eventId} />}
+          />
+          <Flex p={4} flexDir={'column'}>
+            <Flex p={4} w='100%' overflow='scroll' position={'absolute'}>
+              <Outlet />
+            </Flex>
           </Flex>
         </Flex>
       </Flex>

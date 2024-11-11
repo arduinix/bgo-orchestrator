@@ -26,6 +26,7 @@ const NavLink = ({ name, href, tooltip }: NavLinkProps) => {
         _hover={{
           textDecoration: 'underline',
           bg: hoverBg,
+          cursor: 'pointer',
         }}
         bg={isActive ? hoverBg : undefined}
         textDecoration={isActive ? 'underline' : 'none'}

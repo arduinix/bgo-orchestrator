@@ -1,30 +1,14 @@
+import { ReactNode } from 'react'
+import { OlympicMedalType } from '@/enums/enums'
 declare global {
-  export interface Contact {
+  interface Contact {
     name: string
     subject: string
     email: string
     message: string
   }
 
-  export interface Ecosystem {
-    id: string
-    name: string
-    description: string
-    totalAcres: number
-    landOwner: string
-    outerEntity: string
-    county: string
-    state: string
-    country: string
-    latitudeCenter: number
-    longitudeCenter: number
-    elevation: number
-    createdDate: string
-    fTotalImages: number
-    fIdentifiedSpecies: number
-  }
-
-  export interface ListEvent {
+  interface ListEvent {
     id: string
     name: string
     location: string
@@ -33,7 +17,7 @@ declare global {
     imagePath?: string | null
   }
 
-  export interface Player {
+  interface Player {
     id: string
     fName: string
     mInit: string | null
@@ -48,12 +32,12 @@ declare global {
     imagePath?: string
   }
 
-  export interface PlayerExtensions {
+  interface ExtendedPlayer extends Player {
     fullName: string
+    isPlayingToggleNode?: ReactNode
   }
-  export type ExtendedPlayer = Player & PlayerExtensions
 
-  export interface GameCategory {
+  interface GameCategory {
     id: string
     name: string
     description: string
@@ -62,12 +46,12 @@ declare global {
     categoryColor?: CategoryColor
   }
 
-  export interface CategoryColor {
+  interface CategoryColor {
     name: string
     hex: string
   }
 
-  export interface Game {
+  interface Game {
     id: string
     name: string
     description: string
@@ -76,15 +60,67 @@ declare global {
     minPlayers: number
     maxPlayers: number
     lowScoreWins: boolean
+    tableAssignment?: number
     addedDate: string
     averageCompletionMinutes?: number
     imagePath?: string
   }
-  export interface GameExtensions {
-    playerScaleDisplayNode: React.ReactNode
-    scoreMethodDisplayNode: React.ReactNode
+  interface ExtendedGame extends Game {
+    playerScaleDisplayNode?: ReactNode
+    scoreMethodDisplayNode?: ReactNode
+    tableAssignmentDisplayNode: ReactNode
+    isInPlayToggleNode?: ReactNode
   }
-  export type ExtendedGame = Game & GameExtensions
-}
 
+  interface ScoreElement {
+    recordedTimestamp: string
+    score: number
+    tieBreaker?: number // TODO: we need to determine what we are going to determine how we manage ties and tie breakers
+    isWinner?: boolean
+    awardedMedal?: OlympicMedalType
+    lowScoreWins: boolean
+  }
+  interface PlayerMatchScore {
+    id: string
+    playerId: string
+    playerName: string
+    scoreElement?: ScoreElement
+  }
+
+  interface Match {
+    id: string
+    roundId: string
+    game: { id: string; name: string }
+    categoryId: string
+    lowScoreWins: boolean
+    phase: 'incomplete' | 'complete'
+    createdTimestamp: string
+    startedTimestamp?: string
+    completedTimestamp?: string
+    removedTimestamp?: string // will show the time that the match was removed if desired
+    playerMatchScores: PlayerMatchScore[]
+  }
+
+  interface ExtendedMatch extends Match {
+    gameName: string
+    gameNameNode: ReactNode
+    phaseBadgeNode: ReactNode
+    playersNode: ReactNode
+    scoresNode: ReactNode
+    matchActionsNode?: ReactNode
+    playersSearchField?: string
+  }
+
+  interface Round {
+    id: string
+    selectedCategoryId?: string
+    phase: 'setup' | 'ready' | 'playing' | 'complete' // this status should change when a new round is started by the game master
+    createdTimestamp: string
+    startedTimestamp?: string
+    completedTimestamp?: string
+    removedTimestamp?: string
+    roundGameIds: string[] // this will be a string list of ids of the round games
+    roundNumber: number
+  }
+}
 export {}

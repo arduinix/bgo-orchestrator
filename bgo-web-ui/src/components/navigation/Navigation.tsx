@@ -30,7 +30,7 @@ interface NavItemProps extends FlexProps {
 const NavItem = ({ icon, href, children, toolTip }: NavItemProps) => {
   return (
     <Box
-      as="a"
+      as='a'
       href={typeof href === 'string' ? href : undefined}
       onClick={typeof href === 'function' ? href : undefined}
       style={{ textDecoration: 'none' }}
@@ -38,12 +38,12 @@ const NavItem = ({ icon, href, children, toolTip }: NavItemProps) => {
     >
       <Tooltip label={toolTip} aria-label={toolTip}>
         <Flex
-          align="center"
-          p="4"
-          mx="4"
-          borderRadius="md"
-          role="group"
-          cursor="pointer"
+          align='center'
+          p='4'
+          mx='4'
+          borderRadius='md'
+          role='group'
+          cursor='pointer'
           _hover={{
             bg: 'gray.400',
             color: 'gray.100',
@@ -51,9 +51,9 @@ const NavItem = ({ icon, href, children, toolTip }: NavItemProps) => {
         >
           {icon && (
             <Icon
-              mr="4"
-              color="gray.400"
-              fontSize="20"
+              mr='4'
+              color='gray.400'
+              fontSize='20'
               _groupHover={{
                 color: 'white',
               }}
@@ -71,7 +71,7 @@ export default function Navigation({ linkItems }: NavigationProps) {
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)')
   return (
     <>
-      <Box pt={3} pr={3} w="30%">
+      <Box pt={3} pr={3} w='30%'>
         {linkItems.map(({ name, icon, href, tooltip }) => (
           <NavItem key={name} icon={icon} href={href} toolTip={tooltip}>
             {isLargerThan768 && (

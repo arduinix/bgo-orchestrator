@@ -81,7 +81,7 @@ export default function HomepageBgoHero() {
                 top={'-15px'}
                 transform={'rotate(10deg)'}
               >
-                It's free if you know the right people!
+                Try it for free!
               </Text>
             </Box>
           </Stack>

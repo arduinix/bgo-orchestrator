@@ -53,8 +53,8 @@ export default function EditPlayerForm({
       {currentPlayer && (
         <Card position={'relative'}>
           <CardBody>
-            <Box position="absolute" top={4} right={4}>
-              <CustomQRCode url="https://www.google.com" />
+            <Box position='absolute' top={4} right={4}>
+              <CustomQRCode url='https://www.google.com' />
             </Box>
             <Flex gap={4} flexDir={'column'}>
               <AvatarNameFlex player={currentPlayer} />
@@ -64,7 +64,7 @@ export default function EditPlayerForm({
                     <Box width={'44%'}>
                       <BoldFormLabel>Nick Name</BoldFormLabel>
                       <Input
-                        type="text"
+                        type='text'
                         value={nickName || ''}
                         onChange={(e) =>
                           handleFieldUpdate('nickName', e.target.value)
@@ -87,7 +87,7 @@ export default function EditPlayerForm({
                     <Box width={'45%'}>
                       <BoldFormLabel>First Name</BoldFormLabel>
                       <Input
-                        type="text"
+                        type='text'
                         value={fName}
                         onChange={(e) =>
                           handleFieldUpdate('fName', e.target.value)
@@ -97,7 +97,7 @@ export default function EditPlayerForm({
                     <Box width={'10%'}>
                       <BoldFormLabel>Initial</BoldFormLabel>
                       <Input
-                        type="text"
+                        type='text'
                         value={mInit || ''}
                         onChange={(e) =>
                           handleFieldUpdate('mInit', e.target.value)
@@ -107,7 +107,7 @@ export default function EditPlayerForm({
                     <Box width={'45%'}>
                       <BoldFormLabel>Last Name</BoldFormLabel>
                       <Input
-                        type="text"
+                        type='text'
                         value={lName}
                         onChange={(e) =>
                           handleFieldUpdate('lName', e.target.value)
@@ -119,7 +119,7 @@ export default function EditPlayerForm({
                     <Box width={'50%'}>
                       <BoldFormLabel>Phone</BoldFormLabel>
                       <Input
-                        type="text"
+                        type='text'
                         value={phone}
                         onChange={(e) =>
                           handleFieldUpdate('phone', e.target.value)
@@ -129,7 +129,7 @@ export default function EditPlayerForm({
                     <Box width={'50%'}>
                       <BoldFormLabel>Email Address</BoldFormLabel>
                       <Input
-                        type="email"
+                        type='email'
                         value={email}
                         onChange={(e) =>
                           handleFieldUpdate('email', e.target.value)

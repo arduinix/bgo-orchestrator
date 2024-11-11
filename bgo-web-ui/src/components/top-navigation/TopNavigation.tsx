@@ -18,9 +18,8 @@ import {
   useColorMode,
   Spacer,
 } from '@chakra-ui/react'
-import { RxHamburgerMenu } from "react-icons/rx";
-import { IoClose } from "react-icons/io5";
-
+import { RxHamburgerMenu } from 'react-icons/rx'
+import { IoClose } from 'react-icons/io5'
 
 import logo from '../../assets/image/logo_no_info.png'
 import NavLinks, { NavLinkProps } from './NavLinks'
@@ -54,7 +53,8 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
 
   return (
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={10}>
+      {/* <Box bg={useColorModeValue('gray.100', 'gray.900')} px={10} w="calc(100% + 197px)"> */}
+      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={10} w='100%'>
         <Flex h={20} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}
@@ -64,18 +64,18 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-            <Box as="a" cursor={'pointer'} href={'/'}>
+            <Box as='a' cursor={'pointer'} href={'/'}>
               <Image
                 src={logo}
-                alt="logo"
-                boxSize="50px"
+                alt='logo'
+                boxSize='50px'
                 ml={0}
                 mr={0}
                 objectFit={'scale-down'}
               />
             </Box>
-            <Box as="a" cursor={'pointer'} href={'/'}>
-              <Text fontSize={'xl'} as="b">
+            <Box as='a' cursor={'pointer'} href={'/'}>
+              <Text fontSize={'xl'} as='b'>
                 BOARD GAME OLYMPICS
               </Text>
             </Box>

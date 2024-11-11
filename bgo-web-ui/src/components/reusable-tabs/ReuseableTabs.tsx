@@ -7,10 +7,12 @@ interface ReusableTabsProps {
 
 const ReusableTabs: React.FC<ReusableTabsProps> = ({ tabs }) => {
   return (
-    <Tabs size="md" variant="enclosed">
+    <Tabs size='lg' variant='enclosed-colored' colorScheme='blue'>
       <TabList>
         {tabs.map((tab, index) => (
-          <Tab key={index}>{tab.label}</Tab>
+          <Tab fontWeight={'bold'} key={index}>
+            {tab.label}
+          </Tab>
         ))}
       </TabList>
       <Box p={2}>

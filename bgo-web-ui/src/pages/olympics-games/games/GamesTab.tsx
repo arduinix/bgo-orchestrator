@@ -2,7 +2,6 @@ import {
   Button,
   ButtonGroup,
   Flex,
-  Spacer,
   useDisclosure,
   Text,
   useColorModeValue,
@@ -14,11 +13,10 @@ import {
   IconButton,
   Badge,
 } from '@chakra-ui/react'
-import { GoChevronDown } from 'react-icons/go'
+import { RxHamburgerMenu } from 'react-icons/rx'
 import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
 import { useState, useMemo } from 'react'
 import games from '@data/games.json'
-// import EditCategoryForm from './EditCategoryForm'
 import EditGameForm from './EditGameForm'
 import GenericTable, {
   TableHeader,
@@ -111,6 +109,7 @@ export default function GamesTab() {
     },
     { text: 'Duration', sortKey: 'averageCompletionMinutes' },
     { text: 'In Play', sortKey: 'isInPlay' },
+    { text: 'Table', sortKey: 'tableAssignmentDisplayNode' },
   ]
 
   const extendedGames = useMemo(() => {
@@ -130,6 +129,11 @@ export default function GamesTab() {
               <Badge colorScheme='green'>High</Badge>
             )}
           </>
+        ),
+        tableAssignmentDisplayNode: (
+          <Badge colorScheme={game.tableAssignment ? 'green' : 'red'}>
+            {game.tableAssignment ? game.tableAssignment : 'Not Assigned'}
+          </Badge>
         ),
       }
     })
@@ -154,38 +158,35 @@ export default function GamesTab() {
     )
   }
 
+  const actionButtons = (
+    <ButtonGroup size={'md'}>
+      <Button onClick={handleAddClick}>Add Game</Button>
+      <Menu>
+        <MenuButton as={IconButton} icon={<RxHamburgerMenu />} />
+        <MenuList>
+          <MenuItem>Set In-Play</MenuItem>
+          <MenuItem>Set Out-Of-Play</MenuItem>
+          <MenuDivider />
+          <MenuItem>Auto Assign Tables</MenuItem>
+          <MenuDivider />
+          <MenuItem onClick={handleAddClick}>Add Game</MenuItem>
+          <MenuDivider />
+          <MenuItem>Remove Selected Games</MenuItem>
+        </MenuList>
+      </Menu>
+    </ButtonGroup>
+  )
+
   return (
     <>
       <Flex flexDirection={'column'} gap={4}>
-        <ButtonGroup colorScheme='blue' size={'md'}>
-          <Menu>
-            <MenuButton
-              as={Button}
-              colorScheme='blue'
-              rightIcon={<GoChevronDown />}
-            >
-              Actions
-            </MenuButton>
-            <MenuList>
-              <MenuItem>Set In-Play</MenuItem>
-              <MenuItem>Set Out-Of-Play</MenuItem>
-              <MenuDivider />
-              <MenuItem>Remove Selected Games</MenuItem>
-              <MenuDivider />
-              <MenuItem onClick={handleAddClick}>Add Game</MenuItem>
-            </MenuList>
-          </Menu>
-          <Spacer />
-          <Button onClick={handleAddClick}>Add Game</Button>
-        </ButtonGroup>
         <GenericTable
           data={extendedGames}
           headers={headers}
           selectedRow={selectedGame as ExtendedGame}
-          setSelectedRow={(game) => setSelectedGame(game)}
-          enableMultiSelect
           multiSelectKeyExtractor={(game) => game.id}
           rowActionButtons={rowActionButtons}
+          topRightComponent={actionButtons}
         />
       </Flex>
       <ConfirmActionModal

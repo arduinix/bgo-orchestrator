@@ -2,7 +2,6 @@ import {
   Button,
   ButtonGroup,
   Flex,
-  Spacer,
   useDisclosure,
   Text,
   useColorModeValue,
@@ -13,7 +12,7 @@ import {
   MenuDivider,
   IconButton,
 } from '@chakra-ui/react'
-import { GoChevronDown } from 'react-icons/go'
+import { RxHamburgerMenu } from 'react-icons/rx'
 import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
 import { useState } from 'react'
 import games from '@data/games.json'
@@ -114,38 +113,35 @@ export default function CategoriesTab() {
     )
   }
 
+  const actionButtons = (
+    <ButtonGroup size={'md'}>
+      <Button onClick={handleAddClick}>Add Category</Button>
+      <Menu>
+        <MenuButton as={IconButton} icon={<RxHamburgerMenu />} />
+        <MenuList>
+          <MenuItem>Set In-Play</MenuItem>
+          <MenuItem>Set Out-Of-Play</MenuItem>
+          <MenuDivider />
+          <MenuItem>Remove Selected Categories</MenuItem>
+          <MenuDivider />
+          <MenuItem onClick={handleAddClick}>Add Category</MenuItem>
+          <MenuDivider />
+          <MenuItem>Remove Selected Categories</MenuItem>
+        </MenuList>
+      </Menu>
+    </ButtonGroup>
+  )
+
   return (
     <>
       <Flex flexDirection={'column'} gap={4}>
-        <ButtonGroup colorScheme='blue' size={'md'}>
-          <Menu>
-            <MenuButton
-              as={Button}
-              colorScheme='blue'
-              rightIcon={<GoChevronDown />}
-            >
-              Actions
-            </MenuButton>
-            <MenuList>
-              <MenuItem>Set In-Play</MenuItem>
-              <MenuItem>Set Out-Of-Play</MenuItem>
-              <MenuDivider />
-              <MenuItem>Remove Selected Catagories</MenuItem>
-              <MenuDivider />
-              <MenuItem onClick={handleAddClick}>Add Category</MenuItem>
-            </MenuList>
-          </Menu>
-          <Spacer />
-          <Button onClick={handleAddClick}>Add Category</Button>
-        </ButtonGroup>
         <GenericTable
           data={data}
           headers={headers}
           selectedRow={selectedCategory as GameCategory}
-          setSelectedRow={(category) => setSelectedCategory(category)}
-          enableMultiSelect
           multiSelectKeyExtractor={(category) => category.id}
           rowActionButtons={rowActionButtons}
+          topRightComponent={actionButtons}
         />
       </Flex>
       <ConfirmActionModal

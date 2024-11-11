@@ -1,9 +1,7 @@
-import ReusableTabs from '@components/reusable-tabs/ReuseableTabs'
-import OlympicsRoundChooser from './rounds/OlympicsRoundChooser'
+import OlympicsRoundChooser from './round-chooser/OlympicsRoundChooser'
+import { Outlet, useParams } from 'react-router-dom'
 
 export default function OlympicsRounds() {
-  const tabs = [
-    { label: 'Rounds', content: <OlympicsRoundChooser /> },
-  ]
-  return <ReusableTabs tabs={tabs} />
+  const { roundId } = useParams()
+  return roundId ? <Outlet /> : <OlympicsRoundChooser />
 }

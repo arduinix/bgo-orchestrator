@@ -3,32 +3,32 @@ import torch from '../../assets/image/torch.png'
 
 export default function NotFound() {
   return (
-    <Box p={2} pt={4} position="relative" minHeight="50vh">
+    <Box p={2} pt={4} position='relative' minHeight='50vh'>
       <Flex
-        alignItems="top"
+        alignItems='top'
         p={4}
-        height="100%"
-        position="absolute"
-        top="50%"
-        left="50%"
-        transform="translate(-50%, -50%)"
+        height='100%'
+        position='absolute'
+        top='50%'
+        left='50%'
+        transform='translate(-50%, -50%)'
         flexDirection={'column'}
       >
         <Box
-          as="a"
+          as='a'
           href={'/'}
-          cursor="pointer"
+          cursor='pointer'
           _hover={{
             bg: 'gray.500',
             color: 'gray.100',
           }}
         >
-          <Flex direction="column" alignItems="center">
+          <Flex direction='column' alignItems='center'>
             <Image
               src={torch}
-              alt="not_found"
+              alt='not_found'
               boxSize={100}
-              borderRadius="full"
+              borderRadius='full'
               objectFit={'scale-down'}
               transform={'rotate(225deg)'}
               mb={4}

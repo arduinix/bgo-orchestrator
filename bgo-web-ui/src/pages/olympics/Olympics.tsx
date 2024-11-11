@@ -2,6 +2,6 @@ import OlympicsEventChooser from '../../components/olympics-event-chooser/Olympi
 import { Outlet, useParams } from 'react-router-dom'
 
 export default function Olympics() {
-  const { id } = useParams()
-  return id ? <Outlet /> : <OlympicsEventChooser />
+  const { eventId } = useParams()
+  return eventId ? <Outlet /> : <OlympicsEventChooser />
 }

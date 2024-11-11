@@ -2,7 +2,6 @@ import {
   Button,
   ButtonGroup,
   Flex,
-  Spacer,
   useDisclosure,
   Text,
   useColorModeValue,
@@ -13,7 +12,7 @@ import {
   MenuDivider,
   IconButton,
 } from '@chakra-ui/react'
-import { GoChevronDown } from 'react-icons/go'
+import { RxHamburgerMenu } from 'react-icons/rx'
 import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
 import { useState, useMemo } from 'react'
 import players from '@data/players.json'
@@ -120,45 +119,40 @@ export default function PlayersTab() {
     )
   }
 
+  const actionButtons = (
+    <ButtonGroup size={'md'}>
+      <Button onClick={handleAddClick}>Add Player</Button>
+      <Menu>
+        <MenuButton as={IconButton} icon={<RxHamburgerMenu />} />
+        <MenuList>
+          <MenuItem>Import CSV</MenuItem>
+          <MenuItem isDisabled>Import from Player Group</MenuItem>
+          <MenuDivider />
+          <MenuItem>Export CSV</MenuItem>
+          <MenuItem isDisabled>Export to Player Group</MenuItem>
+          <MenuDivider />
+          <MenuItem>Set In-Play</MenuItem>
+          <MenuItem>Set Out-Of-Play</MenuItem>
+          <MenuDivider />
+          <MenuItem>Remove Selected Players</MenuItem>
+          <MenuDivider />
+          <MenuItem onClick={handleAddClick}>Add Player</MenuItem>
+        </MenuList>
+      </Menu>
+    </ButtonGroup>
+  )
+
   return (
     <>
       <Flex flexDirection={'column'} gap={4}>
-        <ButtonGroup colorScheme='blue' size={'md'}>
-          <Menu>
-            <MenuButton
-              as={Button}
-              colorScheme='blue'
-              rightIcon={<GoChevronDown />}
-            >
-              Actions
-            </MenuButton>
-            <MenuList>
-              <MenuItem>Import CSV</MenuItem>
-              <MenuItem isDisabled>Import from Player Group</MenuItem>
-              <MenuDivider />
-              <MenuItem>Export CSV</MenuItem>
-              <MenuItem isDisabled>Export to Player Group</MenuItem>
-              <MenuDivider />
-              <MenuItem>Set In-Play</MenuItem>
-              <MenuItem>Set Out-Of-Play</MenuItem>
-              <MenuDivider />
-              <MenuItem>Remove Selected Players</MenuItem>
-              <MenuDivider />
-              <MenuItem onClick={handleAddClick}>Add Player</MenuItem>
-            </MenuList>
-          </Menu>
-          <Spacer />
-          <Button onClick={handleAddClick}>Add Player</Button>
-        </ButtonGroup>
         <GenericTable
           data={extendedPlayers}
           headers={headers}
           selectedRow={selectedPlayer as ExtendedPlayer}
-          setSelectedRow={(player) => setSelectedPlayer(player)}
-          enableMultiSelect
           multiSelectKeyExtractor={(player) => player.id}
           rowActionButtons={rowActionButtons}
           rowClickAction={handleEditClick}
+          topRightComponent={actionButtons}
         />
       </Flex>
       <ConfirmActionModal
