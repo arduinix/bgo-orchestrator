@@ -2,7 +2,6 @@ import {
   Button,
   ButtonGroup,
   Flex,
-  Spacer,
   useDisclosure,
   Text,
   useColorModeValue,
@@ -14,7 +13,7 @@ import {
   IconButton,
   Badge,
 } from '@chakra-ui/react'
-import { GoChevronDown } from 'react-icons/go'
+import { RxHamburgerMenu } from 'react-icons/rx'
 import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
 import { useState, useMemo } from 'react'
 import games from '@data/games.json'
@@ -159,38 +158,35 @@ export default function GamesTab() {
     )
   }
 
+  const actionButtons = (
+    <ButtonGroup size={'md'}>
+      <Button onClick={handleAddClick}>Add Game</Button>
+      <Menu>
+        <MenuButton as={IconButton} icon={<RxHamburgerMenu />} />
+        <MenuList>
+          <MenuItem>Set In-Play</MenuItem>
+          <MenuItem>Set Out-Of-Play</MenuItem>
+          <MenuDivider />
+          <MenuItem>Auto Assign Tables</MenuItem>
+          <MenuDivider />
+          <MenuItem onClick={handleAddClick}>Add Game</MenuItem>
+          <MenuDivider />
+          <MenuItem>Remove Selected Games</MenuItem>
+        </MenuList>
+      </Menu>
+    </ButtonGroup>
+  )
+
   return (
     <>
       <Flex flexDirection={'column'} gap={4}>
-        <ButtonGroup colorScheme='blue' size={'md'}>
-          <Menu>
-            <MenuButton
-              as={Button}
-              colorScheme='blue'
-              rightIcon={<GoChevronDown />}
-            >
-              Actions
-            </MenuButton>
-            <MenuList>
-              <MenuItem>Set In-Play</MenuItem>
-              <MenuItem>Set Out-Of-Play</MenuItem>
-              <MenuDivider />
-              <MenuItem>Auto Assign Tables</MenuItem>
-              <MenuDivider />
-              <MenuItem onClick={handleAddClick}>Add Game</MenuItem>
-              <MenuDivider />
-              <MenuItem>Remove Selected Games</MenuItem>
-            </MenuList>
-          </Menu>
-          <Spacer />
-          <Button onClick={handleAddClick}>Add Game</Button>
-        </ButtonGroup>
         <GenericTable
           data={extendedGames}
           headers={headers}
           selectedRow={selectedGame as ExtendedGame}
           multiSelectKeyExtractor={(game) => game.id}
           rowActionButtons={rowActionButtons}
+          topRightComponent={actionButtons}
         />
       </Flex>
       <ConfirmActionModal

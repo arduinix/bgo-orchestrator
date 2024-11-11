@@ -107,6 +107,7 @@ declare global {
     phaseBadgeNode: ReactNode
     playersNode: ReactNode
     scoresNode: ReactNode
+    matchActionsNode?: ReactNode
     playersSearchField?: string
   }
 

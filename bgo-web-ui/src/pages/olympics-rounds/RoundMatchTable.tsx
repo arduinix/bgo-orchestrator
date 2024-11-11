@@ -13,6 +13,7 @@ import {
   MenuItem,
   Button,
   Box,
+  IconButton,
 } from '@chakra-ui/react'
 import { useMemo } from 'react'
 import matches from '@data/matches.json'
@@ -21,6 +22,8 @@ import GenericTable, {
 } from '@components/generic-table/GenericTable'
 import EditableTextInput from '@/components/editable-text-input/EditableTextInput'
 import { GoChevronDown } from 'react-icons/go'
+import { RxHamburgerMenu } from 'react-icons/rx'
+import { FaRegEdit } from 'react-icons/fa'
 import OlympicMedal from '@/components/olympic-medal/OlympicMedal'
 
 export default function RoundMatchTable() {
@@ -44,6 +47,11 @@ export default function RoundMatchTable() {
       disableDataCellClickAction: true,
     },
     { text: 'Scores', sortKey: 'scoresNode', disableDataCellClickAction: true },
+    {
+      text: '',
+      sortKey: 'matchActionsNode',
+      disableDataCellClickAction: true,
+    },
   ]
 
   const extendedMatches: ExtendedMatch[] = useMemo(
@@ -87,21 +95,25 @@ export default function RoundMatchTable() {
               {match.playerMatchScores.map((playerMatchScore) => (
                 <Tr key={playerMatchScore.id}>
                   <Td>
-                    <Menu>
-                      <MenuButton
-                        m={-10}
-                        size={'sm'}
-                        as={Button}
-                        rightIcon={<GoChevronDown />}
-                        variant={'outline'}
-                      >
-                        {playerMatchScore.playerName}
-                      </MenuButton>
-                      <MenuList>
-                        <MenuItem>Change Match</MenuItem>
-                        <MenuItem color={'red.600'}>Remove from Match</MenuItem>
-                      </MenuList>
-                    </Menu>
+                    <Box position={'relative'}>
+                      <Menu>
+                        <MenuButton
+                          m={-10}
+                          size={'sm'}
+                          as={Button}
+                          rightIcon={<GoChevronDown />}
+                          variant={'outline'}
+                        >
+                          {playerMatchScore.playerName}
+                        </MenuButton>
+                        <MenuList>
+                          <MenuItem>Change Match</MenuItem>
+                          <MenuItem color={'red.600'}>
+                            Remove from Match
+                          </MenuItem>
+                        </MenuList>
+                      </Menu>
+                    </Box>
                   </Td>
                 </Tr>
               ))}
@@ -143,11 +155,42 @@ export default function RoundMatchTable() {
             </Tbody>
           </Table>
         ),
+        matchActionsNode: (
+          <Menu placement={'bottom'}>
+            <MenuButton
+              as={IconButton}
+              icon={<FaRegEdit />}
+              variant={'outline'}
+              background={'gray.100'}
+              m={-5}
+              size={'sm'}
+            />
+            <MenuList>
+              <MenuItem>Add Player</MenuItem>
+              <MenuItem color={'red.600'}>Remove this Match</MenuItem>
+            </MenuList>
+          </Menu>
+        ),
         playersSearchField: match.playerMatchScores
           .map((playerMatchScore) => playerMatchScore.playerName)
           .join(','),
       })),
     [data]
+  )
+
+  const matchMenuActions = (
+    <Box position={'relative'}>
+      <Menu>
+        <MenuButton as={IconButton} icon={<RxHamburgerMenu />}>
+          Match Actions
+        </MenuButton>
+        <MenuList>
+          <MenuItem>Auto Create All</MenuItem>
+          <MenuItem>Assign All Benched Players</MenuItem>
+          <MenuItem>Create New Match</MenuItem>
+        </MenuList>
+      </Menu>
+    </Box>
   )
 
   return (
@@ -157,6 +200,7 @@ export default function RoundMatchTable() {
           data={extendedMatches}
           headers={headers}
           disablePagination
+          topRightComponent={matchMenuActions}
           tableContainerProps={{
             height: '650px',
             overflowY: 'auto',

@@ -1,7 +1,6 @@
-import { Drawer, extendTheme, position, type ThemeConfig } from '@chakra-ui/react'
+import { extendTheme, type ThemeConfig } from '@chakra-ui/react'
 import colors from './colors'
 import '@fontsource/ibm-plex-sans'
-import { dialog } from 'framer-motion/client'
 //import { Button, Input, NavLink, Table, Text } from './components/index'
 
 const overrides = {

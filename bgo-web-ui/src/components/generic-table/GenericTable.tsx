@@ -46,6 +46,7 @@ interface GenericTableProps<T> {
   disableSearch?: boolean
   defaultRowsPerPage?: number
   disablePagination?: boolean // When pagination is disabled, the defaultRowsPerPage is will be set to the length of the data array
+  topRightComponent?: ReactNode // A component the appears in the top right corner of the table component
   tableContainerProps?: ComponentProps<typeof TableContainer>
   tableProps?: ComponentProps<typeof Table>
 }
@@ -62,6 +63,7 @@ export default function GenericTable<T extends Record<string, any>>({
   disableSearch = false,
   defaultRowsPerPage = 10,
   disablePagination = false,
+  topRightComponent,
   tableContainerProps = {},
   tableProps = {},
 }: GenericTableProps<T>) {
@@ -200,13 +202,18 @@ export default function GenericTable<T extends Record<string, any>>({
 
   return (
     <Flex flexDirection={'column'} gap={2}>
-      {!disableSearch && (
-        <SearchInput
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          handleSearchChange={handleSearchChange}
-        />
-      )}
+      <Flex alignItems={'center'} justifyContent={'space-between'} gap={2}>
+        {!disableSearch && (
+          <SearchInput
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            handleSearchChange={handleSearchChange}
+          />
+        )}
+        <Box alignSelf={'flex-end'} ml={'auto'} mb={'auto'}>
+          {topRightComponent}
+        </Box>
+      </Flex>
       <TableContainer maxWidth={'100%'} {...tableContainerProps}>
         <Table variant='simple' {...tableProps}>
           <Thead>
