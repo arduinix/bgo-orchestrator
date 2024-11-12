@@ -14,7 +14,8 @@
     "outDir": "out",
     "baseUrl": "./",
     "paths": {
-      "@lib/*": ["/opt/lib/*", "src/lib/*"]
+      "@lib/*": ["src/lib/*", "/opt/lib/*"],
+      "@types/*": ["src/types/*"],
     }
   },
   "ts-node": { "esm": true },
