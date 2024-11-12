@@ -1,3 +1,13 @@
+# bgo-web-ui
+A planning and orchestration application that helps you run your Board Game Olympics competition.
+
+# License
+This project is **NOT open source**.
+
+You are welcome to view the code for educational purposes, but you may not use, copy, modify, distribute, or create derivative works without express written permission from Nicholas Pekular [arduinix88@gmail.com](mailto:arduinix88@gmail.com).
+
+All works within this repository are the property of Nicholas Pekular & Tilted Peak LLC.
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
