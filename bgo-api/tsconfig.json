@@ -16,6 +16,7 @@
     "paths": {
       "@lib/*": ["src/lib/*", "/opt/lib/*"],
       "@types/*": ["src/types/*"],
+      "@exampleService/*": ["src/services/exampleService/*"],
     }
   },
   "ts-node": { "esm": true },
