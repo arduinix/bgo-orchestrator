@@ -56,7 +56,7 @@ variable "default_statements" {
 variable "dist_sub_dir" {
   description = "The directory containing the lambda function handlers"
   type        = string
-  default     = "dist"
+  default     = "./"
 }
 
 variable "default_env_vars" {

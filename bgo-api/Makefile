@@ -22,7 +22,7 @@ build:
 	@echo "Building the project..."
 	npm run build
 
-package: package@deps package@example
+package: package@deps package@getMessage
 
 package@deps:
 	mkdir -p $(DIST_DIR)/deps
@@ -37,7 +37,7 @@ package@deps:
 # cp -R out/src/lib dist/layer/
 # cp package.json dist/layer/lib
 
-package@example:
-	mkdir -p ${DIST_DIR}/example
-	cp -R ${OUT_DIR}/src/services/example/* ${DIST_DIR}/example
-	zip -r ${DIST_DIR}/example.zip ${DIST_DIR}/example
+package@getMessage:
+	mkdir -p ${DIST_DIR}/getMessage
+	cp -R ${OUT_DIR}/src/services/exampleService/getMessage/* ${DIST_DIR}/getMessage
+	zip -r ${DIST_DIR}/getMessage.zip ${DIST_DIR}/getMessage
