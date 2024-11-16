@@ -1,0 +1,24 @@
+type Query {
+  listEvents: [Event]
+  getEvent(id: ID!): Event
+}
+
+type Event {
+  id: ID!
+  name: String!
+  description: String!
+  date: String!
+  location: String!
+}
+
+type Query {
+  listPlayers: [Player]
+  getPlayer(id: ID!): Player
+}
+
+type Player {
+  id: ID!
+  name: String!
+  email: String!
+  phone: String
+}
