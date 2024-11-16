@@ -1,33 +1,43 @@
-all: all@full
+DIST_DIR = ./dist
+OUT_DIR = ./out
 
-all@full:
-	clean install build install package
+all: clean install build package
 
-all@full-ci:
-	clean install-ci build install package
+all-ci: clean install build install-ci package
 
 clean:
-	rm -rf ./node_modules ./out
+	@echo "Cleaning up..."
+	rm -rf ./node_modules ${OUT_DIR} ${DIST_DIR}
 
 install:
+	@echo "Installing dependencies..."
 	npm install
 
 install-ci:
+	@echo "Installing dependencies for CI..."
 	rm -rf node_modules && \
 	npm ci --omit=dev
 
 build:
-	npm run build && \
-	cp package.json out
+	@echo "Building the project..."
+	npm run build
 
-package: package@layer
+package: package@deps package@example
 
-package@layer:
-	mkdir -p dist/layer/nodejs
-	cp -R node_modules dist/layer/nodejs/
-	cp -R out/src/lib dist/layer/
-	cp package.json dist/layer/lib
+package@deps:
+	mkdir -p $(DIST_DIR)/deps
+	cp -R ${OUT_DIR}/src/lib $(DIST_DIR)/deps/
+	mkdir -p $(DIST_DIR)/deps/nodejs
+	cp package.json $(DIST_DIR)/deps/nodejs/
+	cp package-lock.json $(DIST_DIR)/deps/nodejs/
+	cd $(DIST_DIR)/deps/nodejs && npm install --omit=dev
+	zip -r $(DIST_DIR)/deps.zip $(DIST_DIR)/deps
+# mkdir -p dist/layer/nodejs
+# cp -R node_modules dist/layer/nodejs/
+# cp -R out/src/lib dist/layer/
+# cp package.json dist/layer/lib
 
 package@example:
-	mkdir -p dist/example
-	cp -R out/src/services/example/* dist/example
+	mkdir -p ${DIST_DIR}/example
+	cp -R ${OUT_DIR}/src/services/example/* ${DIST_DIR}/example
+	zip -r ${DIST_DIR}/example.zip ${DIST_DIR}/example
