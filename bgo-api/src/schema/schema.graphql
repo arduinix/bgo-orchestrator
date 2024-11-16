@@ -1,6 +1,8 @@
 type Query {
   listEvents: [Event]
   getEvent(id: ID!): Event
+  listPlayers: [Player]
+  getPlayer(id: ID!): Player
 }
 
 type Event {
@@ -9,11 +11,6 @@ type Event {
   description: String!
   date: String!
   location: String!
-}
-
-type Query {
-  listPlayers: [Player]
-  getPlayer(id: ID!): Player
 }
 
 type Player {

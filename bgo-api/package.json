@@ -4,7 +4,9 @@
   "description": "API for the BGO web ui and mobile app",
   "main": "index.js",
   "scripts": {
-    "build": "tsc",
+    "generate": "graphql-codegen --verbose --config codegen.yml",
+    "compile": "tsc",
+    "build": "npm run generate && npm run compile",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,6 +15,10 @@
     "email": "arduinix88@gmail.com"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.3",
+    "@graphql-codegen/typescript": "^4.1.1",
+    "@graphql-codegen/typescript-operations": "^4.3.1",
+    "@graphql-codegen/typescript-resolvers": "^4.4.0",
     "@types/node": "^22.5.5",
     "graphql": "^16.9.0",
     "prettier": "^3.3.3",
