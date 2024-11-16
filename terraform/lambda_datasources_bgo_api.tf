@@ -14,7 +14,7 @@ resource "aws_lambda_layer_version" "bgo_api_deps" {
 
 module "lambda_datasources_bgo_api" {
   source          = "./modules/lambda_datasource"
-  dist_sub_dir    = "./"
+  dist_sub_dir    = "./dist"
   env             = var.env
   app_name        = var.app_name
   region          = var.region
@@ -31,7 +31,6 @@ module "lambda_datasources_bgo_api" {
   }
   functions = {
     exampleFunction = {
-      fn_name          = "exampleFunction"
       resolver_type    = "Query"
       source_dir       = "${path.root}/../bgo-api/out/exampleFunction/"
       # source_zip       = "${path.root}/../backend_api/dist/createProject.zip"

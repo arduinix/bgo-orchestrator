@@ -47,7 +47,6 @@ variable "subdir" {
   default     = null
 }
 
-
 variable "default_statements" {
   default     = []
   description = "The lambda iam policy document statements."
@@ -56,7 +55,7 @@ variable "default_statements" {
 variable "dist_sub_dir" {
   description = "The directory containing the lambda function handlers"
   type        = string
-  default     = "./"
+  default     = "./dist"
 }
 
 variable "default_env_vars" {
