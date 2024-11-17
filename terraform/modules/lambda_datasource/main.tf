@@ -15,7 +15,7 @@ locals {
 
 data "archive_file" "this" {
   for_each    = var.publish ? var.functions : {}
-  output_path = "${path.root}/out/${lookup(each.value, "service_name", var.default_service_name)}/${each.key}.zip"
+  output_path = "${path.root}/out/${lookup(each.value, "function_group", "")}/${lookup(each.value, "service_name", var.default_service_name)}/${each.key}.zip"
   source_dir  = lookup(each.value, "source_dir", "${path.root}/../lambda")
   type        = "zip"
 }

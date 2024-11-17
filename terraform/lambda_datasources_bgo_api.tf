@@ -40,7 +40,7 @@ module "lambda_datasources_bgo_api" {
     ENV                         = var.env
   }
   functions = {
-    exampleFunction = {
+    getMessage = {
       service_name  = "exampleService"
       resolver_type = "Query"
       source_dir    = "${local.bgo_api_functions_parent_dir}/exampleService/getMessage/"
