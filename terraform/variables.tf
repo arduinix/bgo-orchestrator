@@ -16,12 +16,12 @@ variable "region" {
 variable "domain_name" {
   type        = string
   default     = null
-  description = "The domain name for the API."
+  description = "The domain name under which the app is hosted."
 }
 
 variable "subdomain" {
   type        = string
-  description = "The subdomain for the application namespace."
+  description = "The subdomain for the app namespace."
 }
 
 variable "domain_is_private" {
@@ -42,14 +42,20 @@ variable "s3_log_retention_days" {
   description = "The number of days to retain S3 logs."
 }
 
-# variable "default_cloudwatch_log_group_retention_in_days" {
-#   type        = number
-#   default     = 15
-#   description = "value in days to set the default retention in CloudWatch Log Groups"
-# }
-
 variable "frontend_auth_domain" {
-  type = string
-  default = "portalauth"
+  type        = string
+  default     = "portalauth"
   description = "The domain for the frontend auth"
+}
+
+variable "enable_cognito" {
+  type        = bool
+  default     = false
+  description = "Enable Cognito for the frontend auth"
+}
+
+variable "manage_route53_zone" {
+  type        = bool
+  default     = false
+  description = "Should this stack manage the Route53 zone?"
 }

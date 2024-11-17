@@ -13,6 +13,7 @@ resource "aws_ssm_parameter" "cloudfront_distribution_id" {
 }
 
 resource "aws_ssm_parameter" "cognito_user_pool_id" {
+  count       = var.enable_cognito ? 1 : 0
   name        = "${local.ssm_prefix}/cognito_user_pool_id"
   description = "The id of the Cognito user pool"
   type        = "String"
@@ -20,6 +21,7 @@ resource "aws_ssm_parameter" "cognito_user_pool_id" {
 }
 
 resource "aws_ssm_parameter" "cognito_user_client_id" {
+  count       = var.enable_cognito ? 1 : 0
   name        = "${local.ssm_prefix}/cognito_user_client_id"
   description = "The id of the Cognito user client"
   type        = "String"
@@ -27,6 +29,7 @@ resource "aws_ssm_parameter" "cognito_user_client_id" {
 }
 
 resource "aws_ssm_parameter" "frontend_auth_fqdn" {
+  count       = var.enable_cognito ? 1 : 0
   name        = "${local.ssm_prefix}/frontend_auth_fqdn"
   description = "The domain for the frontend auth"
   type        = "String"

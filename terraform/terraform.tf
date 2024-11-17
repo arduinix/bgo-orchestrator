@@ -1,3 +1,9 @@
+terraform {
+  backend "s3" {}
+  required_providers {}
+  required_version = "~> 1.9.0"
+}
+
 provider "aws" {
   region = var.region
 
@@ -24,5 +30,4 @@ provider "aws" {
 provider "aws" {
   region = var.region
   alias  = "no_tags"
-
 }

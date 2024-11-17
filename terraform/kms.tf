@@ -27,21 +27,21 @@
 #   policy                  = data.aws_iam_policy_document.state_bucket_kms_key_policy.json
 # }
 
-data "aws_iam_policy_document" "contact_topic_key_policy" {
-  statement {
-    actions   = ["kms:*"]
-    resources = ["*"]
+# data "aws_iam_policy_document" "contact_topic_key_policy" {
+#   statement {
+#     actions   = ["kms:*"]
+#     resources = ["*"]
 
-    principals {
-      type        = "AWS"
-      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
-    }
-  }
-}
+#     principals {
+#       type        = "AWS"
+#       identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
+#     }
+#   }
+# }
 
-resource "aws_kms_key" "contect_topic_key" {
-  description             = "KMS key for the state bucket"
-  deletion_window_in_days = 10
-  enable_key_rotation     = true
-  policy                  = data.aws_iam_policy_document.contact_topic_key_policy.json
-}
+# resource "aws_kms_key" "contect_topic_key" {
+#   description             = "KMS key for the state bucket"
+#   deletion_window_in_days = 10
+#   enable_key_rotation     = true
+#   policy                  = data.aws_iam_policy_document.contact_topic_key_policy.json
+# }

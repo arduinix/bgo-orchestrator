@@ -31,8 +31,8 @@ module "lambda_datasources_bgo_api" {
   }
   functions = {
     exampleFunction = {
-      resolver_type    = "Query"
-      source_dir       = "${path.root}/../bgo-api/out/exampleFunction/"
+      resolver_type = "Query"
+      source_dir    = "${path.root}/../bgo-api/out/exampleFunction/"
       # source_zip       = "${path.root}/../backend_api/dist/createProject.zip"
       timeout          = 30
       lambda_layer_arn = [aws_lambda_layer_version.bgo_api_deps.arn]

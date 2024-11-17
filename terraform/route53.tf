@@ -1,11 +1,13 @@
 
-# resource "aws_route53_zone" "zone" {
-#   count = var.domain_name == null ? 0 : 1
-#   name         = var.domain_name
-# }
+resource "aws_route53_zone" "zone" {
+  # count = var.domain_name == null ? 0 : 1
+  count        = var.domain_name == null ? 0 : (var.manage_route53_zone ? 1 : 0)
+  name         = var.domain_name
+}
 
 data "aws_route53_zone" "zone" {
-  count        = var.domain_name == null ? 0 : 1
+  # count        = var.domain_name == null ? 0 : 1
+  count        = var.domain_name == null ? 0 : (var.manage_route53_zone ? 0 : 1)
   name         = var.domain_name
   private_zone = var.domain_is_private
 }
@@ -24,14 +26,16 @@ resource "aws_route53_record" "dns_validation" {
   records         = [each.value.record]
   ttl             = 60
   type            = each.value.type
-  //zone_id         = aws_route53_zone.zone[0].zone_id
-  zone_id = data.aws_route53_zone.zone[0].zone_id
+  # zone_id         = aws_route53_zone.zone[0].zone_id
+  # zone_id = data.aws_route53_zone.zone[0].zone_id
+  zone_id = var.manage_route53_zone ? aws_route53_zone.zone[0].zone_id : data.aws_route53_zone.zone[0].zone_id
 }
 
 resource "aws_route53_record" "record" {
   count = var.domain_name == null ? 0 : 1
-  //zone_id = aws_route53_zone.zone[0].zone_id
-  zone_id = data.aws_route53_zone.zone[0].zone_id
+  # zone_id = aws_route53_zone.zone[0].zone_id
+  # zone_id = data.aws_route53_zone.zone[0].zone_id
+  zone_id = var.manage_route53_zone ? aws_route53_zone.zone[0].zone_id : data.aws_route53_zone.zone[0].zone_id
   name    = local.fqdn
   type    = "A"
 

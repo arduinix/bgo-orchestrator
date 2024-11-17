@@ -1,11 +1,13 @@
 resource "aws_cognito_user_pool" "this" {
-  name = "${local.app_env}-cognito-user-pool"
+  count = var.enable_cognito ? 1 : 0
+  name  = "${local.app_env}-cognito-user-pool"
   admin_create_user_config {
     allow_admin_create_user_only = true
   }
 }
 
 resource "random_string" "frontend_auth_domain" {
+  count   = var.enable_cognito ? 1 : 0
   length  = 16
   special = false
   upper   = false
@@ -16,23 +18,13 @@ resource "random_string" "frontend_auth_domain" {
 }
 
 resource "aws_cognito_user_pool_domain" "frontend_auth" {
+  count        = var.enable_cognito ? 1 : 0
   domain       = "${var.frontend_auth_domain}${random_string.frontend_auth_domain.result}"
   user_pool_id = aws_cognito_user_pool.this.id
 }
 
 resource "aws_cognito_user_pool_client" "user_client" {
+  count        = var.enable_cognito ? 1 : 0
   name         = "${local.app_env}-user-client-app"
   user_pool_id = aws_cognito_user_pool.this.id
-}
-
-output "cognito_user_pool_id" {
-  value = aws_cognito_user_pool.this.id
-}
-
-output "cognito_user_client_id" {
-  value = aws_cognito_user_pool_client.user_client.id
-}
-
-output "frontend_auth_fqdn" {
-  value = local.frontend_auth_fqdn
 }
