@@ -1,5 +1,10 @@
 DIST_DIR = ./dist
-OUT_DIR = ./out
+OUT_DIR = ./out/src
+SERVICES_DIR = ${OUT_DIR}/services
+
+# list of the functions to be packaged by the @package recipe (space separated)
+PACKAGE_FUNCTIONS = exampleService/getMessage
+
 
 all: clean install build package
 
@@ -22,22 +27,24 @@ build:
 	@echo "Building the project..."
 	npm run build
 
-package: package@deps package@getMessage
+package: package@deps package@functions
 
 package@deps:
 	mkdir -p $(DIST_DIR)/deps
-	cp -R ${OUT_DIR}/src/lib $(DIST_DIR)/deps/
+	cp -R ${OUT_DIR}/lib $(DIST_DIR)/deps/
 	mkdir -p $(DIST_DIR)/deps/nodejs
 	cp package.json $(DIST_DIR)/deps/nodejs/
 	cp package-lock.json $(DIST_DIR)/deps/nodejs/
 	cd $(DIST_DIR)/deps/nodejs && npm install --omit=dev
-	zip -r $(DIST_DIR)/deps.zip $(DIST_DIR)/deps
-# mkdir -p dist/layer/nodejs
-# cp -R node_modules dist/layer/nodejs/
-# cp -R out/src/lib dist/layer/
-# cp package.json dist/layer/lib
+# zip -r $(DIST_DIR)/deps.zip $(DIST_DIR)/deps
 
-package@getMessage:
-	mkdir -p ${DIST_DIR}/getMessage
-	cp -R ${OUT_DIR}/src/services/exampleService/getMessage/* ${DIST_DIR}/getMessage
-	zip -r ${DIST_DIR}/getMessage.zip ${DIST_DIR}/getMessage
+
+
+package@functions:
+	@for FUNCTION_PATH in $(PACKAGE_FUNCTIONS); do \
+		DIST_FUNCTION_DIR=$(DIST_DIR)/$$FUNCTION_PATH && \
+		mkdir -p $$DIST_FUNCTION_DIR && \
+		cp -R $(SERVICES_DIR)/$$FUNCTION_PATH/* $$DIST_FUNCTION_DIR; \
+	done
+
+# zip -r $$DIST_FUNCTION_DIR.zip $$DIST_FUNCTION_DIR; \

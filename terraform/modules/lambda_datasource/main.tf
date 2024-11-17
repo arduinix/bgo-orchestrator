@@ -15,25 +15,24 @@ locals {
 
 data "archive_file" "this" {
   for_each    = var.publish ? var.functions : {}
-  output_path = "${path.root}/out/${each.key}.zip"
+  output_path = "${path.root}/out/${lookup(each.value, "service_name", var.default_service_name)}/${each.key}.zip"
   source_dir  = lookup(each.value, "source_dir", "${path.root}/../lambda")
   type        = "zip"
 }
 
 resource "aws_lambda_function" "this" {
-  for_each      = var.functions
-  function_name = "${local.app_env_fn_name}-${each.key}"
-  runtime       = lookup(each.value, "runtime", var.default_runtime)
-  handler       = "${var.dist_sub_dir}/${each.key}.handler"
-  # handler = "${each.key}/${each.key}.handler"
-  role    = aws_iam_role.this[each.key].arn
+  for_each         = var.functions
+  function_name    = "${local.app_env_fn_name}-${lookup(each.value, "service_name", var.default_service_name)}-${each.key}"
+  runtime          = lookup(each.value, "runtime", var.default_runtime)
+  handler          = lookup(each.value, "custom_handler", "${each.key}.handler")
+  role             = aws_iam_role.this[each.key].arn
   filename         = var.publish ? data.archive_file.this[each.key].output_path : null
   source_code_hash = var.publish ? data.archive_file.this[each.key].output_base64sha256 : null
-  # filename         = lookup(each.value, "source_zip", null)
-  # source_code_hash = filebase64sha256(lookup(each.value, "source_zip", null))
-  publish          = var.publish
-  timeout          = each.value.timeout
-  layers           = lookup(each.value, "lambda_layer_arn", null)
+  # filename         = var.publish ? lookup(each.value, "source_zip", null) : null
+  # source_code_hash = var.publish ? filebase64sha256(lookup(each.value, "source_zip", null)) : null
+  publish = var.publish
+  timeout = each.value.timeout
+  layers  = lookup(each.value, "lambda_layer_arn", null)
   environment {
     variables = merge(var.default_env_vars, lookup(each.value, "env_vars", {}))
   }

@@ -1,23 +1,33 @@
+
+locals {
+  bgo_api_deps_layer_dir       = "${path.root}/../bgo-api/dist/deps"
+  bgo_api_functions_parent_dir = "${path.root}/../bgo-api/dist/"
+  bgo_api_function_group_name  = "bgo-api"
+
+}
+
 data "archive_file" "bgo_api_deps" {
+  source_dir  = locals.bgo_api_deps_layer_dir
   output_path = "${path.root}/out/bgo-api/deps.zip"
-  source_dir  = "${path.root}/../bgo-api/dist/deps/"
   type        = "zip"
 }
 
 resource "aws_lambda_layer_version" "bgo_api_deps" {
-  filename            = data.archive_file.bgo_api_deps.output_path
-  layer_name          = "${local.app_env}-bgo-api-deps"
-  source_code_hash    = data.archive_file.dependencies.output_base64sha256
+  layer_name       = "${local.app_env}-${bgo_api_function_group_name}-deps"
+  filename         = data.archive_file.bgo_api_deps.output_path
+  source_code_hash = data.archive_file.dependencies.output_base64sha256
+  # filename            = local.bgo_api_deps_layer_filename
+  # source_code_hash    = filebase64sha256(local.bgo_api_deps_layer_filename)
   compatible_runtimes = ["nodejs20.x"]
 }
 
 
 module "lambda_datasources_bgo_api" {
   source          = "./modules/lambda_datasource"
-  dist_sub_dir    = "./dist"
   env             = var.env
   app_name        = var.app_name
   region          = var.region
+  function_group  = local.bgo_api_function_group_name
   create_resolver = false
   default_statements = [{
     sid       = "AllowLambdaToLog"
@@ -31,9 +41,10 @@ module "lambda_datasources_bgo_api" {
   }
   functions = {
     exampleFunction = {
+      service_name  = "exampleService"
       resolver_type = "Query"
-      source_dir    = "${path.root}/../bgo-api/out/exampleFunction/"
-      # source_zip       = "${path.root}/../backend_api/dist/createProject.zip"
+      source_dir    = "${local.bgo_api_functions_parent_dir}/exampleService/createProject/"
+      # source_zip       = "${local.bgo_api_functions_parent_dir}/exampleService/createProject.zip"
       timeout          = 30
       lambda_layer_arn = [aws_lambda_layer_version.bgo_api_deps.arn]
       statements       = []
