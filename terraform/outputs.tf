@@ -15,11 +15,11 @@ output "fqdn" {
 }
 
 output "cognito_user_pool_id" {
-  value = var.enable_cognito ? aws_cognito_user_pool.this.id : null
+  value = var.enable_cognito ? aws_cognito_user_pool.this[0].id : null
 }
 
 output "cognito_user_client_id" {
-  value = var.enable_cognito ? aws_cognito_user_pool_client.user_client.id : null
+  value = var.enable_cognito ? aws_cognito_user_pool_client.user_client[0].id : null
 }
 
 output "frontend_auth_fqdn" {

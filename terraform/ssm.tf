@@ -17,7 +17,7 @@ resource "aws_ssm_parameter" "cognito_user_pool_id" {
   name        = "${local.ssm_prefix}/cognito_user_pool_id"
   description = "The id of the Cognito user pool"
   type        = "String"
-  value       = aws_cognito_user_pool.this.id
+  value       = aws_cognito_user_pool.this[0].id
 }
 
 resource "aws_ssm_parameter" "cognito_user_client_id" {
@@ -25,7 +25,7 @@ resource "aws_ssm_parameter" "cognito_user_client_id" {
   name        = "${local.ssm_prefix}/cognito_user_client_id"
   description = "The id of the Cognito user client"
   type        = "String"
-  value       = aws_cognito_user_pool_client.user_client.id
+  value       = aws_cognito_user_pool_client.user_client[0].id
 }
 
 resource "aws_ssm_parameter" "frontend_auth_fqdn" {
