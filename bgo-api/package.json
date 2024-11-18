@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "API for the BGO web ui and mobile app",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "generate": "graphql-codegen --verbose --config codegen.yml",
     "compile": "rm -rf dist && tsc",
