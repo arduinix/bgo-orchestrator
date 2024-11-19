@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "API for the BGO web ui and mobile app",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "generate": "graphql-codegen --verbose --config codegen.yml",
     "compile": "rm -rf dist && tsc",
@@ -29,6 +28,10 @@
   },
   "dependencies": {
     "@aws-lambda-powertools/logger": "^2.10.0",
+    "bgo-api": "file:src/lib",
     "random-words": "^2.0.1"
+  },
+  "engines": {
+    "node": ">=20.0.0 <21.0.0"
   }
 }

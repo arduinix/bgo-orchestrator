@@ -5,7 +5,7 @@
     "preserveConstEnums": true,
     "noEmit": false,
     "sourceMap": true,
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "types": ["node"],
     "typeRoots": ["node_modules/@types"],
@@ -16,11 +16,11 @@
     "outDir": "out",
     "baseUrl": "./",
     "paths": {
-      "lib/*": ["src/lib/*", "/opt/lib/*"],
+      "lib/*": ["src/lib/*"],
       "@types/*": ["src/types/*"],
       "@exampleService/*": ["src/services/exampleService/*"],
     }
   },
-  "ts-node": { "esm": true },
+
   "exclude": ["node_modules", "**/*.test.ts"]
 }
