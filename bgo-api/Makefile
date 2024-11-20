@@ -40,13 +40,10 @@ package@deps:
 	cp package.json $(DIST_DIR)/deps/nodejs/
 	cp package-lock.json $(DIST_DIR)/deps/nodejs/
 	cp ./src/lib/package.json $(OUT_DIR)/lib/
-# cp -R ${OUT_DIR}/lib $(DIST_DIR)/deps/nodejs/
 	cd $(DIST_DIR)/deps/nodejs/ && npm install --omit=dev
 	cd $(DIST_DIR)/deps/nodejs/ && npm install $(CURDIR)/$(OUT_DIR)/lib --omit=dev --save lib
 	mkdir -p $(DIST_DIR)/deps
-	
-#cp package.json $(DIST_DIR)/deps/nodejs/lib/
-	cd $(DIST_DIR)/deps && zip -r ../deps.zip *
+	cd $(DIST_DIR)/deps && zip -r -q ../deps.zip *
 
 package@functions:
 	@for FUNCTION_PATH in $(PACKAGE_FUNCTIONS); do \
@@ -64,8 +61,3 @@ package@functions:
 		cp -R $(SERVICES_DIR)/$$FUNCTION_PATH/* $$DIST_FUNCTION_DIR; \
 		cd $$DIST_FUNCTION_DIR && zip -r ../$$FUNCTION_NAME.zip *; \
 	done
-
-# cd $(DIST_SERVICE_DIR) && zip -r $$FUNCTION_NAME.zip $$FUNCTION_NAME; \
-# zip -r $$DIST_FUNCTION_DIR.zip $$DIST_FUNCTION_DIR; \
-
-# cp -R ${OUT_DIR}/lib $$DIST_FUNCTION_DIR; \
