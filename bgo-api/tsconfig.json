@@ -21,10 +21,10 @@
     "lib": ["es2022"],
     "paths": {
       "*": ["*"],
-      "lib/*": ["src/lib/*"],
-      "lib": ["src/lib"],
-      "types": ["src/types"],
-      "types/*": ["src/types/*"],
+      "lib/*": ["src/lib/*", "lib/*"],
+      "lib": ["src/lib", "lib"],
+      "types/*": ["src/types/*", "types/*"],
+      "types": ["src/types", "types"],
       "@exampleService/*": ["src/services/exampleService/*"]
     }
   },
