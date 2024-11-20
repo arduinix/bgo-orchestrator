@@ -6,18 +6,18 @@ locals {
 
 }
 
-data "archive_file" "bgo_api_deps" {
-  source_dir  = local.bgo_api_deps_layer_dir
-  output_path = "${path.root}/out/bgo-api/deps.zip"
-  type        = "zip"
-}
+# data "archive_file" "bgo_api_deps" {
+#   source_dir  = local.bgo_api_deps_layer_dir
+#   output_path = "${path.root}/out/bgo-api/deps.zip"
+#   type        = "zip"
+# }
 
 resource "aws_lambda_layer_version" "bgo_api_deps" {
-  layer_name       = "${local.app_env}-${local.bgo_api_function_group_name}-deps"
-  filename         = data.archive_file.bgo_api_deps.output_path
-  source_code_hash = data.archive_file.bgo_api_deps.output_base64sha256
-  # filename            = local.bgo_api_deps_layer_filename
-  # source_code_hash    = filebase64sha256(local.bgo_api_deps_layer_filename)
+  layer_name       = "${local.app_env}-${local.bgo_api_function_group_name}-deps2"
+  # filename         = data.archive_file.bgo_api_deps.output_path
+  # source_code_hash = data.archive_file.bgo_api_deps.output_base64sha256
+  filename            = "${local.bgo_api_functions_parent_dir}/deps.zip"
+  source_code_hash    = filebase64sha256("${local.bgo_api_functions_parent_dir}/deps.zip")
   compatible_runtimes = ["nodejs20.x"]
 }
 
@@ -43,8 +43,8 @@ module "lambda_datasources_bgo_api" {
     getMessage = {
       service_name  = "exampleService"
       resolver_type = "Query"
-      source_dir    = "${local.bgo_api_functions_parent_dir}/exampleService/getMessage/"
-      # source_zip       = "${local.bgo_api_functions_parent_dir}/exampleService/createProject.zip"
+      # source_dir    = "${local.bgo_api_functions_parent_dir}/exampleService/getMessage/"
+      source_zip       = "${local.bgo_api_functions_parent_dir}/exampleService/getMessage.zip"
       timeout          = 30
       lambda_layer_arn = [aws_lambda_layer_version.bgo_api_deps.arn]
       statements       = []

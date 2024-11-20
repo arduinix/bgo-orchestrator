@@ -13,12 +13,12 @@ locals {
   app_env_fn_name = "${var.app_name}-${var.env}"
 }
 
-data "archive_file" "this" {
-  for_each    = var.publish ? var.functions : {}
-  output_path = "${path.root}/out/${lookup(each.value, "function_group", "")}/${lookup(each.value, "service_name", var.default_service_name)}/${each.key}.zip"
-  source_dir  = lookup(each.value, "source_dir", "${path.root}/../lambda")
-  type        = "zip"
-}
+# data "archive_file" "this" {
+#   for_each    = var.publish && (lookup(each.value, "loading_method", var.default_loading_method) == "tf-zip") ? var.functions : {}
+#   output_path = "${path.root}/out/${lookup(each.value, "function_group", "")}/${lookup(each.value, "service_name", var.default_service_name)}/${each.key}.zip"
+#   source_dir  = lookup(each.value, "source_dir", "${path.root}/../lambda")
+#   type        = "zip"
+# }
 
 resource "aws_lambda_function" "this" {
   for_each         = var.functions
@@ -26,10 +26,10 @@ resource "aws_lambda_function" "this" {
   runtime          = lookup(each.value, "runtime", var.default_runtime)
   handler          = lookup(each.value, "custom_handler", "${each.key}.handler")
   role             = aws_iam_role.this[each.key].arn
-  filename         = var.publish ? data.archive_file.this[each.key].output_path : null
-  source_code_hash = var.publish ? data.archive_file.this[each.key].output_base64sha256 : null
-  # filename         = var.publish ? lookup(each.value, "source_zip", null) : null
-  # source_code_hash = var.publish ? filebase64sha256(lookup(each.value, "source_zip", null)) : null
+  # filename         = var.publish ? data.archive_file.this[each.key].output_path : null
+  # source_code_hash = var.publish ? data.archive_file.this[each.key].output_base64sha256 : null
+  filename         = var.publish ? lookup(each.value, "source_zip", null) : null
+  source_code_hash = var.publish ? filebase64sha256(lookup(each.value, "source_zip", null)) : null
   publish = var.publish
   timeout = each.value.timeout
   layers  = lookup(each.value, "lambda_layer_arn", null)

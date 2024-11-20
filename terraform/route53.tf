@@ -1,8 +1,8 @@
 
 resource "aws_route53_zone" "zone" {
   # count = var.domain_name == null ? 0 : 1
-  count        = var.domain_name == null ? 0 : (var.manage_route53_zone ? 1 : 0)
-  name         = var.domain_name
+  count = var.domain_name == null ? 0 : (var.manage_route53_zone ? 1 : 0)
+  name  = var.domain_name
 }
 
 data "aws_route53_zone" "zone" {
