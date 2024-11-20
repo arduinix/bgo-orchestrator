@@ -20,9 +20,12 @@
     "allowSyntheticDefaultImports": true,
     "lib": ["es2022"],
     "paths": {
+      "*": ["*"],
       "lib/*": ["src/lib/*"],
+      "lib": ["src/lib"],
+      "types": ["src/types"],
       "types/*": ["src/types/*"],
-      "@exampleService/*": ["src/services/exampleService/*"],
+      "@exampleService/*": ["src/services/exampleService/*"]
     }
   },
   "ts-node": { "esm": true },

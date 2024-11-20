@@ -1,5 +1,5 @@
-import { handler } from "@exampleService/getMessage/getMessage";
+import { handler } from '@exampleService/getMessage/getMessage'
 
 handler().then((result) => {
-  console.log(result);
-});
+  console.log(result)
+})
