@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es2020",
+    "target": "ES2022",
     "strict": true,
     "preserveConstEnums": true,
     "noEmit": false,
     "sourceMap": true,
     "module": "CommonJS",
-    "moduleResolution": "node",
     "types": ["node"],
     "typeRoots": ["node_modules/@types"],
     "esModuleInterop": true,
@@ -15,12 +14,17 @@
     "isolatedModules": true,
     "outDir": "out",
     "baseUrl": "./",
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "moduleDetection": "force",
+    "allowSyntheticDefaultImports": true,
+    "lib": ["es2022"],
     "paths": {
       "lib/*": ["src/lib/*"],
-      "@types/*": ["src/types/*"],
+      "types/*": ["src/types/*"],
       "@exampleService/*": ["src/services/exampleService/*"],
     }
   },
-
+  "ts-node": { "esm": true },
   "exclude": ["node_modules", "**/*.test.ts"]
 }
