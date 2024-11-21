@@ -1,26 +1,25 @@
 terraform {
   required_providers {
     aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.39"
+      source = "hashicorp/aws"
     }
   }
 }
 
 resource "aws_appsync_graphql_api" "this" {
-  name                = var.app_env
+  name = var.app_env
   #authentication_type = "AWS_LAMBDA"
   authentication_type = "AMAZON_COGNITO_USER_POOLS"
   schema              = var.schema
   user_pool_config {
-    aws_region = var.region
+    aws_region     = var.region
     default_action = "ALLOW"
-    user_pool_id = var.user_pool_id
+    user_pool_id   = var.user_pool_id
   }
   log_config {
     cloudwatch_logs_role_arn = aws_iam_role.logging_role.arn
-    exclude_verbose_content   = false
-    field_log_level           = "ALL"
+    exclude_verbose_content  = false
+    field_log_level          = "ALL"
   }
 
   # lambda_authorizer_config {

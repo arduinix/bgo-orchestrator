@@ -50,7 +50,7 @@ variable "frontend_auth_domain" {
 
 variable "enable_cognito" {
   type        = bool
-  default     = false
+  default     = true
   description = "Enable Cognito for the frontend auth"
 }
 
@@ -68,6 +68,6 @@ variable "api_cache_size" {
 
 variable "enable_api_caching" {
   type        = bool
-  default     = true
+  default     = false
   description = "Should caching be enabled?"
 }
