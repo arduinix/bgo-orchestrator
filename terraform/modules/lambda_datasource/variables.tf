@@ -28,6 +28,12 @@ variable "appsync_id" {
   description = "The appsync id."
 }
 
+variable "appsync_arn" {
+  type        = string
+  default     = null
+  description = "The ARN of the appsync api."
+}
+
 variable "appsync_role_arn" {
   type        = string
   default     = null
@@ -53,11 +59,11 @@ variable "publish" {
   description = "Whether to publish the lambda function"
 }
 
-variable "create_resolver" {
-  type        = bool
-  default     = true
-  description = "Whether to create a resolver for the lambda function"
-}
+# variable "create_resolver" {
+#   type        = bool
+#   default     = true
+#   description = "Whether to create a resolver for the lambda function"
+# }
 
 variable "default_service_name" {
   type        = string
@@ -91,4 +97,14 @@ variable "default_runtime" {
   type        = string
   default     = "nodejs20.x"
   description = "The default lambda runtime"
+}
+
+variable "default_request_template" {
+  type        = string
+  description = "The default request template for the resolver"
+}
+
+variable "default_resposne_template" {
+  type        = string
+  description = "The default response template for the resolver"
 }

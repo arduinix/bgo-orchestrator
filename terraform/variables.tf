@@ -59,3 +59,15 @@ variable "manage_route53_zone" {
   default     = false
   description = "Should this stack manage the Route53 zone?"
 }
+
+variable "api_cache_size" {
+  type        = string
+  default     = "SMALL"
+  description = "The size of the API cache"
+}
+
+variable "enable_api_caching" {
+  type        = bool
+  default     = true
+  description = "Should caching be enabled?"
+}

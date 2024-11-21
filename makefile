@@ -43,4 +43,8 @@ destroy:
 	@echo "Destroying Terraform-managed infrastructure with variables from $(TFVARS_FILE)..."
 	cd $(TERRAFORM_DIR) && terraform destroy -var-file=$(TFVARS_FILE) -auto-approve
 
+format:
+	@echo "Formatting Terraform configuration..."
+	cd $(TERRAFORM_DIR) && terraform fmt
+
 .PHONY: init plan apply destroy
