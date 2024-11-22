@@ -25,3 +25,7 @@ output "cognito_user_client_id" {
 output "frontend_auth_fqdn" {
   value = var.enable_cognito ? local.frontend_auth_fqdn : null
 }
+
+output "appsync_domain" {
+  value = module.appsync_bgo_api.appsync_domain
+}

@@ -6,13 +6,13 @@ variable "app_env" {
 variable "authorizer_arn" {
   type        = string
   description = "The arn for the lambda authorizer."
-  default = null
+  default     = null
 }
 
 variable "authorizer_name" {
   type        = string
   description = "The name for the lambda authorizer."
-  default = null
+  default     = null
 }
 
 variable "cache_size" {
@@ -73,7 +73,41 @@ variable "statements" {
 }
 
 variable "user_pool_id" {
-  type = string
+  type        = string
   description = "The user pool id for the API."
-  default = null
+  default     = null
+}
+
+variable "api_name" {
+  type        = string
+  description = "The name of the API."
+  default     = "api"
+}
+
+variable "enable_custom_subdomain" {
+  type        = bool
+  default     = false
+  description = "Should a custom subdomain be created?"
+}
+
+variable "api_custom_domain" {
+  type        = string
+  description = "The custom subdomain for the API."
+  default     = ""
+  validation {
+    condition     = var.enable_custom_subdomain == false || length(var.api_custom_domain) > 0
+    error_message = "A custom domain name must be provided if enable_custom_subdomain is true."
+  }
+}
+
+variable "certificate_arn" {
+  type        = string
+  description = "The certificate arn for the custom domain."
+  default     = null
+}
+
+variable "enable_api_key" {
+  type        = bool
+  default     = false
+  description = "Should an API key be created?"
 }

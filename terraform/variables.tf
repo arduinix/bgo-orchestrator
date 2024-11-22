@@ -71,3 +71,15 @@ variable "enable_api_caching" {
   default     = false
   description = "Should caching be enabled?"
 }
+
+variable "enable_api_key" {
+  type        = bool
+  default     = false
+  description = "Should an API key be created?"
+}
+
+variable "enable_custom_api_subdomain" {
+  type        = bool
+  default     = false
+  description = "Should a custom subdomain be created for the API?"
+}

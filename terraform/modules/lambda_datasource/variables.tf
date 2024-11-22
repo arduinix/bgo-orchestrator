@@ -108,3 +108,9 @@ variable "default_resposne_template" {
   type        = string
   description = "The default response template for the resolver"
 }
+
+variable "default_timeout" {
+  type        = number
+  default     = 30
+  description = "The default lambda timeout"
+}

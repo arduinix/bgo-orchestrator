@@ -31,7 +31,7 @@ resource "aws_lambda_function" "this" {
   filename         = var.publish ? lookup(each.value, "source_zip", null) : null
   source_code_hash = var.publish ? filebase64sha256(lookup(each.value, "source_zip", null)) : null
   publish          = var.publish
-  timeout          = each.value.timeout
+  timeout          = lookup(each.value, "timeout", var.default_timeout)
   layers           = lookup(each.value, "lambda_layer_arn", null)
   environment {
     variables = merge(var.default_env_vars, lookup(each.value, "env_vars", {}))

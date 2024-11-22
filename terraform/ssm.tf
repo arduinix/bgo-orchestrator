@@ -35,3 +35,18 @@ resource "aws_ssm_parameter" "frontend_auth_fqdn" {
   type        = "String"
   value       = local.frontend_auth_fqdn
 }
+
+resource "aws_ssm_parameter" "appsync_domain" {
+  name        = "${local.ssm_prefix}/appsync_domain"
+  description = "The domain for the AppSync API"
+  type        = "String"
+  value       = module.appsync_bgo_api.appsync_domain
+}
+
+resource "aws_ssm_parameter" "appsync_api_key" {
+  count       = var.enable_api_key ? 1 : 0
+  name        = "${local.ssm_prefix}/appsync_api_key"
+  description = "API key for the AppSync API"
+  type        = "String"
+  value       = module.appsync_bgo_api.appsync_api_key
+}

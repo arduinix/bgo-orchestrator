@@ -50,7 +50,6 @@ module "lambda_datasources_bgo_api" {
       create_resolver = false # change this when we are ready to start deploying resolvers
       # source_dir    = "${local.bgo_api_functions_parent_dir}/exampleService/getMessage/"
       source_zip       = "${local.bgo_api_functions_parent_dir}/exampleService/getMessage.zip"
-      timeout          = 30
       lambda_layer_arn = [aws_lambda_layer_version.bgo_api_deps.arn]
       statements       = []
       # resquest_template =

@@ -1,7 +1,11 @@
+locals {
+  sans = var.enable_custom_api_subdomain ? concat([], [local.api_fqdn]) : []
+}
+
 resource "aws_acm_certificate" "cert" {
   count                     = var.domain_name == null ? 0 : 1
   domain_name               = local.fqdn
-  subject_alternative_names = []
+  subject_alternative_names = local.sans
   validation_method         = "DNS"
   provider                  = aws.va
 
