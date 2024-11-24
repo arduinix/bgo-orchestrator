@@ -29,8 +29,8 @@
   "dependencies": {
     "@aws-lambda-powertools/logger": "^2.10.0",
     "bgo-api": "file:src/lib",
-    "ksuid": "^3.0.0",
-    "random-words": "^2.0.1"
+    "random-words": "^2.0.1",
+    "ulid": "^2.3.0"
   },
   "engines": {
     "node": ">=20.0.0 <21.0.0"

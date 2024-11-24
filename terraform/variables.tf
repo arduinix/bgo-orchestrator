@@ -11,6 +11,13 @@ variable "env" {
 variable "region" {
   type        = string
   description = "The region the infrastructure is deployed to."
+  default     = "us-east-1"
+}
+
+variable "acm_region" {
+  type        = string
+  description = "The region where to create the ACM certificate"
+  default     = "us-east-1"
 }
 
 variable "domain_name" {
@@ -28,12 +35,6 @@ variable "domain_is_private" {
   type        = bool
   default     = false
   description = "Is the domain private?"
-}
-
-variable "acm_region" {
-  type        = string
-  description = "The region where to create the ACM certificate"
-  default     = "us-east-1"
 }
 
 variable "s3_log_retention_days" {
