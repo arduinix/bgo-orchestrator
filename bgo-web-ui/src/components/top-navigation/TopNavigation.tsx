@@ -20,9 +20,9 @@ import {
 } from '@chakra-ui/react'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import { IoClose } from 'react-icons/io5'
-
 import logo from '../../assets/image/logo_no_info.png'
 import NavLinks, { NavLinkProps } from './NavLinks'
+import { logout } from '@lib/auth/CognitoAuth'
 
 export interface TopNavigationProps {
   loggedIn: boolean
@@ -111,7 +111,7 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
                 />
               </MenuButton>
               <MenuList>
-                <MenuItem>Sign Out</MenuItem>
+                <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
                 <MenuItem>Change Account</MenuItem>
                 <MenuDivider />
                 <MenuItem>Account Settings</MenuItem>

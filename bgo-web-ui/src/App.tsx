@@ -1,7 +1,7 @@
-// import { Authenticator, withAuthenticator } from "@aws-amplify/ui-react";
-// import { Amplify } from "aws-amplify";
+import { Authenticator, withAuthenticator } from '@aws-amplify/ui-react'
+import { Amplify } from 'aws-amplify'
 import './App.css'
-// import { amplifyAuthConfig } from "./lib/auth/amplifyAuthConfig";
+import { amplifyAuthConfig } from '@lib/auth/amplifyAuthConfig'
 import { ChakraProvider } from '@chakra-ui/react'
 import { BrowserRouter } from 'react-router-dom'
 import './App.css'
@@ -14,28 +14,20 @@ import '@aws-amplify/ui-react/styles/reset.layer.css'
 import '@aws-amplify/ui-react/styles/base.layer.css'
 import '@aws-amplify/ui-react/styles/button.layer.css'
 
-// Amplify.configure(amplifyAuthConfig);
+Amplify.configure(amplifyAuthConfig)
 
-export default function App() {
+function App() {
   return (
-    // <Authenticator>
-    //   <BrowserRouter>
-    //     <ErrorBoundary>
-    //       <ChakraProvider theme={theme}>
-    //         <AppRouter />
-    //       </ChakraProvider>
-    //     </ErrorBoundary>
-    //   </BrowserRouter>
-    // </Authenticator>
-
-    <BrowserRouter>
-      <ErrorBoundary>
-        <ChakraProvider theme={theme}>
-          <AppRouter />
-        </ChakraProvider>
-      </ErrorBoundary>
-    </BrowserRouter>
+    <Authenticator>
+      <BrowserRouter>
+        <ErrorBoundary>
+          <ChakraProvider theme={theme}>
+            <AppRouter />
+          </ChakraProvider>
+        </ErrorBoundary>
+      </BrowserRouter>
+    </Authenticator>
   )
 }
 
-// export default withAuthenticator(App, { hideSignUp: true });
+export default withAuthenticator(App, { hideSignUp: true })

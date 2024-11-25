@@ -1,5 +1,5 @@
 app_name               = "myapp"
 env                    = "dev"
-region                 = "us-east-2"
+region                 = "us-east-1"
 domain_name            = "bar.com"
 subdomain              = "foo"

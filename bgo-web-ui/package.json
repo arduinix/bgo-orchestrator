@@ -16,12 +16,14 @@
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,md}\" --config ./.prettierrc.json"
   },
   "dependencies": {
+    "@aws-amplify/auth": "^6.7.0",
     "@aws-amplify/ui-react": "^6.5.0",
     "@chakra-ui/react": "^2.10.3",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@fontsource/ibm-plex-sans": "^5.1.0",
     "@types/node": "^22.5.5",
+    "aws-amplify": "^6.9.0",
     "framer-motion": "^11.5.6",
     "next-themes": "^0.3.0",
     "react": "^18.3.1",
