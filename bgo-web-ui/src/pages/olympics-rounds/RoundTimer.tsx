@@ -4,7 +4,8 @@ import { FaPlay, FaStop } from 'react-icons/fa'
 
 export default function RoundTimer() {
   const [time, setTime] = useState<number>(0)
-  const [isRunning, setIsRunning] = useState<boolean>(false)
+  // const [isRunning, setIsRunning] = useState<boolean>(false)
+  const [isRunning] = useState<boolean>(false)
 
   useEffect(() => {
     let timer: NodeJS.Timeout | undefined = undefined
@@ -18,13 +19,13 @@ export default function RoundTimer() {
     return () => clearInterval(timer)
   }, [isRunning])
 
-  const handleStart = (): void => {
-    setIsRunning(true)
-  }
+  // const handleStart = (): void => {
+  //   setIsRunning(true)
+  // }
 
-  const handleStop = (): void => {
-    setIsRunning(false)
-  }
+  // const handleStop = (): void => {
+  //   setIsRunning(false)
+  // }
 
   const formatTime = (time: number): string => {
     const hours = String(Math.floor(time / 3600)).padStart(2, '0')

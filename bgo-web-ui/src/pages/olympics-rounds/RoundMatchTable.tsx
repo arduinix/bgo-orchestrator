@@ -16,7 +16,7 @@ import {
   IconButton,
 } from '@chakra-ui/react'
 import { useMemo } from 'react'
-import matches from '@data/matches.json'
+import data from '@data/matches.json'
 import GenericTable, {
   TableHeader,
 } from '@components/generic-table/GenericTable'
@@ -26,8 +26,10 @@ import { RxHamburgerMenu } from 'react-icons/rx'
 import { FaRegEdit } from 'react-icons/fa'
 import OlympicMedal from '@/components/olympic-medal/OlympicMedal'
 
+const matches: { matches: Match[] } = data as { matches: Match[] }
+
 export default function RoundMatchTable() {
-  const data: Match[] = matches.matches
+  const matchData: Match[] = matches.matches
 
   const headers: TableHeader<ExtendedMatch>[] = [
     {
@@ -56,7 +58,7 @@ export default function RoundMatchTable() {
 
   const extendedMatches: ExtendedMatch[] = useMemo(
     () =>
-      data.map((match) => ({
+      matchData.map((match) => ({
         ...match,
         gameName: match.game.name,
         gameNameNode: (

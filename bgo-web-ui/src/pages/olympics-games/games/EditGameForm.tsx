@@ -26,12 +26,11 @@ const BoldFormLabel = chakra(FormLabel, {
 
 export interface EditGameFormProps {
   game: Game | null
-  closeAction: () => void
+  closeAction?: () => void
 }
 
 export default function EditGameyForm({
   game,
-  closeAction,
 }: EditGameFormProps) {
   const categories: GameCategory[] = games.catagories
   const [currentGame, setCurrentGame] = useState<Game | null>(null)

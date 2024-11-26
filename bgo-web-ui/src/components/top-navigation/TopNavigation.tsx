@@ -22,7 +22,7 @@ import { RxHamburgerMenu } from 'react-icons/rx'
 import { IoClose } from 'react-icons/io5'
 import logo from '../../assets/image/logo_no_info.png'
 import NavLinks, { NavLinkProps } from './NavLinks'
-import { logout, getLoggedInUser } from '@lib/auth/CognitoAuth'
+import { logout } from '@lib/auth/CognitoAuth'
 import { FaRegChessPawn } from 'react-icons/fa6'
 
 export interface TopNavigationProps {
@@ -96,7 +96,7 @@ export default function TopNavigation({ loggedIn }: TopNavigationProps) {
           </HStack>
 
           <Flex alignItems={'center'}>
-            {getLoggedInUser != undefined ? (
+            {loggedIn ? (
               <Menu>
                 <MenuButton
                   as={Button}

@@ -17,14 +17,14 @@ export async function isLoggedIn(): Promise<boolean> {
   return response
 }
 
-export async function getLoggedInUser(): Promise<AuthUser | undefined> {
+export async function getLoggedInUser(): Promise<AuthUser | boolean> {
   const loggedIn = await checkIsLoggedIn()
   console.log(loggedIn)
   if (loggedIn) {
     const user = await getCurrentUser()
     return user
   }
-  return
+  return false
 }
 
 export async function checkIsLoggedIn(): Promise<boolean> {

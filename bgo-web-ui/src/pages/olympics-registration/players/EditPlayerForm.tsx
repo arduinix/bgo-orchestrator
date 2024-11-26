@@ -23,12 +23,11 @@ const BoldFormLabel = chakra(FormLabel, {
 
 export interface EditPlayerFormProps {
   player: Player | null
-  closeAction: () => void
+  closeAction?: () => void
 }
 
 export default function EditPlayerForm({
   player,
-  closeAction,
 }: EditPlayerFormProps) {
   const [currentPlayer, setCurrentPlayer] = useState<Player | null>(null)
 

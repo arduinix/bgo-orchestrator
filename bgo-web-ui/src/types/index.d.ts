@@ -111,10 +111,11 @@ declare global {
     playersSearchField?: string
   }
 
+  type RoundPhase = 'setup' | 'ready' | 'playing' | 'complete'
   interface Round {
     id: string
     selectedCategoryId?: string
-    phase: 'setup' | 'ready' | 'playing' | 'complete' // this status should change when a new round is started by the game master
+    phase: RoundPhase // this status should change when a new round is started by the game master
     createdTimestamp: string
     startedTimestamp?: string
     completedTimestamp?: string
