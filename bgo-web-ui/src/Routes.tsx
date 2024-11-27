@@ -1,7 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
 import { Box } from '@chakra-ui/react'
-import { useState } from 'react'
-import { isLoggedIn } from './lib/auth/CognitoAuth'
 import NotFound from '@pages/not-found/NotFound'
 import MainLayout from '@components/main-layout/MainLayout'
 import Header from '@components/header/Header'
@@ -20,7 +18,7 @@ import OlympicsRoundEditor from '@pages/olympics-rounds/OlympicsRoundEditor'
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react'
 import { Amplify } from 'aws-amplify'
 import { amplifyAuthConfig } from '@lib/auth/amplifyAuthConfig'
-
+import SigninPage from './pages/signin-page/SigninPage'
 import '@aws-amplify/ui-react/styles.css'
 import '@aws-amplify/ui-react/styles/reset.layer.css'
 import '@aws-amplify/ui-react/styles/base.layer.css'
@@ -35,24 +33,15 @@ interface RequireAuthProps {
 // eslint-disable-next-line react/prop-types
 const RequireAuth: React.FC<RequireAuthProps> = ({ children }) => {
   const { route } = useAuthenticator((context) => [context.route])
-  return route === 'authenticated' ? children : <Authenticator />
+  // return route === 'authenticated' ? children : <Authenticator hideSignUp />
+  return route === 'authenticated' ? children : <SigninPage />
 }
 
 export default function AppRouter() {
-  const [loggedIn, setLoggedIn] = useState<boolean>(true)
-
-  isLoggedIn().then((response) => {
-    if (response) {
-      setLoggedIn(true)
-    } else {
-      setLoggedIn(false)
-    }
-  })
-
   return (
     <>
       <Authenticator.Provider>
-        <Header loggedIn={loggedIn} />
+        <Header />
         <Box position={'relative'} minHeight={'100vh'}>
           <Routes>
             <Route path='*' element={<NotFound />} />
@@ -83,6 +72,7 @@ export default function AppRouter() {
               <Route path='/leagues' element={<Leagues />} />
               <Route path='/playergroups' element={<PlayerGroups />} />
             </Route>
+            <Route path='/signin' element={<SigninPage />} />
           </Routes>
         </Box>
       </Authenticator.Provider>
