@@ -30,16 +30,11 @@ export default function TopNavigation() {
   const navigate = useNavigate()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { colorMode, toggleColorMode } = useColorMode()
-  const { user, authStatus, signOut, toSignIn } = useAuthenticator((context) => [
+  const { user, authStatus, signOut } = useAuthenticator((context) => [
     context.user,
     context.authStatus,
     context.signOut,
-    context.toSignIn,
   ])
-
-  console.log('authStatus:', authStatus)
-  console.log('toSignIn:', toSignIn)
-
 
   const navLinks: Array<NavLinkProps> = [
     {
