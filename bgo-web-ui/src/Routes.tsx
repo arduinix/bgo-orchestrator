@@ -50,11 +50,12 @@ export default function AppRouter() {
               <Route
                 path='/olympics'
                 element={
-                  <RequireAuth>
+                  // <RequireAuth>
                     <Olympics />
-                  </RequireAuth>
+                  // </RequireAuth>
                 }
               >
+                
                 <Route path=':eventId' element={<OlympicsManager />}>
                   <Route
                     path='registration'

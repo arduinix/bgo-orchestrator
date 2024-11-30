@@ -28,13 +28,19 @@ declare global {
     gender: string
     age: number
     isPlaying: boolean
+    isCheckedIn: boolean
     score: number
     imagePath?: string
+    inviteTimestamp?: string
+    inviteAcceptedTimestamp?: string
   }
 
   interface ExtendedPlayer extends Player {
     fullName: string
     isPlayingToggleNode?: ReactNode
+    inviteStatusNode?: ReactNode
+    checkedInNode?: ReactNode
+    playingNode?: ReactNode
   }
 
   interface GameCategory {

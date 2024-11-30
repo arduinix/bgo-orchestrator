@@ -1,5 +1,4 @@
 import {
-  Button,
   ButtonGroup,
   Flex,
   useDisclosure,
@@ -11,6 +10,9 @@ import {
   MenuItem,
   MenuDivider,
   IconButton,
+  Badge,
+  Tooltip,
+  Switch,
 } from '@chakra-ui/react'
 import { RxHamburgerMenu } from 'react-icons/rx'
 import ConfirmActionModal from '@components/confirm-action-modal/ConfirmActionModal'
@@ -20,8 +22,8 @@ import EditPlayerForm from './EditPlayerForm'
 import GenericTable, {
   TableHeader,
 } from '@components/generic-table/GenericTable'
-import { formatPlayerName } from '@utils/stringConversion'
-import { FiTrash2, FiEdit } from 'react-icons/fi'
+import { formatPlayerName, convertDateShort } from '@utils/stringConversion'
+import { FiTrash2, FiEdit, FiPlus } from 'react-icons/fi'
 
 export default function PlayersTab() {
   const data: Player[] = players.players
@@ -60,6 +62,7 @@ export default function PlayersTab() {
       phone: '',
       email: '',
       isPlaying: false,
+      isCheckedIn: false,
     } as Player)
     onOpenEdit()
   }
@@ -88,14 +91,69 @@ export default function PlayersTab() {
     },
     { text: 'Email', sortKey: 'email' },
     { text: 'Phone', sortKey: 'phone' },
-    { text: 'Playing', sortKey: 'isPlaying' },
+    {
+      text: 'Invite',
+      sortKey: 'inviteTimestamp',
+      showKey: 'inviteStatusNode',
+    },
+    {
+      text: 'Checked In',
+      sortKey: 'isCheckedIn',
+      showKey: 'checkedInNode',
+      disableDataCellClickAction: true,
+    },
+    {
+      text: 'Playing',
+      sortKey: 'isPlaying',
+      showKey: 'playingNode',
+      disableDataCellClickAction: true,
+    },
   ]
+
+  const inviteStatusNode = (player: Player) => {
+    const { inviteTimestamp, inviteAcceptedTimestamp } = player
+    if (inviteAcceptedTimestamp) {
+      return (
+        <Tooltip
+          label={`Accepted ${convertDateShort(inviteAcceptedTimestamp)}`}
+        >
+          <Badge colorScheme='green'>accepted</Badge>
+        </Tooltip>
+      )
+    }
+    if (inviteTimestamp) {
+      return (
+        <Tooltip label={`Invited ${convertDateShort(inviteTimestamp)}`}>
+          <Badge colorScheme='orange'>sent</Badge>
+        </Tooltip>
+      )
+    }
+
+    return <Badge colorScheme='red'>not sent</Badge>
+  }
 
   const extendedPlayers = useMemo(
     () =>
       data.map((player) => ({
         ...player,
         fullName: formatPlayerName(player),
+        inviteStatusNode: inviteStatusNode(player),
+        checkedInNode: (
+          <Switch
+            pl={5}
+            isChecked={player.isCheckedIn}
+            onChange={() => {}}
+            size={'md'}
+          />
+        ),
+        playingNode: (
+          <Switch
+            pl={1}
+            isChecked={player.isPlaying}
+            onChange={() => {}}
+            size={'md'}
+          />
+        ),
       })),
     [data]
   )
@@ -121,7 +179,12 @@ export default function PlayersTab() {
 
   const actionButtons = (
     <ButtonGroup size={'md'}>
-      <Button onClick={handleAddClick}>Add Player</Button>
+      <IconButton
+        size={'md'}
+        aria-label='add player'
+        icon={<FiPlus />}
+        onClick={handleAddClick}
+      />
       <Menu>
         <MenuButton as={IconButton} icon={<RxHamburgerMenu />} />
         <MenuList>
@@ -135,6 +198,8 @@ export default function PlayersTab() {
           <MenuItem>Set Out-Of-Play</MenuItem>
           <MenuDivider />
           <MenuItem>Remove Selected Players</MenuItem>
+          <MenuDivider />
+          <MenuItem>Send Invites</MenuItem>
           <MenuDivider />
           <MenuItem onClick={handleAddClick}>Add Player</MenuItem>
         </MenuList>
@@ -158,7 +223,7 @@ export default function PlayersTab() {
       <ConfirmActionModal
         isOpen={isOpenDelete}
         closeAction={onCloseDelete}
-        header='Delete Player?'
+        header='Remove Player?'
         body={
           <>
             Are you sure you want to remove player{' '}
@@ -181,7 +246,7 @@ export default function PlayersTab() {
         closeAction={onCloseEdit}
         header={
           selectedPlayer && selectedPlayer.id === 'new'
-            ? 'Create New Player'
+            ? 'Add New Player'
             : 'Edit Player Information'
         }
         body={
