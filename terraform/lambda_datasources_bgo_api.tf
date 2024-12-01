@@ -33,12 +33,33 @@ module "lambda_datasources_bgo_api" {
   default_request_template  = local.default_request_template
   default_resposne_template = local.default_response_template
   # create_resolver = false # this is deprecated now because we will create the resovlver depending on the function
-  default_statements = [{
-    sid       = "AllowLambdaToLog"
-    effect    = "Allow"
-    actions   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"]
-    resources = ["*"]
-  }]
+  default_statements = [
+    {
+      sid       = "AllowLambdaToLog"
+      effect    = "Allow"
+      actions   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"]
+      resources = ["*"]
+    },
+    {
+      sid    = "AllowDataKeyRead"
+      effect = "Allow"
+      actions = [
+        "kms:Decrypt",
+        "kms:GenerateDataKey*",
+      ]
+      resources = ["${aws_kms_key.bgo_data_kms_key.arn}"]
+    },
+    {
+      sid    = "AllowDataTableRead"
+      effect = "Allow"
+      actions = [
+        "dynamodb:GetItem",
+        "dynamodb:Query",
+        "dynamodb:BatchGetItem",
+      ]
+      resources = ["${aws_dynamodb_table.bgo_data.arn}"]
+    }
+  ]
   default_env_vars = {
     POWERTOOLS_LOGGER_LOG_EVENT = true
     ENV                         = var.env
