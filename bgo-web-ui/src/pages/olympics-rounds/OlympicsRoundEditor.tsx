@@ -1,12 +1,14 @@
 import { Heading, Box, Flex } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
-import rounds from '@data/rounds.json'
+import data from '@data/rounds.json'
 import ReusableAccordion from '@/components/reusable-accordion/ReusableAccordion'
 import RoundPlayersTable from './RoundPlayersTable'
 import RoundGamesTable from './RoundGamesTable'
 import ScrollingConsole from '@/components/scrolling-console/ScrollingConsole'
 import RoundMatchTable from './RoundMatchTable'
 import RoundControlsCard from './RoundControlsCard'
+
+const rounds: { rounds: Round[] } = data as { rounds: Round[] }
 
 export default function OlympicsRoundEditor() {
   const roundData: Round[] = rounds.rounds

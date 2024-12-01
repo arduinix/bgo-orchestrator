@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { Box, useTheme } from '@chakra-ui/react'
 
 interface ConsoleProps {

@@ -1,12 +1,9 @@
 import TopNavigation from '../top-navigation/TopNavigation'
-export interface HeaderProps {
-  loggedIn: boolean
-}
 
-export default function Header({ loggedIn }: HeaderProps) {
+export default function Header() {
   return (
     <>
-      <TopNavigation loggedIn={loggedIn} />
+      <TopNavigation />
     </>
   )
 }

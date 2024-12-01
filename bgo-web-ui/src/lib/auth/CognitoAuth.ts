@@ -1,4 +1,10 @@
-import { getCurrentUser, signIn, signOut, SignInInput } from '@aws-amplify/auth'
+import {
+  getCurrentUser,
+  signIn,
+  signOut,
+  SignInInput,
+  AuthUser,
+} from '@aws-amplify/auth'
 
 const ACCESS_TOKEN_KEY = 'accessToken'
 
@@ -10,6 +16,17 @@ export async function isLoggedIn(): Promise<boolean> {
   const response = await checkIsLoggedIn()
   return response
 }
+
+export async function getLoggedInUser(): Promise<AuthUser | boolean> {
+  const loggedIn = await checkIsLoggedIn()
+  console.log(loggedIn)
+  if (loggedIn) {
+    const user = await getCurrentUser()
+    return user
+  }
+  return false
+}
+
 export async function checkIsLoggedIn(): Promise<boolean> {
   try {
     const session = await getCurrentUser()

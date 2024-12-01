@@ -28,13 +28,19 @@ declare global {
     gender: string
     age: number
     isPlaying: boolean
+    isCheckedIn: boolean
     score: number
     imagePath?: string
+    inviteTimestamp?: string
+    inviteAcceptedTimestamp?: string
   }
 
   interface ExtendedPlayer extends Player {
     fullName: string
     isPlayingToggleNode?: ReactNode
+    inviteStatusNode?: ReactNode
+    checkedInNode?: ReactNode
+    playingNode?: ReactNode
   }
 
   interface GameCategory {
@@ -111,10 +117,11 @@ declare global {
     playersSearchField?: string
   }
 
+  type RoundPhase = 'setup' | 'ready' | 'playing' | 'complete'
   interface Round {
     id: string
     selectedCategoryId?: string
-    phase: 'setup' | 'ready' | 'playing' | 'complete' // this status should change when a new round is started by the game master
+    phase: RoundPhase // this status should change when a new round is started by the game master
     createdTimestamp: string
     startedTimestamp?: string
     completedTimestamp?: string

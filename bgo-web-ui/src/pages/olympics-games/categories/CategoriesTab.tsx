@@ -20,7 +20,7 @@ import EditCategoryForm from './EditCategoryForm'
 import GenericTable, {
   TableHeader,
 } from '@components/generic-table/GenericTable'
-import { FiTrash2, FiEdit } from 'react-icons/fi'
+import { FiTrash2, FiEdit, FiPlus } from 'react-icons/fi'
 
 export default function CategoriesTab() {
   const data: GameCategory[] = games.catagories
@@ -99,7 +99,7 @@ export default function CategoriesTab() {
       <Flex gap={2}>
         <IconButton
           size={'sm'}
-          aria-label='delete row'
+          aria-label='remove row'
           icon={<FiTrash2 />}
           onClick={() => handleDeleteClick(category)}
         />
@@ -115,7 +115,12 @@ export default function CategoriesTab() {
 
   const actionButtons = (
     <ButtonGroup size={'md'}>
-      <Button onClick={handleAddClick}>Add Category</Button>
+      <IconButton
+        size={'md'}
+        aria-label='add category'
+        icon={<FiPlus />}
+        onClick={handleAddClick}
+      />
       <Menu>
         <MenuButton as={IconButton} icon={<RxHamburgerMenu />} />
         <MenuList>
@@ -147,7 +152,7 @@ export default function CategoriesTab() {
       <ConfirmActionModal
         isOpen={isOpenDelete}
         closeAction={onCloseDelete}
-        header='Delete Category?'
+        header='Remove Category?'
         body={
           <>
             Are you sure you want to remove category{' '}
@@ -166,7 +171,7 @@ export default function CategoriesTab() {
         closeAction={onCloseEdit}
         header={
           selectedCategory && selectedCategory.id === 'new'
-            ? 'Create New Category'
+            ? 'Add New Category'
             : 'Edit Category Information'
         }
         body={

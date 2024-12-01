@@ -10,7 +10,10 @@
       "gender": "m",
       "age": 25,
       "isPlaying": true,
-      "score": 0
+      "isCheckedIn": true,
+      "score": 0,
+      "inviteTimestamp": "2023-01-01T11:00:00Z",
+      "inviteAcceptedTimestamp": "2023-01-02T11:00:00Z"
     },
     {
       "id": "2",
@@ -22,7 +25,9 @@
       "gender": "f",
       "age": 28,
       "isPlaying": false,
-      "score": 10
+      "isCheckedIn": false,
+      "score": 10,
+      "inviteTimestamp": "2023-01-01T11:00:00Z"
     },
     {
       "id": "3",
@@ -34,6 +39,7 @@
       "gender": "f",
       "age": 22,
       "isPlaying": true,
+      "isCheckedIn": true,
       "score": 15
     },
     {
@@ -46,6 +52,7 @@
       "gender": "m",
       "age": 30,
       "isPlaying": false,
+      "isCheckedIn": false,
       "score": 5
     },
     {
@@ -58,6 +65,7 @@
       "gender": "m",
       "age": 27,
       "isPlaying": true,
+      "isCheckedIn": true,
       "score": 20
     },
     {
@@ -70,6 +78,7 @@
       "gender": "f",
       "age": 24,
       "isPlaying": false,
+      "isCheckedIn": false,
       "score": 8
     },
     {
@@ -82,6 +91,7 @@
       "gender": "f",
       "age": 26,
       "isPlaying": true,
+      "isCheckedIn": true,
       "score": 12
     },
     {
@@ -94,6 +104,7 @@
       "gender": "m",
       "age": 29,
       "isPlaying": false,
+      "isCheckedIn": true,
       "score": 7
     },
     {
@@ -107,6 +118,7 @@
       "gender": "f",
       "age": 23,
       "isPlaying": true,
+      "isCheckedIn": false,
       "score": 18
     },
     {
@@ -119,6 +131,7 @@
       "gender": "m",
       "age": 31,
       "isPlaying": false,
+      "isCheckedIn": true,
       "score": 3
     },
     {
@@ -132,6 +145,7 @@
       "gender": "m",
       "age": 39,
       "isPlaying": true,
+      "isCheckedIn": true,
       "score": 3
     }
   ]
