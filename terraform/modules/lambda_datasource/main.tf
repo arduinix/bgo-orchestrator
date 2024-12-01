@@ -63,8 +63,8 @@ resource "aws_appsync_resolver" "this" {
   field             = each.key
   type              = each.value.resolver_type
   data_source       = aws_appsync_datasource.this[each.key].name
-  request_template  = file(lookup(each.value, "request_template", "${path.root}/../api/lambda.default.request.vtl"))
-  response_template = file(lookup(each.value, "response_template", "${path.root}/../api/lambda.default.response.vtl"))
+  request_template  = file(lookup(each.value, "request_template", var.default_request_template))
+  response_template = file(lookup(each.value, "response_template", var.default_response_template))
 
   caching_config {
     caching_keys = lookup(each.value, "caching_keys", ["$context.identity"])

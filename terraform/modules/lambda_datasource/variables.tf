@@ -104,7 +104,7 @@ variable "default_request_template" {
   description = "The default request template for the resolver"
 }
 
-variable "default_resposne_template" {
+variable "default_response_template" {
   type        = string
   description = "The default response template for the resolver"
 }

@@ -3,6 +3,13 @@ type Query {
   getEvent(id: ID!): Event
   listPlayers: [Player]
   getPlayer(id: ID!): Player
+  getMessage: Message
+}
+
+type Message {
+  id: ID!
+  message: String!
+  timestamp: String!
 }
 
 type Event {
