@@ -3,8 +3,8 @@ locals {
   bgo_api_deps_layer_dir       = "${path.root}/../bgo-api/dist/deps"
   bgo_api_functions_parent_dir = "${path.root}/../bgo-api/dist/"
   bgo_api_function_group_name  = "bgo-api"
-  default_request_template     = "${path.root}/api/resolvers/lambdaGeneric.request.vtl"
-  default_response_template    = "${path.root}/api/resolvers/lambdaGeneric.response.vtl"
+  default_request_template     = "${path.root}/../bgo-api/src/resolvers/lambdaGeneric.request.vtl"
+  default_response_template    = "${path.root}/../bgo-api/src/resolvers/lambdaGeneric.response.vtl"
   resolver_path_prefix         = "${path.root}/../bgo-api/src/resolvers/"
 }
 

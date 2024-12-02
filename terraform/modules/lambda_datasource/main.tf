@@ -65,7 +65,6 @@ resource "aws_appsync_resolver" "this" {
   data_source       = aws_appsync_datasource.this[each.key].name
   request_template  = file(lookup(each.value, "request_template", var.default_request_template))
   response_template = file(lookup(each.value, "response_template", var.default_response_template))
-
   caching_config {
     caching_keys = lookup(each.value, "caching_keys", ["$context.identity"])
     ttl          = 900
