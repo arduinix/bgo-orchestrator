@@ -32,7 +32,7 @@ module "lambda_datasources_bgo_api" {
   function_group            = local.bgo_api_function_group_name
   default_request_template  = local.default_request_template
   default_response_template = local.default_response_template
-  appsync_id = module.appsync_bgo_api.appsync_id
+  appsync_id                = module.appsync_bgo_api.appsync_id
   default_statements = [
     {
       sid       = "AllowLambdaToLog"

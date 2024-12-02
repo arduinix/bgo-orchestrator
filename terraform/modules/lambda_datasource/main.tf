@@ -10,7 +10,7 @@ terraform {
 }
 
 locals {
-  app_env_fn_name = "${var.app_name}-${var.env}"
+  app_env_fn_name = "${var.app_name}-${var.env}-${var.function_group}"
 }
 
 # data "archive_file" "this" {
@@ -46,7 +46,7 @@ resource "aws_appsync_datasource" "this" {
   api_id           = var.appsync_id
   name             = each.key
   type             = "AWS_LAMBDA"
-  service_role_arn = var.appsync_role_arn
+  service_role_arn = aws_iam_role.appsync_datasource_role.arn
 
   lambda_config {
     function_arn = aws_lambda_function.this[each.key].arn

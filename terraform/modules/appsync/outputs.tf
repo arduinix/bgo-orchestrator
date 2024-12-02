@@ -19,3 +19,4 @@ output "appsync_api_key" {
   description = "The API key"
   value       = var.enable_api_key ? aws_appsync_api_key.this[0].key : "none"
 }
+
