@@ -1,14 +1,21 @@
-import { Client, cacheExchange, fetchExchange } from 'urql';
+import { Client, cacheExchange, fetchExchange } from 'urql'
+import { fetchAuthSession } from '@aws-amplify/auth'
 
 const client = new Client({
-    url: 'http://localhost:3000/graphql',
-    exchanges: [cacheExchange, fetchExchange],
-    fetchOptions: () => {
-      const token = getToken();
-      return {
-        headers: { authorization: token ? `Bearer ${token}` : '' },
-      };
-    },
-  });
+  url: import.meta.env.VITE_GRAPHQL_API_URL as string,
+  exchanges: [cacheExchange, fetchExchange],
+  fetch: async (url, options) => {
+    const session = await fetchAuthSession()
+    const token = session.tokens?.accessToken.toString()
+    const updatedOptions = {
+      ...options,
+      headers: {
+        ...options?.headers,
+        Authorization: token ? `Bearer ${token}` : '',
+      },
+    }
+    return fetch(url, updatedOptions)
+  },
+})
 
-export default client;
+export default client

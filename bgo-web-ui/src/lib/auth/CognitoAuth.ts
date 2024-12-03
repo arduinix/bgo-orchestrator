@@ -53,3 +53,5 @@ export async function login(signInInput: SignInInput) {
       return err
     })
 }
+
+export async function getToken() {}
