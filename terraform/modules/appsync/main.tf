@@ -9,8 +9,8 @@ terraform {
 resource "aws_appsync_graphql_api" "this" {
   name = "${var.app_env}-${var.api_name}"
   #authentication_type = "AWS_LAMBDA"
-  authentication_type = "AMAZON_COGNITO_USER_POOLS"
-  schema              = var.schema
+  authentication_type  = "AMAZON_COGNITO_USER_POOLS"
+  schema               = var.schema
   introspection_config = "ENABLED"
   user_pool_config {
     aws_region     = var.region
@@ -62,23 +62,16 @@ resource "aws_appsync_domain_name" "this" {
 }
 
 resource "aws_appsync_domain_name_api_association" "this" {
-  count           = var.enable_custom_subdomain ? 1 : 0
-  domain_name     = aws_appsync_domain_name.this[0].domain_name
-  api_id          = aws_appsync_graphql_api.this.id
+  count       = var.enable_custom_subdomain ? 1 : 0
+  domain_name = aws_appsync_domain_name.this[0].domain_name
+  api_id      = aws_appsync_graphql_api.this.id
 }
 
-# resource "aws_lambda_permission" "this" {
-#   statement_id  = "appsync_lambda_authorizer"
-#   action        = "lambda:InvokeFunction"
-#   function_name = var.authorizer_name
-#   principal     = "appsync.amazonaws.com"
-#   source_arn    = aws_appsync_graphql_api.this.arn
-# }
-
-# resource "aws_lambda_permission" "door_crud_function" {
-#   statement_id  = "appsync_lambda_authorizer"
-#   action        = "lambda:InvokeFunction"
-#   function_name = var.door_crud_function_name
-#   principal     = "appsync.amazonaws.com"
-#   source_arn    = aws_appsync_graphql_api.this.arn
-# }
+resource "aws_route53_record" "this" {
+  count   = var.enable_custom_subdomain ? 1 : 0
+  zone_id = var.route53_zone_id
+  name    = aws_appsync_domain_name.this[0].domain_name
+  type    = "CNAME"
+  ttl     = "300"
+  records = [trimsuffix(trimprefix(aws_appsync_graphql_api.this.uris["GRAPHQL"], "https://"), "/graphql")]
+}

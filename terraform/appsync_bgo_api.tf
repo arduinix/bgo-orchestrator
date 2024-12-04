@@ -17,4 +17,5 @@ module "appsync_bgo_api" {
   api_custom_domain       = local.api_fqdn
   certificate_arn         = var.enable_custom_api_subdomain ? aws_acm_certificate.cert[0].arn : null
   user_pool_id            = var.enable_cognito ? aws_cognito_user_pool.this[0].id : null
+  route53_zone_id         = aws_route53_record.record[0].zone_id
 }

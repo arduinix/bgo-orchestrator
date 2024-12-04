@@ -1,52 +1,45 @@
 {
-  "listEvents": [
+  "Events": [
     {
       "id": "1",
       "name": "BGO Summer 2024",
       "location": "Dormont, PA",
-      "createdDate": "2024-07-01T00:00:00.000Z",
-      "playedDate": null,
-      "imagePath": null
+      "createdTimestamp": "2024-07-01T00:00:00.000Z"
     },
     {
       "id": "2",
       "name": "BGO Winter 2024",
       "location": "Dormont, PA",
-      "createdDate": "2024-01-01T00:00:00.000Z",
-      "playedDate": "2024-01-01T00:00:00.000Z",
-      "imagePath": null
+      "createdTimestamp": "2024-01-01T00:00:00.000Z",
+      "playedTimestamp": "2024-01-01T00:00:00.000Z"
     },
     {
       "id": "3",
       "name": "BGO Summer 2023",
       "location": "Dormont, PA",
-      "createdDate": "2023-07-01T00:00:00.000Z",
-      "playedDate": "2023-07-01T00:00:00.000Z",
-      "imagePath": null
+      "createdTimestamp": "2023-07-01T00:00:00.000Z",
+      "playedTimestamp": "2023-07-01T00:00:00.000Z"
     },
     {
       "id": "4",
       "name": "BGO Winter 2023",
       "location": "Dormont, PA",
-      "createdDate": "2023-01-01T00:00:00.000Z",
-      "playedDate": "2023-01-01T00:00:00.000Z",
-      "imagePath": null
+      "createdTimestamp": "2023-01-01T00:00:00.000Z",
+      "playedTimestamp": "2023-01-01T00:00:00.000Z"
     },
     {
       "id": "5",
       "name": "BGO Summer 2022",
       "location": "Dormont, PA",
-      "createdDate": "2022-07-01T00:00:00.000Z",
-      "playedDate": "2022-07-01T00:00:00.000Z",
-      "imagePath": null
+      "createdTimestamp": "2022-07-01T00:00:00.000Z",
+      "playedTimestamp": "2022-07-01T00:00:00.000Z"
     },
     {
       "id": "6",
       "name": "BGO Winter 2022",
       "location": "Dormont, PA",
-      "createdDate": "2022-01-01T00:00:00.000Z",
-      "playedDate": "2022-01-01T00:00:00.000Z",
-      "imagePath": null
+      "createdTimestamp": "2022-01-01T00:00:00.000Z",
+      "playedTimestamp": "2022-01-01T00:00:00.000Z"
     }
   ]
 }

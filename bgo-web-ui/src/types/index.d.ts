@@ -8,13 +8,13 @@ declare global {
     message: string
   }
 
-  interface ListEvent {
+  interface Event {
     id: string
     name: string
     location: string
-    createdDate: string
-    playedDate?: string | null
-    imagePath?: string | null
+    createdTimestamp: string
+    playedTimestamp?: string
+    imagePath?: string
   }
 
   interface Player {

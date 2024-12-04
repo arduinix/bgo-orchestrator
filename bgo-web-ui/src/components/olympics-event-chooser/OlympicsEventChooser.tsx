@@ -11,15 +11,15 @@ import {
 } from '@chakra-ui/react'
 import EventCard from './EventCard'
 import events from '@data/events.json'
-// import { getMessageQuery } from '@/graphql/message'
-// import { useQuery } from 'urql'
+import { getMessageQuery } from '@/graphql/message'
+import { useQuery } from 'urql'
 
 export default function OlympicsEventChooser() {
-  const data: ListEvent[] = events.listEvents
-  // const [result] = useQuery({ query: getMessageQuery })
-  // const { data: messageData } = result
+  const data: Event[] = events.Events
+  const [result] = useQuery({ query: getMessageQuery })
+  const { data: messageData } = result
 
-  // console.log('messageData', messageData)
+  console.log('messageData', messageData)
   return (
     <Box p={4}>
       <Stack spacing={4} as={Container} maxW={'4xl'} textAlign={'center'}>
