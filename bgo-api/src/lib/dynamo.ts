@@ -18,11 +18,17 @@ class DynamoDBUtils {
     this.client = DynamoDBDocumentClient.from(dynamoDbClient)
   }
 
-  async getItem(tableName: string, key: Record<string, any>): Promise<any> {
+  async getItem<T>(tableName: string, key: Record<string, any>): Promise<T | undefined> {
     const command = new GetItemCommand({ TableName: tableName, Key: key })
     const response = await this.client.send(command)
-    return response.Item
+    return response.Item as T | undefined
   }
+
+//   async getItem<any>(tableName: string, key: Record<string, any>): Promise<any> {
+//     const command = new GetItemCommand({ TableName: tableName, Key: key })
+//     const response = await this.client.send(command)
+//     return response.Item
+//   }
 
   async putItem(tableName: string, item: Record<string, any>): Promise<void> {
     const command = new PutItemCommand({ TableName: tableName, Item: item })
