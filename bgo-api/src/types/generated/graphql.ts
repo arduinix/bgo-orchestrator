@@ -23,6 +23,13 @@ export type Event = {
   name: Scalars['String']['output'];
 };
 
+export type Message = {
+  __typename?: 'Message';
+  id: Scalars['ID']['output'];
+  message: Scalars['String']['output'];
+  timestamp: Scalars['String']['output'];
+};
+
 export type Player = {
   __typename?: 'Player';
   email: Scalars['String']['output'];
@@ -33,18 +40,19 @@ export type Player = {
 
 export type Query = {
   __typename?: 'Query';
-  getEvent?: Maybe<Event>;
+  getMessage?: Maybe<Message>;
   getPlayer?: Maybe<Player>;
   listEvents?: Maybe<Array<Maybe<Event>>>;
   listPlayers?: Maybe<Array<Maybe<Player>>>;
-};
-
-
-export type QueryGetEventArgs = {
-  id: Scalars['ID']['input'];
+  readEvent?: Maybe<Event>;
 };
 
 
 export type QueryGetPlayerArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type QueryReadEventArgs = {
   id: Scalars['ID']['input'];
 };

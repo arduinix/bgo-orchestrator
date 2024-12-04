@@ -1,6 +1,6 @@
 type Query {
   listEvents: [Event]
-  getEvent(id: ID!): Event
+  readEvent(id: ID!): Event
   listPlayers: [Player]
   getPlayer(id: ID!): Player
   getMessage: Message

@@ -3,3 +3,13 @@ export interface MessageResponse {
   message: string
   timestamp: string
 }
+
+export interface EventRecord {
+  pk: string
+  sk: string
+  name: string
+  location: string
+  createdTimestamp: string
+  playedTimestamp?: string
+  imagePath?: string
+}

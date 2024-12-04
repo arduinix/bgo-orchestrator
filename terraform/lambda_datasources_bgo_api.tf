@@ -76,5 +76,13 @@ module "lambda_datasources_bgo_api" {
       # resquest_template =
       # response_template =
     },
+    readEvent = {
+      service_name     = "event"
+      resolver_type    = "Query"
+      create_resolver  = true
+      source_zip       = "${local.bgo_api_functions_parent_dir}/event/readEvent.zip"
+      lambda_layer_arn = [aws_lambda_layer_version.bgo_api_deps.arn]
+      statements       = []
+    },
   }
 }

@@ -3,7 +3,7 @@ OUT_DIR = ./out/src
 SERVICES_DIR = ${OUT_DIR}/services
 
 # list of the functions to be packaged by the @package recipe (space separated)
-PACKAGE_FUNCTIONS = exampleService/getMessage exampleService/randomWord
+PACKAGE_FUNCTIONS = exampleService/getMessage exampleService/randomWord event/readEvent
 
 
 all: clean install build package

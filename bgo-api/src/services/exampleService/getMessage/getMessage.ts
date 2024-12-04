@@ -1,12 +1,12 @@
 import { helloExample } from 'lib/helloExample'
 import { MessageResponse } from 'types'
-import KSUID from 'ksuid'
+import { ulid } from 'ulid'
 
 export async function handler(): Promise<MessageResponse> {
   console.log('Retrieving message...')
 
   return {
-    id: KSUID.randomSync().string,
+    id: ulid(),
     message: helloExample().message,
     timestamp: new Date().toISOString(),
   }

@@ -10,7 +10,7 @@ import {
 } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
 
-class DynamoDBUtils {
+class DynamoUtils {
   private client: DynamoDBDocumentClient
 
   constructor(region: string) {
@@ -112,4 +112,4 @@ class DynamoDBUtils {
   }
 }
 
-export default DynamoDBUtils
+export default DynamoUtils
