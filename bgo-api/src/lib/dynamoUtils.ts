@@ -1,5 +1,6 @@
 import {
   GetItemCommand,
+  GetItemCommandInput,
   PutItemCommand,
   QueryCommand,
   UpdateItemCommand,
@@ -12,25 +13,30 @@ import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
 
 class DynamoUtils {
   private client: DynamoDBDocumentClient
+  private tableName: string
 
-  constructor(region?: string) {
+  constructor(tableName: string, region?: string) {
     const dynamoDbClient = new DynamoDBClient({
       region: region || process.env.AWS_REGION,
     })
     this.client = DynamoDBDocumentClient.from(dynamoDbClient)
+    this.tableName = tableName
   }
 
   // async getItem<T>(
-  //   tableName: string,
   //   key: Record<string, any>
   // ): Promise<T | undefined> {
-  //   const command = new GetItemCommand({ TableName: tableName, Key: key })
+  //   const command = new GetItemCommand({ TableName: this.tableName, Key: key })
   //   const response = await this.client.send(command)
   //   return response.Item as T | undefined
   // }
 
-  async getItem(tableName: string, key: Record<string, any>): Promise<any> {
-    const command = new GetItemCommand({ TableName: tableName, Key: key })
+  async getItem(key: Record<string, any>, projectionExpression?: string): Promise<any> {
+    const command = new GetItemCommand({
+      TableName: this.tableName,
+      Key: key,
+      ProjectionExpression: projectionExpression,
+    } as GetItemCommandInput)
     const response = await this.client.send(command)
     return response.Item
   }

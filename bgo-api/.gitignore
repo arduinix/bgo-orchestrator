@@ -108,3 +108,5 @@ coverage/
 
 # Storybook build artifacts
 storybook-static/
+
+!eslint.config.js
