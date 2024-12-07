@@ -1,4 +1,5 @@
 import { AppSyncResolverEvent, AppSyncResolverHandler } from 'aws-lambda'
+import DynamoUtils from 'lib/dynamoUtils'
 
 interface ReadEventInput {
   input: {
@@ -6,25 +7,46 @@ interface ReadEventInput {
   }
 }
 
-interface ReadEventResponse {
-  message: string
+interface Event {
   id: string
+  name: string
+  location: string
+  createdTimestamp: string
+  playedTimestamp?: string
+  imagePath?: string
 }
 
 export const handler: AppSyncResolverHandler<
   ReadEventInput,
-  ReadEventResponse
+  Event
 > = async (
   event: AppSyncResolverEvent<ReadEventInput>
-): Promise<ReadEventResponse> => {
+): Promise<Event> => {
   try {
     console.log('Received event:', JSON.stringify(event, null, 2))
 
     const { id } = event.arguments.input
-    console.log('id:', id)
+
+    const dynamoUtils = new DynamoUtils()
+    const eventRecord = await dynamoUtils.getItem({
+      pk: `Event#${id}`,
+      sk: `Event#${id}`,
+    })
+    }
+
+    if (!eventRecord) {
+      throw new Error('Event not found')
+    }
+
+    const { name, location, createdTimestamp, playedTimestamp, imagePath } = eventRecord
+
     return {
-      message: 'Hello, world!',
       id: id,
+      name: name,
+      location: location,
+      createdTimestamp: createdTimestamp,
+      playedTimestamp: playedTimestamp,
+      imagePath: imagePath,
     }
   } catch (error) {
     console.error('Error handling the event:', error)

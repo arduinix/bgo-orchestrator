@@ -13,22 +13,27 @@ import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
 class DynamoUtils {
   private client: DynamoDBDocumentClient
 
-  constructor(region: string) {
-    const dynamoDbClient = new DynamoDBClient({ region })
+  constructor(region?: string) {
+    const dynamoDbClient = new DynamoDBClient({
+      region: region || process.env.AWS_REGION,
+    })
     this.client = DynamoDBDocumentClient.from(dynamoDbClient)
   }
 
-  async getItem<T>(tableName: string, key: Record<string, any>): Promise<T | undefined> {
+  // async getItem<T>(
+  //   tableName: string,
+  //   key: Record<string, any>
+  // ): Promise<T | undefined> {
+  //   const command = new GetItemCommand({ TableName: tableName, Key: key })
+  //   const response = await this.client.send(command)
+  //   return response.Item as T | undefined
+  // }
+
+  async getItem(tableName: string, key: Record<string, any>): Promise<any> {
     const command = new GetItemCommand({ TableName: tableName, Key: key })
     const response = await this.client.send(command)
-    return response.Item as T | undefined
+    return response.Item
   }
-
-//   async getItem<any>(tableName: string, key: Record<string, any>): Promise<any> {
-//     const command = new GetItemCommand({ TableName: tableName, Key: key })
-//     const response = await this.client.send(command)
-//     return response.Item
-//   }
 
   async putItem(tableName: string, item: Record<string, any>): Promise<void> {
     const command = new PutItemCommand({ TableName: tableName, Item: item })
