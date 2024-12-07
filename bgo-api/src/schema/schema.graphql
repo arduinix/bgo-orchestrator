@@ -1,6 +1,6 @@
 type Query {
   listEvents: [Event]
-  readEvent(id: ID!): Event
+  readEvent(input: ReadEventInput!): Event
   listPlayers: [Player]
   getPlayer(id: ID!): Player
   getMessage: Message
@@ -12,17 +12,14 @@ type Message {
   timestamp: String!
 }
 
+input ReadEventInput {
+  id: ID!
+}
+
 type Event {
   id: ID!
   name: String!
   description: String!
   date: String!
   location: String!
-}
-
-type Player {
-  id: ID!
-  name: String!
-  email: String!
-  phone: String
 }
