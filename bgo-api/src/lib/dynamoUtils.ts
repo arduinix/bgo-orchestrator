@@ -8,55 +8,71 @@ import {
   ScanCommand,
   DynamoDBClient,
   QueryCommandInput,
+  PutItemCommandInput,
+  PutItemCommandOutput,
+  QueryInput,
 } from '@aws-sdk/client-dynamodb'
-import { DynamoDBDocumentClient } from '@aws-sdk/lib-dynamodb'
+// import { TranslateConfig } from '@aws-sdk/lib-dynamodb'
+import { marshall, unmarshall } from '@aws-sdk/util-dynamodb'
 
 class DynamoUtils {
-  private client: DynamoDBDocumentClient
+  private client: DynamoDBClient
   private tableName: string
 
   constructor(tableName: string, region?: string) {
     const dynamoDbClient = new DynamoDBClient({
       region: region || process.env.AWS_REGION,
     })
-    this.client = DynamoDBDocumentClient.from(dynamoDbClient)
+    // const translateConfig: TranslateConfig = {
+    //   marshallOptions: {
+    //     removeUndefinedValues: true,
+    //     convertEmptyValues: true,
+    //     convertClassInstanceToMap: true,
+    //   },
+    //   unmarshallOptions: {
+    //     wrapNumbers: false,
+    //   },
+    // }
+    this.client = dynamoDbClient
     this.tableName = tableName
   }
-
-  // async getItem<T>(
-  //   key: Record<string, any>
-  // ): Promise<T | undefined> {
-  //   const command = new GetItemCommand({ TableName: this.tableName, Key: key })
-  //   const response = await this.client.send(command)
-  //   return response.Item as T | undefined
-  // }
 
   async getItem(key: Record<string, any>, projectionExpression?: string): Promise<any> {
     const command = new GetItemCommand({
       TableName: this.tableName,
-      Key: key,
+      Key: marshall(key),
       ProjectionExpression: projectionExpression,
     } as GetItemCommandInput)
     const response = await this.client.send(command)
-    return response.Item
+    return response.Item ? unmarshall(response.Item) : undefined
   }
 
-  async putItem(tableName: string, item: Record<string, any>): Promise<void> {
-    const command = new PutItemCommand({ TableName: tableName, Item: item })
-    await this.client.send(command)
+  async putItem(item: Record<string, any>): Promise<PutItemCommandOutput> {
+    const command = new PutItemCommand({
+      TableName: this.tableName,
+      Item: marshall(item),
+    } as PutItemCommandInput)
+    return await this.client.send(command)
   }
 
   async query(
-    tableName: string,
-    keyCondition: string,
-    expressionValues: Record<string, any>
+    keyConditionExpression?: string,
+    expressionAttributeNames?: Record<string, string>,
+    expressionAttributeValues?: Record<string, any>,
+    filterExpression?: string,
+    indexName?: string
   ): Promise<any[]> {
     const command = new QueryCommand({
-      TableName: tableName,
-      KeyConditionExpression: keyCondition,
-      ExpressionAttributeValues: expressionValues,
-    })
+      TableName: this.tableName,
+      KeyConditionExpression: keyConditionExpression,
+      ExpressionAttributeNames: expressionAttributeNames,
+      ExpressionAttributeValues: expressionAttributeValues,
+      FilterExpression: filterExpression,
+      IndexName: indexName,
+    } as QueryInput)
+    console.log('Query command:', command)
     const response = await this.client.send(command)
+    console.log('Query response:', response)
     return response.Items || []
   }
 
