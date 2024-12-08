@@ -19,7 +19,7 @@ class DynamoUtils {
   private client: DynamoDBClient
   private tableName: string
 
-  constructor(tableName: string, region?: string) {
+  constructor(tableName: string, region?: string, client?: DynamoDBClient) {
     const dynamoDbClient = new DynamoDBClient({
       region: region || process.env.AWS_REGION,
     })
@@ -33,7 +33,7 @@ class DynamoUtils {
     //     wrapNumbers: false,
     //   },
     // }
-    this.client = dynamoDbClient
+    this.client = client || dynamoDbClient
     this.tableName = tableName
   }
 
@@ -55,25 +55,31 @@ class DynamoUtils {
     return await this.client.send(command)
   }
 
-  async query(
-    keyConditionExpression?: string,
-    expressionAttributeNames?: Record<string, string>,
-    expressionAttributeValues?: Record<string, any>,
-    filterExpression?: string,
+  async query({
+    keyConditionExpression,
+    expressionAttributeNames,
+    expressionAttributeValues,
+    filterExpression,
+    indexName,
+  }: {
+    keyConditionExpression?: string
+    expressionAttributeNames?: Record<string, string>
+    expressionAttributeValues?: Record<string, any>
+    filterExpression?: string
     indexName?: string
-  ): Promise<any[]> {
+  }): Promise<any[]> {
     const command = new QueryCommand({
       TableName: this.tableName,
       KeyConditionExpression: keyConditionExpression,
       ExpressionAttributeNames: expressionAttributeNames,
-      ExpressionAttributeValues: expressionAttributeValues,
+      ExpressionAttributeValues: marshall(expressionAttributeValues),
       FilterExpression: filterExpression,
       IndexName: indexName,
     } as QueryInput)
     console.log('Query command:', command)
     const response = await this.client.send(command)
     console.log('Query response:', response)
-    return response.Items || []
+    return response.Items ? response.Items.map((item) => unmarshall(item)) : []
   }
 
   async updateItem(
