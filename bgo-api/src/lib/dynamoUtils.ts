@@ -13,6 +13,8 @@ import {
   PutItemCommandInput,
   PutItemCommandOutput,
   QueryInput,
+  DeleteItemCommandInput,
+  DeleteItemCommandOutput,
 } from '@aws-sdk/client-dynamodb'
 // import { TranslateConfig } from '@aws-sdk/lib-dynamodb'
 import { marshall, unmarshall } from '@aws-sdk/util-dynamodb'
@@ -34,6 +36,11 @@ export interface UpdateItemInputUnmarshalled
     UpdateItemCommandInput,
     'TableName' | 'Key' | 'ExpressionAttributeValues' | 'UpdateExpression'
   > {
+  Key: Record<string, any>
+}
+
+export interface DeleteItemInputUnmarshalled
+  extends Omit<DeleteItemCommandInput, 'TableName' | 'Key'> {
   Key: Record<string, any>
 }
 
@@ -79,23 +86,6 @@ class DynamoUtils {
     return response.Items ? response.Items.map((item) => unmarshall(item)) : []
   }
 
-  // async updateItem(
-  //   tableName: string,
-  //   key: Record<string, any>,
-  //   updateExpression: string,
-  //   expressionValues: Record<string, any>,
-  //   expressionNames?: Record<string, string>
-  // ): Promise<void> {
-  //   const command = new UpdateItemCommand({
-  //     TableName: tableName,
-  //     Key: key,
-  //     UpdateExpression: updateExpression,
-  //     ExpressionAttributeValues: expressionValues,
-  //     ExpressionAttributeNames: expressionNames,
-  //   })
-  //   await this.client.send(command)
-  // }
-
   async updateItem(
     params: UpdateItemInputUnmarshalled,
     updatedRecord: Record<string, any>
@@ -112,9 +102,14 @@ class DynamoUtils {
     return response
   }
 
-  async deleteItem(tableName: string, key: Record<string, any>): Promise<void> {
-    const command = new DeleteItemCommand({ TableName: tableName, Key: key })
-    await this.client.send(command)
+  async deleteItem(params: DeleteItemInputUnmarshalled): Promise<DeleteItemCommandOutput> {
+    const command = new DeleteItemCommand({
+      ...params,
+      TableName: this.tableName,
+      Key: marshall(params.Key),
+    } as DeleteItemCommandInput)
+    const response = await this.client.send(command)
+    return response
   }
 
   async scanTable(tableName: string, limit?: number): Promise<any[]> {

@@ -97,7 +97,7 @@ export const handlerQuery: AppSyncResolverHandler<ReadEventInput, any> = async (
 
     const dynamoUtils = new DynamoUtils(data_table_name)
 
-    // const location = 'Dormont, PA'
+    //const location = 'Dormont, PA'
     const location = 'Broomfield, CO'
 
     // const events = await dynamoUtils.query({
@@ -146,6 +146,27 @@ export const handlerUpdateItem: AppSyncResolverHandler<ReadEventInput, any> = as
         eventLocation: location,
       }
     )
+
+    return response
+  } catch (error) {
+    console.error('Error handling the event:', error)
+    throw new Error('An error occurred')
+  }
+}
+
+export const handlerDeleteItem: AppSyncResolverHandler<ReadEventInput, any> = async (
+  event: AppSyncResolverEvent<ReadEventInput>
+): Promise<any> => {
+  try {
+    console.log('Received event:', JSON.stringify(event, null, 2))
+
+    const { id } = event.arguments.input
+
+    const dynamoUtils = new DynamoUtils(data_table_name)
+
+    const response = await dynamoUtils.deleteItem({
+      Key: { pk: `event#${id}`, sk: `event#${id}` },
+    })
 
     return response
   } catch (error) {
