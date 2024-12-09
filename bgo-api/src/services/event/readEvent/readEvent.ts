@@ -72,40 +72,17 @@ export const handler: AppSyncResolverHandler<ReadEventInput, any> = async (
 
     const dynamoUtils = new DynamoUtils(data_table_name)
 
-    // const events = await dynamoUtils.query('pk = :pk AND begins_with(type, :type)', {
-    //   ':pk': `event#${id}`,
-    //   ':type': 'event#',
-    // })
     const location = 'Dormont, PA'
 
-    // const queryInput: QueryInput = {
-    //   TableName: data_table_name,
-    //   KeyConditionExpression: 'pk = :pk AND begins_with(sk, :sk)',
-    //   ExpressionAttributeValues: {
-    //     ':pk': `event#${id}`,
-    //     ':sk': 'event#',
-    //   },
-    // }
-
-    // const events = await dynamoUtils.query({
-    //   keyConditionExpression: 'location = :loc',
-    //   expressionAttributeValues: {
-    //     ':loc': { S: location },
-    //   },
-    //   indexName: 'location-index',
-
-    // })
-
     const events = await dynamoUtils.query({
-      keyConditionExpression: 'pk = :pk AND begins_with(sk, :sk)',
-      filterExpression: 'eventLocation = :loc',
-      expressionAttributeValues: {
-        ':pk': `event#${id}`, // Partition key
-        ':sk': 'event#', // Sort key condition
-        ':loc': location,
+      TableName: data_table_name,
+      KeyConditionExpression: 'pk = :pk AND begins_with(sk, :sk)',
+      FilterExpression: 'eventLocation = :loc',
+      ExpressionAttributeValues: {
+        ':pk': { S: `event#${id}` }, // Partition key
+        ':sk': { S: 'event#' }, // Sort key condition
+        ':loc': { S: location },
       },
-
-
     })
 
     return events

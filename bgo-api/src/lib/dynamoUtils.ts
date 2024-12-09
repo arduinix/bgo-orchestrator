@@ -55,30 +55,36 @@ class DynamoUtils {
     return await this.client.send(command)
   }
 
-  async query({
-    keyConditionExpression,
-    expressionAttributeNames,
-    expressionAttributeValues,
-    filterExpression,
-    indexName,
-  }: {
-    keyConditionExpression?: string
-    expressionAttributeNames?: Record<string, string>
-    expressionAttributeValues?: Record<string, any>
-    filterExpression?: string
-    indexName?: string
-  }): Promise<any[]> {
-    const command = new QueryCommand({
-      TableName: this.tableName,
-      KeyConditionExpression: keyConditionExpression,
-      ExpressionAttributeNames: expressionAttributeNames,
-      ExpressionAttributeValues: marshall(expressionAttributeValues),
-      FilterExpression: filterExpression,
-      IndexName: indexName,
-    } as QueryInput)
-    console.log('Query command:', command)
+  // async query({
+  //   keyConditionExpression,
+  //   expressionAttributeNames,
+  //   expressionAttributeValues,
+  //   filterExpression,
+  //   indexName,
+  // }: {
+  //   keyConditionExpression?: string
+  //   expressionAttributeNames?: Record<string, string>
+  //   expressionAttributeValues?: Record<string, any>
+  //   filterExpression?: string
+  //   indexName?: string
+  // }): Promise<any[]> {
+  //   const command = new QueryCommand({
+  //     TableName: this.tableName,
+  //     KeyConditionExpression: keyConditionExpression,
+  //     ExpressionAttributeNames: expressionAttributeNames,
+  //     ExpressionAttributeValues: marshall(expressionAttributeValues),
+  //     FilterExpression: filterExpression,
+  //     IndexName: indexName,
+  //   } as QueryInput)
+  //   console.log('Query command:', command)
+  //   const response = await this.client.send(command)
+  //   console.log('Query response:', response)
+  //   return response.Items ? response.Items.map((item) => unmarshall(item)) : []
+  // }
+
+  async query(params: QueryInput) {
+    const command = new QueryCommand(params)
     const response = await this.client.send(command)
-    console.log('Query response:', response)
     return response.Items ? response.Items.map((item) => unmarshall(item)) : []
   }
 
