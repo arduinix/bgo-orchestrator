@@ -4,6 +4,8 @@ import {
   PutItemCommand,
   QueryCommand,
   UpdateItemCommand,
+  UpdateItemCommandInput,
+  UpdateItemCommandOutput,
   DeleteItemCommand,
   ScanCommand,
   DynamoDBClient,
@@ -15,6 +17,26 @@ import {
 // import { TranslateConfig } from '@aws-sdk/lib-dynamodb'
 import { marshall, unmarshall } from '@aws-sdk/util-dynamodb'
 
+export interface GetItemInputUnmarshalled extends Omit<GetItemCommandInput, 'TableName' | 'Key'> {
+  Key: Record<string, any>
+}
+
+export interface PutItemInputUnmarshalled extends Omit<PutItemCommandInput, 'TableName' | 'Item'> {
+  Item: Record<string, any>
+}
+export interface QueryInputUnmarshalled
+  extends Omit<QueryInput, 'TableName' | 'ExpressionAttributeValues'> {
+  ExpressionAttributeValues: Record<string, any>
+}
+
+export interface UpdateItemInputUnmarshalled
+  extends Omit<
+    UpdateItemCommandInput,
+    'TableName' | 'Key' | 'ExpressionAttributeValues' | 'UpdateExpression'
+  > {
+  Key: Record<string, any>
+}
+
 class DynamoUtils {
   private client: DynamoDBClient
   private tableName: string
@@ -23,86 +45,71 @@ class DynamoUtils {
     const dynamoDbClient = new DynamoDBClient({
       region: region || process.env.AWS_REGION,
     })
-    // const translateConfig: TranslateConfig = {
-    //   marshallOptions: {
-    //     removeUndefinedValues: true,
-    //     convertEmptyValues: true,
-    //     convertClassInstanceToMap: true,
-    //   },
-    //   unmarshallOptions: {
-    //     wrapNumbers: false,
-    //   },
-    // }
+
     this.client = client || dynamoDbClient
     this.tableName = tableName
   }
 
-  async getItem(key: Record<string, any>, projectionExpression?: string): Promise<any> {
+  async getItem(params: GetItemInputUnmarshalled): Promise<any> {
     const command = new GetItemCommand({
+      ...params,
       TableName: this.tableName,
-      Key: marshall(key),
-      ProjectionExpression: projectionExpression,
+      Key: marshall(params.Key),
     } as GetItemCommandInput)
     const response = await this.client.send(command)
     return response.Item ? unmarshall(response.Item) : undefined
   }
 
-  async putItem(item: Record<string, any>): Promise<PutItemCommandOutput> {
+  async putItem(params: PutItemInputUnmarshalled): Promise<PutItemCommandOutput> {
     const command = new PutItemCommand({
+      ...params,
       TableName: this.tableName,
-      Item: marshall(item),
+      Item: marshall(params.Item),
     } as PutItemCommandInput)
     return await this.client.send(command)
   }
 
-  // async query({
-  //   keyConditionExpression,
-  //   expressionAttributeNames,
-  //   expressionAttributeValues,
-  //   filterExpression,
-  //   indexName,
-  // }: {
-  //   keyConditionExpression?: string
-  //   expressionAttributeNames?: Record<string, string>
-  //   expressionAttributeValues?: Record<string, any>
-  //   filterExpression?: string
-  //   indexName?: string
-  // }): Promise<any[]> {
-  //   const command = new QueryCommand({
-  //     TableName: this.tableName,
-  //     KeyConditionExpression: keyConditionExpression,
-  //     ExpressionAttributeNames: expressionAttributeNames,
-  //     ExpressionAttributeValues: marshall(expressionAttributeValues),
-  //     FilterExpression: filterExpression,
-  //     IndexName: indexName,
-  //   } as QueryInput)
-  //   console.log('Query command:', command)
-  //   const response = await this.client.send(command)
-  //   console.log('Query response:', response)
-  //   return response.Items ? response.Items.map((item) => unmarshall(item)) : []
-  // }
-
-  async query(params: QueryInput) {
-    const command = new QueryCommand(params)
+  async query(params: QueryInputUnmarshalled) {
+    const command = new QueryCommand({
+      ...params,
+      TableName: this.tableName,
+      ExpressionAttributeValues: marshall(params.ExpressionAttributeValues),
+    } as QueryInput)
     const response = await this.client.send(command)
     return response.Items ? response.Items.map((item) => unmarshall(item)) : []
   }
 
+  // async updateItem(
+  //   tableName: string,
+  //   key: Record<string, any>,
+  //   updateExpression: string,
+  //   expressionValues: Record<string, any>,
+  //   expressionNames?: Record<string, string>
+  // ): Promise<void> {
+  //   const command = new UpdateItemCommand({
+  //     TableName: tableName,
+  //     Key: key,
+  //     UpdateExpression: updateExpression,
+  //     ExpressionAttributeValues: expressionValues,
+  //     ExpressionAttributeNames: expressionNames,
+  //   })
+  //   await this.client.send(command)
+  // }
+
   async updateItem(
-    tableName: string,
-    key: Record<string, any>,
-    updateExpression: string,
-    expressionValues: Record<string, any>,
-    expressionNames?: Record<string, string>
-  ): Promise<void> {
+    params: UpdateItemInputUnmarshalled,
+    updatedRecord: Record<string, any>
+  ): Promise<UpdateItemCommandOutput> {
+    const updateParams = this.generateUpdateParams(updatedRecord)
+    console.log('updateParams', updateParams)
     const command = new UpdateItemCommand({
-      TableName: tableName,
-      Key: key,
-      UpdateExpression: updateExpression,
-      ExpressionAttributeValues: expressionValues,
-      ExpressionAttributeNames: expressionNames,
-    })
-    await this.client.send(command)
+      ...params,
+      TableName: this.tableName,
+      Key: marshall(params.Key),
+      ...updateParams,
+    } as UpdateItemCommandInput)
+    const response = await this.client.send(command)
+    return response
   }
 
   async deleteItem(tableName: string, key: Record<string, any>): Promise<void> {
@@ -148,6 +155,27 @@ class DynamoUtils {
     } while (lastEvaluatedKey)
 
     return allItems
+  }
+
+  generateUpdateParams(updateObject: Record<string, any>): {
+    ExpressionAttributeValues: Record<string, any>
+    UpdateExpression: string
+  } {
+    const expressionValues: Record<string, any> = {}
+    const updateExpressionParts: string[] = []
+
+    Object.keys(updateObject).forEach((key, index) => {
+      const expressionKey = `:value${index}`
+      expressionValues[expressionKey] = updateObject[key]
+      updateExpressionParts.push(`${key} = ${expressionKey}`)
+    })
+
+    const updateExpression = `SET ${updateExpressionParts.join(', ')}`
+
+    return {
+      ExpressionAttributeValues: marshall(expressionValues),
+      UpdateExpression: updateExpression,
+    }
   }
 }
 

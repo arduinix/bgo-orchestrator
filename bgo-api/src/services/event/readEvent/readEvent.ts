@@ -2,7 +2,7 @@ import { AppSyncResolverEvent, AppSyncResolverHandler } from 'aws-lambda'
 import DynamoUtils from 'lib/dynamoUtils'
 import * as dotenv from 'dotenv'
 import { Logger } from '@aws-lambda-powertools/logger'
-import { QueryInput } from '@aws-sdk/client-dynamodb'
+import { ulid } from 'ulid'
 
 dotenv.config()
 const logger = new Logger({ serviceName: 'event-service' })
@@ -23,66 +23,99 @@ interface Event {
   playedTimestamp?: string
   imagePath?: string
 }
-// get item
-// export const handler: AppSyncResolverHandler<ReadEventInput, Event> = async (
-//   event: AppSyncResolverEvent<ReadEventInput>
-// ): Promise<Event> => {
-//   try {
-//     console.log('Received event:', JSON.stringify(event, null, 2))
 
-//     const { id } = event.arguments.input
-//     logger.info(`Reading event with id: ${id}`)
+export const handlerGetItem: AppSyncResolverHandler<ReadEventInput, Event> = async (
+  event: AppSyncResolverEvent<ReadEventInput>
+): Promise<Event> => {
+  try {
+    console.log('Received event:', JSON.stringify(event, null, 2))
 
-//     const dynamoUtils = new DynamoUtils(data_table_name)
+    const { id } = event.arguments.input
 
-//     const eventRecord = await dynamoUtils.getItem({
-//       pk: `event#${id}`,
-//       sk: `event#${id}`,
-//     })
+    const dynamoUtils = new DynamoUtils(data_table_name)
 
-//     if (!eventRecord) {
-//       throw new Error('Requested event not found.')
-//     }
+    const eventRecord = await dynamoUtils.getItem({
+      Key: { pk: `event#${id}`, sk: `event#${id}` },
+    })
 
-//     const { name, location, createdTimestamp, playedTimestamp, imagePath } = eventRecord
+    if (!eventRecord) {
+      throw new Error('Requested event not found.')
+    }
 
-//     return {
-//       id: id,
-//       name: name,
-//       location: location,
-//       createdTimestamp: createdTimestamp,
-//       playedTimestamp: playedTimestamp,
-//       imagePath: imagePath,
-//     }
-//   } catch (error) {
-//     console.error('Error handling the event:', error)
-//     throw new Error('An error occurred')
-//   }
-// }
+    const { eventName, eventLocation, createdTimestamp, playedTimestamp, imagePath } = eventRecord
 
-// query/list
-export const handler: AppSyncResolverHandler<ReadEventInput, any> = async (
+    return {
+      id: id,
+      eventName: eventName,
+      eventLocation: eventLocation,
+      createdTimestamp: createdTimestamp,
+      playedTimestamp: playedTimestamp,
+      imagePath: imagePath,
+    }
+  } catch (error) {
+    console.error('Error handling the event:', error)
+    throw new Error('An error occurred')
+  }
+}
+
+export const handlerPutItem: AppSyncResolverHandler<ReadEventInput, any> = async (
+  event: AppSyncResolverEvent<ReadEventInput>
+): Promise<any> => {
+  try {
+    console.log('Received event:', JSON.stringify(event, null, 2))
+
+    const id = ulid()
+
+    const dynamoUtils = new DynamoUtils(data_table_name)
+
+    const location = 'Dormont, PA'
+
+    const response = await dynamoUtils.putItem({
+      Item: {
+        pk: `event#${id}`,
+        sk: `event#${id}`,
+        eventLocation: location,
+        eventName: 'BGO Event',
+        createdTimestamp: new Date().toISOString(),
+      },
+    })
+
+    return response
+  } catch (error) {
+    console.error('Error handling the event:', error)
+    throw new Error('An error occurred')
+  }
+}
+
+export const handlerQuery: AppSyncResolverHandler<ReadEventInput, any> = async (
   event: AppSyncResolverEvent<ReadEventInput>
 ): Promise<any> => {
   try {
     console.log('Received event:', JSON.stringify(event, null, 2))
 
     const { id } = event.arguments.input
-    logger.info(`Reading event with id: ${id}`)
 
     const dynamoUtils = new DynamoUtils(data_table_name)
 
-    const location = 'Dormont, PA'
+    // const location = 'Dormont, PA'
+    const location = 'Broomfield, CO'
+
+    // const events = await dynamoUtils.query({
+    //   KeyConditionExpression: 'pk = :pk AND begins_with(sk, :sk)',
+    //   FilterExpression: 'eventLocation = :loc',
+    //   ExpressionAttributeValues: {
+    //     ':pk': `event#${id}`,
+    //     ':sk': 'event#',
+    //     ':loc': location,
+    //   },
+    // })
 
     const events = await dynamoUtils.query({
-      TableName: data_table_name,
-      KeyConditionExpression: 'pk = :pk AND begins_with(sk, :sk)',
-      FilterExpression: 'eventLocation = :loc',
+      KeyConditionExpression: 'eventLocation = :loc',
       ExpressionAttributeValues: {
-        ':pk': { S: `event#${id}` }, // Partition key
-        ':sk': { S: 'event#' }, // Sort key condition
-        ':loc': { S: location },
+        ':loc': location,
       },
+      IndexName: 'eventLocation-index',
     })
 
     return events
@@ -91,3 +124,34 @@ export const handler: AppSyncResolverHandler<ReadEventInput, any> = async (
     throw new Error('An error occurred')
   }
 }
+
+export const handlerUpdateItem: AppSyncResolverHandler<ReadEventInput, any> = async (
+  event: AppSyncResolverEvent<ReadEventInput>
+): Promise<any> => {
+  try {
+    console.log('Received event:', JSON.stringify(event, null, 2))
+
+    const { id } = event.arguments.input
+
+    const dynamoUtils = new DynamoUtils(data_table_name)
+
+    const location = 'Broomfield, CO'
+
+    const response = await dynamoUtils.updateItem(
+      {
+        Key: { pk: `event#${id}`, sk: `event#${id}` },
+        ReturnValues: 'ALL_NEW',
+      },
+      {
+        eventLocation: location,
+      }
+    )
+
+    return response
+  } catch (error) {
+    console.error('Error handling the event:', error)
+    throw new Error('An error occurred')
+  }
+}
+
+export { handlerQuery as handler }
