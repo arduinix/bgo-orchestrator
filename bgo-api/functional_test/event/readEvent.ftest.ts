@@ -6,7 +6,7 @@ const callback = () => {}
 const event: AppSyncResolverEvent<any> = {
   arguments: {
     input: {
-      id: '01JE9AWFDECV5Y1BF1CJ796PMK',
+      id: '01JEPF5BZP5RT7DE65CT4E75NW',
     },
   },
   identity: {

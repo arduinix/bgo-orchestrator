@@ -51,7 +51,7 @@ class DynamoUtils {
   private client: DynamoDBClient
   private tableName: string
 
-  constructor(tableName: string, region?: string, client?: DynamoDBClient) {
+  constructor(tableName: string,  client?: DynamoDBClient, region?: string,) {
     const dynamoDbClient = new DynamoDBClient({
       region: region || process.env.AWS_REGION,
     })
@@ -174,3 +174,4 @@ class DynamoUtils {
 }
 
 export default DynamoUtils
+export { DynamoDBClient }

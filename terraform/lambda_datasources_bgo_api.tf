@@ -62,6 +62,7 @@ module "lambda_datasources_bgo_api" {
   ]
   default_env_vars = {
     POWERTOOLS_LOGGER_LOG_EVENT = true
+    LOG_LEVEL_DEBUG             = false
     ENV                         = var.env
   }
   functions = {
