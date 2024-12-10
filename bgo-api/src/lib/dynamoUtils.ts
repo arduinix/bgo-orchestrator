@@ -9,14 +9,13 @@ import {
   DeleteItemCommand,
   ScanCommand,
   DynamoDBClient,
-  QueryCommandInput,
   PutItemCommandInput,
   PutItemCommandOutput,
   QueryInput,
   DeleteItemCommandInput,
   DeleteItemCommandOutput,
+  ScanInput,
 } from '@aws-sdk/client-dynamodb'
-// import { TranslateConfig } from '@aws-sdk/lib-dynamodb'
 import { marshall, unmarshall } from '@aws-sdk/util-dynamodb'
 
 export interface GetItemInputUnmarshalled extends Omit<GetItemCommandInput, 'TableName' | 'Key'> {
@@ -44,6 +43,10 @@ export interface DeleteItemInputUnmarshalled
   Key: Record<string, any>
 }
 
+export interface ScanInputUnmarshalled
+  extends Omit<ScanInput, 'TableName' | 'ExpressionAttributeValues'> {
+  ExpressionAttributeValues?: Record<string, any>
+}
 class DynamoUtils {
   private client: DynamoDBClient
   private tableName: string
@@ -76,14 +79,33 @@ class DynamoUtils {
     return await this.client.send(command)
   }
 
-  async query(params: QueryInputUnmarshalled) {
-    const command = new QueryCommand({
-      ...params,
-      TableName: this.tableName,
-      ExpressionAttributeValues: marshall(params.ExpressionAttributeValues),
-    } as QueryInput)
-    const response = await this.client.send(command)
-    return response.Items ? response.Items.map((item) => unmarshall(item)) : []
+  async query(
+    params: QueryInputUnmarshalled,
+    returnAllRecords: boolean = false
+  ): Promise<{ items: any[]; lastEvaluatedKey: any }> {
+    const allItems: any[] = []
+    let lastEvaluatedKey: any = null
+
+    do {
+      const command = new QueryCommand({
+        ...params,
+        TableName: this.tableName,
+        ExpressionAttributeValues: params.ExpressionAttributeValues
+          ? marshall(params.ExpressionAttributeValues, {
+              removeUndefinedValues: true,
+            })
+          : undefined,
+        ExclusiveStartKey: lastEvaluatedKey,
+      } as QueryInput)
+
+      const response = await this.client.send(command)
+      if (response.Items) {
+        allItems.push(...response.Items.map((item) => unmarshall(item)))
+      }
+      lastEvaluatedKey = response.LastEvaluatedKey
+    } while (returnAllRecords && lastEvaluatedKey)
+
+    return { items: allItems, lastEvaluatedKey }
   }
 
   async updateItem(
@@ -112,44 +134,21 @@ class DynamoUtils {
     return response
   }
 
-  async scanTable(tableName: string, limit?: number): Promise<any[]> {
+  async scan(params: ScanInputUnmarshalled): Promise<{ items: any[]; lastEvaluatedKey: any }> {
     const command = new ScanCommand({
-      TableName: tableName,
-      Limit: limit,
-    })
+      ...params,
+      TableName: this.tableName,
+      ExpressionAttributeValues: params.ExpressionAttributeValues
+        ? marshall(params.ExpressionAttributeValues, {
+            removeUndefinedValues: true,
+          })
+        : undefined,
+    } as ScanInput)
     const response = await this.client.send(command)
-    return response.Items || []
-  }
-
-  async queryPaginate(
-    tableName: string,
-    keyCondition: string,
-    expressionValues: Record<string, any>,
-    limit: number
-  ) {
-    let lastEvaluatedKey = undefined
-    let allItems: any[] = []
-
-    do {
-      const params: QueryCommandInput = {
-        TableName: tableName,
-        KeyConditionExpression: keyCondition,
-        ExpressionAttributeValues: expressionValues,
-        ExclusiveStartKey: lastEvaluatedKey,
-        Limit: limit,
-      }
-
-      const command = new QueryCommand(params)
-      const response = await this.client.send(command)
-
-      if (response.Items) {
-        allItems = allItems.concat(response.Items)
-      }
-
-      lastEvaluatedKey = response.LastEvaluatedKey
-    } while (lastEvaluatedKey)
-
-    return allItems
+    return {
+      items: response.Items ? response.Items.map((item) => unmarshall(item)) : [],
+      lastEvaluatedKey: response.LastEvaluatedKey,
+    }
   }
 
   generateUpdateParams(updateObject: Record<string, any>): {

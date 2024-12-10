@@ -97,8 +97,8 @@ export const handlerQuery: AppSyncResolverHandler<ReadEventInput, any> = async (
 
     const dynamoUtils = new DynamoUtils(data_table_name)
 
-    //const location = 'Dormont, PA'
-    const location = 'Broomfield, CO'
+    const location = 'Dormont, PA'
+    //const location = 'Broomfield, CO'
 
     // const events = await dynamoUtils.query({
     //   KeyConditionExpression: 'pk = :pk AND begins_with(sk, :sk)',
@@ -110,13 +110,21 @@ export const handlerQuery: AppSyncResolverHandler<ReadEventInput, any> = async (
     //   },
     // })
 
-    const events = await dynamoUtils.query({
-      KeyConditionExpression: 'eventLocation = :loc',
-      ExpressionAttributeValues: {
-        ':loc': location,
+    const response = await dynamoUtils.query(
+      {
+        KeyConditionExpression: 'eventLocation = :loc',
+        ExpressionAttributeValues: {
+          ':loc': location,
+        },
+        IndexName: 'eventLocation-index',
+        Limit: 1,
       },
-      IndexName: 'eventLocation-index',
-    })
+      false
+    )
+
+    const { items: events, lastEvaluatedKey } = response
+
+    console.log('lastEvaluatedKey', lastEvaluatedKey)
 
     return events
   } catch (error) {
@@ -175,4 +183,25 @@ export const handlerDeleteItem: AppSyncResolverHandler<ReadEventInput, any> = as
   }
 }
 
-export { handlerQuery as handler }
+export const handlerScan: AppSyncResolverHandler<ReadEventInput, any> = async (
+  event: AppSyncResolverEvent<ReadEventInput>
+): Promise<any> => {
+  try {
+    console.log('Received event:', JSON.stringify(event, null, 2))
+
+    const dynamoUtils = new DynamoUtils(data_table_name)
+
+    const response = await dynamoUtils.scan({})
+
+    const { items: events, lastEvaluatedKey } = response
+
+    console.log('lastEvaluatedKey', lastEvaluatedKey)
+
+    return events
+  } catch (error) {
+    console.error('Error handling the event:', error)
+    throw new Error('An error occurred')
+  }
+}
+
+export { handlerScan as handler }
