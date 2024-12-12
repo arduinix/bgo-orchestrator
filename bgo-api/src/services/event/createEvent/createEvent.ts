@@ -45,8 +45,8 @@ export const handler: AppSyncResolverHandler<MutationCreateEventArgs, Event> = a
       },
     })
 
-    if (!response || response.$metadata.httpStatusCode != 200) {
-      throw new Error('Failed to create event')
+    if (!response.statusCode || response.statusCode != 200) {
+      throw new Error('Failed to create the event')
     }
 
     return {

@@ -29,9 +29,10 @@ export const handler: AppSyncResolverHandler<MutationUpdateEventArgs, Event> = a
     const updatedEventRecord = {
       eventName,
       description,
-      eventDate,
       eventLocation,
+      eventDate,
       imagePath,
+      updatedTimestamp: new Date().toISOString(),
     }
 
     const response = await dynamoUtils.updateItem(
@@ -42,25 +43,20 @@ export const handler: AppSyncResolverHandler<MutationUpdateEventArgs, Event> = a
       updatedEventRecord
     )
 
-    if (!response || response.$metadata.httpStatusCode != 200) {
+    if (!response.statusCode || response.statusCode != 200) {
       throw new Error('Failed to update the event')
     }
 
-    const eventRecord = await dynamoUtils.getItem({
-      Key: { pk: `event#${id}`, sk: `event#${id}` },
-    })
-    if (!eventRecord) {
-      throw new Error('Requested event not found.')
-    }
+    const updatedRecord = response.updatedRecord || {}
 
     return {
       id: id,
-      eventName: eventRecord.eventName,
-      description: eventRecord.description,
-      eventLocation: eventRecord.eventLocation,
-      createdTimestamp: eventRecord.createdTimestamp,
-      playedTimestamp: eventRecord.playedTimestamp,
-      imagePath: eventRecord.imagePath,
+      eventName: updatedRecord.eventName,
+      description: updatedRecord.description,
+      eventLocation: updatedRecord.eventLocation,
+      createdTimestamp: updatedRecord.createdTimestamp,
+      playedTimestamp: updatedRecord.playedTimestamp,
+      imagePath: updatedRecord.imagePath,
     }
   } catch (error) {
     logger.error('Error updating the event:', { error })

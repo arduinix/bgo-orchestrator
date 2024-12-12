@@ -5,7 +5,6 @@ import {
   QueryCommand,
   UpdateItemCommand,
   UpdateItemCommandInput,
-  UpdateItemCommandOutput,
   DeleteItemCommand,
   ScanCommand,
   DynamoDBClient,
@@ -74,23 +73,33 @@ class DynamoUtils {
     this.unmarshallingOptions = unmarshallingOptions || {}
   }
 
-  async getItem(params: GetItemInputUnmarshalled): Promise<any> {
+  async getItem(
+    params: GetItemInputUnmarshalled
+  ): Promise<{ statusCode?: number; record?: Record<string, any> }> {
     const command = new GetItemCommand({
       ...params,
       TableName: this.tableName,
       Key: this.marshallDefaults(params.Key),
     } as GetItemCommandInput)
     const response = await this.client.send(command)
-    return response.Item ? this.unmarshallDefaults(response.Item) : undefined
+    // return response.Item ? this.unmarshallDefaults(response.Item) : undefined
+    return {
+      statusCode: response.$metadata.httpStatusCode,
+      record: response.Item ? this.unmarshallDefaults(response.Item) : undefined,
+    }
   }
 
-  async putItem(params: PutItemInputUnmarshalled): Promise<PutItemCommandOutput> {
+  async putItem(params: PutItemInputUnmarshalled): Promise<{ statusCode?: number }> {
     const command = new PutItemCommand({
       ...params,
       TableName: this.tableName,
       Item: this.marshallDefaults(params.Item),
     } as PutItemCommandInput)
-    return await this.client.send(command)
+    const response = await this.client.send(command)
+
+    return {
+      statusCode: response.$metadata.httpStatusCode,
+    }
   }
 
   async query(
@@ -123,9 +132,8 @@ class DynamoUtils {
   async updateItem(
     params: UpdateItemInputUnmarshalled,
     updatedRecord: Record<string, any>
-  ): Promise<UpdateItemCommandOutput> {
+  ): Promise<{ statusCode?: number; updatedRecord?: Record<string, any> }> {
     const updateParams = this.generateUpdateParams(updatedRecord)
-    console.log('updateParams', updateParams)
     const command = new UpdateItemCommand({
       ...params,
       TableName: this.tableName,
@@ -133,7 +141,10 @@ class DynamoUtils {
       ...updateParams,
     } as UpdateItemCommandInput)
     const response = await this.client.send(command)
-    return response
+    return {
+      statusCode: response.$metadata.httpStatusCode,
+      updatedRecord: response.Attributes ? this.unmarshallDefaults(response.Attributes) : undefined,
+    }
   }
 
   async deleteItem(params: DeleteItemInputUnmarshalled): Promise<DeleteItemCommandOutput> {
@@ -169,9 +180,11 @@ class DynamoUtils {
     const updateExpressionParts: string[] = []
 
     Object.keys(updateObject).forEach((key, index) => {
-      const expressionKey = `:value${index}`
-      expressionValues[expressionKey] = updateObject[key]
-      updateExpressionParts.push(`${key} = ${expressionKey}`)
+      if (updateObject[key]) {
+        const expressionKey = `:value${index}`
+        expressionValues[expressionKey] = updateObject[key]
+        updateExpressionParts.push(`${key} = ${expressionKey}`)
+      }
     })
 
     const updateExpression = `SET ${updateExpressionParts.join(', ')}`

@@ -8,7 +8,7 @@ const event: AppSyncResolverEvent<MutationUpdateEventArgs> = {
   arguments: {
     input: {
       id: '01JEW8G6WKMRAFGVXE9PJQF5Z9',
-      eventName: 'Nicks update event',
+      eventName: 'Another update to the event',
       description: 'An updated event',
       eventDate: '2021-10-01',
       eventLocation: 'Mars',

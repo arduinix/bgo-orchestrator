@@ -19,26 +19,21 @@ export const handler: AppSyncResolverHandler<QueryReadEventArgs, Event> = async 
     logger.debug('Received event:', { event })
     const dynamoUtils = new DynamoUtils({ tableName })
     const { id } = event.arguments.input
-    const eventRecord = await dynamoUtils.getItem({
+    const response = await dynamoUtils.getItem({
       Key: { pk: `event#${id}`, sk: `event#${id}` },
     })
 
-    if (!eventRecord) {
+    if (!response.statusCode || response.statusCode != 200) {
       throw new Error('Requested event not found.')
     }
 
-    const {
-      pk,
-      eventName,
-      description,
-      eventLocation,
-      createdTimestamp,
-      playedTimestamp,
-      imagePath,
-    } = eventRecord
+    const record = response.record || {}
+
+    const { eventName, description, eventLocation, createdTimestamp, playedTimestamp, imagePath } =
+      record
 
     return {
-      id: pk.split('#')[1],
+      id,
       eventName,
       description,
       eventLocation,

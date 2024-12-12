@@ -10,7 +10,6 @@ const event: AppSyncResolverEvent<MutationCreateEventArgs> = {
       eventName: 'Nicks Sweet New Event',
       description: 'A sweet new event',
       eventDate: '2021-10-01',
-      eventLocation: 'The Moon',
     },
   },
   identity: {
