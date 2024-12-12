@@ -33,7 +33,7 @@ export type DeletionResult = {
 
 export type Event = {
   __typename?: 'Event';
-  createdTimestamp: Scalars['String']['output'];
+  createdTimestamp?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   eventDate?: Maybe<Scalars['String']['output']>;
   eventLocation?: Maybe<Scalars['String']['output']>;

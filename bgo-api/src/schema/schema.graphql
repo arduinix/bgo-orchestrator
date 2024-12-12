@@ -48,7 +48,7 @@ type Event {
   description: String
   eventDate: String
   eventLocation: String
-  createdTimestamp: String!
+  createdTimestamp: String
   playedTimestamp: String
   imagePath: String
 }

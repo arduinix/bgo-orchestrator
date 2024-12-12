@@ -22,7 +22,7 @@ export const handler: AppSyncResolverHandler<MutationCreateEventArgs, Event> = a
   try {
     logger.info(`Start ${methodName} handler`)
     logger.debug('Received event:', { event })
-    const dynamoUtils = new DynamoUtils({tableName})
+    const dynamoUtils = new DynamoUtils({ tableName })
 
     const { eventName, description, eventDate, eventLocation, imagePath } = event.arguments.input
 
@@ -45,9 +45,7 @@ export const handler: AppSyncResolverHandler<MutationCreateEventArgs, Event> = a
       },
     })
 
-    console.log('response:', response)
-
-    if (!response) {
+    if (!response || response.$metadata.httpStatusCode != 200) {
       throw new Error('Failed to create event')
     }
 
