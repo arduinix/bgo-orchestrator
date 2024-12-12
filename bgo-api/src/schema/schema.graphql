@@ -1,7 +1,7 @@
 type Query {
   createEvent(input: CreateEventInput!): Event
   readEvent(input: ReadEventInput!): Event
-  listEvents: [Event]
+  listEvents(input: ListEventsInput!): [Event]
   getMessage: Message
 }
 
@@ -42,9 +42,18 @@ input ReadEventInput {
   id: ID!
 }
 
+input ListEventsInput {
+  limit: Int
+  nextToken: String
+  showEventsOwnedByOthers: Boolean
+  eventCreatedTimestampLower: String
+  eventCreatedTimestampUpper: String
+}
+
 type Event {
   id: ID!
   eventName: String!
+  eventOwner: String
   description: String
   eventDate: String
   eventLocation: String

@@ -38,12 +38,21 @@ export type Event = {
   eventDate?: Maybe<Scalars['String']['output']>;
   eventLocation?: Maybe<Scalars['String']['output']>;
   eventName: Scalars['String']['output'];
+  eventOwner?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   imagePath?: Maybe<Scalars['String']['output']>;
   playedTimestamp?: Maybe<Scalars['String']['output']>;
 };
 
 export type EventDeleteResult = DeletionResult | Event;
+
+export type ListEventsInput = {
+  eventCreatedTimestampLower?: InputMaybe<Scalars['String']['input']>;
+  eventCreatedTimestampUpper?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  nextToken?: InputMaybe<Scalars['String']['input']>;
+  showEventsOwnedByOthers?: InputMaybe<Scalars['Boolean']['input']>;
+};
 
 export type Message = {
   __typename?: 'Message';
@@ -85,6 +94,11 @@ export type Query = {
 
 export type QueryCreateEventArgs = {
   input: CreateEventInput;
+};
+
+
+export type QueryListEventsArgs = {
+  input: ListEventsInput;
 };
 
 

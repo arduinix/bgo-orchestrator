@@ -9,13 +9,13 @@ import {
   ScanCommand,
   DynamoDBClient,
   PutItemCommandInput,
-  PutItemCommandOutput,
   QueryInput,
   DeleteItemCommandInput,
   DeleteItemCommandOutput,
   ScanInput,
 } from '@aws-sdk/client-dynamodb'
 import { marshall, marshallOptions, unmarshall, unmarshallOptions } from '@aws-sdk/util-dynamodb'
+import { stat } from 'fs'
 
 export interface GetItemInputUnmarshalled extends Omit<GetItemCommandInput, 'TableName' | 'Key'> {
   Key: Record<string, any>
@@ -82,7 +82,6 @@ class DynamoUtils {
       Key: this.marshallDefaults(params.Key),
     } as GetItemCommandInput)
     const response = await this.client.send(command)
-    // return response.Item ? this.unmarshallDefaults(response.Item) : undefined
     return {
       statusCode: response.$metadata.httpStatusCode,
       record: response.Item ? this.unmarshallDefaults(response.Item) : undefined,
@@ -105,9 +104,10 @@ class DynamoUtils {
   async query(
     params: QueryInputUnmarshalled,
     returnAllRecords: boolean = false
-  ): Promise<{ items: any[]; lastEvaluatedKey: any }> {
+  ): Promise<{ items: Record<string, any>[]; lastEvaluatedKey: any; statusCode?: number }> {
     const allItems: any[] = []
     let lastEvaluatedKey: any = null
+    let statusCode: number | undefined
 
     do {
       const command = new QueryCommand({
@@ -124,9 +124,10 @@ class DynamoUtils {
         allItems.push(...response.Items.map((item) => this.unmarshallDefaults(item)))
       }
       lastEvaluatedKey = response.LastEvaluatedKey
+      statusCode = response.$metadata.httpStatusCode
     } while (returnAllRecords && lastEvaluatedKey)
 
-    return { items: allItems, lastEvaluatedKey }
+    return { items: allItems, lastEvaluatedKey, statusCode }
   }
 
   async updateItem(

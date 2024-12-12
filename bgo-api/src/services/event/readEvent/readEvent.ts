@@ -1,12 +1,16 @@
 import { AppSyncResolverEvent, AppSyncResolverHandler } from 'aws-lambda'
 import DynamoUtils from 'lib/dynamoUtils'
 import * as dotenv from 'dotenv'
+import { recordPrefix } from 'lib/config'
 import { Logger, LogLevel } from '@aws-lambda-powertools/logger'
 import { Event, QueryReadEventArgs } from 'types/generated/graphql'
 
+const eventRecordPrefix = recordPrefix.event
+const methodName = 'updateEvent'
+
 dotenv.config()
 const logger = new Logger({
-  serviceName: 'readEvent',
+  serviceName: methodName,
   logLevel: process.env.LOG_LEVEL_DEBUG === 'true' ? LogLevel.DEBUG : LogLevel.INFO,
 })
 const tableName = process.env.BGO_DATA_TABLE_NAME || ''
@@ -15,12 +19,12 @@ export const handler: AppSyncResolverHandler<QueryReadEventArgs, Event> = async 
   event: AppSyncResolverEvent<QueryReadEventArgs>
 ): Promise<Event> => {
   try {
-    logger.info('Start readEvent handler')
+    logger.info(`Start ${methodName} handler`)
     logger.debug('Received event:', { event })
     const dynamoUtils = new DynamoUtils({ tableName })
     const { id } = event.arguments.input
     const response = await dynamoUtils.getItem({
-      Key: { pk: `event#${id}`, sk: `event#${id}` },
+      Key: { pk: `${eventRecordPrefix}#${id}`, sk: `${eventRecordPrefix}#${id}` },
     })
 
     if (!response.statusCode || response.statusCode != 200) {
