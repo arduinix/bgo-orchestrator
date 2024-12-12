@@ -1,9 +1,14 @@
 type Query {
-  listEvents: [Event]
+  createEvent(input: CreateEventInput!): Event
   readEvent(input: ReadEventInput!): Event
-  listPlayers: [Player]
-  getPlayer(id: ID!): Player
+  listEvents: [Event]
   getMessage: Message
+}
+
+type Mutation {
+  createEvent(input: CreateEventInput!): Event
+  updateEvent(input: UpdateEventInput!): Event
+  deleteEvent(input: DeleteEventInput!): EventDeleteResult
 }
 
 type Message {
@@ -12,14 +17,44 @@ type Message {
   timestamp: String!
 }
 
+input CreateEventInput {
+  eventName: String!
+  description: String
+  eventDate: String
+  eventLocation: String
+  imagePath: String
+}
+
+input UpdateEventInput {
+  id: ID!
+  eventName: String
+  description: String
+  eventDate: String
+  eventLocation: String
+  imagePath: String
+}
+
+input DeleteEventInput {
+  id: ID!
+}
+
 input ReadEventInput {
   id: ID!
 }
 
 type Event {
   id: ID!
-  name: String!
-  description: String!
-  date: String!
-  location: String!
+  eventName: String!
+  description: String
+  eventDate: String
+  eventLocation: String
+  createdTimestamp: String!
+  playedTimestamp: String
+  imagePath: String
 }
+
+type DeletionResult {
+  deletedTimestamp: String!
+}
+
+union EventDeleteResult = Event | DeletionResult

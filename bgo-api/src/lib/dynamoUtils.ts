@@ -16,7 +16,7 @@ import {
   DeleteItemCommandOutput,
   ScanInput,
 } from '@aws-sdk/client-dynamodb'
-import { marshall, unmarshall } from '@aws-sdk/util-dynamodb'
+import { marshall, marshallOptions, unmarshall, unmarshallOptions } from '@aws-sdk/util-dynamodb'
 
 export interface GetItemInputUnmarshalled extends Omit<GetItemCommandInput, 'TableName' | 'Key'> {
   Key: Record<string, any>
@@ -47,34 +47,48 @@ export interface ScanInputUnmarshalled
   extends Omit<ScanInput, 'TableName' | 'ExpressionAttributeValues'> {
   ExpressionAttributeValues?: Record<string, any>
 }
+
+export interface DynamoUtilsOptions {
+  tableName: string
+  client?: DynamoDBClient
+  marshallingOptions?: marshallOptions
+  unmarshallingOptions?: unmarshallOptions
+  region?: string
+}
+
 class DynamoUtils {
   private client: DynamoDBClient
   private tableName: string
+  private marshallingOptions: marshallOptions
+  private unmarshallingOptions: unmarshallOptions
 
-  constructor(tableName: string,  client?: DynamoDBClient, region?: string,) {
+  constructor(options: DynamoUtilsOptions) {
+    const { tableName, client, marshallingOptions, unmarshallingOptions, region } = options
     const dynamoDbClient = new DynamoDBClient({
       region: region || process.env.AWS_REGION,
     })
 
     this.client = client || dynamoDbClient
     this.tableName = tableName
+    this.marshallingOptions = marshallingOptions || { removeUndefinedValues: true }
+    this.unmarshallingOptions = unmarshallingOptions || {}
   }
 
   async getItem(params: GetItemInputUnmarshalled): Promise<any> {
     const command = new GetItemCommand({
       ...params,
       TableName: this.tableName,
-      Key: marshall(params.Key),
+      Key: this.marshallDefaults(params.Key),
     } as GetItemCommandInput)
     const response = await this.client.send(command)
-    return response.Item ? unmarshall(response.Item) : undefined
+    return response.Item ? this.unmarshallDefaults(response.Item) : undefined
   }
 
   async putItem(params: PutItemInputUnmarshalled): Promise<PutItemCommandOutput> {
     const command = new PutItemCommand({
       ...params,
       TableName: this.tableName,
-      Item: marshall(params.Item),
+      Item: this.marshallDefaults(params.Item),
     } as PutItemCommandInput)
     return await this.client.send(command)
   }
@@ -91,16 +105,14 @@ class DynamoUtils {
         ...params,
         TableName: this.tableName,
         ExpressionAttributeValues: params.ExpressionAttributeValues
-          ? marshall(params.ExpressionAttributeValues, {
-              removeUndefinedValues: true,
-            })
+          ? this.marshallDefaults(params.ExpressionAttributeValues)
           : undefined,
         ExclusiveStartKey: lastEvaluatedKey,
       } as QueryInput)
 
       const response = await this.client.send(command)
       if (response.Items) {
-        allItems.push(...response.Items.map((item) => unmarshall(item)))
+        allItems.push(...response.Items.map((item) => this.unmarshallDefaults(item)))
       }
       lastEvaluatedKey = response.LastEvaluatedKey
     } while (returnAllRecords && lastEvaluatedKey)
@@ -117,7 +129,7 @@ class DynamoUtils {
     const command = new UpdateItemCommand({
       ...params,
       TableName: this.tableName,
-      Key: marshall(params.Key),
+      Key: this.marshallDefaults(params.Key),
       ...updateParams,
     } as UpdateItemCommandInput)
     const response = await this.client.send(command)
@@ -139,14 +151,12 @@ class DynamoUtils {
       ...params,
       TableName: this.tableName,
       ExpressionAttributeValues: params.ExpressionAttributeValues
-        ? marshall(params.ExpressionAttributeValues, {
-            removeUndefinedValues: true,
-          })
+        ? this.marshallDefaults(params.ExpressionAttributeValues)
         : undefined,
     } as ScanInput)
     const response = await this.client.send(command)
     return {
-      items: response.Items ? response.Items.map((item) => unmarshall(item)) : [],
+      items: response.Items ? response.Items.map((item) => this.unmarshallDefaults(item)) : [],
       lastEvaluatedKey: response.LastEvaluatedKey,
     }
   }
@@ -167,9 +177,17 @@ class DynamoUtils {
     const updateExpression = `SET ${updateExpressionParts.join(', ')}`
 
     return {
-      ExpressionAttributeValues: marshall(expressionValues),
+      ExpressionAttributeValues: this.marshallDefaults(expressionValues),
       UpdateExpression: updateExpression,
     }
+  }
+
+  marshallDefaults(item: Record<string, any>): Record<string, any> {
+    return marshall(item, this.marshallingOptions)
+  }
+
+  unmarshallDefaults(item: Record<string, any>): Record<string, any> {
+    return unmarshall(item, this.unmarshallingOptions)
   }
 }
 
