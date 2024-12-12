@@ -45,6 +45,8 @@ export const handler: AppSyncResolverHandler<MutationCreateEventArgs, Event> = a
       },
     })
 
+    console.log('response:', response)
+
     if (!response) {
       throw new Error('Failed to create event')
     }

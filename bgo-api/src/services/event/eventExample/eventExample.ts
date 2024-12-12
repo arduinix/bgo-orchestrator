@@ -7,7 +7,7 @@ import { ulid } from 'ulid'
 dotenv.config()
 const logger = new Logger({ serviceName: 'event-service' })
 
-const data_table_name = process.env.BGO_DATA_TABLE_NAME || ''
+const tableName = process.env.BGO_DATA_TABLE_NAME || ''
 
 interface ReadEventInput {
   input: {
@@ -32,7 +32,7 @@ export const handlerGetItem: AppSyncResolverHandler<ReadEventInput, Event> = asy
 
     const { id } = event.arguments.input
 
-    const dynamoUtils = new DynamoUtils(data_table_name)
+    const dynamoUtils = new DynamoUtils({ tableName })
 
     const eventRecord = await dynamoUtils.getItem({
       Key: { pk: `event#${id}`, sk: `event#${id}` },
@@ -66,7 +66,7 @@ export const handlerPutItem: AppSyncResolverHandler<ReadEventInput, any> = async
 
     const id = ulid()
 
-    const dynamoUtils = new DynamoUtils(data_table_name)
+    const dynamoUtils = new DynamoUtils({ tableName })
 
     const location = 'Dormont, PA'
 
@@ -95,7 +95,7 @@ export const handlerQuery: AppSyncResolverHandler<ReadEventInput, any> = async (
 
     const { id } = event.arguments.input
 
-    const dynamoUtils = new DynamoUtils(data_table_name)
+    const dynamoUtils = new DynamoUtils({ tableName })
 
     const location = 'Dormont, PA'
     //const location = 'Broomfield, CO'
@@ -141,7 +141,7 @@ export const handlerUpdateItem: AppSyncResolverHandler<ReadEventInput, any> = as
 
     const { id } = event.arguments.input
 
-    const dynamoUtils = new DynamoUtils(data_table_name)
+    const dynamoUtils = new DynamoUtils({ tableName })
 
     const location = 'Broomfield, CO'
 
@@ -170,7 +170,7 @@ export const handlerDeleteItem: AppSyncResolverHandler<ReadEventInput, any> = as
 
     const { id } = event.arguments.input
 
-    const dynamoUtils = new DynamoUtils(data_table_name)
+    const dynamoUtils = new DynamoUtils({ tableName })
 
     const response = await dynamoUtils.deleteItem({
       Key: { pk: `event#${id}`, sk: `event#${id}` },
@@ -189,7 +189,7 @@ export const handlerScan: AppSyncResolverHandler<ReadEventInput, any> = async (
   try {
     console.log('Received event:', JSON.stringify(event, null, 2))
 
-    const dynamoUtils = new DynamoUtils(data_table_name)
+    const dynamoUtils = new DynamoUtils({ tableName })
 
     const response = await dynamoUtils.scan({})
 
