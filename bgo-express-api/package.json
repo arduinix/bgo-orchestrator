@@ -1,0 +1,33 @@
+{
+  "name": "bgo-express-api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "graphql-codegen --verbose --config codegen.yml",
+    "compile": "npm run generate && tsc",
+    "postinstall": "npm run compile",
+    "start": "npm run compile && node ./dist/index.js",
+    "watch": "concurrently  --names \"CodeGen,TS,Nodemon\" -c \"bgYellow,bgBlue,bgMagenta\" \"graphql-codegen --watch 'src/**/*.ts'\"  \"tsc -w \" \"nodemon ./dist/index.js \""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "type": "module",
+  "dependencies": {
+    "@apollo/server": "^4.11.2",
+    "graphql": "^16.9.0",
+    "graphql-tag": "^2.12.6"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.3",
+    "@graphql-codegen/typescript": "^4.1.2",
+    "@graphql-codegen/typescript-operations": "^4.4.0",
+    "@graphql-codegen/typescript-resolvers": "^4.4.1",
+    "@types/node": "^22.10.2",
+    "concurrently": "^9.1.0",
+    "nodemon": "^3.1.7",
+    "typescript": "^5.7.2"
+  }
+}
