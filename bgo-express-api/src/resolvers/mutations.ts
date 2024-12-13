@@ -7,6 +7,12 @@ const mutations: MutationResolvers = {
   addBook: async (_, { title, author }, { dataSources }) => {
     return dataSources.booksAPI.addBook({ title, author });
   },
+  createEvent: async (_, { input }, { dataSources }) => {
+    return dataSources.eventsAPI.createEvent(input);
+  },
+  updateEvent: async (_, { input }, { dataSources }) => {
+    return dataSources.eventsAPI.updateEvent(input);
+  }
 };
 
 export default mutations;

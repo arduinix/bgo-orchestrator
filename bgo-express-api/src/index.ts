@@ -1,17 +1,18 @@
-import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
-import { BooksDataSource } from "./datasources.js";
-import resolvers from "./resolvers/index.js";
-import { readFileSync } from "fs";
+import { ApolloServer } from '@apollo/server'
+import { startStandaloneServer } from '@apollo/server/standalone'
+import { BooksDataSource, EventsDataSource } from './datasources.js'
+import resolvers from './resolvers/index.js'
+import { readFileSync } from 'fs'
 
 // Note: this only works locally because it relies on `npm` routing
 // from the root directory of the project.
-const typeDefs = readFileSync("./schema.graphql", { encoding: "utf-8" });
+const typeDefs = readFileSync('./schema.graphql', { encoding: 'utf-8' })
 
 export interface MyContext {
   dataSources: {
-    booksAPI: BooksDataSource;
-  };
+    booksAPI: BooksDataSource
+    eventsAPI: EventsDataSource
+  }
 }
 
 // The ApolloServer constructor requires two parameters: your schema
@@ -19,7 +20,7 @@ export interface MyContext {
 const server = new ApolloServer<MyContext>({
   typeDefs,
   resolvers,
-});
+})
 
 const { url } = await startStandaloneServer(server, {
   context: async () => {
@@ -29,9 +30,10 @@ const { url } = await startStandaloneServer(server, {
       // or your REST API classes.
       dataSources: {
         booksAPI: new BooksDataSource(),
+        eventsAPI: new EventsDataSource(),
       },
-    };
+    }
   },
-});
+})
 
-console.log(`🚀 Server listening at: ${url}`);
+console.log(`🚀 Server listening at: ${url}`)
