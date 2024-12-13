@@ -1,69 +1,19 @@
 type Query {
-  createEvent(input: CreateEventInput!): Event
-  readEvent(input: ReadEventInput!): Event
-  listEvents(input: ListEventsInput!): [Event]
-  getMessage: Message
+  books: [Book]
+}
+
+type Book {
+  title: String
+  author: String
+}
+
+type AddBookMutationResponse {
+  code: String!
+  success: Boolean!
+  message: String!
+  book: Book
 }
 
 type Mutation {
-  createEvent(input: CreateEventInput!): Event
-  updateEvent(input: UpdateEventInput!): Event
-  deleteEvent(input: DeleteEventInput!): EventDeleteResult
+  addBook(title: String, author: String): AddBookMutationResponse
 }
-
-type Message {
-  id: ID!
-  message: String!
-  timestamp: String!
-}
-
-input CreateEventInput {
-  eventName: String!
-  description: String
-  eventDate: String
-  eventLocation: String
-  imagePath: String
-}
-
-input UpdateEventInput {
-  id: ID!
-  eventName: String
-  description: String
-  eventDate: String
-  eventLocation: String
-  imagePath: String
-}
-
-input DeleteEventInput {
-  id: ID!
-}
-
-input ReadEventInput {
-  id: ID!
-}
-
-input ListEventsInput {
-  limit: Int
-  nextToken: String
-  showEventsOwnedByOthers: Boolean
-  eventCreatedTimestampLower: String
-  eventCreatedTimestampUpper: String
-}
-
-type Event {
-  id: ID!
-  eventName: String!
-  eventOwner: String
-  description: String
-  eventDate: String
-  eventLocation: String
-  createdTimestamp: String
-  playedTimestamp: String
-  imagePath: String
-}
-
-type DeletionResult {
-  deletedTimestamp: String!
-}
-
-union EventDeleteResult = Event | DeletionResult
