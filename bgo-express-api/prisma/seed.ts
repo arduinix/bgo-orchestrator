@@ -36,6 +36,12 @@ const eventData: Prisma.EventCreateInput[] = [
     description: 'Event 5 Description',
     location: 'Austin, TX',
   },
+  {
+    id: ulid(),
+    name: 'Event 6',
+    description: 'Event 6 Description',
+    location: 'Pittsburgh, PA',
+  },
 ]
 
 async function main() {
