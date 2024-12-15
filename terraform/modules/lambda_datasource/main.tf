@@ -10,7 +10,7 @@ terraform {
 }
 
 locals {
-  app_env_fn_name = "${var.app_name}-${var.env}"
+  app_env_fn_name = "${var.app_name}-${var.env}-${var.function_group}"
 }
 
 # data "archive_file" "this" {
@@ -46,7 +46,7 @@ resource "aws_appsync_datasource" "this" {
   api_id           = var.appsync_id
   name             = each.key
   type             = "AWS_LAMBDA"
-  service_role_arn = var.appsync_role_arn
+  service_role_arn = aws_iam_role.appsync_datasource_role.arn
 
   lambda_config {
     function_arn = aws_lambda_function.this[each.key].arn
@@ -63,9 +63,8 @@ resource "aws_appsync_resolver" "this" {
   field             = each.key
   type              = each.value.resolver_type
   data_source       = aws_appsync_datasource.this[each.key].name
-  request_template  = file(lookup(each.value, "request_template", "${path.root}/../api/lambda.default.request.vtl"))
-  response_template = file(lookup(each.value, "response_template", "${path.root}/../api/lambda.default.response.vtl"))
-
+  request_template  = file(lookup(each.value, "request_template", var.default_request_template))
+  response_template = file(lookup(each.value, "response_template", var.default_response_template))
   caching_config {
     caching_keys = lookup(each.value, "caching_keys", ["$context.identity"])
     ttl          = 900

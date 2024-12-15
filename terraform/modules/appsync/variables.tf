@@ -111,3 +111,13 @@ variable "enable_api_key" {
   default     = false
   description = "Should an API key be created?"
 }
+
+variable "route53_zone_id" {
+  type        = string
+  description = "The route53 zone id for the custom domain."
+  default     = null
+  validation {
+    condition     = var.enable_custom_subdomain == false || length(var.route53_zone_id) > 0
+    error_message = "A route53 zone id must be provided if enable_custom_subdomain is true."
+  }
+}

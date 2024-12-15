@@ -14,37 +14,107 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
-export type Event = {
-  __typename?: 'Event';
-  date: Scalars['String']['output'];
-  description: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  location: Scalars['String']['output'];
-  name: Scalars['String']['output'];
+export type CreateEventInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  eventDate?: InputMaybe<Scalars['String']['input']>;
+  eventLocation?: InputMaybe<Scalars['String']['input']>;
+  eventName: Scalars['String']['input'];
+  imagePath?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type Player = {
-  __typename?: 'Player';
-  email: Scalars['String']['output'];
+export type DeleteEventInput = {
+  id: Scalars['ID']['input'];
+};
+
+export type DeletionResult = {
+  __typename?: 'DeletionResult';
+  deletedTimestamp: Scalars['String']['output'];
+};
+
+export type Event = {
+  __typename?: 'Event';
+  createdTimestamp?: Maybe<Scalars['String']['output']>;
+  description?: Maybe<Scalars['String']['output']>;
+  eventDate?: Maybe<Scalars['String']['output']>;
+  eventLocation?: Maybe<Scalars['String']['output']>;
+  eventName: Scalars['String']['output'];
+  eventOwner?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
-  name: Scalars['String']['output'];
-  phone?: Maybe<Scalars['String']['output']>;
+  imagePath?: Maybe<Scalars['String']['output']>;
+  playedTimestamp?: Maybe<Scalars['String']['output']>;
+};
+
+export type EventDeleteResult = DeletionResult | Event;
+
+export type ListEventsInput = {
+  eventCreatedTimestampLower?: InputMaybe<Scalars['String']['input']>;
+  eventCreatedTimestampUpper?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  nextToken?: InputMaybe<Scalars['String']['input']>;
+  showEventsOwnedByOthers?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type Message = {
+  __typename?: 'Message';
+  id: Scalars['ID']['output'];
+  message: Scalars['String']['output'];
+  timestamp: Scalars['String']['output'];
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  createEvent?: Maybe<Event>;
+  deleteEvent?: Maybe<EventDeleteResult>;
+  updateEvent?: Maybe<Event>;
+};
+
+
+export type MutationCreateEventArgs = {
+  input: CreateEventInput;
+};
+
+
+export type MutationDeleteEventArgs = {
+  input: DeleteEventInput;
+};
+
+
+export type MutationUpdateEventArgs = {
+  input: UpdateEventInput;
 };
 
 export type Query = {
   __typename?: 'Query';
-  getEvent?: Maybe<Event>;
-  getPlayer?: Maybe<Player>;
+  createEvent?: Maybe<Event>;
+  getMessage?: Maybe<Message>;
   listEvents?: Maybe<Array<Maybe<Event>>>;
-  listPlayers?: Maybe<Array<Maybe<Player>>>;
+  readEvent?: Maybe<Event>;
 };
 
 
-export type QueryGetEventArgs = {
-  id: Scalars['ID']['input'];
+export type QueryCreateEventArgs = {
+  input: CreateEventInput;
 };
 
 
-export type QueryGetPlayerArgs = {
+export type QueryListEventsArgs = {
+  input: ListEventsInput;
+};
+
+
+export type QueryReadEventArgs = {
+  input: ReadEventInput;
+};
+
+export type ReadEventInput = {
   id: Scalars['ID']['input'];
+};
+
+export type UpdateEventInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
+  eventDate?: InputMaybe<Scalars['String']['input']>;
+  eventLocation?: InputMaybe<Scalars['String']['input']>;
+  eventName?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['ID']['input'];
+  imagePath?: InputMaybe<Scalars['String']['input']>;
 };

@@ -8,13 +8,13 @@ declare global {
     message: string
   }
 
-  interface ListEvent {
+  interface Event {
     id: string
     name: string
     location: string
-    createdDate: string
-    playedDate?: string | null
-    imagePath?: string | null
+    createdTimestamp: string
+    playedTimestamp?: string
+    imagePath?: string
   }
 
   interface Player {
@@ -126,7 +126,7 @@ declare global {
     startedTimestamp?: string
     completedTimestamp?: string
     removedTimestamp?: string
-    roundGameIds: string[] // this will be a string list of ids of the round games
+    roundGameIds: string[] // this will be a string list of ids of the round games, change this to a list of (match) ids.
     roundNumber: number
   }
 }

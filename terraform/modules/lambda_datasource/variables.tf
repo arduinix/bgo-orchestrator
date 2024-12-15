@@ -34,24 +34,11 @@ variable "appsync_arn" {
   description = "The ARN of the appsync api."
 }
 
-variable "appsync_role_arn" {
-  type        = string
-  default     = null
-  description = "The appsync service role arn."
-}
-
 variable "caching_keys" {
   type        = list(string)
   default     = ["$context.identity"]
   description = "A list of caching keys for the resolver."
 }
-
-# I don't thinks this is needed since we handle it on the lambda function level
-# variable "env_vars" {
-#   type        = map(string)
-#   default     = {}
-#   description = "Additional lambda environment variables to merge with the default."
-# }
 
 variable "publish" {
   type        = bool
@@ -104,7 +91,7 @@ variable "default_request_template" {
   description = "The default request template for the resolver"
 }
 
-variable "default_resposne_template" {
+variable "default_response_template" {
   type        = string
   description = "The default response template for the resolver"
 }

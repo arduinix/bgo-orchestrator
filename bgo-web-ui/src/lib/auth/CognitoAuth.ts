@@ -19,7 +19,6 @@ export async function isLoggedIn(): Promise<boolean> {
 
 export async function getLoggedInUser(): Promise<AuthUser | boolean> {
   const loggedIn = await checkIsLoggedIn()
-  console.log(loggedIn)
   if (loggedIn) {
     const user = await getCurrentUser()
     return user
@@ -54,3 +53,5 @@ export async function login(signInInput: SignInInput) {
       return err
     })
 }
+
+export async function getToken() {}

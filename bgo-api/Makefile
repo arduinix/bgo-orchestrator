@@ -3,7 +3,7 @@ OUT_DIR = ./out/src
 SERVICES_DIR = ${OUT_DIR}/services
 
 # list of the functions to be packaged by the @package recipe (space separated)
-PACKAGE_FUNCTIONS = exampleService/getMessage exampleService/randomWord
+PACKAGE_FUNCTIONS = exampleService/getMessage exampleService/randomWord event/readEvent
 
 
 all: clean install build package
@@ -13,6 +13,10 @@ all-ci: clean install build install-ci package
 clean:
 	@echo "Cleaning up..."
 	rm -rf ./out ${DIST_DIR}
+
+clean-dist:
+	@echo "Cleaning up dist directory..."
+	rm -rf ${DIST_DIR}
 
 clean-full:
 	@echo "Performing full cleanup..."
@@ -32,7 +36,7 @@ build:
 	@echo "Building the project..."
 	npm run build
 
-package: package@deps package@functions
+package: clean-dist build package@deps package@functions
 
 package@deps:
 	
@@ -43,7 +47,7 @@ package@deps:
 	cd $(DIST_DIR)/deps/nodejs/ && npm install --omit=dev
 	cd $(DIST_DIR)/deps/nodejs/ && npm install $(CURDIR)/$(OUT_DIR)/lib --omit=dev --save lib
 	mkdir -p $(DIST_DIR)/deps
-	cd $(DIST_DIR)/deps && zip -r -q ../deps.zip *
+	cd $(DIST_DIR)/deps && zip -r -q -X ../deps.zip *
 
 package@functions:
 	@for FUNCTION_PATH in $(PACKAGE_FUNCTIONS); do \
@@ -59,5 +63,5 @@ package@functions:
 		cp package.json $$DIST_FUNCTION_DIR; \
 		echo "Dist function dir" $$DIST_FUNCTION_DIR; \
 		cp -R $(SERVICES_DIR)/$$FUNCTION_PATH/* $$DIST_FUNCTION_DIR; \
-		cd $$DIST_FUNCTION_DIR && zip -r ../$$FUNCTION_NAME.zip *; \
+		cd $$DIST_FUNCTION_DIR && zip -r -X ../$$FUNCTION_NAME.zip *; \
 	done

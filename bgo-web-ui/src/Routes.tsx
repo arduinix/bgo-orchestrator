@@ -23,6 +23,8 @@ import '@aws-amplify/ui-react/styles.css'
 import '@aws-amplify/ui-react/styles/reset.layer.css'
 import '@aws-amplify/ui-react/styles/base.layer.css'
 import '@aws-amplify/ui-react/styles/button.layer.css'
+import client from '@lib/urql/client'
+import { Provider as UrqlProvider } from 'urql'
 
 Amplify.configure(amplifyAuthConfig)
 
@@ -41,41 +43,45 @@ export default function AppRouter() {
   return (
     <>
       <Authenticator.Provider>
-        <Header />
-        <Box position={'relative'} minHeight={'100vh'}>
-          <Routes>
-            <Route path='*' element={<NotFound />} />
-            <Route path='/' element={<MainLayout />}>
-              <Route path='/tutorials' element={<Tutorials />} />
-              <Route
-                path='/olympics'
-                element={
-                  // <RequireAuth>
-                    <Olympics />
-                  // </RequireAuth>
-                }
-              >
-                
-                <Route path=':eventId' element={<OlympicsManager />}>
-                  <Route
-                    path='registration'
-                    element={<OlympicsRegistration />}
-                  />
-                  <Route path='games' element={<OlympicsGames />} />
-                  <Route path='rounds' element={<OlympicsRounds />}>
-                    <Route path=':roundId' element={<OlympicsRoundEditor />} />
+        <UrqlProvider value={client}>
+          <Header />
+          <Box position={'relative'} minHeight={'100vh'}>
+            <Routes>
+              <Route path='*' element={<NotFound />} />
+              <Route path='/' element={<MainLayout />}>
+                <Route path='/tutorials' element={<Tutorials />} />
+                <Route
+                  path='/olympics'
+                  element={
+                    <RequireAuth>
+                      <Olympics />
+                    </RequireAuth>
+                  }
+                >
+                  <Route path=':eventId' element={<OlympicsManager />}>
+                    <Route
+                      path='registration'
+                      element={<OlympicsRegistration />}
+                    />
+                    <Route path='games' element={<OlympicsGames />} />
+                    <Route path='rounds' element={<OlympicsRounds />}>
+                      <Route
+                        path=':roundId'
+                        element={<OlympicsRoundEditor />}
+                      />
+                    </Route>
+                    <Route path='printables' element={<OlympicsPrintables />} />
+                    <Route path='dashboards' element={<OlympicsDashboards />} />
+                    <Route path='settings' element={<OlympicsSettings />} />
                   </Route>
-                  <Route path='printables' element={<OlympicsPrintables />} />
-                  <Route path='dashboards' element={<OlympicsDashboards />} />
-                  <Route path='settings' element={<OlympicsSettings />} />
                 </Route>
+                <Route path='/leagues' element={<Leagues />} />
+                <Route path='/playergroups' element={<PlayerGroups />} />
               </Route>
-              <Route path='/leagues' element={<Leagues />} />
-              <Route path='/playergroups' element={<PlayerGroups />} />
-            </Route>
-            <Route path='/signin' element={<SigninPage />} />
-          </Routes>
-        </Box>
+              <Route path='/signin' element={<SigninPage />} />
+            </Routes>
+          </Box>
+        </UrqlProvider>
       </Authenticator.Provider>
     </>
   )

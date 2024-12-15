@@ -84,3 +84,9 @@ variable "enable_custom_api_subdomain" {
   default     = false
   description = "Should a custom subdomain be created for the API?"
 }
+
+variable "enable_table_deletion_protection" {
+  type        = bool
+  default     = true
+  description = "Should table deletion protection be enabled?"
+}

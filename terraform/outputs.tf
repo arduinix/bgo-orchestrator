@@ -29,3 +29,7 @@ output "frontend_auth_fqdn" {
 output "appsync_domain" {
   value = module.appsync_bgo_api.appsync_domain
 }
+
+output "dynamo_bgo_data_table_name" {
+  value = aws_dynamodb_table.bgo_data.name
+}

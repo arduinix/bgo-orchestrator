@@ -31,29 +31,59 @@ module "lambda_datasources_bgo_api" {
   region                    = var.region
   function_group            = local.bgo_api_function_group_name
   default_request_template  = local.default_request_template
-  default_resposne_template = local.default_response_template
-  # create_resolver = false # this is deprecated now because we will create the resovlver depending on the function
-  default_statements = [{
-    sid       = "AllowLambdaToLog"
-    effect    = "Allow"
-    actions   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"]
-    resources = ["*"]
-  }]
+  default_response_template = local.default_response_template
+  appsync_id                = module.appsync_bgo_api.appsync_id
+  default_statements = [
+    {
+      sid       = "AllowLambdaToLog"
+      effect    = "Allow"
+      actions   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"]
+      resources = ["*"]
+    },
+    {
+      sid    = "AllowDataKeyRead"
+      effect = "Allow"
+      actions = [
+        "kms:Decrypt",
+        "kms:GenerateDataKey*",
+      ]
+      resources = ["${aws_kms_key.bgo_data_kms_key.arn}"]
+    },
+    {
+      sid    = "AllowDataTableRead"
+      effect = "Allow"
+      actions = [
+        "dynamodb:GetItem",
+        "dynamodb:Query",
+        "dynamodb:BatchGetItem",
+      ]
+      resources = ["${aws_dynamodb_table.bgo_data.arn}"]
+    }
+  ]
   default_env_vars = {
     POWERTOOLS_LOGGER_LOG_EVENT = true
+    LOG_LEVEL_DEBUG             = false
     ENV                         = var.env
   }
   functions = {
     getMessage = {
       service_name    = "exampleService"
       resolver_type   = "Query"
-      create_resolver = false # change this when we are ready to start deploying resolvers
+      create_resolver = true
       # source_dir    = "${local.bgo_api_functions_parent_dir}/exampleService/getMessage/"
       source_zip       = "${local.bgo_api_functions_parent_dir}/exampleService/getMessage.zip"
       lambda_layer_arn = [aws_lambda_layer_version.bgo_api_deps.arn]
       statements       = []
       # resquest_template =
       # response_template =
+    },
+    readEvent = {
+      service_name     = "event"
+      resolver_type    = "Query"
+      create_resolver  = true
+      source_zip       = "${local.bgo_api_functions_parent_dir}/event/readEvent.zip"
+      lambda_layer_arn = [aws_lambda_layer_version.bgo_api_deps.arn]
+      statements       = []
     },
   }
 }

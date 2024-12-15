@@ -52,4 +52,8 @@ format:
 	@echo "Formatting Terraform configuration..."
 	cd $(TERRAFORM_DIR) && terraform fmt
 
+output:
+	@echo "Running Terraform output with variables from $(TFVARS_FILE)..."
+	cd $(TERRAFORM_DIR) && terraform output -var-file=$(TFVARS_FILE)
+
 .PHONY: init plan apply destroy

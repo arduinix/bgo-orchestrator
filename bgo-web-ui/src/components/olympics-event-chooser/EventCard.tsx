@@ -28,7 +28,7 @@ import { convertDateShort } from '@utils/stringConversion'
 //   href: string;
 // }
 
-const EventCard = ({ id: eventId, name, location, playedDate }: ListEvent) => {
+const EventCard = ({ id: eventId, name, location, playedTimestamp }: Event) => {
   const navigate = useNavigate()
   const {
     isOpen: isOpenDelete,
@@ -81,9 +81,9 @@ const EventCard = ({ id: eventId, name, location, playedDate }: ListEvent) => {
             <Text mt={1} fontSize={'sm'}>
               {location}
             </Text>
-            {playedDate ? (
+            {playedTimestamp ? (
               <Badge colorScheme='green'>
-                Played {convertDateShort(playedDate)}
+                Played {convertDateShort(playedTimestamp)}
               </Badge>
             ) : (
               <Badge colorScheme='purple'>New</Badge>

@@ -7,7 +7,9 @@
     "generate": "graphql-codegen --verbose --config codegen.yml",
     "compile": "rm -rf dist && tsc",
     "build": "npm run generate && npm run compile",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\""
   },
   "keywords": [],
   "author": {
@@ -15,20 +17,28 @@
     "email": "arduinix88@gmail.com"
   },
   "devDependencies": {
+    "@aws-sdk/client-dynamodb": "^3.705.0",
+    "@aws-sdk/lib-dynamodb": "^3.705.0",
     "@graphql-codegen/cli": "^5.0.3",
     "@graphql-codegen/typescript": "^4.1.1",
     "@graphql-codegen/typescript-operations": "^4.3.1",
     "@graphql-codegen/typescript-resolvers": "^4.4.0",
     "@types/aws-lambda": "^8.10.145",
     "@types/node": "^22.5.5",
+    "eslint": "^9.11.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
     "graphql": "^16.9.0",
     "prettier": "^3.3.3",
     "tsx": "^4.19.2",
-    "typescript": "^5.6.2"
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.7.0"
   },
   "dependencies": {
     "@aws-lambda-powertools/logger": "^2.10.0",
+    "@aws-sdk/util-dynamodb": "^3.705.0",
     "bgo-api": "file:src/lib",
+    "dotenv": "^16.4.7",
     "random-words": "^2.0.1",
     "ulid": "^2.3.0"
   },
