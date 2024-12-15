@@ -12,6 +12,13 @@ const queries: QueryResolvers = {
     return dataSources.eventsAPI.listEvents()
   },
 
+  listEvents2: async (_, __, { dataSources }) => {
+    const data = await dataSources.bgoPrisma.event.findMany()
+    console.log('data', data)
+    return data
+    // return dataSources.bgoPrisma.event.findMany()
+  },
+
   readEvent: async (_, { input }, { dataSources }) => {
     return dataSources.eventsAPI.readEvent(input)
   },

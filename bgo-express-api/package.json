@@ -7,8 +7,8 @@
     "generate": "graphql-codegen --verbose --config codegen.yml",
     "compile": "npm run generate && tsc",
     "postinstall": "npm run compile",
-    "start": "npm run compile && node ./dist/index.js",
-    "watch": "concurrently  --names \"CodeGen,TS,Nodemon\" -c \"bgYellow,bgBlue,bgMagenta\" \"graphql-codegen --watch 'src/**/*.ts'\"  \"tsc -w \" \"nodemon ./dist/index.js \""
+    "start": "npm run compile && node ./dist/src/index.js",
+    "watch": "concurrently  --names \"CodeGen,TS,Nodemon\" -c \"bgYellow,bgBlue,bgMagenta\" \"graphql-codegen --watch 'src/**/*.ts'\"  \"tsc -w \" \"nodemon ./dist/src/index.js \""
   },
   "keywords": [],
   "author": "",
@@ -18,7 +18,6 @@
   "dependencies": {
     "@apollo/server": "^4.11.2",
     "@prisma/client": "^6.0.1",
-    "@types/node-pg-migrate": "^2.3.1",
     "dotenv": "^16.4.7",
     "graphql": "^16.9.0",
     "graphql-tag": "^2.12.6",
@@ -30,6 +29,7 @@
     "@graphql-codegen/typescript": "^4.1.2",
     "@graphql-codegen/typescript-operations": "^4.4.0",
     "@graphql-codegen/typescript-resolvers": "^4.4.1",
+    "@parcel/watcher": "^2.5.0",
     "@types/node": "^22.10.2",
     "concurrently": "^9.1.0",
     "eslint": "^9.16.0",

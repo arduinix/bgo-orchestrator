@@ -7,4 +7,4 @@ generates:
       - "typescript-operations"
     config:
       useIndexSignature: true
-      contextType: "../index#MyContext"
+      contextType: "../context#Contexts"

@@ -2,7 +2,8 @@ type Query {
   books: [Book]
   createEvent(input: CreateEventInput!): Event
   readEvent(input: ReadEventInput!): Event
-  listEvents(input: ListEventsInput!): [Event]
+  listEvents(input: ListEventsInput): [Event]
+  listEvents2: [Event2]
 }
 
 type Mutation {
@@ -81,6 +82,13 @@ type Event {
   playedTimestamp: String
   imagePath: String
   updatedTimestamp: String
+}
+
+type Event2 {
+  id: ID!
+  name: String!
+  description: String
+  location: String
 }
 
 type DeletionResult {
