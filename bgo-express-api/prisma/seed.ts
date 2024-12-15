@@ -4,11 +4,37 @@ import { ulid } from 'ulid'
 const prisma = new PrismaClient()
 
 const eventData: Prisma.EventCreateInput[] = [
+    // loop to generate 5 events
+
   {
     id: ulid(),
     name: 'Event 1',
     description: 'Event 1 Description',
     location: 'Denver, CO',
+  },
+  {
+    id: ulid(),
+    name: 'Event 2',
+    description: 'Event 2 Description',
+    location: 'New York, NY',
+  },
+  {
+    id: ulid(),
+    name: 'Event 3',
+    description: 'Event 3 Description',
+    location: 'San Francisco, CA',
+  },
+  {
+    id: ulid(),
+    name: 'Event 4',
+    description: 'Event 4 Description',
+    location: 'Chicago, IL',
+  },
+  {
+    id: ulid(),
+    name: 'Event 5',
+    description: 'Event 5 Description',
+    location: 'Austin, TX',
   },
 ]
 

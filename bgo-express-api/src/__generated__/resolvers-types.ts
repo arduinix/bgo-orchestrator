@@ -60,22 +60,13 @@ export type Event = {
   __typename?: 'Event';
   createdTimestamp?: Maybe<Scalars['String']['output']>;
   description?: Maybe<Scalars['String']['output']>;
-  eventDate?: Maybe<Scalars['String']['output']>;
-  eventLocation?: Maybe<Scalars['String']['output']>;
-  eventName: Scalars['String']['output'];
-  eventOwner?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   imagePath?: Maybe<Scalars['String']['output']>;
-  playedTimestamp?: Maybe<Scalars['String']['output']>;
-  updatedTimestamp?: Maybe<Scalars['String']['output']>;
-};
-
-export type Event2 = {
-  __typename?: 'Event2';
-  description?: Maybe<Scalars['String']['output']>;
-  id: Scalars['ID']['output'];
   location?: Maybe<Scalars['String']['output']>;
   name: Scalars['String']['output'];
+  playedTimestamp?: Maybe<Scalars['String']['output']>;
+  proposedDatetime?: Maybe<Scalars['String']['output']>;
+  updatedTimestamp?: Maybe<Scalars['String']['output']>;
 };
 
 export type EventDeleteResult = DeletionResult | Event;
@@ -129,7 +120,6 @@ export type Query = {
   books?: Maybe<Array<Maybe<Book>>>;
   createEvent?: Maybe<Event>;
   listEvents?: Maybe<Array<Maybe<Event>>>;
-  listEvents2?: Maybe<Array<Maybe<Event2>>>;
   readEvent?: Maybe<Event>;
 };
 
@@ -245,7 +235,6 @@ export type ResolversTypes = ResolversObject<{
   DeleteEventInput: DeleteEventInput;
   DeletionResult: ResolverTypeWrapper<DeletionResult>;
   Event: ResolverTypeWrapper<Event>;
-  Event2: ResolverTypeWrapper<Event2>;
   EventDeleteResult: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['EventDeleteResult']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
@@ -268,7 +257,6 @@ export type ResolversParentTypes = ResolversObject<{
   DeleteEventInput: DeleteEventInput;
   DeletionResult: DeletionResult;
   Event: Event;
-  Event2: Event2;
   EventDeleteResult: ResolversUnionTypes<ResolversParentTypes>['EventDeleteResult'];
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
@@ -311,22 +299,13 @@ export type DeletionResultResolvers<ContextType = Contexts, ParentType extends R
 export type EventResolvers<ContextType = Contexts, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = ResolversObject<{
   createdTimestamp?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  eventDate?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  eventLocation?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  eventName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  eventOwner?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   imagePath?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  playedTimestamp?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  updatedTimestamp?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export type Event2Resolvers<ContextType = Contexts, ParentType extends ResolversParentTypes['Event2'] = ResolversParentTypes['Event2']> = ResolversObject<{
-  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   location?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  playedTimestamp?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  proposedDatetime?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedTimestamp?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -352,7 +331,6 @@ export type QueryResolvers<ContextType = Contexts, ParentType extends ResolversP
   books?: Resolver<Maybe<Array<Maybe<ResolversTypes['Book']>>>, ParentType, ContextType>;
   createEvent?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryCreateEventArgs, 'input'>>;
   listEvents?: Resolver<Maybe<Array<Maybe<ResolversTypes['Event']>>>, ParentType, ContextType, Partial<QueryListEventsArgs>>;
-  listEvents2?: Resolver<Maybe<Array<Maybe<ResolversTypes['Event2']>>>, ParentType, ContextType>;
   readEvent?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<QueryReadEventArgs, 'input'>>;
 }>;
 
@@ -362,7 +340,6 @@ export type Resolvers<ContextType = Contexts> = ResolversObject<{
   CreateEventMutationResponse?: CreateEventMutationResponseResolvers<ContextType>;
   DeletionResult?: DeletionResultResolvers<ContextType>;
   Event?: EventResolvers<ContextType>;
-  Event2?: Event2Resolvers<ContextType>;
   EventDeleteResult?: EventDeleteResultResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   MutationResponse?: MutationResponseResolvers<ContextType>;

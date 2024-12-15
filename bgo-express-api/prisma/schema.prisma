@@ -14,8 +14,13 @@ datasource db {
 }
 
 model Event {
-  id String @unique
+  id String @id
   name String
   description String?
+  proposedDatetime DateTime?
   location String?
+  createdTimestamp DateTime @default(now())
+  updatedTimestamp DateTime @updatedAt @default(now())
+  playedTimestamp DateTime?
+  imagePath String?
 }

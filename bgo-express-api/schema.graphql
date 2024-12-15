@@ -3,7 +3,6 @@ type Query {
   createEvent(input: CreateEventInput!): Event
   readEvent(input: ReadEventInput!): Event
   listEvents(input: ListEventsInput): [Event]
-  listEvents2: [Event2]
 }
 
 type Mutation {
@@ -73,22 +72,14 @@ input ListEventsInput {
 
 type Event {
   id: ID!
-  eventName: String!
-  eventOwner: String
-  description: String
-  eventDate: String
-  eventLocation: String
-  createdTimestamp: String
-  playedTimestamp: String
-  imagePath: String
-  updatedTimestamp: String
-}
-
-type Event2 {
-  id: ID!
   name: String!
   description: String
+  proposedDatetime: String
   location: String
+  createdTimestamp: String
+  updatedTimestamp: String
+  playedTimestamp: String
+  imagePath: String
 }
 
 type DeletionResult {

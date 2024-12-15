@@ -3,13 +3,7 @@
 import {
   AddBookMutationResponse,
   Book,
-  CreateEventInput,
-  Event,
-  CreateEventMutationResponse,
-  ReadEventInput,
-  UpdateEventInput,
 } from './__generated__/resolvers-types'
-import { ulid } from 'ulid'
 
 const BooksDB: Omit<Required<Book>, '__typename'>[] = [
   {
@@ -52,61 +46,61 @@ export class BooksDataSource {
   }
 }
 
-const EventsDB: Omit<Event, '__typename'>[] = [
-  {
-    id: '01JEW8G6WKMRAFGVXE9PJQF511',
-    createdTimestamp: '2024-12-12T01:42:27.987Z',
-    description: 'An updated event',
-    eventDate: '2021-10-01',
-    eventLocation: 'Mars',
-    eventName: 'Another update to the event',
-    updatedTimestamp: '2024-12-12T15:26:35.854Z',
-  },
-]
+// const EventsDB: Omit<Event, '__typename'>[] = [
+//   {
+//     id: '01JEW8G6WKMRAFGVXE9PJQF511',
+//     createdTimestamp: '2024-12-12T01:42:27.987Z',
+//     description: 'An updated event',
+//     eventDate: '2021-10-01',
+//     eventLocation: 'Mars',
+//     eventName: 'Another update to the event',
+//     updatedTimestamp: '2024-12-12T15:26:35.854Z',
+//   },
+// ]
 
-export class EventsDataSource {
-  listEvents(): Event[] {
-    // simulate fetching a list of events
-    return EventsDB
-  }
-  readEvent(input: ReadEventInput): Event | null {
-    return EventsDB.find((event) => event.id === input.id) || null
-  }
+// export class EventsDataSource {
+//   listEvents(): Event[] {
+//     // simulate fetching a list of events
+//     return EventsDB
+//   }
+//   readEvent(input: ReadEventInput): Event | null {
+//     return EventsDB.find((event) => event.id === input.id) || null
+//   }
 
-  updateEvent(input: UpdateEventInput): Event | null {
-    const eventIndex = EventsDB.findIndex((event) => event.id === input.id)
+//   updateEvent(input: UpdateEventInput): Event | null {
+//     const eventIndex = EventsDB.findIndex((event) => event.id === input.id)
 
-    if (eventIndex === -1) {
-      return null
-    }
+//     if (eventIndex === -1) {
+//       return null
+//     }
 
-    EventsDB[eventIndex] = {
-      ...EventsDB[eventIndex],
-      ...input,
-      updatedTimestamp: new Date().toISOString(),
-    }
+//     EventsDB[eventIndex] = {
+//       ...EventsDB[eventIndex],
+//       ...input,
+//       updatedTimestamp: new Date().toISOString(),
+//     }
 
-    return EventsDB[eventIndex]
-  }
+//     return EventsDB[eventIndex]
+//   }
 
-  // We are using a static data set for this small example, but normally
-  // this Mutation would *mutate* our underlying data using a database
-  // or a REST API.
-  async createEvent(input: CreateEventInput): Promise<CreateEventMutationResponse> {
-    const event: Event = {
-      ...input,
-      id: ulid(),
-      createdTimestamp: new Date().toISOString(),
-      updatedTimestamp: new Date().toISOString(),
-    }
+//   // We are using a static data set for this small example, but normally
+//   // this Mutation would *mutate* our underlying data using a database
+//   // or a REST API.
+//   async createEvent(input: CreateEventInput): Promise<CreateEventMutationResponse> {
+//     const event: Event = {
+//       ...input,
+//       id: ulid(),
+//       createdTimestamp: new Date().toISOString(),
+//       updatedTimestamp: new Date().toISOString(),
+//     }
 
-    EventsDB.push(event)
+//     EventsDB.push(event)
 
-    return {
-      code: '200',
-      success: true,
-      message: 'New event created!',
-      event,
-    }
-  }
-}
+//     return {
+//       code: '200',
+//       success: true,
+//       message: 'New event created!',
+//       event,
+//     }
+//   }
+// }

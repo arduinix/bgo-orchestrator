@@ -8,20 +8,28 @@ const queries: QueryResolvers = {
     return dataSources.booksAPI.getBooks()
   },
 
+  // listEvents: async (_, __, { dataSources }) => {
+  //   return dataSources.eventsAPI.listEvents()
+  // },
+
   listEvents: async (_, __, { dataSources }) => {
-    return dataSources.eventsAPI.listEvents()
+    const events = await dataSources.bgoPrisma.event.findMany()
+    // loop through the events and format the date
+
+    return events.map((event) => {
+      return {
+        ...event,
+        proposedDatetime: new Date(event.proposedDatetime).toISOString(),
+        createdTimestamp: new Date(event.createdTimestamp).toISOString(),
+        updatedTimestamp: new Date(event.updatedTimestamp).toISOString(),
+        playedTimestamp: new Date(event.playedTimestamp).toISOString(),
+      }
+    })
   },
 
-  listEvents2: async (_, __, { dataSources }) => {
-    const data = await dataSources.bgoPrisma.event.findMany()
-    console.log('data', data)
-    return data
-    // return dataSources.bgoPrisma.event.findMany()
-  },
-
-  readEvent: async (_, { input }, { dataSources }) => {
-    return dataSources.eventsAPI.readEvent(input)
-  },
+  // readEvent: async (_, { input }, { dataSources }) => {
+  //   return dataSources.eventsAPI.readEvent(input)
+  // },
 }
 
 export default queries
