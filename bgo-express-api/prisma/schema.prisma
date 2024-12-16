@@ -15,17 +15,16 @@ datasource db {
 
 // Users the are respnsible for creating and managing events
 model User {
-  id                 String                  @id @unique
-  email              String                  @unique
-  username           String                  @unique
-  firstName          String
-  lastName           String
-  middleName         String?
-  createdTimestamp   DateTime                @default(now())
-  updatedTimestamp   DateTime                @default(now()) @updatedAt
-  playerAssociations UserPlayerAssociation[]
-  entitledEvents     UserEventEntitlement[]
-
+  id                     String                  @id @unique
+  email                  String                  @unique
+  username               String                  @unique
+  firstName              String
+  lastName               String
+  middleName             String?
+  createdTimestamp       DateTime                @default(now())
+  updatedTimestamp       DateTime                @default(now()) @updatedAt
+  playerAssociations     UserPlayerAssociation[]
+  entitledEvents         UserEventEntitlement[]
   eventPlayerInvitations EventPlayerInvitation[]
 }
 
@@ -44,13 +43,13 @@ model UserEventEntitlement {
 
 // Associates a user with a player. Players are managed by users and are not shared between users unless the appropriate entitlement exists.
 model UserPlayerAssociation {
-  user             User     @relation(fields: [userId], references: [id])
-  userId           String
-  player           Player   @relation(fields: [playerId], references: [id])
-  playerId         String
+  user             User     @relation(fields: [userEmail], references: [email])
+  userEmail        String
+  player           Player   @relation(fields: [playerEmail], references: [email])
+  playerEmail      String
   createdTimestamp DateTime @default(now())
 
-  @@id([userId, playerId])
+  @@id([userEmail, playerEmail])
 }
 
 // Roles that a user can have in relation to an event
@@ -62,42 +61,46 @@ enum UserEventEntitlementRole {
 
 // Events are held by users, events hold players (via playerGroups) and all other elements associated with event planning and event game play.
 model Event {
-  id                     String                  @id @unique
-  name                   String
-  description            String?
-  proposedDatetime       DateTime?
-  location               String?
-  createdTimestamp       DateTime                @default(now())
-  updatedTimestamp       DateTime                @default(now()) @updatedAt
-  playedTimestamp        DateTime?
-  imagePath              String?
-  entitledUsers          UserEventEntitlement[]
-  eventPlayerGroup       EventPlayerGroup        @relation(fields: [eventPlayerGroupId], references: [id])
-  eventPlayerGroupId     String                  @unique
-  eventPlayerInvitations EventPlayerInvitation[]
+  id                        String                           @id @unique
+  name                      String
+  description               String?
+  proposedDatetime          DateTime?
+  location                  String?
+  createdTimestamp          DateTime                         @default(now())
+  updatedTimestamp          DateTime                         @default(now()) @updatedAt
+  playedTimestamp           DateTime?
+  imagePath                 String?
+  entitledUsers             UserEventEntitlement[]
+  eventPlayerGroup          EventPlayerGroup                 @relation(fields: [eventPlayerGroupId], references: [id])
+  eventPlayerGroupId        String                           @unique
+  eventPlayerInvitations    EventPlayerInvitation[]
+  playerParticipationStatus EventPlayerParticipationStatus[]
+  eventGameCategories       EventGameCategory[]
 }
 
 // Players are the participants in events. Players are managed by users and are not shared between users unless the appropriate entitlement exists.
 model Player {
-  id                String                  @id @unique
-  firstName         String
-  middleName        String?
-  lastName          String
-  email             String                  @unique
-  phoneNumber       String
-  age               Int?
-  createdTimestamp  DateTime                @default(now())
-  updatedTimestamp  DateTime                @default(now()) @updatedAt
-  userAssociations  UserPlayerAssociation[]
-  eventInvitations  EventPlayerInvitation[]
-  eventPlayerGroups EventPlayerGroup[]
+  id                       String                           @id @unique
+  firstName                String
+  middleName               String?
+  lastName                 String
+  email                    String                           @unique
+  phoneNumber              String
+  age                      Int?
+  createdTimestamp         DateTime                         @default(now())
+  updatedTimestamp         DateTime                         @default(now()) @updatedAt
+  userAssociations         UserPlayerAssociation[]
+  eventInvitations         EventPlayerInvitation[]
+  eventPlayerGroups        EventPlayerGroup[]
+  eventParticipationStatus EventPlayerParticipationStatus[]
 }
 
 // Associates a player with an event.
 model EventPlayerGroup {
-  id      String   @id @unique
-  event   Event?
-  players Player[]
+  id               String   @id @unique
+  createdTimestamp DateTime @default(now())
+  event            Event?
+  players          Player[]
 }
 
 // Invitations to players to join an event
@@ -106,7 +109,7 @@ model EventPlayerInvitation {
   eventId            String
   player             Player                              @relation(fields: [playerId], references: [id])
   playerId           String
-  invitedTimestamp   DateTime                            @default(now())
+  createdTimestamp   DateTime                            @default(now())
   invitedBy          User                                @relation(fields: [userId], references: [id])
   respondedTimestamp DateTime?
   responseStatus     EventPlayerInvitationResponseStatus @default(PENDING)
@@ -122,3 +125,51 @@ enum EventPlayerInvitationResponseStatus {
   DECLINED
   PENDING
 }
+
+// A model to track the participation status of a player during an event
+model EventPlayerParticipationStatus {
+  event                     Event     @relation(fields: [eventId], references: [id])
+  eventId                   String
+  player                    Player    @relation(fields: [playerId], references: [id])
+  playerId                  String
+  createdTimestamp          DateTime  @default(now())
+  updatedTimestamp          DateTime  @default(now()) @updatedAt
+  initialCheckedInTimestamp DateTime?
+  isCheckedIn               Boolean   @default(false)
+  isPlaying                 Boolean   @default(false)
+
+  @@id([eventId, playerId])
+}
+
+// Categories of games that can be played during an event
+model EventGameCategory {
+  id               String      @id @unique
+  createdTimestamp DateTime    @default(now())
+  updatedTimestamp DateTime    @default(now()) @updatedAt
+  name             String      @unique
+  description      String?
+  isInPlay         Boolean     @default(true)
+  event            Event?      @relation(fields: [eventId], references: [id])
+  eventId          String?
+  eventGames       EventGame[]
+}
+
+// Games that can be played during an event
+model EventGame {
+  id                  String             @id @unique
+  createdTimestamp    DateTime           @default(now())
+  updatedTimestamp    DateTime           @default(now()) @updatedAt
+  name                String             @unique
+  description         String?
+  isInPlay            Boolean            @default(true)
+  eventGameCategory   EventGameCategory? @relation(fields: [eventGameCategoryId], references: [id])
+  eventGameCategoryId String?
+}
+
+// Round id needs to be unique across all rounds in the system
+
+// Match
+
+// PlayerMatchScore
+
+// Score
