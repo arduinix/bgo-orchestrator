@@ -76,6 +76,7 @@ model Event {
   eventPlayerInvitations    EventPlayerInvitation[]
   playerParticipationStatus EventPlayerParticipationStatus[]
   eventGameCategories       EventGameCategory[]
+  rounds                    Round[]
 }
 
 // Players are the participants in events. Players are managed by users and are not shared between users unless the appropriate entitlement exists.
@@ -93,6 +94,8 @@ model Player {
   eventInvitations         EventPlayerInvitation[]
   eventPlayerGroups        EventPlayerGroup[]
   eventParticipationStatus EventPlayerParticipationStatus[]
+  matches                  MatchPlayer[]
+  Score                    Score[]
 }
 
 // Associates a player with an event.
@@ -161,15 +164,73 @@ model EventGame {
   updatedTimestamp    DateTime           @default(now()) @updatedAt
   name                String             @unique
   description         String?
+  lowScoreWins        Boolean            @default(false)
   isInPlay            Boolean            @default(true)
   eventGameCategory   EventGameCategory? @relation(fields: [eventGameCategoryId], references: [id])
   eventGameCategoryId String?
+  matches             Match[]
 }
 
-// Round id needs to be unique across all rounds in the system
+// Round
+model Round {
+  id                 String     @id @unique
+  createdTimestamp   DateTime   @default(now())
+  startedTimestamp   DateTime?
+  completedTimestamp DateTime?
+  event              Event      @relation(fields: [eventId], references: [id])
+  eventId            String
+  phase              RoundPhase
+
+  Match Match[]
+}
+
+enum RoundPhase {
+  SETUP
+  READY
+  PLAYING
+  COMPLETE
+}
 
 // Match
+model Match {
+  id                 String        @id @unique
+  createdTimestamp   DateTime      @default(now())
+  startedTimestamp   DateTime?
+  completedTimestamp DateTime?
+  round              Round         @relation(fields: [roundId], references: [id])
+  roundId            String
+  game               EventGame     @relation(fields: [gameId], references: [id])
+  gameId             String
+  players            MatchPlayer[]
 
-// PlayerMatchScore
+  Score Score[]
+}
 
-// Score
+model MatchPlayer {
+  id               String   @id @unique
+  createdTimestamp DateTime @default(now())
+  match            Match    @relation(fields: [matchId], references: [id])
+  matchId          String
+  player           Player   @relation(fields: [playerId], references: [id])
+  playerId         String
+}
+
+model Score {
+  recordedTimestamp DateTime   @default(now())
+  match             Match      @relation(fields: [matchId], references: [id])
+  matchId           String
+  player            Player     @relation(fields: [playerId], references: [id])
+  playerId          String
+  score             Int
+  isWinningScore    Boolean
+  medal             ScoreMedal
+
+  @@id([matchId, playerId])
+}
+
+enum ScoreMedal {
+  GOLD
+  SILVER
+  BRONZE
+  NONE
+}
