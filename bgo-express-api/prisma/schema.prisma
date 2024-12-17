@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Users the are respnsible for creating and managing events
+// Users the are responsible for creating and managing events
 model User {
   id                     String                  @id @unique
   email                  String                  @unique
@@ -26,6 +26,8 @@ model User {
   playerAssociations     UserPlayerAssociation[]
   entitledEvents         UserEventEntitlement[]
   eventPlayerInvitations EventPlayerInvitation[]
+  ownedPlayer            Player                  @relation(fields: [ownedPlayerId], references: [id])
+  ownedPlayerId          String                  @unique
 }
 
 // Entitles a user to an event with a specific role
@@ -80,6 +82,16 @@ model Event {
 }
 
 // Players are the participants in events. Players are managed by users and are not shared between users unless the appropriate entitlement exists.
+// We should manage players differently depending on weather or not a users owns a player.
+// an owned player is a player that is managed by a user account that has signed up for the platform.
+// An unOwned player is one that is created by a user on behalf of the player. For example, where the event owner signs a user up for the platform.
+// We need to decide on player ownership. This WILL be different depending on how the player is created and if that player is owned by a user.
+// Scenarios
+/// 1. A user, as and EventOwner, creates a player and they are part of the event.
+/// 2. A user, as a an accountHolder has a player created for them that may or may not be part of the event.
+// If we have a player per event, then we need to potentially associate them with a central user account. This will result in duplicate data because we will have player per person, per event.
+// If we have a player which is managed by a user (who is not the owner of the player) then we can have a player object that exist in the context of a non-owning user and shared across events.
+// If we create a player account for a user when they sign up for the platform, then they would need to accept invitation in order for their player info to be shared with an event owner.
 model Player {
   id                       String                           @id @unique
   firstName                String
@@ -87,7 +99,6 @@ model Player {
   lastName                 String
   email                    String                           @unique
   phoneNumber              String
-  age                      Int?
   createdTimestamp         DateTime                         @default(now())
   updatedTimestamp         DateTime                         @default(now()) @updatedAt
   userAssociations         UserPlayerAssociation[]
@@ -95,7 +106,8 @@ model Player {
   eventPlayerGroups        EventPlayerGroup[]
   eventParticipationStatus EventPlayerParticipationStatus[]
   matches                  MatchPlayer[]
-  Score                    Score[]
+  score                    Score[]
+  ownedByUser              User?
 }
 
 // Associates a player with an event.
@@ -203,7 +215,7 @@ model Match {
   gameId             String
   players            MatchPlayer[]
 
-  Score Score[]
+  score Score[]
 }
 
 model MatchPlayer {
