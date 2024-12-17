@@ -23,21 +23,22 @@ model User {
   middleName             String?
   createdTimestamp       DateTime                @default(now())
   updatedTimestamp       DateTime                @default(now()) @updatedAt
-  playerAssociations     UserPlayerAssociation[]
+  playerAssociations     UserPlayerAssociation[] // A user can be associated with many players, these associations are for data aggregation purposes
+  ownedEvents            Event[]
   entitledEvents         UserEventEntitlement[]
   eventPlayerInvitations EventPlayerInvitation[]
-  ownedPlayer            Player                  @relation(fields: [ownedPlayerId], references: [id])
-  ownedPlayerId          String                  @unique
+  ownedPlayers           Player[]
+  ownedGames             Game[]
 }
 
 // Entitles a user to an event with a specific role
 model UserEventEntitlement {
-  user              User                     @relation(fields: [userId], references: [id])
+  user              User                @relation(fields: [userId], references: [id])
   userId            String
-  event             Event                    @relation(fields: [eventId], references: [id])
+  event             Event               @relation(fields: [eventId], references: [id])
   eventId           String
-  role              UserEventEntitlementRole
-  assignedTimestamp DateTime                 @default(now())
+  role              UserEntitlementRole
+  assignedTimestamp DateTime            @default(now())
   assignedBy        String
 
   @@id([userId, eventId])
@@ -55,7 +56,7 @@ model UserPlayerAssociation {
 }
 
 // Roles that a user can have in relation to an event
-enum UserEventEntitlementRole {
+enum UserEntitlementRole {
   OWNER
   EDITOR
   VIEWER
@@ -79,19 +80,12 @@ model Event {
   playerParticipationStatus EventPlayerParticipationStatus[]
   eventGameCategories       EventGameCategory[]
   rounds                    Round[]
+  ownedByUser               User                             @relation(fields: [ownedByUserId], references: [id])
+  ownedByUserId             String                           @unique
 }
 
-// Players are the participants in events. Players are managed by users and are not shared between users unless the appropriate entitlement exists.
-// We should manage players differently depending on weather or not a users owns a player.
-// an owned player is a player that is managed by a user account that has signed up for the platform.
-// An unOwned player is one that is created by a user on behalf of the player. For example, where the event owner signs a user up for the platform.
-// We need to decide on player ownership. This WILL be different depending on how the player is created and if that player is owned by a user.
-// Scenarios
-/// 1. A user, as and EventOwner, creates a player and they are part of the event.
-/// 2. A user, as a an accountHolder has a player created for them that may or may not be part of the event.
-// If we have a player per event, then we need to potentially associate them with a central user account. This will result in duplicate data because we will have player per person, per event.
-// If we have a player which is managed by a user (who is not the owner of the player) then we can have a player object that exist in the context of a non-owning user and shared across events.
-// If we create a player account for a user when they sign up for the platform, then they would need to accept invitation in order for their player info to be shared with an event owner.
+// Players are the participants in events
+// We need to make sure that players are always associated with the appropriate owned by user based on the event
 model Player {
   id                       String                           @id @unique
   firstName                String
@@ -107,10 +101,12 @@ model Player {
   eventParticipationStatus EventPlayerParticipationStatus[]
   matches                  MatchPlayer[]
   score                    Score[]
-  ownedByUser              User?
+  ownedByUser              User                             @relation(fields: [ownedByUserId], references: [id])
+  ownedByUserId            String                           @unique
 }
 
-// Associates a player with an event.
+// Associates players with an event
+// We should infer the entitlements to manage these players based on the UserEventEntitlement table.
 model EventPlayerGroup {
   id               String   @id @unique
   createdTimestamp DateTime @default(now())
@@ -170,17 +166,30 @@ model EventGameCategory {
 }
 
 // Games that can be played during an event
+// We need to infer the event entitlements for editing the games
 model EventGame {
-  id                  String             @id @unique
+  eventGameCategory   EventGameCategory? @relation(fields: [eventGameCategoryId], references: [id])
+  eventGameCategoryId String
+  game                Game               @relation(fields: [gameId], references: [id])
+  gameId              String
   createdTimestamp    DateTime           @default(now())
   updatedTimestamp    DateTime           @default(now()) @updatedAt
-  name                String             @unique
-  description         String?
-  lowScoreWins        Boolean            @default(false)
   isInPlay            Boolean            @default(true)
-  eventGameCategory   EventGameCategory? @relation(fields: [eventGameCategoryId], references: [id])
-  eventGameCategoryId String?
   matches             Match[]
+
+  @@id([eventGameCategoryId, gameId])
+}
+
+model Game {
+  id               String      @id @unique
+  createdTimestamp DateTime    @default(now())
+  updatedTimestamp DateTime    @default(now()) @updatedAt
+  name             String      @unique
+  description      String?
+  lowScoreWins     Boolean     @default(false)
+  ownedByUser      User        @relation(fields: [ownedByUserId], references: [id])
+  ownedByUserId    String      @unique
+  eventGames       EventGame[]
 }
 
 // Round
@@ -211,11 +220,12 @@ model Match {
   completedTimestamp DateTime?
   round              Round         @relation(fields: [roundId], references: [id])
   roundId            String
-  game               EventGame     @relation(fields: [gameId], references: [id])
+  game               EventGame     @relation(fields: [eventGameCategory, eventGameId], references: [eventGameCategoryId, gameId])
   gameId             String
   players            MatchPlayer[]
-
-  score Score[]
+  score              Score[]
+  eventGameCategory  String
+  eventGameId        String
 }
 
 model MatchPlayer {
