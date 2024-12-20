@@ -158,6 +158,11 @@ async function main() {
       eventPlayerGroup: {
         connect: { id: playerGroupData[0].id },
       },
+      eventConfigParameters: {
+        create: {
+          id: ulid(),
+        },
+      },
     },
     {
       id: ulid(),
@@ -205,6 +210,40 @@ async function main() {
   for (const userEventEntitlement of userEventEntitlementData) {
     await prisma.userEventEntitlement.create({
       data: userEventEntitlement,
+    })
+  }
+
+  const eventGameCategoryData: Prisma.EventGameCategoryCreateInput[] = [
+    {
+      id: ulid(),
+      name: 'Trick Taking',
+      description: 'Games where players take turns playing cards to win tricks.',
+    },
+    {
+      id: ulid(),
+      name: 'Deck Building',
+      description: 'Games where players build their deck of cards to win.',
+    },
+    {
+      id: ulid(),
+      name: 'Tile Placement',
+      description: 'Games where players place tiles to score points.',
+    },
+    {
+      id: ulid(),
+      name: 'Cooperative',
+      description: 'Games where players work together to achieve a common goal.',
+    },
+    {
+      id: ulid(),
+      name: 'Competitive',
+      description: 'Games where players compete against each other to win.',
+    },
+  ]
+
+  for (const eventGameCategory of eventGameCategoryData) {
+    await prisma.eventGameCategory.create({
+      data: eventGameCategory,
     })
   }
 
@@ -334,6 +373,94 @@ async function main() {
   for (const game of gameData) {
     await prisma.game.create({
       data: game,
+    })
+  }
+
+  const eventGameData: Prisma.EventGameCreateInput[] = [
+    {
+      eventGameCategory: {
+        connect: { id: eventGameCategoryData[0].id },
+      },
+      game: {
+        connect: { id: gameData[0].id },
+      },
+    },
+    {
+      eventGameCategory: {
+        connect: { id: eventGameCategoryData[1].id },
+      },
+      game: {
+        connect: { id: gameData[1].id },
+      },
+    },
+    {
+      eventGameCategory: {
+        connect: { id: eventGameCategoryData[2].id },
+      },
+      game: {
+        connect: { id: gameData[2].id },
+      },
+    },
+    {
+      eventGameCategory: {
+        connect: { id: eventGameCategoryData[3].id },
+      },
+      game: {
+        connect: { id: gameData[3].id },
+      },
+    },
+    {
+      eventGameCategory: {
+        connect: { id: eventGameCategoryData[4].id },
+      },
+      game: {
+        connect: { id: gameData[4].id },
+      },
+    },
+    {
+      eventGameCategory: {
+        connect: { id: eventGameCategoryData[4].id },
+      },
+      game: {
+        connect: { id: gameData[5].id },
+      },
+    },
+    {
+      eventGameCategory: {
+        connect: { id: eventGameCategoryData[4].id },
+      },
+      game: {
+        connect: { id: gameData[6].id },
+      },
+    },
+    {
+      eventGameCategory: {
+        connect: { id: eventGameCategoryData[4].id },
+      },
+      game: {
+        connect: { id: gameData[7].id },
+      },
+    },
+    {
+      eventGameCategory: {
+        connect: { id: eventGameCategoryData[4].id },
+      },
+      game: {
+        connect: { id: gameData[8].id },
+      },
+    },
+    {
+      eventGameCategory: {
+        connect: { id: eventGameCategoryData[4].id },
+      },
+      game: {
+        connect: { id: gameData[9].id },
+      },
+    },
+  ]
+  for (const eventGame of eventGameData) {
+    await prisma.eventGame.create({
+      data: eventGame,
     })
   }
 }
