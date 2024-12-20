@@ -5,122 +5,190 @@ const prisma = new PrismaClient()
 
 async function main() {
   console.log('Seeding the database...')
-
-  // Create Users
-  const user1 = await prisma.user.create({
-    data: {
+  const userData: Prisma.UserCreateInput[] = [
+    {
       id: ulid(),
       email: 'user1@example.com',
       username: 'user1',
       firstName: 'John',
       lastName: 'Doe',
     },
-  })
-
-  const user2 = await prisma.user.create({
-    data: {
+    {
       id: ulid(),
       email: 'user2@example.com',
       username: 'user2',
       firstName: 'Jane',
-      lastName: 'Smith',
+      lastName: 'Doe',
     },
-  })
+  ]
 
-  // Create Players
-  const player1 = await prisma.player.create({
-    data: {
+  for (const user of userData) {
+    await prisma.user.create({
+      data: user,
+    })
+  }
+
+  const playerData: Prisma.PlayerCreateInput[] = [
+    {
       id: ulid(),
-      firstName: 'Michael',
-      lastName: 'Jordan',
+      firstName: 'Sassy',
+      lastName: 'Lassie',
       email: 'player1@example.com',
       phoneNumber: '123-456-7890',
-      age: 25,
-    },
-  })
-
-  const player2 = await prisma.player.create({
-    data: {
-      id: ulid(),
-      firstName: 'Serena',
-      lastName: 'Williams',
-      email: 'player2@example.com',
-      phoneNumber: '987-654-3210',
-      age: 29,
-    },
-  })
-
-  // Associate User and Player
-  await prisma.userPlayerAssociation.create({
-    data: {
-      userEmail: user1.email,
-      playerEmail: player1.email,
-    },
-  })
-
-  // Create Event
-  const event1 = await prisma.event.create({
-    data: {
-      id: ulid(),
-      name: 'Summer Tournament',
-      description: 'A fun summer sports tournament',
-      proposedDatetime: new Date(),
-      location: 'Sports Arena',
-      imagePath: '/images/event1.png',
-      eventPlayerGroup: {
-        create: {
-          id: ulid(),
-          players: { connect: [{ id: player1.id }, { id: player2.id }] },
-        },
+      ownedByUser: {
+        connect: { id: userData[0].id },
       },
     },
-    include: { eventPlayerGroup: true },
-  })
+    {
+      id: ulid(),
+      firstName: 'Fancy',
+      lastName: 'Pants',
+      email: 'player2@example.com',
+      phoneNumber: '123-456-7810',
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+    },
+    {
+      id: ulid(),
+      firstName: 'Rudolph',
+      lastName: 'Reindeer',
+      email: 'player3@example.com',
+      phoneNumber: '123-456-7810',
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+    },
+    {
+      id: ulid(),
+      firstName: 'Santa',
+      lastName: 'Claus',
+      email: 'santa.claus@northpole.com',
+      phoneNumber: '123-456-7810',
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+    },
+    {
+      id: ulid(),
+      firstName: 'Master',
+      lastName: 'Splinter',
+      email: 'player2@example.com',
+      phoneNumber: '123-456-7810',
+      ownedByUser: {
+        connect: { id: userData[1].id },
+      },
+    },
+    {
+      id: ulid(),
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'user1@example.com',
+      phoneNumber: '123-456-7890',
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+    },
+  ]
 
-  // Assign Entitlements
-  await prisma.userEventEntitlement.create({
-    data: {
-      userId: user1.id,
-      eventId: event1.id,
+  for (const player of playerData) {
+    await prisma.player.create({
+      data: player,
+    })
+  }
+
+  const userPlayerAssociationData: Prisma.UserPlayerAssociationCreateInput[] = [
+    {
+      user: {
+        connect: { id: userData[0].id },
+      },
+      player: {
+        connect: { id: playerData[0].id },
+      },
+    },
+  ]
+
+  for (const userPlayerAssociation of userPlayerAssociationData) {
+    await prisma.userPlayerAssociation.create({
+      data: userPlayerAssociation,
+    })
+  }
+
+  const playerGroupData: Prisma.EventPlayerGroupCreateInput[] = [
+    {
+      id: ulid(),
+      players: {
+        connect: [
+          { id: playerData[0].id },
+          { id: playerData[1].id },
+          { id: playerData[2].id },
+          { id: playerData[3].id },
+        ],
+      },
+    },
+  ]
+
+  for (const playerGroup of playerGroupData) {
+    await prisma.eventPlayerGroup.create({
+      data: playerGroup,
+    })
+  }
+
+  const eventData: Prisma.EventCreateInput[] = [
+    {
+      id: ulid(),
+      name: 'Spring 2025',
+      description: 'BGO Spring 2025',
+      proposedDatetime: new Date('2025-03-01T00:00:00Z'),
+      location: 'Dormont, PA',
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+      eventPlayerGroup: {
+        connect: { id: playerGroupData[0].id },
+      },
+    },
+  ]
+
+  for (const event of eventData) {
+    await prisma.event.create({
+      data: event,
+    })
+  }
+  const userEventEntitlementData: Prisma.UserEventEntitlementCreateInput[] = [
+    {
+      user: {
+        connect: { id: userData[0].id },
+      },
+      event: {
+        connect: { id: eventData[0].id },
+      },
       role: 'OWNER',
-      assignedBy: 'admin',
+      assignedBy: 'SYSTEM',
     },
-  })
-
-  await prisma.userEventEntitlement.create({
-    data: {
-      userId: user2.id,
-      eventId: event1.id,
-      role: 'VIEWER',
-      assignedBy: 'admin',
+    {
+      user: {
+        connect: { id: userData[1].id },
+      },
+      event: {
+        connect: { id: eventData[0].id },
+      },
+      role: 'EDITOR',
+      assignedBy: 'SYSTEM',
     },
-  })
+  ]
 
-  // Create Event Game Categories and Games
-  const gameCategory = await prisma.eventGameCategory.create({
-    data: {
-      id: ulid(),
-      name: 'Basketball',
-      description: 'Basketball category',
-      eventId: event1.id,
-    },
-  })
-
-  await prisma.eventGame.create({
-    data: {
-      id: ulid(),
-      name: 'Three-Point Contest',
-      description: 'Test your three-point shooting skills!',
-      eventGameCategoryId: gameCategory.id,
-    },
-  })
-
-  console.log('Seeding complete!')
+  for (const userEventEntitlement of userEventEntitlementData) {
+    await prisma.userEventEntitlement.create({
+      data: userEventEntitlement,
+    })
+  }
 }
 
 main()
   .catch((e) => {
-    console.error('Error during seeding:', e)
+    console.error(e)
+    process.exit(1)
   })
   .finally(async () => {
     await prisma.$disconnect()
