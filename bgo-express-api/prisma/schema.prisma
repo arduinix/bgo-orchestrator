@@ -81,8 +81,10 @@ model Event {
   eventGameCategories       EventGameCategory[]
   rounds                    Round[]
   ownedByUser               User                             @relation(fields: [ownedByUserId], references: [id])
-  ownedByUserId             String                           @unique
+  ownedByUserId             String                       
 }
+
+// TODO: We need to create an event round configuration model to allow for the configuration of rounds for an event
 
 // Players are the participants in events
 // We need to make sure that players are always associated with the appropriate owned by user based on the event
@@ -188,6 +190,9 @@ model Game {
   name             String      @unique
   description      String?
   lowScoreWins     Boolean     @default(false)
+  minPlayers       Int
+  maxPlayers       Int
+  averagePlayTime  Int?
   ownedByUser      User        @relation(fields: [ownedByUserId], references: [id])
   ownedByUserId    String      @unique
   eventGames       EventGame[]
@@ -202,8 +207,7 @@ model Round {
   event              Event      @relation(fields: [eventId], references: [id])
   eventId            String
   phase              RoundPhase
-
-  Match Match[]
+  matches Match[]
 }
 
 enum RoundPhase {

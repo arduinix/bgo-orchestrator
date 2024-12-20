@@ -126,6 +126,17 @@ async function main() {
         ],
       },
     },
+    {
+      id: ulid(),
+      // players: {
+      //   connect: [
+      //     { id: playerData[0].id },
+      //     { id: playerData[1].id },
+      //     { id: playerData[2].id },
+      //     { id: playerData[3].id },
+      //   ],
+      // },
+    },
   ]
 
   for (const playerGroup of playerGroupData) {
@@ -146,6 +157,19 @@ async function main() {
       },
       eventPlayerGroup: {
         connect: { id: playerGroupData[0].id },
+      },
+    },
+    {
+      id: ulid(),
+      name: 'Fall 2025',
+      description: 'BGO Fall 2025',
+      proposedDatetime: new Date('2025-03-01T00:00:00Z'),
+      location: 'Dormont, PA',
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+      eventPlayerGroup: {
+        connect: { id: playerGroupData[1].id },
       },
     },
   ]
@@ -181,6 +205,27 @@ async function main() {
   for (const userEventEntitlement of userEventEntitlementData) {
     await prisma.userEventEntitlement.create({
       data: userEventEntitlement,
+    })
+  }
+
+  const gameData: Prisma.GameCreateInput[] = [
+    {
+      id: ulid(),
+      name: 'Ticket to Ride',
+      description:
+        'Ticket to Ride is a cross-country train adventure in which players collect and play matching train cards to claim railway routes connecting cities throughout North America.',
+      minPlayers: 2,
+      maxPlayers: 5,
+      lowScoreWins: false,
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+    },
+  ]
+
+  for (const game of gameData) {
+    await prisma.game.create({
+      data: game,
     })
   }
 }
