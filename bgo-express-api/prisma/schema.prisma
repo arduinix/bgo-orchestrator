@@ -23,6 +23,7 @@ model User {
   middleName             String?
   createdTimestamp       DateTime                @default(now())
   updatedTimestamp       DateTime                @default(now()) @updatedAt
+  deleteRequestTimestamp DateTime?
   playerAssociations     UserPlayerAssociation[] // A user can be associated with many players, these associations are for data aggregation purposes
   ownedEvents            Event[]
   entitledEvents         UserEventEntitlement[]
@@ -71,6 +72,7 @@ model Event {
   location                  String?
   createdTimestamp          DateTime                         @default(now())
   updatedTimestamp          DateTime                         @default(now()) @updatedAt
+  deleteRequestTimestamp    DateTime?
   playedTimestamp           DateTime?
   imagePath                 String?
   entitledUsers             UserEventEntitlement[]
@@ -82,9 +84,23 @@ model Event {
   rounds                    Round[]
   ownedByUser               User                             @relation(fields: [ownedByUserId], references: [id])
   ownedByUserId             String
+  eventConfigParameters     EventConfigParameters?
+
+  @@unique([name, ownedByUserId])
 }
 
-// TODO: We need to create an event round configuration model to allow for the configuration of rounds for an event
+model EventConfigParameters {
+  id                      String    @id @unique
+  createdTimestamp        DateTime  @default(now())
+  updatedTimestamp        DateTime  @default(now()) @updatedAt
+  deleteRequestTimestamp  DateTime?
+  event                   Event     @relation(fields: [eventId], references: [id])
+  eventId                 String    @unique
+  autoMinPlayersPerMatch  Int       @default(3)
+  autoMaxPlayersPerMatch  Int       @default(4)
+  autoPrefPlayersPerMatch Int       @default(3)
+  autoPrefMatchDuration   Int       @default(60)
+}
 
 // Players are the participants in events
 // We need to make sure that players are always associated with the appropriate owned by user based on the event
@@ -97,6 +113,7 @@ model Player {
   phoneNumber              String
   createdTimestamp         DateTime                         @default(now())
   updatedTimestamp         DateTime                         @default(now()) @updatedAt
+  deleteRequestTimestamp   DateTime?
   userAssociations         UserPlayerAssociation[]
   eventInvitations         EventPlayerInvitation[]
   eventPlayerGroups        EventPlayerGroup[]
@@ -161,12 +178,14 @@ model EventGameCategory {
   id               String      @id @unique
   createdTimestamp DateTime    @default(now())
   updatedTimestamp DateTime    @default(now()) @updatedAt
-  name             String      @unique
+  name             String
   description      String?
   isInPlay         Boolean     @default(true)
   event            Event?      @relation(fields: [eventId], references: [id])
   eventId          String?
   eventGames       EventGame[]
+
+  @@unique([name, eventId])
 }
 
 // Games that can be played during an event
@@ -185,30 +204,34 @@ model EventGame {
 }
 
 model Game {
-  id               String      @id @unique
-  createdTimestamp DateTime    @default(now())
-  updatedTimestamp DateTime    @default(now()) @updatedAt
-  name             String      @unique
-  description      String?
-  lowScoreWins     Boolean     @default(false)
-  minPlayers       Int
-  maxPlayers       Int
-  averagePlayTime  Int?
-  ownedByUser      User        @relation(fields: [ownedByUserId], references: [id])
-  ownedByUserId    String      @unique
-  eventGames       EventGame[]
+  id                     String      @id @unique
+  createdTimestamp       DateTime    @default(now())
+  updatedTimestamp       DateTime    @default(now()) @updatedAt
+  deleteRequestTimestamp DateTime?
+  name                   String
+  description            String?
+  lowScoreWins           Boolean     @default(false)
+  minPlayers             Int
+  maxPlayers             Int
+  averagePlayTime        Int?
+  ownedByUser            User        @relation(fields: [ownedByUserId], references: [id])
+  ownedByUserId          String
+  eventGames             EventGame[]
+
+  @@unique([name, ownedByUserId])
 }
 
 // Round
 model Round {
-  id                 String     @id @unique
-  createdTimestamp   DateTime   @default(now())
-  startedTimestamp   DateTime?
-  completedTimestamp DateTime?
-  event              Event      @relation(fields: [eventId], references: [id])
-  eventId            String
-  phase              RoundPhase
-  matches            Match[]
+  id                     String     @id @unique
+  createdTimestamp       DateTime   @default(now())
+  startedTimestamp       DateTime?
+  completedTimestamp     DateTime?
+  deleteRequestTimestamp DateTime?
+  event                  Event      @relation(fields: [eventId], references: [id])
+  eventId                String
+  phase                  RoundPhase
+  matches                Match[]
 }
 
 enum RoundPhase {
@@ -220,18 +243,19 @@ enum RoundPhase {
 
 // Match
 model Match {
-  id                 String        @id @unique
-  createdTimestamp   DateTime      @default(now())
-  startedTimestamp   DateTime?
-  completedTimestamp DateTime?
-  round              Round         @relation(fields: [roundId], references: [id])
-  roundId            String
-  game               EventGame     @relation(fields: [eventGameCategory, eventGameId], references: [eventGameCategoryId, gameId])
-  gameId             String
-  players            MatchPlayer[]
-  score              Score[]
-  eventGameCategory  String
-  eventGameId        String
+  id                     String        @id @unique
+  createdTimestamp       DateTime      @default(now())
+  startedTimestamp       DateTime?
+  completedTimestamp     DateTime?
+  deleteRequestTimestamp DateTime?
+  round                  Round         @relation(fields: [roundId], references: [id])
+  roundId                String
+  game                   EventGame     @relation(fields: [eventGameCategory, eventGameId], references: [eventGameCategoryId, gameId])
+  gameId                 String
+  players                MatchPlayer[]
+  score                  Score[]
+  eventGameCategory      String
+  eventGameId            String
 }
 
 model MatchPlayer {

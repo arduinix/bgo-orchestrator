@@ -20,6 +20,7 @@ CREATE TABLE "User" (
     "middleName" TEXT,
     "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deleteRequestTimestamp" TIMESTAMP(3),
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
@@ -53,12 +54,28 @@ CREATE TABLE "Event" (
     "location" TEXT,
     "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deleteRequestTimestamp" TIMESTAMP(3),
     "playedTimestamp" TIMESTAMP(3),
     "imagePath" TEXT,
     "eventPlayerGroupId" TEXT NOT NULL,
     "ownedByUserId" TEXT NOT NULL,
 
     CONSTRAINT "Event_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "EventConfigParameters" (
+    "id" TEXT NOT NULL,
+    "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deleteRequestTimestamp" TIMESTAMP(3),
+    "eventId" TEXT NOT NULL,
+    "autoMinPlayersPerMatch" INTEGER NOT NULL DEFAULT 3,
+    "autoMaxPlayersPerMatch" INTEGER NOT NULL DEFAULT 4,
+    "autoPrefPlayersPerMatch" INTEGER NOT NULL DEFAULT 3,
+    "autoPrefMatchDuration" INTEGER NOT NULL DEFAULT 60,
+
+    CONSTRAINT "EventConfigParameters_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -71,6 +88,7 @@ CREATE TABLE "Player" (
     "phoneNumber" TEXT NOT NULL,
     "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deleteRequestTimestamp" TIMESTAMP(3),
     "ownedByUserId" TEXT NOT NULL,
 
     CONSTRAINT "Player_pkey" PRIMARY KEY ("id")
@@ -139,9 +157,13 @@ CREATE TABLE "Game" (
     "id" TEXT NOT NULL,
     "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deleteRequestTimestamp" TIMESTAMP(3),
     "name" TEXT NOT NULL,
     "description" TEXT,
     "lowScoreWins" BOOLEAN NOT NULL DEFAULT false,
+    "minPlayers" INTEGER NOT NULL,
+    "maxPlayers" INTEGER NOT NULL,
+    "averagePlayTime" INTEGER,
     "ownedByUserId" TEXT NOT NULL,
 
     CONSTRAINT "Game_pkey" PRIMARY KEY ("id")
@@ -153,6 +175,7 @@ CREATE TABLE "Round" (
     "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "startedTimestamp" TIMESTAMP(3),
     "completedTimestamp" TIMESTAMP(3),
+    "deleteRequestTimestamp" TIMESTAMP(3),
     "eventId" TEXT NOT NULL,
     "phase" "RoundPhase" NOT NULL,
 
@@ -165,6 +188,7 @@ CREATE TABLE "Match" (
     "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "startedTimestamp" TIMESTAMP(3),
     "completedTimestamp" TIMESTAMP(3),
+    "deleteRequestTimestamp" TIMESTAMP(3),
     "roundId" TEXT NOT NULL,
     "gameId" TEXT NOT NULL,
     "eventGameCategory" TEXT NOT NULL,
@@ -219,7 +243,13 @@ CREATE UNIQUE INDEX "Event_id_key" ON "Event"("id");
 CREATE UNIQUE INDEX "Event_eventPlayerGroupId_key" ON "Event"("eventPlayerGroupId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Event_ownedByUserId_key" ON "Event"("ownedByUserId");
+CREATE UNIQUE INDEX "Event_name_ownedByUserId_key" ON "Event"("name", "ownedByUserId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "EventConfigParameters_id_key" ON "EventConfigParameters"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "EventConfigParameters_eventId_key" ON "EventConfigParameters"("eventId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Player_id_key" ON "Player"("id");
@@ -234,16 +264,13 @@ CREATE UNIQUE INDEX "EventPlayerGroup_id_key" ON "EventPlayerGroup"("id");
 CREATE UNIQUE INDEX "EventGameCategory_id_key" ON "EventGameCategory"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "EventGameCategory_name_key" ON "EventGameCategory"("name");
+CREATE UNIQUE INDEX "EventGameCategory_name_eventId_key" ON "EventGameCategory"("name", "eventId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Game_id_key" ON "Game"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Game_name_key" ON "Game"("name");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Game_ownedByUserId_key" ON "Game"("ownedByUserId");
+CREATE UNIQUE INDEX "Game_name_ownedByUserId_key" ON "Game"("name", "ownedByUserId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Round_id_key" ON "Round"("id");
@@ -274,6 +301,9 @@ ALTER TABLE "Event" ADD CONSTRAINT "Event_eventPlayerGroupId_fkey" FOREIGN KEY (
 
 -- AddForeignKey
 ALTER TABLE "Event" ADD CONSTRAINT "Event_ownedByUserId_fkey" FOREIGN KEY ("ownedByUserId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EventConfigParameters" ADD CONSTRAINT "EventConfigParameters_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Player" ADD CONSTRAINT "Player_ownedByUserId_fkey" FOREIGN KEY ("ownedByUserId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

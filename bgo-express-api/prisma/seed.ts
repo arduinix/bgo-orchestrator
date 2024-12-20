@@ -221,6 +221,114 @@ async function main() {
         connect: { id: userData[0].id },
       },
     },
+    {
+      id: ulid(),
+      name: 'Catan',
+      description:
+        'Catan is a game of trading and building where players collect resources and use them to build roads, settlements, and cities to earn points.',
+      minPlayers: 3,
+      maxPlayers: 4,
+      lowScoreWins: false,
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+    },
+    {
+      id: ulid(),
+      name: 'Pandemic',
+      description:
+        'Pandemic is a cooperative game where players work together to stop the spread of diseases and find cures before time runs out.',
+      minPlayers: 2,
+      maxPlayers: 4,
+      lowScoreWins: false,
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+    },
+    {
+      id: ulid(),
+      name: 'Carcassonne',
+      description:
+        'Carcassonne is a tile-placement game where players build cities, roads, and fields to score points.',
+      minPlayers: 2,
+      maxPlayers: 5,
+      lowScoreWins: false,
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+    },
+    {
+      id: ulid(),
+      name: '7 Wonders',
+      description:
+        '7 Wonders is a card drafting game where players build structures and wonders to earn points over three ages.',
+      minPlayers: 3,
+      maxPlayers: 7,
+      lowScoreWins: false,
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+    },
+    {
+      id: ulid(),
+      name: 'Dominion',
+      description:
+        'Dominion is a deck-building game where players use cards to build their deck and earn points.',
+      minPlayers: 2,
+      maxPlayers: 4,
+      lowScoreWins: false,
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+    },
+    {
+      id: ulid(),
+      name: 'Splendor',
+      description:
+        'Splendor is a game of chip-collecting and card development where players use gems to buy cards and earn points.',
+      minPlayers: 2,
+      maxPlayers: 4,
+      lowScoreWins: false,
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+    },
+    {
+      id: ulid(),
+      name: 'Azul',
+      description:
+        'Azul is a tile-placement game where players draft tiles to complete patterns and score points.',
+      minPlayers: 2,
+      maxPlayers: 4,
+      lowScoreWins: false,
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+    },
+    {
+      id: ulid(),
+      name: 'Terraforming Mars',
+      description:
+        'Terraforming Mars is a game where players work to terraform the planet Mars by raising the temperature, creating oceans, and building greenery.',
+      minPlayers: 1,
+      maxPlayers: 5,
+      lowScoreWins: false,
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+    },
+    {
+      id: ulid(),
+      name: 'Gloomhaven',
+      description:
+        'Gloomhaven is a cooperative game of tactical combat in a persistent world of shifting motives.',
+      minPlayers: 1,
+      maxPlayers: 4,
+      lowScoreWins: false,
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+    },
   ]
 
   for (const game of gameData) {
