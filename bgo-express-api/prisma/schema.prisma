@@ -47,9 +47,9 @@ model UserEventEntitlement {
 // Associates a user with a player. Players are managed by users and are not shared between users unless the appropriate entitlement exists.
 model UserPlayerAssociation {
   user             User     @relation(fields: [userId], references: [id])
-  userId        String
+  userId           String
   player           Player   @relation(fields: [playerId], references: [id])
-  playerId      String
+  playerId         String
   createdTimestamp DateTime @default(now())
 
   @@id([userId, playerId])
@@ -81,7 +81,7 @@ model Event {
   eventGameCategories       EventGameCategory[]
   rounds                    Round[]
   ownedByUser               User                             @relation(fields: [ownedByUserId], references: [id])
-  ownedByUserId             String                       
+  ownedByUserId             String
 }
 
 // TODO: We need to create an event round configuration model to allow for the configuration of rounds for an event
@@ -93,7 +93,7 @@ model Player {
   firstName                String
   middleName               String?
   lastName                 String
-  email                    String                           
+  email                    String
   phoneNumber              String
   createdTimestamp         DateTime                         @default(now())
   updatedTimestamp         DateTime                         @default(now()) @updatedAt
@@ -104,8 +104,9 @@ model Player {
   matches                  MatchPlayer[]
   score                    Score[]
   ownedByUser              User                             @relation(fields: [ownedByUserId], references: [id])
-  ownedByUserId            String     
-  @@unique([email, ownedByUserId])                      
+  ownedByUserId            String
+
+  @@unique([email, ownedByUserId])
 }
 
 // Associates players with an event
@@ -207,7 +208,7 @@ model Round {
   event              Event      @relation(fields: [eventId], references: [id])
   eventId            String
   phase              RoundPhase
-  matches Match[]
+  matches            Match[]
 }
 
 enum RoundPhase {
