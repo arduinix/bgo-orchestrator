@@ -480,9 +480,6 @@ async function main() {
     await prisma.eventPlayerInvitation.create({
       data: playerInvitation,
     })
-  }
-  // create participation status
-  for (const player of playerData) {
     const playerParticipationStatus: Prisma.EventPlayerParticipationStatusCreateInput = {
       event: {
         connect: { id: eventData[0].id },
@@ -511,22 +508,25 @@ async function main() {
     })
   }
 
-  const matchData: Prisma.MatchCreateInput[] = [
-    {
-      id: ulid(),
-      round: {
-        connect: {
-          id: roundData[0].id,
-        },
-      },
-      game: {
-        connect: {
-          eventGameCategoryId: eventGameCategoryData[0].id,
-          gameId: gameData[0].id
-        }
-      }
-    },
-  ]
+  // const matchData: Prisma.MatchCreateInput[] = [
+  //   {
+  //     id: ulid(),
+  //     round: {
+  //       connect: {
+  //         id: roundData[0].id,
+  //       },
+  //     },
+  //     // game: {
+  //     //   connect: {
+  //     //     eventGameCategoryId: eventGameCategoryData[0].id,
+  //     //     gameId: gameData[0].id
+  //     //   }
+  //     // },
+  //     // eventGameCategory: eventGameCategoryData[0].id,
+  //     // eventGameId: gameData[0].id,
+
+  //   },
+  // ]
 }
 
 main()

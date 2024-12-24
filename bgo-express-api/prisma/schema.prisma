@@ -199,7 +199,7 @@ model EventGame {
   createdTimestamp    DateTime           @default(now())
   updatedTimestamp    DateTime           @default(now()) @updatedAt
   isInPlay            Boolean            @default(true)
-  matches             Match[]
+  // matches             Match[]
 
   @@id([eventGameCategoryId, gameId])
 }
@@ -251,12 +251,12 @@ model Match {
   deleteRequestTimestamp DateTime?
   round                  Round         @relation(fields: [roundId], references: [id])
   roundId                String
-  game                   EventGame     @relation(fields: [eventGameCategory, eventGameId], references: [eventGameCategoryId, gameId])
-  gameId                 String
   matchPlayers           MatchPlayer[]
   score                  Score[]
-  eventGameCategory      String
-  eventGameId            String
+  // game                   EventGame     @relation(fields: [eventGameCategory, eventGameCategoryId], references: [eventGameCategoryId, gameId])
+  // gameId                 String
+  // eventGameCategory      String
+  // eventGameCategoryId            String
 }
 
 model MatchPlayer {
