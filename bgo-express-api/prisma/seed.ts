@@ -89,6 +89,26 @@ async function main() {
         connect: { id: userData[0].id },
       },
     },
+    {
+      id: ulid(),
+      firstName: 'Sarah',
+      lastName: 'Connor',
+      email: 'sc@example.com',
+      phoneNumber: '123-456-7890',
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+    },
+    {
+      id: ulid(),
+      firstName: 'Barry',
+      lastName: 'Weiss',
+      email: 'bw@example.com',
+      phoneNumber: '123-456-7890',
+      ownedByUser: {
+        connect: { id: userData[0].id },
+      },
+    },
   ]
 
   for (const player of playerData) {
@@ -480,7 +500,7 @@ async function main() {
     await prisma.eventPlayerInvitation.create({
       data: playerInvitation,
     })
-    const playerParticipationStatus: Prisma.EventPlayerParticipationStatusCreateInput = {
+    const eventPlayerParticipation: Prisma.EventPlayerParticipationCreateInput = {
       event: {
         connect: { id: eventData[0].id },
       },
@@ -488,8 +508,8 @@ async function main() {
         connect: { id: player.id },
       },
     }
-    await prisma.eventPlayerParticipationStatus.create({
-      data: playerParticipationStatus,
+    await prisma.eventPlayerParticipation.create({
+      data: eventPlayerParticipation,
     })
   }
   const roundData: Prisma.RoundCreateInput[] = [
@@ -508,25 +528,212 @@ async function main() {
     })
   }
 
-  // const matchData: Prisma.MatchCreateInput[] = [
-  //   {
-  //     id: ulid(),
-  //     round: {
-  //       connect: {
-  //         id: roundData[0].id,
-  //       },
-  //     },
-  //     // game: {
-  //     //   connect: {
-  //     //     eventGameCategoryId: eventGameCategoryData[0].id,
-  //     //     gameId: gameData[0].id
-  //     //   }
-  //     // },
-  //     // eventGameCategory: eventGameCategoryData[0].id,
-  //     // eventGameId: gameData[0].id,
+  const matchData: Prisma.MatchCreateInput[] = [
+    {
+      id: ulid(),
+      round: {
+        connect: {
+          id: roundData[0].id,
+        },
+      },
+      eventGame: {
+        connect: {
+          eventGameCategoryId_gameId: {
+            gameId: gameData[0].id,
+            eventGameCategoryId: eventGameCategoryData[0].id,
+          },
+        },
+      },
+    },
+    {
+      id: ulid(),
+      round: {
+        connect: {
+          id: roundData[0].id,
+        },
+      },
+      eventGame: {
+        connect: {
+          eventGameCategoryId_gameId: {
+            gameId: gameData[1].id,
+            eventGameCategoryId: eventGameCategoryData[1].id,
+          },
+        },
+      },
+    },
+  ]
 
-  //   },
-  // ]
+  for (const match of matchData) {
+    await prisma.match.create({
+      data: match,
+    })
+  }
+  const eventMatchPlayerSlotData: Prisma.EventMatchPlayerSlotCreateInput[] = [
+    {
+      id: ulid(),
+      eventPlayerParticipation: {
+        connect: {
+          eventId_playerId: { playerId: playerData[0].id, eventId: eventData[0].id },
+        },
+      },
+      match: {
+        connect: {
+          id: matchData[0].id,
+        },
+      },
+    },
+    {
+      id: ulid(),
+      eventPlayerParticipation: {
+        connect: {
+          eventId_playerId: { playerId: playerData[1].id, eventId: eventData[0].id },
+        },
+      },
+      match: {
+        connect: {
+          id: matchData[0].id,
+        },
+      },
+    },
+    {
+      id: ulid(),
+      eventPlayerParticipation: {
+        connect: {
+          eventId_playerId: { playerId: playerData[2].id, eventId: eventData[0].id },
+        },
+      },
+      match: {
+        connect: {
+          id: matchData[0].id,
+        },
+      },
+    },
+    {
+      id: ulid(),
+      eventPlayerParticipation: {
+        connect: {
+          eventId_playerId: { playerId: playerData[3].id, eventId: eventData[0].id },
+        },
+      },
+      match: {
+        connect: {
+          id: matchData[0].id,
+        },
+      },
+    },
+
+    {
+      id: ulid(),
+      eventPlayerParticipation: {
+        connect: {
+          eventId_playerId: { playerId: playerData[4].id, eventId: eventData[0].id },
+        },
+      },
+      match: {
+        connect: {
+          id: matchData[1].id,
+        },
+      },
+    },
+    {
+      id: ulid(),
+      eventPlayerParticipation: {
+        connect: {
+          eventId_playerId: { playerId: playerData[5].id, eventId: eventData[0].id },
+        },
+      },
+      match: {
+        connect: {
+          id: matchData[1].id,
+        },
+      },
+    },
+    {
+      id: ulid(),
+      eventPlayerParticipation: {
+        connect: {
+          eventId_playerId: { playerId: playerData[6].id, eventId: eventData[0].id },
+        },
+      },
+      match: {
+        connect: {
+          id: matchData[1].id,
+        },
+      },
+    },
+    {
+      id: ulid(),
+      eventPlayerParticipation: {
+        connect: {
+          eventId_playerId: { playerId: playerData[7].id, eventId: eventData[0].id },
+        },
+      },
+      match: {
+        connect: {
+          id: matchData[1].id,
+        },
+      },
+    },
+  ]
+
+  for (const eventMatchPlayerSlot of eventMatchPlayerSlotData) {
+    await prisma.eventMatchPlayerSlot.create({
+      data: eventMatchPlayerSlot,
+    })
+  }
+
+  const playerSlotScoreData: Prisma.PlayerSlotScoreCreateInput[] = [
+    {
+      id: ulid(),
+      eventMatchPlayerSlot: {
+        connect: {
+          id: eventMatchPlayerSlotData[0].id,
+        },
+      },
+      score: 10,
+      isWinningScore: false,
+      medal: 'NONE',
+    },
+    {
+      id: ulid(),
+      eventMatchPlayerSlot: {
+        connect: {
+          id: eventMatchPlayerSlotData[1].id,
+        },
+      },
+      score: 20,
+      isWinningScore: false,
+      medal: 'BRONZE',
+    },
+    {
+      id: ulid(),
+      eventMatchPlayerSlot: {
+        connect: {
+          id: eventMatchPlayerSlotData[2].id,
+        },
+      },
+      score: 30,
+      isWinningScore: false,
+      medal: 'SILVER',
+    },
+    {
+      id: ulid(),
+      eventMatchPlayerSlot: {
+        connect: {
+          id: eventMatchPlayerSlotData[3].id,
+        },
+      },
+      score: 40,
+      isWinningScore: true,
+      medal: 'GOLD',
+    },
+  ]
+
+  for (const playerSlotScore of playerSlotScoreData) {
+    await prisma.playerSlotScore.create({
+      data: playerSlotScore,
+    })
+  }
 }
 
 main()

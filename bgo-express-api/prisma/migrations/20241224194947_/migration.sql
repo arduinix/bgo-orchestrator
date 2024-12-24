@@ -107,16 +107,16 @@ CREATE TABLE "EventPlayerInvitation" (
     "eventId" TEXT NOT NULL,
     "playerId" TEXT NOT NULL,
     "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userId" TEXT NOT NULL,
     "respondedTimestamp" TIMESTAMP(3),
     "responseStatus" "EventPlayerInvitationResponseStatus" NOT NULL DEFAULT 'PENDING',
     "responseMessage" TEXT,
-    "userId" TEXT NOT NULL,
 
     CONSTRAINT "EventPlayerInvitation_pkey" PRIMARY KEY ("eventId","playerId")
 );
 
 -- CreateTable
-CREATE TABLE "EventPlayerParticipationStatus" (
+CREATE TABLE "EventPlayerParticipation" (
     "eventId" TEXT NOT NULL,
     "playerId" TEXT NOT NULL,
     "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -125,7 +125,7 @@ CREATE TABLE "EventPlayerParticipationStatus" (
     "isCheckedIn" BOOLEAN NOT NULL DEFAULT false,
     "isPlaying" BOOLEAN NOT NULL DEFAULT false,
 
-    CONSTRAINT "EventPlayerParticipationStatus_pkey" PRIMARY KEY ("eventId","playerId")
+    CONSTRAINT "EventPlayerParticipation_pkey" PRIMARY KEY ("eventId","playerId")
 );
 
 -- CreateTable
@@ -190,33 +190,34 @@ CREATE TABLE "Match" (
     "completedTimestamp" TIMESTAMP(3),
     "deleteRequestTimestamp" TIMESTAMP(3),
     "roundId" TEXT NOT NULL,
+    "eventGameCategoryId" TEXT NOT NULL,
     "gameId" TEXT NOT NULL,
-    "eventGameCategory" TEXT NOT NULL,
-    "eventGameId" TEXT NOT NULL,
 
     CONSTRAINT "Match_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "MatchPlayer" (
+CREATE TABLE "EventMatchPlayerSlot" (
     "id" TEXT NOT NULL,
     "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "matchId" TEXT NOT NULL,
+    "eventId" TEXT NOT NULL,
     "playerId" TEXT NOT NULL,
 
-    CONSTRAINT "MatchPlayer_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "EventMatchPlayerSlot_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "Score" (
+CREATE TABLE "PlayerSlotScore" (
+    "id" TEXT NOT NULL,
+    "eventMatchPlayerSlotId" TEXT NOT NULL,
     "recordedTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "matchId" TEXT NOT NULL,
-    "playerId" TEXT NOT NULL,
     "score" INTEGER NOT NULL,
-    "isWinningScore" BOOLEAN NOT NULL,
-    "medal" "ScoreMedal" NOT NULL,
+    "isWinningScore" BOOLEAN NOT NULL DEFAULT false,
+    "medal" "ScoreMedal" DEFAULT 'NONE',
+    "lowScoreWins" BOOLEAN NOT NULL DEFAULT false,
 
-    CONSTRAINT "Score_pkey" PRIMARY KEY ("matchId","playerId")
+    CONSTRAINT "PlayerSlotScore_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -279,7 +280,13 @@ CREATE UNIQUE INDEX "Round_id_key" ON "Round"("id");
 CREATE UNIQUE INDEX "Match_id_key" ON "Match"("id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "MatchPlayer_id_key" ON "MatchPlayer"("id");
+CREATE UNIQUE INDEX "EventMatchPlayerSlot_id_key" ON "EventMatchPlayerSlot"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "PlayerSlotScore_id_key" ON "PlayerSlotScore"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "PlayerSlotScore_eventMatchPlayerSlotId_key" ON "PlayerSlotScore"("eventMatchPlayerSlotId");
 
 -- CreateIndex
 CREATE INDEX "_EventPlayerGroupToPlayer_B_index" ON "_EventPlayerGroupToPlayer"("B");
@@ -318,10 +325,10 @@ ALTER TABLE "EventPlayerInvitation" ADD CONSTRAINT "EventPlayerInvitation_player
 ALTER TABLE "EventPlayerInvitation" ADD CONSTRAINT "EventPlayerInvitation_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "EventPlayerParticipationStatus" ADD CONSTRAINT "EventPlayerParticipationStatus_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "EventPlayerParticipation" ADD CONSTRAINT "EventPlayerParticipation_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "EventPlayerParticipationStatus" ADD CONSTRAINT "EventPlayerParticipationStatus_playerId_fkey" FOREIGN KEY ("playerId") REFERENCES "Player"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "EventPlayerParticipation" ADD CONSTRAINT "EventPlayerParticipation_playerId_fkey" FOREIGN KEY ("playerId") REFERENCES "Player"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "EventGameCategory" ADD CONSTRAINT "EventGameCategory_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE SET NULL ON UPDATE CASCADE;
@@ -342,19 +349,16 @@ ALTER TABLE "Round" ADD CONSTRAINT "Round_eventId_fkey" FOREIGN KEY ("eventId") 
 ALTER TABLE "Match" ADD CONSTRAINT "Match_roundId_fkey" FOREIGN KEY ("roundId") REFERENCES "Round"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Match" ADD CONSTRAINT "Match_eventGameCategory_eventGameId_fkey" FOREIGN KEY ("eventGameCategory", "eventGameId") REFERENCES "EventGame"("eventGameCategoryId", "gameId") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Match" ADD CONSTRAINT "Match_eventGameCategoryId_gameId_fkey" FOREIGN KEY ("eventGameCategoryId", "gameId") REFERENCES "EventGame"("eventGameCategoryId", "gameId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "MatchPlayer" ADD CONSTRAINT "MatchPlayer_matchId_fkey" FOREIGN KEY ("matchId") REFERENCES "Match"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "EventMatchPlayerSlot" ADD CONSTRAINT "EventMatchPlayerSlot_matchId_fkey" FOREIGN KEY ("matchId") REFERENCES "Match"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "MatchPlayer" ADD CONSTRAINT "MatchPlayer_playerId_fkey" FOREIGN KEY ("playerId") REFERENCES "Player"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "EventMatchPlayerSlot" ADD CONSTRAINT "EventMatchPlayerSlot_eventId_playerId_fkey" FOREIGN KEY ("eventId", "playerId") REFERENCES "EventPlayerParticipation"("eventId", "playerId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Score" ADD CONSTRAINT "Score_matchId_fkey" FOREIGN KEY ("matchId") REFERENCES "Match"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Score" ADD CONSTRAINT "Score_playerId_fkey" FOREIGN KEY ("playerId") REFERENCES "Player"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "PlayerSlotScore" ADD CONSTRAINT "PlayerSlotScore_eventMatchPlayerSlotId_fkey" FOREIGN KEY ("eventMatchPlayerSlotId") REFERENCES "EventMatchPlayerSlot"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_EventPlayerGroupToPlayer" ADD CONSTRAINT "_EventPlayerGroupToPlayer_A_fkey" FOREIGN KEY ("A") REFERENCES "EventPlayerGroup"("id") ON DELETE CASCADE ON UPDATE CASCADE;
