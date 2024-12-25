@@ -85,6 +85,7 @@ model Event {
   ownedByUser            User                       @relation(fields: [ownedByUserId], references: [id])
   ownedByUserId          String
   eventConfigParameters  EventConfigParameters?
+  teams                  Team[]
 
   @@unique([name, ownedByUserId])
 }
@@ -100,6 +101,31 @@ model EventConfigParameters {
   autoMaxPlayersPerMatch  Int       @default(4)
   autoPrefPlayersPerMatch Int       @default(3)
   autoPrefMatchDuration   Int       @default(60)
+}
+
+model Team {
+  id                       String                     @id @unique
+  createdTimestamp         DateTime                   @default(now())
+  updatedTimestamp         DateTime                   @default(now()) @updatedAt
+  name                     String                     @unique
+  description              String?
+  event                    Event                      @relation(fields: [eventId], references: [id])
+  eventId                  String
+  eventPlayers             EventPlayerParticipation[]
+  teamRoundRepresentatives TeamRoundRepresentative[]
+}
+
+model TeamRoundRepresentative {
+  round             Round                @relation(fields: [roundId], references: [id])
+  roundId           String
+  team              Team                 @relation(fields: [teamId], references: [id])
+  teamId            String
+  eventPlayerSlot   EventMatchPlayerSlot @relation(fields: [eventPlayerSlotId], references: [id])
+  eventPlayerSlotId String               @unique
+  createdTimestamp  DateTime             @default(now())
+  updatedTimestamp  DateTime             @default(now()) @updatedAt
+
+  @@id([roundId, teamId])
 }
 
 // Players are the participants in events
@@ -169,6 +195,8 @@ model EventPlayerParticipation {
   isCheckedIn               Boolean                @default(false)
   isPlaying                 Boolean                @default(false)
   eventMatchPlayerSlots     EventMatchPlayerSlot[]
+  team                      Team?                  @relation(fields: [teamId], references: [id])
+  teamId                    String?
 
   @@id([eventId, playerId])
 }
@@ -223,15 +251,16 @@ model Game {
 
 // Round
 model Round {
-  id                     String     @id @unique
-  createdTimestamp       DateTime   @default(now())
+  id                     String                    @id @unique
+  createdTimestamp       DateTime                  @default(now())
   startedTimestamp       DateTime?
   completedTimestamp     DateTime?
   deleteRequestTimestamp DateTime?
-  event                  Event      @relation(fields: [eventId], references: [id])
+  event                  Event                     @relation(fields: [eventId], references: [id])
   eventId                String
   phase                  RoundPhase
   matches                Match[]
+  teamRepresentatives    TeamRoundRepresentative[]
 }
 
 enum RoundPhase {
@@ -265,6 +294,7 @@ model EventMatchPlayerSlot {
   eventId                  String
   playerId                 String
   score                    PlayerSlotScore?
+  teamRoundRepresentative  TeamRoundRepresentative?
 }
 
 model PlayerSlotScore {

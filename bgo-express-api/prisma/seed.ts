@@ -568,6 +568,30 @@ async function main() {
       data: match,
     })
   }
+  
+
+  const teamData: Prisma.TeamCreateInput[] = [
+    {
+      id: ulid(),
+      name: 'Team Fancy Pants',
+      event: {
+        connect: { id: eventData[0].id },
+      },
+      eventPlayers: {
+        connect: [
+          { eventId_playerId: { playerId: playerData[0].id, eventId: eventData[0].id } },
+          { eventId_playerId: { playerId: playerData[1].id, eventId: eventData[0].id } },
+          { eventId_playerId: { playerId: playerData[2].id, eventId: eventData[0].id } },
+          { eventId_playerId: { playerId: playerData[3].id, eventId: eventData[0].id } },
+        ],
+      },
+    },
+  ]
+  for (const team of teamData) {
+    await prisma.team.create({
+      data: team,
+    })
+  }
   const eventMatchPlayerSlotData: Prisma.EventMatchPlayerSlotCreateInput[] = [
     {
       id: ulid(),
@@ -734,6 +758,7 @@ async function main() {
       data: playerSlotScore,
     })
   }
+
 }
 
 main()
