@@ -1,6 +1,7 @@
 import { QueryResolvers } from '__generated__/resolvers-types'
 import { MutationResolvers } from "__generated__/resolvers-types";
 import listEvents from './query/listEvents.js'
+import readEvent from './query/readEvent.js';
 
 // Use the generated `QueryResolvers` type to type check our queries!
 export const eventQueries: QueryResolvers = {
@@ -17,6 +18,7 @@ export const eventQueries: QueryResolvers = {
   //   })
   // },
   listEvents,
+  readEvent,
 
   // readEvent: async (_, { input }, { dataSources }) => {
   //   return dataSources.eventsAPI.readEvent(input)

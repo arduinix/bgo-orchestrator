@@ -46,8 +46,7 @@ const loggingPlugin = {
   },
 }
 
-// The ApolloServer constructor requires two parameters: your schema
-// definition and your set of resolvers.
+// create an instance of ApolloServer
 const server = new ApolloServer<Contexts>({
   typeDefs,
   resolvers,
@@ -55,15 +54,17 @@ const server = new ApolloServer<Contexts>({
 })
 
 const { url } = await startStandaloneServer(server, {
-  context: async () => {
+  context: async ({ req, res}) => {
+    // const token = req.headers.authorization || '';
+    // const user = await getUser(token);
+
     return {
-      // We are using a static data set for this example, but normally
-      // this would be where you'd add your data source connections
-      // or your REST API classes.
+      // add data sources to the context
       dataSources: {
         ...dataSources,
       },
-      logger: logger,
+      logger,
+      // user,
     }
   },
 })

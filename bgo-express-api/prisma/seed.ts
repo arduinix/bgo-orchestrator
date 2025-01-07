@@ -157,6 +157,10 @@ async function main() {
       //   ],
       // },
     },
+    {
+      id: ulid(),
+    },
+    
   ]
 
   for (const playerGroup of playerGroupData) {
@@ -195,6 +199,19 @@ async function main() {
       },
       eventPlayerGroup: {
         connect: { id: playerGroupData[1].id },
+      },
+    },
+    {
+      id: ulid(),
+      name: 'Fall 2025',
+      description: 'Not My BGO Fall 2025',
+      proposedDatetime: new Date('2025-03-01T00:00:00Z'),
+      location: 'Dormont, PA',
+      ownedByUser: {
+        connect: { id: userData[1].id },
+      },
+      eventPlayerGroup: {
+        connect: { id: playerGroupData[2].id },
       },
     },
   ]

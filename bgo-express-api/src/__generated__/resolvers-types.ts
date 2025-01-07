@@ -33,10 +33,10 @@ export type Book = {
 
 export type CreateEventInput = {
   description?: InputMaybe<Scalars['String']['input']>;
-  eventDate?: InputMaybe<Scalars['String']['input']>;
-  eventLocation?: InputMaybe<Scalars['String']['input']>;
-  eventName: Scalars['String']['input'];
   imagePath?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  proposedDatetime?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type CreateEventMutationResponse = {
@@ -72,10 +72,8 @@ export type Event = {
 export type EventDeleteResult = DeletionResult | Event;
 
 export type ListEventsInput = {
-  eventCreatedTimestampLower?: InputMaybe<Scalars['String']['input']>;
-  eventCreatedTimestampUpper?: InputMaybe<Scalars['String']['input']>;
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  nextToken?: InputMaybe<Scalars['String']['input']>;
+  lastShownId?: InputMaybe<Scalars['String']['input']>;
+  pageSize?: InputMaybe<Scalars['Int']['input']>;
   showEventsOwnedByOthers?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
@@ -144,11 +142,11 @@ export type ReadEventInput = {
 
 export type UpdateEventInput = {
   description?: InputMaybe<Scalars['String']['input']>;
-  eventDate?: InputMaybe<Scalars['String']['input']>;
-  eventLocation?: InputMaybe<Scalars['String']['input']>;
-  eventName?: InputMaybe<Scalars['String']['input']>;
   id: Scalars['ID']['input'];
   imagePath?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  name: Scalars['String']['input'];
+  proposedDatetime?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;

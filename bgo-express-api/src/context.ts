@@ -1,6 +1,7 @@
 import { BooksDataSource } from './datasources.js'
 import { PrismaClient } from '@prisma/client'
 import { Logger } from 'winston'
+import { UserInterface} from '@types'
 
 export interface Contexts {
   dataSources: {

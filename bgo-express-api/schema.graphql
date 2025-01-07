@@ -38,19 +38,19 @@ type CreateEventMutationResponse {
 }
 
 input CreateEventInput {
-  eventName: String!
+  name: String!
   description: String
-  eventDate: String
-  eventLocation: String
+  proposedDatetime: String
+  location: String
   imagePath: String
 }
 
 input UpdateEventInput {
   id: ID!
-  eventName: String
+  name: String!
   description: String
-  eventDate: String
-  eventLocation: String
+  proposedDatetime: String
+  location: String
   imagePath: String
 }
 
@@ -63,11 +63,9 @@ input ReadEventInput {
 }
 
 input ListEventsInput {
-  limit: Int
-  nextToken: String
+  pageSize: Int
+  lastShownId: String
   showEventsOwnedByOthers: Boolean
-  eventCreatedTimestampLower: String
-  eventCreatedTimestampUpper: String
 }
 
 type Event {
