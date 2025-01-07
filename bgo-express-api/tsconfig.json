@@ -1,3 +1,5 @@
+
+
 {
   "compilerOptions": {
     "rootDirs": ["src"],
@@ -11,9 +13,7 @@
     "types": ["node"],
     "paths": {
       "*": ["*", "./*"],
-      "@types/*": ["src/types/*"],
+      "@types/*": ["src/types/*"]
     }
   },
-  "include": ["src/**/*.ts", ],
-
 }
