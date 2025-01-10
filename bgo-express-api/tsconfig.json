@@ -11,9 +11,12 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "types": ["node"],
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
     "paths": {
       "*": ["*", "./*"],
-      "@types/*": ["src/types/*"]
+      "@types/*": ["./types/*"],
+      "@generated/*": ["generated/*"],
     }
   },
 }

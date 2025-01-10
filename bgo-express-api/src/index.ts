@@ -4,14 +4,19 @@ import resolvers from './resolvers/index.js'
 import { readFileSync } from 'fs'
 import { Contexts, dataSources } from './context.js'
 import winston from 'winston'
+import { GraphQLError } from 'graphql';
+
+import {getAuthenticatedUser} from './lib/authUtils.js'
 
 const logger = winston.createLogger({
-  level: 'info',
+  level: 'debug',
   // format: winston.format.json(),
   format: winston.format.combine(
     winston.format.colorize(),
-    winston.format.simple(),
-    winston.format.json()
+    winston.format.json(),
+    // winston.format.printf(({ message, ...metadata }) => {
+    //   return `${message} ${JSON.stringify(metadata)}`;
+    // })
   ),
   defaultMeta: { service: 'bgo-express-api' },
   transports: [
@@ -55,8 +60,20 @@ const server = new ApolloServer<Contexts>({
 
 const { url } = await startStandaloneServer(server, {
   context: async ({ req, res}) => {
-    // const token = req.headers.authorization || '';
-    // const user = await getUser(token);
+    const token = req.headers.authorization || '';
+
+    logger.debug(token)
+
+    const user = await getAuthenticatedUser(token);
+    if (!user) {
+      throw new GraphQLError('User is not authenticated', {
+        extensions: {
+          code: 'UNAUTHENTICATED',
+          http: {status: 401}
+        },
+      })
+    }
+    logger.debug(user.sub)
 
     return {
       // add data sources to the context
@@ -64,7 +81,7 @@ const { url } = await startStandaloneServer(server, {
         ...dataSources,
       },
       logger,
-      // user,
+      user,
     }
   },
 })

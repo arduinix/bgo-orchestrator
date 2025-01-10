@@ -1,20 +1,13 @@
 import { QueryResolvers } from '__generated__/resolvers-types'
 
-const listEvents: QueryResolvers['listEvents'] = async (_, __, { dataSources, logger }) => {
-  const events = await dataSources.bgoPrisma.event.findMany(
-//     {
-//     where: {
-//       OR: [
-//         { ownedByUserId: '01JGZGW51NQT5M316AW0ZH7HGX' },
-//         { entitledUsers: { some: { userId: '01JGZGW51NQT5M316AW0ZH7HGX' } } },
-//       ],
-//     },
-//   }
-)
+const listEvents: QueryResolvers['listEvents'] = async (_, __, { dataSources, logger, user }) => {
+  const events = await dataSources.bgoPrisma.event.findMany({
+    where: {
+      OR: [{ ownedByUserId: user.sub }, { entitledUsers: { some: { userId: user.sub } } }],
+    },
+  })
 
   return events.map((event) => {
-    logger.info('event', event)
-
     return {
       ...event,
       proposedDatetime: new Date(event.proposedDatetime).toISOString(),

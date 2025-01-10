@@ -7,7 +7,9 @@ async function main() {
   console.log('Seeding the database...')
   const userData: Prisma.UserCreateInput[] = [
     {
-      id: ulid(),
+      // id: ulid(),
+      // Test cognito sub
+      id: '74485438-2091-70e8-dc02-f421126daab6',
       email: 'user1@example.com',
       username: 'user1',
       firstName: 'John',
