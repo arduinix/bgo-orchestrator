@@ -7,7 +7,7 @@ type Query {
 
 type Mutation {
   addBook(title: String, author: String): AddBookMutationResponse
-  createEvent(input: CreateEventInput!): CreateEventMutationResponse
+  createEvent(input: CreateEventInput!): Event
   updateEvent(input: UpdateEventInput!): Event
   deleteEvent(input: DeleteEventInput!): EventDeleteResult
 }
@@ -30,12 +30,12 @@ type MutationResponse {
   message: String!
 }
 
-type CreateEventMutationResponse {
-  code: String!
-  success: Boolean!
-  message: String!
-  event: Event
-}
+# type CreateEventMutationResponse {
+#   code: String!
+#   success: Boolean!
+#   message: String!
+#   event: Event
+# }
 
 input CreateEventInput {
   name: String!

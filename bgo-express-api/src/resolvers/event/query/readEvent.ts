@@ -1,19 +1,30 @@
-import { QueryResolvers } from '__generated__/resolvers-types'
+import { QueryResolvers, Event } from '__generated__/resolvers-types'
+import { GraphQLError } from 'graphql'
+import { parseDate } from '../../../lib/dateUtils.js'
 
-const readEvent: QueryResolvers['readEvent'] = async (_, { input }, { dataSources, logger }) => {
-  const { id } = input
-  const event = await dataSources.bgoPrisma.event.findUnique({
-    where: {
-      id: id,
-    },
-  })
+const readEvent: QueryResolvers['readEvent'] = async (
+  _,
+  { input },
+  { dataSources, logger }
+): Promise<Event> => {
+  try {
+    const { id } = input
+    const event = await dataSources.bgoPrisma.event.findUnique({
+      where: {
+        id: id,
+      },
+    })
 
-  return {
-    ...event,
-    proposedDatetime: new Date(event.proposedDatetime).toISOString(),
-    createdTimestamp: new Date(event.createdTimestamp).toISOString(),
-    updatedTimestamp: new Date(event.updatedTimestamp).toISOString(),
-    playedTimestamp: new Date(event.playedTimestamp).toISOString(),
+    return {
+      ...event,
+      proposedDatetime: parseDate(event.proposedDatetime),
+      createdTimestamp: parseDate(event.createdTimestamp),
+      updatedTimestamp: parseDate(event.updatedTimestamp),
+      playedTimestamp: parseDate(event.playedTimestamp),
+    }
+  } catch (error) {
+    logger.error(error)
+    throw new GraphQLError(`Error reading event ${error.message}`)
   }
 }
 
