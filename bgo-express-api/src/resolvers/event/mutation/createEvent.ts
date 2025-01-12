@@ -11,24 +11,13 @@ const createEvent: MutationResolvers['createEvent'] = async (
   try {
     const { name, description, proposedDatetime, location, imagePath } = input
     logger.debug(`proposedDatetime: ${proposedDatetime}`)
-
-    const eventDate = proposedDatetime
-      ? new Date(proposedDatetime)
-      : new Date(Date.now() + 14 * 24 * 60 * 60 * 1000)
-    if (isNaN(eventDate.getTime())) {
-      throw new GraphQLError('Invalid proposedDatetime value', {
-        extensions: {
-          code: 'BAD_USER_INPUT',
-        },
-      })
-    }
     const event = await dataSources.bgoPrisma.event.create({
       data: {
         id: ulid(),
         name,
         description,
         location,
-        proposedDatetime: eventDate,
+        proposedDatetime,
         imagePath,
         ownedByUser: {
           connect: {
@@ -39,6 +28,11 @@ const createEvent: MutationResolvers['createEvent'] = async (
           create: {
             userId: user.sub,
             role: 'OWNER',
+          },
+        },
+        eventConfigParameters: {
+          create: {
+            id: ulid(),
           },
         },
         eventPlayerGroup: {

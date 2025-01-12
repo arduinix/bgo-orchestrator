@@ -3,6 +3,8 @@ import { MutationResolvers } from '__generated__/resolvers-types'
 import listEvents from './query/listEvents.js'
 import readEvent from './query/readEvent.js'
 import createEvent from './mutation/createEvent.js'
+import updateEvent from './mutation/updateEvent.js'
+import deleteEvent from './mutation/deleteEvent.js'
 
 // Use the generated `QueryResolvers` type to type check our queries!
 export const eventQueries: QueryResolvers = {
@@ -29,6 +31,8 @@ export const eventQueries: QueryResolvers = {
 // Use the generated `MutationResolvers` type to type check our mutations!
 export const eventMutations: MutationResolvers = {
   createEvent,
+  updateEvent,
+  deleteEvent,
   // Below, we mock adding a new book. Our data set is static for this
   // example, so we won't actually modify our data.
 

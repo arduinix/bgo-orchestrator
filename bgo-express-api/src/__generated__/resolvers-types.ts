@@ -43,11 +43,6 @@ export type DeleteEventInput = {
   id: Scalars['ID']['input'];
 };
 
-export type DeletionResult = {
-  __typename?: 'DeletionResult';
-  deletedTimestamp: Scalars['String']['output'];
-};
-
 export type Event = {
   __typename?: 'Event';
   createdTimestamp?: Maybe<Scalars['String']['output']>;
@@ -61,7 +56,11 @@ export type Event = {
   updatedTimestamp?: Maybe<Scalars['String']['output']>;
 };
 
-export type EventDeleteResult = DeletionResult | Event;
+export type EventDeletionResult = {
+  __typename?: 'EventDeletionResult';
+  deleteRequestTimestamp: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+};
 
 export type ListEventsInput = {
   lastShownId?: InputMaybe<Scalars['String']['input']>;
@@ -73,7 +72,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addBook?: Maybe<AddBookMutationResponse>;
   createEvent?: Maybe<Event>;
-  deleteEvent?: Maybe<EventDeleteResult>;
+  deleteEvent?: Maybe<EventDeletionResult>;
   updateEvent?: Maybe<Event>;
 };
 
@@ -209,10 +208,6 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
-/** Mapping of union types */
-export type ResolversUnionTypes<_RefType extends Record<string, unknown>> = ResolversObject<{
-  EventDeleteResult: ( DeletionResult ) | ( Event );
-}>;
 
 
 /** Mapping between all available schema types and the resolvers types */
@@ -222,9 +217,8 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   CreateEventInput: CreateEventInput;
   DeleteEventInput: DeleteEventInput;
-  DeletionResult: ResolverTypeWrapper<DeletionResult>;
   Event: ResolverTypeWrapper<Event>;
-  EventDeleteResult: ResolverTypeWrapper<ResolversUnionTypes<ResolversTypes>['EventDeleteResult']>;
+  EventDeletionResult: ResolverTypeWrapper<EventDeletionResult>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   ListEventsInput: ListEventsInput;
@@ -243,9 +237,8 @@ export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean']['output'];
   CreateEventInput: CreateEventInput;
   DeleteEventInput: DeleteEventInput;
-  DeletionResult: DeletionResult;
   Event: Event;
-  EventDeleteResult: ResolversUnionTypes<ResolversParentTypes>['EventDeleteResult'];
+  EventDeletionResult: EventDeletionResult;
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   ListEventsInput: ListEventsInput;
@@ -271,11 +264,6 @@ export type BookResolvers<ContextType = Contexts, ParentType extends ResolversPa
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type DeletionResultResolvers<ContextType = Contexts, ParentType extends ResolversParentTypes['DeletionResult'] = ResolversParentTypes['DeletionResult']> = ResolversObject<{
-  deletedTimestamp?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
 export type EventResolvers<ContextType = Contexts, ParentType extends ResolversParentTypes['Event'] = ResolversParentTypes['Event']> = ResolversObject<{
   createdTimestamp?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -289,14 +277,16 @@ export type EventResolvers<ContextType = Contexts, ParentType extends ResolversP
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type EventDeleteResultResolvers<ContextType = Contexts, ParentType extends ResolversParentTypes['EventDeleteResult'] = ResolversParentTypes['EventDeleteResult']> = ResolversObject<{
-  __resolveType: TypeResolveFn<'DeletionResult' | 'Event', ParentType, ContextType>;
+export type EventDeletionResultResolvers<ContextType = Contexts, ParentType extends ResolversParentTypes['EventDeletionResult'] = ResolversParentTypes['EventDeletionResult']> = ResolversObject<{
+  deleteRequestTimestamp?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type MutationResolvers<ContextType = Contexts, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   addBook?: Resolver<Maybe<ResolversTypes['AddBookMutationResponse']>, ParentType, ContextType, Partial<MutationAddBookArgs>>;
   createEvent?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<MutationCreateEventArgs, 'input'>>;
-  deleteEvent?: Resolver<Maybe<ResolversTypes['EventDeleteResult']>, ParentType, ContextType, RequireFields<MutationDeleteEventArgs, 'input'>>;
+  deleteEvent?: Resolver<Maybe<ResolversTypes['EventDeletionResult']>, ParentType, ContextType, RequireFields<MutationDeleteEventArgs, 'input'>>;
   updateEvent?: Resolver<Maybe<ResolversTypes['Event']>, ParentType, ContextType, RequireFields<MutationUpdateEventArgs, 'input'>>;
 }>;
 
@@ -317,9 +307,8 @@ export type QueryResolvers<ContextType = Contexts, ParentType extends ResolversP
 export type Resolvers<ContextType = Contexts> = ResolversObject<{
   AddBookMutationResponse?: AddBookMutationResponseResolvers<ContextType>;
   Book?: BookResolvers<ContextType>;
-  DeletionResult?: DeletionResultResolvers<ContextType>;
   Event?: EventResolvers<ContextType>;
-  EventDeleteResult?: EventDeleteResultResolvers<ContextType>;
+  EventDeletionResult?: EventDeletionResultResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   MutationResponse?: MutationResponseResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

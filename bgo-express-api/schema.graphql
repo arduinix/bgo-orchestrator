@@ -9,7 +9,7 @@ type Mutation {
   addBook(title: String, author: String): AddBookMutationResponse
   createEvent(input: CreateEventInput!): Event
   updateEvent(input: UpdateEventInput!): Event
-  deleteEvent(input: DeleteEventInput!): EventDeleteResult
+  deleteEvent(input: DeleteEventInput!): EventDeletionResult
 }
 
 type Book {
@@ -29,13 +29,6 @@ type MutationResponse {
   success: Boolean!
   message: String!
 }
-
-# type CreateEventMutationResponse {
-#   code: String!
-#   success: Boolean!
-#   message: String!
-#   event: Event
-# }
 
 input CreateEventInput {
   name: String!
@@ -80,8 +73,7 @@ type Event {
   imagePath: String
 }
 
-type DeletionResult {
-  deletedTimestamp: String!
+type EventDeletionResult {
+  id: ID!
+  deleteRequestTimestamp: String!
 }
-
-union EventDeleteResult = Event | DeletionResult
