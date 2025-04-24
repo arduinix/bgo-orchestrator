@@ -12,20 +12,20 @@ const queries: QueryResolvers = {
   //   return dataSources.eventsAPI.listEvents()
   // },
 
-  listEvents: async (_, __, { dataSources }) => {
-    const events = await dataSources.bgoPrisma.event.findMany()
-    // loop through the events and format the date
+  // listEvents: async (_, __, { dataSources }) => {
+  //   const events = await dataSources.bgoPrisma.event.findMany()
+  //   // loop through the events and format the date
 
-    return events.map((event) => {
-      return {
-        ...event,
-        proposedDatetime: new Date(event.proposedDatetime).toISOString(),
-        createdTimestamp: new Date(event.createdTimestamp).toISOString(),
-        updatedTimestamp: new Date(event.updatedTimestamp).toISOString(),
-        playedTimestamp: new Date(event.playedTimestamp).toISOString(),
-      }
-    })
-  },
+  //   return events.map((event) => {
+  //     return {
+  //       ...event,
+  //       proposedDatetime: new Date(event.proposedDatetime).toISOString(),
+  //       createdTimestamp: new Date(event.createdTimestamp).toISOString(),
+  //       updatedTimestamp: new Date(event.updatedTimestamp).toISOString(),
+  //       playedTimestamp: new Date(event.playedTimestamp).toISOString(),
+  //     }
+  //   })
+  // },
 
   // readEvent: async (_, { input }, { dataSources }) => {
   //   return dataSources.eventsAPI.readEvent(input)

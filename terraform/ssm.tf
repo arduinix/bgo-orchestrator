@@ -28,6 +28,14 @@ resource "aws_ssm_parameter" "cognito_user_client_id" {
   value       = aws_cognito_user_pool_client.user_client[0].id
 }
 
+# resource "aws_ssm_parameter" "cognito_user_client_secret" {
+#   count       = var.enable_cognito ? 1 : 0
+#   name        = "${local.ssm_prefix}/cognito_user_client_secret"
+#   description = "The secret of the Cognito user client"
+#   type        = "SecureString"
+#   value       = aws_cognito_user_pool_client.user_client[0].client_secret
+# }
+
 resource "aws_ssm_parameter" "frontend_auth_fqdn" {
   count       = var.enable_cognito ? 1 : 0
   name        = "${local.ssm_prefix}/frontend_auth_fqdn"

@@ -13,14 +13,304 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Event {
-  id String @id
-  name String
-  description String?
-  proposedDatetime DateTime?
-  location String?
+// Users the are responsible for creating and managing events
+model User {
+  id                     String                  @id @unique
+  email                  String                  @unique
+  username               String                  @unique
+  firstName              String
+  lastName               String
+  middleName             String?
+  createdTimestamp       DateTime                @default(now())
+  updatedTimestamp       DateTime                @default(now()) @updatedAt
+  deleteRequestTimestamp DateTime?
+  playerAssociations     UserPlayerAssociation[] // A user can be associated with many players, these associations are for data aggregation purposes
+  ownedEvents            Event[]
+  entitledEvents         UserEventEntitlement[]
+  eventPlayerInvitations EventPlayerInvitation[]
+  ownedPlayers           Player[]
+  ownedGames             Game[]
+}
+
+// Entitles a user to an event with a specific role
+model UserEventEntitlement {
+  user              User                @relation(fields: [userId], references: [id])
+  userId            String
+  event             Event               @relation(fields: [eventId], references: [id])
+  eventId           String
+  role              UserEntitlementRole
+  assignedTimestamp DateTime            @default(now())
+  assignedBy        String              @default("SYSTEM")
+
+  @@id([userId, eventId])
+}
+
+// Associates a user with a player. Players are managed by users and are not shared between users unless the appropriate entitlement exists.
+model UserPlayerAssociation {
+  user             User     @relation(fields: [userId], references: [id])
+  userId           String
+  player           Player   @relation(fields: [playerId], references: [id])
+  playerId         String
   createdTimestamp DateTime @default(now())
-  updatedTimestamp DateTime @updatedAt @default(now())
-  playedTimestamp DateTime?
-  imagePath String?
+
+  @@id([userId, playerId])
+}
+
+// Roles that a user can have in relation to an event
+enum UserEntitlementRole {
+  OWNER
+  EDITOR
+  VIEWER
+}
+
+// Events are held by users, events hold players (via playerGroups) and all other elements associated with event planning and event game play.
+model Event {
+  id                     String                     @id @unique
+  name                   String
+  description            String?
+  proposedDatetime       DateTime?
+  location               String?
+  createdTimestamp       DateTime                   @default(now())
+  updatedTimestamp       DateTime                   @default(now()) @updatedAt
+  deleteRequestTimestamp DateTime?
+  playedTimestamp        DateTime?
+  imagePath              String?
+  entitledUsers          UserEventEntitlement[]
+  eventPlayerGroup       EventPlayerGroup           @relation(fields: [eventPlayerGroupId], references: [id])
+  eventPlayerGroupId     String                     @unique
+  eventPlayerInvitations EventPlayerInvitation[]
+  playerParticipation    EventPlayerParticipation[]
+  eventGameCategories    EventGameCategory[]
+  rounds                 Round[]
+  ownedByUser            User                       @relation(fields: [ownedByUserId], references: [id])
+  ownedByUserId          String
+  eventConfigParameters  EventConfigParameters?
+  teams                  Team[]
+
+  @@unique([name, ownedByUserId])
+}
+
+model EventConfigParameters {
+  id                      String    @id @unique
+  createdTimestamp        DateTime  @default(now())
+  updatedTimestamp        DateTime  @default(now()) @updatedAt
+  deleteRequestTimestamp  DateTime?
+  event                   Event     @relation(fields: [eventId], references: [id])
+  eventId                 String    @unique
+  autoMinPlayersPerMatch  Int       @default(3)
+  autoMaxPlayersPerMatch  Int       @default(4)
+  autoPrefPlayersPerMatch Int       @default(3)
+  autoPrefMatchDuration   Int       @default(60)
+}
+
+model Team {
+  id                       String                     @id @unique
+  createdTimestamp         DateTime                   @default(now())
+  updatedTimestamp         DateTime                   @default(now()) @updatedAt
+  name                     String                     @unique
+  description              String?
+  event                    Event                      @relation(fields: [eventId], references: [id])
+  eventId                  String
+  eventPlayers             EventPlayerParticipation[]
+  teamRoundRepresentatives TeamRoundRepresentative[]
+}
+
+model TeamRoundRepresentative {
+  round             Round                @relation(fields: [roundId], references: [id])
+  roundId           String
+  team              Team                 @relation(fields: [teamId], references: [id])
+  teamId            String
+  eventPlayerSlot   EventMatchPlayerSlot @relation(fields: [eventPlayerSlotId], references: [id])
+  eventPlayerSlotId String               @unique
+  createdTimestamp  DateTime             @default(now())
+  updatedTimestamp  DateTime             @default(now()) @updatedAt
+
+  @@id([roundId, teamId])
+}
+
+// Players are the participants in events
+// We need to make sure that players are always associated with the appropriate owned by user based on the event
+model Player {
+  id                     String                     @id @unique
+  firstName              String
+  middleName             String?
+  lastName               String
+  email                  String
+  phoneNumber            String
+  createdTimestamp       DateTime                   @default(now())
+  updatedTimestamp       DateTime                   @default(now()) @updatedAt
+  deleteRequestTimestamp DateTime?
+  userAssociations       UserPlayerAssociation[]
+  eventInvitations       EventPlayerInvitation[]
+  eventPlayerGroups      EventPlayerGroup[]
+  eventParticipation     EventPlayerParticipation[]
+  ownedByUser            User                       @relation(fields: [ownedByUserId], references: [id])
+  ownedByUserId          String
+
+  @@unique([email, ownedByUserId])
+}
+
+// Associates players with an event
+// We should infer the entitlements to manage these players based on the UserEventEntitlement table.
+model EventPlayerGroup {
+  id               String   @id @unique
+  createdTimestamp DateTime @default(now())
+  event            Event?
+  players          Player[]
+}
+
+// Invitations to players to join an event
+// These must be mapped to the event and not the user that has invited them
+model EventPlayerInvitation {
+  event              Event                               @relation(fields: [eventId], references: [id])
+  eventId            String
+  player             Player                              @relation(fields: [playerId], references: [id])
+  playerId           String
+  createdTimestamp   DateTime                            @default(now())
+  invitedByUser      User                                @relation(fields: [userId], references: [id])
+  userId             String
+  respondedTimestamp DateTime?
+  responseStatus     EventPlayerInvitationResponseStatus @default(PENDING)
+  responseMessage    String?
+
+  @@id([eventId, playerId])
+}
+
+// The status of a player's response to an event invitation
+enum EventPlayerInvitationResponseStatus {
+  ACCEPTED
+  DECLINED
+  PENDING
+}
+
+// A model to track the participation status of a player during an event
+model EventPlayerParticipation {
+  event                     Event                  @relation(fields: [eventId], references: [id])
+  eventId                   String
+  player                    Player                 @relation(fields: [playerId], references: [id])
+  playerId                  String
+  createdTimestamp          DateTime               @default(now())
+  updatedTimestamp          DateTime               @default(now()) @updatedAt
+  initialCheckedInTimestamp DateTime?
+  isCheckedIn               Boolean                @default(false)
+  isPlaying                 Boolean                @default(false)
+  eventMatchPlayerSlots     EventMatchPlayerSlot[]
+  team                      Team?                  @relation(fields: [teamId], references: [id])
+  teamId                    String?
+
+  @@id([eventId, playerId])
+}
+
+// Categories of games that can be played during an event
+model EventGameCategory {
+  id               String      @id @unique
+  createdTimestamp DateTime    @default(now())
+  updatedTimestamp DateTime    @default(now()) @updatedAt
+  name             String
+  description      String?
+  isInPlay         Boolean     @default(true)
+  event            Event?      @relation(fields: [eventId], references: [id])
+  eventId          String?
+  eventGames       EventGame[]
+
+  @@unique([name, eventId])
+}
+
+// Games that can be played during an event
+// We need to infer the event entitlements for editing the games
+model EventGame {
+  eventGameCategory   EventGameCategory? @relation(fields: [eventGameCategoryId], references: [id])
+  eventGameCategoryId String
+  game                Game               @relation(fields: [gameId], references: [id])
+  gameId              String
+  createdTimestamp    DateTime           @default(now())
+  updatedTimestamp    DateTime           @default(now()) @updatedAt
+  isInPlay            Boolean            @default(true)
+  matches             Match[]
+
+  @@id([eventGameCategoryId, gameId])
+}
+
+model Game {
+  id                     String      @id @unique
+  createdTimestamp       DateTime    @default(now())
+  updatedTimestamp       DateTime    @default(now()) @updatedAt
+  deleteRequestTimestamp DateTime?
+  name                   String
+  description            String?
+  lowScoreWins           Boolean     @default(false)
+  minPlayers             Int
+  maxPlayers             Int
+  averagePlayTime        Int?
+  ownedByUser            User        @relation(fields: [ownedByUserId], references: [id])
+  ownedByUserId          String
+  eventGames             EventGame[]
+
+  @@unique([name, ownedByUserId])
+}
+
+// Round
+model Round {
+  id                     String                    @id @unique
+  createdTimestamp       DateTime                  @default(now())
+  startedTimestamp       DateTime?
+  completedTimestamp     DateTime?
+  deleteRequestTimestamp DateTime?
+  event                  Event                     @relation(fields: [eventId], references: [id])
+  eventId                String
+  phase                  RoundPhase
+  matches                Match[]
+  teamRepresentatives    TeamRoundRepresentative[]
+}
+
+enum RoundPhase {
+  SETUP
+  READY
+  PLAYING
+  COMPLETE
+}
+
+// Match
+model Match {
+  id                     String                 @id @unique
+  createdTimestamp       DateTime               @default(now())
+  startedTimestamp       DateTime?
+  completedTimestamp     DateTime?
+  deleteRequestTimestamp DateTime?
+  round                  Round                  @relation(fields: [roundId], references: [id])
+  roundId                String
+  eventGame              EventGame              @relation(fields: [eventGameCategoryId, gameId], references: [eventGameCategoryId, gameId])
+  eventGameCategoryId    String
+  gameId                 String
+  eventMatchPlayerSlots  EventMatchPlayerSlot[] // The slots that are available for players to join the match
+}
+
+model EventMatchPlayerSlot {
+  id                       String                   @id @unique
+  createdTimestamp         DateTime                 @default(now())
+  match                    Match                    @relation(fields: [matchId], references: [id])
+  matchId                  String
+  eventPlayerParticipation EventPlayerParticipation @relation(fields: [eventId, playerId], references: [eventId, playerId])
+  eventId                  String
+  playerId                 String
+  score                    PlayerSlotScore?
+  teamRoundRepresentative  TeamRoundRepresentative?
+}
+
+model PlayerSlotScore {
+  id                     String               @id @unique
+  eventMatchPlayerSlot   EventMatchPlayerSlot @relation(fields: [eventMatchPlayerSlotId], references: [id])
+  eventMatchPlayerSlotId String               @unique
+  recordedTimestamp      DateTime             @default(now())
+  score                  Int
+  isWinningScore         Boolean              @default(false)
+  medal                  ScoreMedal?          @default(NONE)
+  lowScoreWins           Boolean              @default(false)
+}
+
+enum ScoreMedal {
+  GOLD
+  SILVER
+  BRONZE
+  NONE
 }

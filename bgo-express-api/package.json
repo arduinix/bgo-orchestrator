@@ -10,7 +10,8 @@
     "compile": "npm run generate && tsc",
     "postinstall": "npm run compile",
     "start": "npm run compile && node ./dist/src/index.js",
-    "watch": "concurrently  --names \"CodeGen,TS,Nodemon\" -c \"bgYellow,bgBlue,bgMagenta\" \"graphql-codegen --watch 'src/**/*.ts'\"  \"tsc -w \" \"nodemon ./dist/src/index.js \""
+    "watch": "concurrently  --names \"CodeGen,TS,Nodemon\" -c \"bgYellow,bgBlue,bgMagenta\" \"graphql-codegen --watch 'src/**/*.ts'\"  \"tsc -w \" \"nodemon ./dist/src/index.js \"",
+    "watch:debug": "concurrently  --names \"CodeGen,TS,Nodemon\" -c \"bgYellow,bgBlue,bgMagenta\" \"graphql-codegen --watch 'src/**/*.ts'\"  \"tsc -w \" \"nodemon --inspect-brk=9229 ./dist/src/index.js \""
   },
   "keywords": [],
   "author": "",
@@ -23,7 +24,10 @@
     "dotenv": "^16.4.7",
     "graphql": "^16.9.0",
     "graphql-tag": "^2.12.6",
-    "ulid": "^2.3.0"
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
+    "ulid": "^2.3.0",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.16.0",

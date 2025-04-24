@@ -1,3 +1,5 @@
+
+
 {
   "compilerOptions": {
     "rootDirs": ["src"],
@@ -5,9 +7,16 @@
     "outDir": "dist",
     "lib": ["es2020"],
     "target": "es2020",
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "types": ["node"]
-  }
+    "types": ["node"],
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "paths": {
+      "*": ["*", "./*"],
+      "@types/*": ["./types/*"],
+      "@generated/*": ["generated/*"],
+    }
+  },
 }

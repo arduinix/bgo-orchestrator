@@ -7,9 +7,9 @@ type Query {
 
 type Mutation {
   addBook(title: String, author: String): AddBookMutationResponse
-  createEvent(input: CreateEventInput!): CreateEventMutationResponse
+  createEvent(input: CreateEventInput!): Event
   updateEvent(input: UpdateEventInput!): Event
-  deleteEvent(input: DeleteEventInput!): EventDeleteResult
+  deleteEvent(input: DeleteEventInput!): EventDeletionResult
 }
 
 type Book {
@@ -30,27 +30,20 @@ type MutationResponse {
   message: String!
 }
 
-type CreateEventMutationResponse {
-  code: String!
-  success: Boolean!
-  message: String!
-  event: Event
-}
-
 input CreateEventInput {
-  eventName: String!
+  name: String!
   description: String
-  eventDate: String
-  eventLocation: String
+  proposedDatetime: String
+  location: String
   imagePath: String
 }
 
 input UpdateEventInput {
   id: ID!
-  eventName: String
+  name: String!
   description: String
-  eventDate: String
-  eventLocation: String
+  proposedDatetime: String
+  location: String
   imagePath: String
 }
 
@@ -63,11 +56,9 @@ input ReadEventInput {
 }
 
 input ListEventsInput {
-  limit: Int
-  nextToken: String
+  pageSize: Int
+  lastShownId: String
   showEventsOwnedByOthers: Boolean
-  eventCreatedTimestampLower: String
-  eventCreatedTimestampUpper: String
 }
 
 type Event {
@@ -82,8 +73,7 @@ type Event {
   imagePath: String
 }
 
-type DeletionResult {
-  deletedTimestamp: String!
+type EventDeletionResult {
+  id: ID!
+  deleteRequestTimestamp: String!
 }
-
-union EventDeleteResult = Event | DeletionResult

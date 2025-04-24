@@ -1,0 +1,367 @@
+-- CreateEnum
+CREATE TYPE "UserEntitlementRole" AS ENUM ('OWNER', 'EDITOR', 'VIEWER');
+
+-- CreateEnum
+CREATE TYPE "EventPlayerInvitationResponseStatus" AS ENUM ('ACCEPTED', 'DECLINED', 'PENDING');
+
+-- CreateEnum
+CREATE TYPE "RoundPhase" AS ENUM ('SETUP', 'READY', 'PLAYING', 'COMPLETE');
+
+-- CreateEnum
+CREATE TYPE "ScoreMedal" AS ENUM ('GOLD', 'SILVER', 'BRONZE', 'NONE');
+
+-- CreateTable
+CREATE TABLE "User" (
+    "id" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
+    "middleName" TEXT,
+    "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deleteRequestTimestamp" TIMESTAMP(3),
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "UserEventEntitlement" (
+    "userId" TEXT NOT NULL,
+    "eventId" TEXT NOT NULL,
+    "role" "UserEntitlementRole" NOT NULL,
+    "assignedTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "assignedBy" TEXT NOT NULL,
+
+    CONSTRAINT "UserEventEntitlement_pkey" PRIMARY KEY ("userId","eventId")
+);
+
+-- CreateTable
+CREATE TABLE "UserPlayerAssociation" (
+    "userId" TEXT NOT NULL,
+    "playerId" TEXT NOT NULL,
+    "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "UserPlayerAssociation_pkey" PRIMARY KEY ("userId","playerId")
+);
+
+-- CreateTable
+CREATE TABLE "Event" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "proposedDatetime" TIMESTAMP(3),
+    "location" TEXT,
+    "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deleteRequestTimestamp" TIMESTAMP(3),
+    "playedTimestamp" TIMESTAMP(3),
+    "imagePath" TEXT,
+    "eventPlayerGroupId" TEXT NOT NULL,
+    "ownedByUserId" TEXT NOT NULL,
+
+    CONSTRAINT "Event_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "EventConfigParameters" (
+    "id" TEXT NOT NULL,
+    "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deleteRequestTimestamp" TIMESTAMP(3),
+    "eventId" TEXT NOT NULL,
+    "autoMinPlayersPerMatch" INTEGER NOT NULL DEFAULT 3,
+    "autoMaxPlayersPerMatch" INTEGER NOT NULL DEFAULT 4,
+    "autoPrefPlayersPerMatch" INTEGER NOT NULL DEFAULT 3,
+    "autoPrefMatchDuration" INTEGER NOT NULL DEFAULT 60,
+
+    CONSTRAINT "EventConfigParameters_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Player" (
+    "id" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "middleName" TEXT,
+    "lastName" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "phoneNumber" TEXT NOT NULL,
+    "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deleteRequestTimestamp" TIMESTAMP(3),
+    "ownedByUserId" TEXT NOT NULL,
+
+    CONSTRAINT "Player_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "EventPlayerGroup" (
+    "id" TEXT NOT NULL,
+    "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "EventPlayerGroup_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "EventPlayerInvitation" (
+    "eventId" TEXT NOT NULL,
+    "playerId" TEXT NOT NULL,
+    "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userId" TEXT NOT NULL,
+    "respondedTimestamp" TIMESTAMP(3),
+    "responseStatus" "EventPlayerInvitationResponseStatus" NOT NULL DEFAULT 'PENDING',
+    "responseMessage" TEXT,
+
+    CONSTRAINT "EventPlayerInvitation_pkey" PRIMARY KEY ("eventId","playerId")
+);
+
+-- CreateTable
+CREATE TABLE "EventPlayerParticipation" (
+    "eventId" TEXT NOT NULL,
+    "playerId" TEXT NOT NULL,
+    "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "initialCheckedInTimestamp" TIMESTAMP(3),
+    "isCheckedIn" BOOLEAN NOT NULL DEFAULT false,
+    "isPlaying" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "EventPlayerParticipation_pkey" PRIMARY KEY ("eventId","playerId")
+);
+
+-- CreateTable
+CREATE TABLE "EventGameCategory" (
+    "id" TEXT NOT NULL,
+    "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "isInPlay" BOOLEAN NOT NULL DEFAULT true,
+    "eventId" TEXT,
+
+    CONSTRAINT "EventGameCategory_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "EventGame" (
+    "eventGameCategoryId" TEXT NOT NULL,
+    "gameId" TEXT NOT NULL,
+    "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "isInPlay" BOOLEAN NOT NULL DEFAULT true,
+
+    CONSTRAINT "EventGame_pkey" PRIMARY KEY ("eventGameCategoryId","gameId")
+);
+
+-- CreateTable
+CREATE TABLE "Game" (
+    "id" TEXT NOT NULL,
+    "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deleteRequestTimestamp" TIMESTAMP(3),
+    "name" TEXT NOT NULL,
+    "description" TEXT,
+    "lowScoreWins" BOOLEAN NOT NULL DEFAULT false,
+    "minPlayers" INTEGER NOT NULL,
+    "maxPlayers" INTEGER NOT NULL,
+    "averagePlayTime" INTEGER,
+    "ownedByUserId" TEXT NOT NULL,
+
+    CONSTRAINT "Game_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Round" (
+    "id" TEXT NOT NULL,
+    "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "startedTimestamp" TIMESTAMP(3),
+    "completedTimestamp" TIMESTAMP(3),
+    "deleteRequestTimestamp" TIMESTAMP(3),
+    "eventId" TEXT NOT NULL,
+    "phase" "RoundPhase" NOT NULL,
+
+    CONSTRAINT "Round_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Match" (
+    "id" TEXT NOT NULL,
+    "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "startedTimestamp" TIMESTAMP(3),
+    "completedTimestamp" TIMESTAMP(3),
+    "deleteRequestTimestamp" TIMESTAMP(3),
+    "roundId" TEXT NOT NULL,
+    "eventGameCategoryId" TEXT NOT NULL,
+    "gameId" TEXT NOT NULL,
+
+    CONSTRAINT "Match_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "EventMatchPlayerSlot" (
+    "id" TEXT NOT NULL,
+    "createdTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "matchId" TEXT NOT NULL,
+    "eventId" TEXT NOT NULL,
+    "playerId" TEXT NOT NULL,
+
+    CONSTRAINT "EventMatchPlayerSlot_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "PlayerSlotScore" (
+    "id" TEXT NOT NULL,
+    "eventMatchPlayerSlotId" TEXT NOT NULL,
+    "recordedTimestamp" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "score" INTEGER NOT NULL,
+    "isWinningScore" BOOLEAN NOT NULL DEFAULT false,
+    "medal" "ScoreMedal" DEFAULT 'NONE',
+    "lowScoreWins" BOOLEAN NOT NULL DEFAULT false,
+
+    CONSTRAINT "PlayerSlotScore_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "_EventPlayerGroupToPlayer" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL,
+
+    CONSTRAINT "_EventPlayerGroupToPlayer_AB_pkey" PRIMARY KEY ("A","B")
+);
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_id_key" ON "User"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Event_id_key" ON "Event"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Event_eventPlayerGroupId_key" ON "Event"("eventPlayerGroupId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Event_name_ownedByUserId_key" ON "Event"("name", "ownedByUserId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "EventConfigParameters_id_key" ON "EventConfigParameters"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "EventConfigParameters_eventId_key" ON "EventConfigParameters"("eventId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Player_id_key" ON "Player"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Player_email_ownedByUserId_key" ON "Player"("email", "ownedByUserId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "EventPlayerGroup_id_key" ON "EventPlayerGroup"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "EventGameCategory_id_key" ON "EventGameCategory"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "EventGameCategory_name_eventId_key" ON "EventGameCategory"("name", "eventId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Game_id_key" ON "Game"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Game_name_ownedByUserId_key" ON "Game"("name", "ownedByUserId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Round_id_key" ON "Round"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Match_id_key" ON "Match"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "EventMatchPlayerSlot_id_key" ON "EventMatchPlayerSlot"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "PlayerSlotScore_id_key" ON "PlayerSlotScore"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "PlayerSlotScore_eventMatchPlayerSlotId_key" ON "PlayerSlotScore"("eventMatchPlayerSlotId");
+
+-- CreateIndex
+CREATE INDEX "_EventPlayerGroupToPlayer_B_index" ON "_EventPlayerGroupToPlayer"("B");
+
+-- AddForeignKey
+ALTER TABLE "UserEventEntitlement" ADD CONSTRAINT "UserEventEntitlement_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserEventEntitlement" ADD CONSTRAINT "UserEventEntitlement_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserPlayerAssociation" ADD CONSTRAINT "UserPlayerAssociation_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserPlayerAssociation" ADD CONSTRAINT "UserPlayerAssociation_playerId_fkey" FOREIGN KEY ("playerId") REFERENCES "Player"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Event" ADD CONSTRAINT "Event_eventPlayerGroupId_fkey" FOREIGN KEY ("eventPlayerGroupId") REFERENCES "EventPlayerGroup"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Event" ADD CONSTRAINT "Event_ownedByUserId_fkey" FOREIGN KEY ("ownedByUserId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EventConfigParameters" ADD CONSTRAINT "EventConfigParameters_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Player" ADD CONSTRAINT "Player_ownedByUserId_fkey" FOREIGN KEY ("ownedByUserId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EventPlayerInvitation" ADD CONSTRAINT "EventPlayerInvitation_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EventPlayerInvitation" ADD CONSTRAINT "EventPlayerInvitation_playerId_fkey" FOREIGN KEY ("playerId") REFERENCES "Player"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EventPlayerInvitation" ADD CONSTRAINT "EventPlayerInvitation_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EventPlayerParticipation" ADD CONSTRAINT "EventPlayerParticipation_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EventPlayerParticipation" ADD CONSTRAINT "EventPlayerParticipation_playerId_fkey" FOREIGN KEY ("playerId") REFERENCES "Player"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EventGameCategory" ADD CONSTRAINT "EventGameCategory_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EventGame" ADD CONSTRAINT "EventGame_eventGameCategoryId_fkey" FOREIGN KEY ("eventGameCategoryId") REFERENCES "EventGameCategory"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EventGame" ADD CONSTRAINT "EventGame_gameId_fkey" FOREIGN KEY ("gameId") REFERENCES "Game"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Game" ADD CONSTRAINT "Game_ownedByUserId_fkey" FOREIGN KEY ("ownedByUserId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Round" ADD CONSTRAINT "Round_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Match" ADD CONSTRAINT "Match_roundId_fkey" FOREIGN KEY ("roundId") REFERENCES "Round"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Match" ADD CONSTRAINT "Match_eventGameCategoryId_gameId_fkey" FOREIGN KEY ("eventGameCategoryId", "gameId") REFERENCES "EventGame"("eventGameCategoryId", "gameId") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EventMatchPlayerSlot" ADD CONSTRAINT "EventMatchPlayerSlot_matchId_fkey" FOREIGN KEY ("matchId") REFERENCES "Match"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "EventMatchPlayerSlot" ADD CONSTRAINT "EventMatchPlayerSlot_eventId_playerId_fkey" FOREIGN KEY ("eventId", "playerId") REFERENCES "EventPlayerParticipation"("eventId", "playerId") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "PlayerSlotScore" ADD CONSTRAINT "PlayerSlotScore_eventMatchPlayerSlotId_fkey" FOREIGN KEY ("eventMatchPlayerSlotId") REFERENCES "EventMatchPlayerSlot"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_EventPlayerGroupToPlayer" ADD CONSTRAINT "_EventPlayerGroupToPlayer_A_fkey" FOREIGN KEY ("A") REFERENCES "EventPlayerGroup"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_EventPlayerGroupToPlayer" ADD CONSTRAINT "_EventPlayerGroupToPlayer_B_fkey" FOREIGN KEY ("B") REFERENCES "Player"("id") ON DELETE CASCADE ON UPDATE CASCADE;
